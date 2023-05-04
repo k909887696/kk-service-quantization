@@ -1,0 +1,65 @@
+package com.kk.business.quantization.service.executor.impl;
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.kk.business.quantization.dao.entity.Concept;
+import com.kk.business.quantization.dao.entity.TradeCal;
+import com.kk.business.quantization.dao.mapper.ConceptMapper;
+import com.kk.business.quantization.model.tushare.ConceptVo;
+import com.kk.business.quantization.model.tushare.TradeCalVo;
+import com.kk.business.quantization.model.tushare.TushareData;
+import com.kk.business.quantization.service.IConceptService;
+import com.kk.business.quantization.service.ITradeCalService;
+import com.kk.business.quantization.service.executor.ITaskExecutor;
+import com.kk.business.quantization.third.ITushareDataApi;
+import com.kk.common.utils.DateUtil;
+import com.kk.common.utils.JsonUtil;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+/**
+ * 概念基本信息任务执行器
+ */
+@Service("ConceptTaskExecutor")
+@Slf4j
+public class ConceptTaskExecutor implements ITaskExecutor {
+
+    @Resource
+    public ITushareDataApi tushareDataApi;
+    @Resource
+    public IConceptService conceptService;
+    @Resource
+    public ConceptMapper conceptMapper;
+
+
+    /**
+     * 下载数据
+     * @param params
+     */
+    @Override
+    public void executeTask(String params) {
+        if(StringUtils.isBlank(params)) return ;
+        ConceptVo vo = (ConceptVo) JsonUtil.parseObject(params,ConceptVo.class);
+        List<Concept> data = new ArrayList<>();
+
+        TushareData<Concept> res =  tushareDataApi.concept(vo);
+        if("cover".equals(vo.getUpdateType()))
+        {
+            LambdaQueryWrapper<Concept> query = new LambdaQueryWrapper<>();
+            query.eq(Concept::getSrc,"ts");
+            conceptMapper.delete(query);
+        }
+        data.addAll(res.getData());
+        //插入db
+        conceptService.insertIgnoreBatch(data);
+    }
+
+
+}
