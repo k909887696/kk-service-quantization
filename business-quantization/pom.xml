@@ -5,9 +5,9 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.kk</groupId>
-    <artifactId>common-parent</artifactId>
+    <artifactId>kk-service-quantization</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <relativePath/> <!-- lookup parent from repository -->
+
   </parent>
   <groupId>com.kk</groupId>
   <artifactId>business-quantization</artifactId>
