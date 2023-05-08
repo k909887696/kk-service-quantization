@@ -11,7 +11,7 @@ spring:
     #配置基本属性
     url: jdbc:mysql://192.168.2.235:3306/quantization?useUnicode=true&characterEncoding=UTF-8&useSSL=false&allowMultiQueries=true
     username: root
-    password: -random8201227
+    password: .....
 
     #url: jdbc:mysql://192.168.90.126:3309/quantization?useUnicode=true&characterEncoding=UTF-8&useSSL=false&allowMultiQueries=true
     #username: hotel
