@@ -13,9 +13,9 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>api-quantization</module>
-        <module>business-quantization</module>
-        <module>executor-quantization</module>
+        <module>kk-api-quantization</module>
+        <module>kk-business-quantization</module>
+        <module>kk-executor-quantization</module>
     </modules>
 
 

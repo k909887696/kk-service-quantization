@@ -9,7 +9,7 @@
 
     </parent>
     <groupId>com.kk</groupId>
-    <artifactId>api-quantization</artifactId>
+    <artifactId>kk-api-quantization</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>kk-api-quantization</name>
     <description>kk-api-quantization</description>
