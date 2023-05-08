@@ -2,7 +2,7 @@ server:
   port: 8011
 spring:
   application:
-    name: api-quantization
+    name: kk-api-quantization
   datasource:
     name: mybatis_quantization
     #使用druid连接池
@@ -75,17 +75,16 @@ spring:
     nacos:
       #nacos 服务注册发现
       discovery:
-        enabled: false
-        server-addr: 192.168.2.235:8848
-        namespace: kk_dev
-        register-enabled: false
+        enabled: true
+        namespace: kk_${spring.profiles.active}
+        register-enabled: true
       config:
-        server-addr: 192.168.2.235:8848
         file-extension: yaml
         prefix: ${spring.application.name}
-        namespace: kk_dev
+        namespace: kk_${spring.profiles.active}
         group: DEFAULT_GROUP
-        enabled: false
+        enabled: true
+
 
 mybatis-plus:
   # 以下配置均有默认值,可以不设置
@@ -118,7 +117,7 @@ springfox:
 swagger:
   enable: true
   #swagger文档项目名称
-  application-name: ${spring.application.name}
+  application-name: ${spring.application.name}-${spring.profiles.active}
   #swagger版本号
   application-version: 1.0
   application-description: 量化系统
