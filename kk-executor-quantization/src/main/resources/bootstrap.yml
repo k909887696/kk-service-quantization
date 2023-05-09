@@ -2,7 +2,7 @@ server:
   port: 8881
 spring:
   application:
-    name: executor-quantization
+    name: kk-service-quantization
   datasource:
     name: mybatis_quantization
     #使用druid连接池
