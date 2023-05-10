@@ -30,4 +30,10 @@ public interface IStockDayKdjService extends IMppService<StockDayKdj> {
     */
     PageResult<StockDayKdj> getPageResult(BasePage vo);
 
+    /**
+     * 根据交易日期删除kdj数据
+     * @param tradeDate
+     */
+    void deleteByTradeDate(String tradeDate);
+
 }

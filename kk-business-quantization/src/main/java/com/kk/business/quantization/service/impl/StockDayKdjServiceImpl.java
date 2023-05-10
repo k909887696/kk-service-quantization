@@ -1,5 +1,6 @@
 package com.kk.business.quantization.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -71,6 +72,18 @@ public class StockDayKdjServiceImpl extends MppServiceImpl<StockDayKdjMapper, St
 
         return pageResult;
     }
+
+    /**
+     * 根据交易日期删除kdj数据
+     * @param tradeDate
+     */
+    public void deleteByTradeDate(String tradeDate)
+    {
+        LambdaQueryWrapper<StockDayKdj> query = new LambdaQueryWrapper<>();
+        query.eq(StockDayKdj::getTradeDate,tradeDate);
+        mapper.delete(query);
+    }
+
 
 
 }

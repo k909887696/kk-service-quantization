@@ -2,7 +2,7 @@ server:
   port: 8881
 spring:
   application:
-    name: kk-service-quantization
+    name: kk-executor-quantization
   datasource:
     name: mybatis_quantization
     #使用druid连接池
@@ -73,15 +73,15 @@ spring:
       #nacos 服务注册发现
       discovery:
         enabled: true
-        server-addr: 192.168.90.220:8848
-        namespace: kk_dev
+        namespace: kk_${spring.profiles.active}
         register-enabled: true
+        group: DEFAULT_GROUP
       config:
-        server-addr: 192.168.90.220:8848
         file-extension: yaml
         prefix: ${spring.application.name}
-        namespace: kk_dev
+        namespace: kk_${spring.profiles.active}
         group: DEFAULT_GROUP
+        enabled: true
 # mybatis-plus相关配置
 mybatis-plus:
   # 以下配置均有默认值,可以不设置
@@ -102,7 +102,7 @@ xxl:
   job:
     executor:
       #执行器的名称、ip地址、端口号
-      appname: ${spring.application.name}
+      appname: ${spring.application.name}-${spring.profiles.active}
       address:
       ip:
       port: 9999

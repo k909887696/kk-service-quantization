@@ -45,7 +45,7 @@
 
         <dependency>
             <groupId>com.kk</groupId>
-            <artifactId>business-quantization</artifactId>
+            <artifactId>kk-business-quantization</artifactId>
             <version>1.0-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
