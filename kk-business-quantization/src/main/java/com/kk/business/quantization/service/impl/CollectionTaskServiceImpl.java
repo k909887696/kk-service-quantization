@@ -49,6 +49,15 @@ public class CollectionTaskServiceImpl extends MppServiceImpl<CollectionTaskMapp
         return mapper.updateExMsgAndRunCount(taskId,exMsg);
     }
     /**
+     * 更新
+     * @param task
+     * @return
+     */
+    public int update(CollectionTask task)
+    {
+        return mapper.updateById(task);
+    }
+    /**
     * 分批批量插入
     * @param list 数据列表
     * @return

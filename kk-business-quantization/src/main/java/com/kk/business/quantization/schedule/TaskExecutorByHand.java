@@ -7,12 +7,15 @@ import com.kk.business.quantization.dao.mapper.CollectionTaskMapper;
 import com.kk.business.quantization.service.ICollectionPolicyService;
 import com.kk.business.quantization.service.ICollectionTaskService;
 import com.kk.business.quantization.service.executor.TaskExecutorHandler;
+import com.kk.common.utils.DateUtil;
 import com.kk.common.utils.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -156,8 +159,11 @@ public class TaskExecutorByHand {
                             "任务调度执行异常：" + p.getName() + "(" + p.getTaskId() + ")"
                             , e.getMessage(), ExceptionUtils.getStackTrace(e)
                             , "taskSchedule;" + p.getTaskId());
-
-                    collectionTaskMapper.updateExMsgAndRunCount(p.getTaskId(), e.getMessage() + "|" + ExceptionUtils.getStackTrace(e));
+                    p.setExMsg(e.getMessage() + "|" + ExceptionUtils.getStackTrace(e));
+                    p.setRunCount(p.getRunCount() +1);
+                    p.setRunTime(new Date());
+                    p.setPreRunTime(DateUtil.addDate(p.getPreRunTime(), Calendar.MINUTE,p.getRunCount()*(p.getRunCount()-1)));
+                    collectionTaskService.update(p);
                 }
             }
         }

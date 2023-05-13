@@ -9,6 +9,7 @@ import com.kk.business.quantization.third.ITushareDataApi;
 import com.kk.business.quantization.utils.ThridDataUtils;
 
 import com.kk.common.exception.BusinessException;
+import com.kk.common.utils.JsonUtil;
 import com.kk.common.utils.MapperUtils;
 import com.kk.common.utils.httpUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +39,7 @@ public class TushareDataApiImpl implements ITushareDataApi {
             throw new BusinessException("返回数据为null");
         if(resObj!=null && !"0".equals(resObj.getCode()))
         {
+            log.error(JsonUtil.getJSONString(resObj),"validTushareData;tushare接口异常返回");
             throw new BusinessException(resObj.getMsg());
         }
     }

@@ -25,6 +25,13 @@ public interface ICollectionTaskService extends IMppService<CollectionTask> {
      * @return
      */
     int updateExMsgAndRunCount(String taskId,String exMsg);
+
+    /**
+     * 更新
+     * @param task
+     * @return
+     */
+    int update(CollectionTask task);
     /**
     * 分批批量插入
     * @param list 数据列表
