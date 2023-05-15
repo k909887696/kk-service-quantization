@@ -2,10 +2,8 @@ package com.kk.business.quantization.service;
 
 import com.github.jeffreyning.mybatisplus.service.IMppService;
 import com.kk.business.quantization.dao.entity.Daily;
-import com.kk.business.quantization.model.DailyKdj;
-import com.kk.business.quantization.model.tushare.DailyVo;
+import com.kk.business.quantization.model.dto.DailyKdjDto;
 import com.kk.business.quantization.model.vo.SearchDailyVo;
-import com.kk.common.base.model.BasePage;
 import com.kk.common.base.model.PageResult;
 
 import java.util.List;
@@ -38,6 +36,6 @@ public interface IDailyService extends IMppService<Daily> {
      * @param vo 请求参数
      * @return 结果集
      */
-    PageResult<DailyKdj>  getPageResultEx(SearchDailyVo vo);
+    PageResult<DailyKdjDto>  getPageResultEx(SearchDailyVo vo);
 
 }

@@ -1,16 +1,11 @@
 package com.kk.business.quantization.service.executor.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.kk.business.quantization.dao.entity.*;
 import com.kk.business.quantization.dao.mapper.ConceptDailyMapper;
-import com.kk.business.quantization.dao.mapper.ConceptDetailMapper;
-import com.kk.business.quantization.model.dfcf.DfcfConceptDailyVo;
-import com.kk.business.quantization.model.dfcf.DfcfData;
-import com.kk.business.quantization.model.tushare.ConceptDetailVo;
-import com.kk.business.quantization.model.tushare.ConceptVo;
-import com.kk.business.quantization.model.tushare.DailyVo;
+import com.kk.business.quantization.model.po.dfcf.DfcfConceptDailyVo;
+import com.kk.business.quantization.model.po.dfcf.DfcfData;
+import com.kk.business.quantization.model.po.tushare.ConceptVo;
 import com.kk.business.quantization.service.IConceptDailyService;
-import com.kk.business.quantization.service.IConceptDetailService;
 import com.kk.business.quantization.service.IConceptService;
 import com.kk.business.quantization.service.ITradeCalService;
 import com.kk.business.quantization.service.executor.ITaskExecutor;
@@ -23,7 +18,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import javax.servlet.http.Cookie;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

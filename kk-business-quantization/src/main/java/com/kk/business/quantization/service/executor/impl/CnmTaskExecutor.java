@@ -1,15 +1,11 @@
 package com.kk.business.quantization.service.executor.impl;
 
 import com.kk.business.quantization.dao.entity.CnM;
-import com.kk.business.quantization.dao.entity.TradeCal;
-import com.kk.business.quantization.model.tushare.CnmVo;
-import com.kk.business.quantization.model.tushare.TradeCalVo;
-import com.kk.business.quantization.model.tushare.TushareData;
+import com.kk.business.quantization.model.po.tushare.CnmVo;
+import com.kk.business.quantization.model.po.tushare.TushareData;
 import com.kk.business.quantization.service.ICnMService;
-import com.kk.business.quantization.service.ITradeCalService;
 import com.kk.business.quantization.service.executor.ITaskExecutor;
 import com.kk.business.quantization.third.ITushareDataApi;
-import com.kk.common.utils.DateUtil;
 import com.kk.common.utils.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -17,8 +13,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 /**

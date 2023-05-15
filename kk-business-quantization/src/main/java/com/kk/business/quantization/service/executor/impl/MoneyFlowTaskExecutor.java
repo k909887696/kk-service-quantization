@@ -1,10 +1,9 @@
 package com.kk.business.quantization.service.executor.impl;
 
 import com.kk.business.quantization.dao.entity.*;
-import com.kk.business.quantization.model.tushare.DailyVo;
-import com.kk.business.quantization.model.tushare.MoneyFlowVo;
-import com.kk.business.quantization.model.tushare.TushareData;
-import com.kk.business.quantization.service.IDailyService;
+import com.kk.business.quantization.model.po.tushare.DailyVo;
+import com.kk.business.quantization.model.po.tushare.MoneyFlowVo;
+import com.kk.business.quantization.model.po.tushare.TushareData;
 import com.kk.business.quantization.service.IMoneyFlowService;
 import com.kk.business.quantization.service.IStockBasicService;
 import com.kk.business.quantization.service.executor.ITaskExecutor;

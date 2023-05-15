@@ -2,9 +2,8 @@ package com.kk.api.quantization.controller;
 
 
 import com.kk.business.quantization.dao.entity.IndexClassify;
-import com.kk.business.quantization.model.tushare.IndexClassifyVo;
+import com.kk.business.quantization.model.po.tushare.IndexClassifyVo;
 import com.kk.business.quantization.service.IIndexClassifyService;
-import com.kk.common.base.model.BasePage;
 import com.kk.common.base.model.PageResult;
 import com.kk.common.web.model.ApiResult;
 import io.swagger.annotations.Api;

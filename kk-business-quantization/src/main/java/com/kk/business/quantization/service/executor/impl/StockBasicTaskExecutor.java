@@ -1,13 +1,9 @@
 package com.kk.business.quantization.service.executor.impl;
 
-import com.baomidou.mybatisplus.extension.conditions.AbstractChainWrapper;
-import com.kk.business.quantization.dao.entity.Daily;
 import com.kk.business.quantization.dao.entity.StockBasic;
 import com.kk.business.quantization.dao.mapper.StockBasicMapper;
-import com.kk.business.quantization.model.tushare.DailyVo;
-import com.kk.business.quantization.model.tushare.StockBasicVo;
-import com.kk.business.quantization.model.tushare.TushareData;
-import com.kk.business.quantization.service.IDailyService;
+import com.kk.business.quantization.model.po.tushare.StockBasicVo;
+import com.kk.business.quantization.model.po.tushare.TushareData;
 import com.kk.business.quantization.service.IStockBasicService;
 import com.kk.business.quantization.service.executor.ITaskExecutor;
 import com.kk.business.quantization.third.ITushareDataApi;

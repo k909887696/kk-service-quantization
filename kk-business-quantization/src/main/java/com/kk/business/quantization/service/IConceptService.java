@@ -2,8 +2,7 @@ package com.kk.business.quantization.service;
 
 import com.github.jeffreyning.mybatisplus.service.IMppService;
 import com.kk.business.quantization.dao.entity.Concept;
-import com.kk.business.quantization.model.tushare.ConceptVo;
-import com.kk.common.base.model.BasePage;
+import com.kk.business.quantization.model.po.tushare.ConceptVo;
 import com.kk.common.base.model.PageResult;
 
 import java.util.List;

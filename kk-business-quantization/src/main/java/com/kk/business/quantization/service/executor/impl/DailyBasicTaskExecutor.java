@@ -1,13 +1,10 @@
 package com.kk.business.quantization.service.executor.impl;
 
 import com.kk.business.quantization.dao.entity.*;
-import com.kk.business.quantization.model.tushare.DailyBasicVo;
-import com.kk.business.quantization.model.tushare.DailyVo;
-import com.kk.business.quantization.model.tushare.MoneyFlowVo;
-import com.kk.business.quantization.model.tushare.TushareData;
+import com.kk.business.quantization.model.po.tushare.DailyBasicVo;
+import com.kk.business.quantization.model.po.tushare.DailyVo;
+import com.kk.business.quantization.model.po.tushare.TushareData;
 import com.kk.business.quantization.service.IDailyBasicService;
-import com.kk.business.quantization.service.IDailyService;
-import com.kk.business.quantization.service.IMoneyFlowService;
 import com.kk.business.quantization.service.IStockBasicService;
 import com.kk.business.quantization.service.executor.ITaskExecutor;
 import com.kk.business.quantization.third.ITushareDataApi;
@@ -21,7 +18,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 

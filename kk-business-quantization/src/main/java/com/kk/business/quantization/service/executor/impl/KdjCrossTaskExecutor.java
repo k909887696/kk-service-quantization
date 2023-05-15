@@ -1,19 +1,17 @@
 package com.kk.business.quantization.service.executor.impl;
 
 import com.kk.business.quantization.dao.entity.*;
-import com.kk.business.quantization.model.DailyKdj;
-import com.kk.business.quantization.model.tushare.DailyKdjVo;
+import com.kk.business.quantization.model.dto.DailyKdjDto;
+import com.kk.business.quantization.model.po.tushare.DailyKdjVo;
 import com.kk.business.quantization.model.vo.SearchDailyVo;
 import com.kk.business.quantization.service.*;
 import com.kk.business.quantization.service.executor.ITaskExecutor;
 import com.kk.business.quantization.third.ITushareDataApi;
 import com.kk.business.quantization.utils.StochasticOscillatorUtil;
-import com.kk.common.base.model.BasePage;
 import com.kk.common.base.model.PageResult;
 import com.kk.common.exception.BusinessException;
 import com.kk.common.utils.DateUtil;
 import com.kk.common.utils.JsonUtil;
-import com.kk.common.utils.MapperUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -63,12 +61,12 @@ public class KdjCrossTaskExecutor implements ITaskExecutor {
 
         svo.setPageIndex(1);
         svo.setPageSize(50000);
-        PageResult<DailyKdj> dailyKdjList = dailyService.getPageResultEx(svo);
+        PageResult<DailyKdjDto> dailyKdjList = dailyService.getPageResultEx(svo);
         if(dailyKdjList==null||dailyKdjList.getTotalCount()<=0) return ;
         List<String> ids = dailyKdjList.getResult().stream().map(t->t.getTsCode()).collect(Collectors.toList());
         for (String code : ids)
         {
-           List<DailyKdj> templist =  dailyKdjList.getResult().stream().filter(t->t.getTsCode().equals(code)).collect(Collectors.toList());
+           List<DailyKdjDto> templist =  dailyKdjList.getResult().stream().filter(t->t.getTsCode().equals(code)).collect(Collectors.toList());
            String crossType = StochasticOscillatorUtil.IsKDJCrossAndType(templist);
            if(StringUtils.isNotBlank(crossType))
            {

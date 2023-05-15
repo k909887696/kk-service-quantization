@@ -2,9 +2,7 @@ package com.kk.business.quantization.service;
 
 import com.github.jeffreyning.mybatisplus.service.IMppService;
 import com.kk.business.quantization.dao.entity.IndexClassify;
-import com.kk.business.quantization.model.tushare.IndexClassifyVo;
-import com.kk.business.quantization.model.tushare.IndexMemberVo;
-import com.kk.common.base.model.BasePage;
+import com.kk.business.quantization.model.po.tushare.IndexClassifyVo;
 import com.kk.common.base.model.PageResult;
 
 import java.util.List;

@@ -3,7 +3,7 @@ package com.kk.business.quantization.third.impl;
 import com.kk.business.quantization.config.ThirdDataConfig;
 import com.kk.business.quantization.constant.TushareFields;
 import com.kk.business.quantization.dao.entity.*;
-import com.kk.business.quantization.model.tushare.*;
+import com.kk.business.quantization.model.po.tushare.*;
 import com.kk.business.quantization.third.ITushareDataApi;
 
 import com.kk.business.quantization.utils.ThridDataUtils;

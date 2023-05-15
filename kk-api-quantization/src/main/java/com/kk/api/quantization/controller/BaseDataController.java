@@ -1,17 +1,14 @@
 package com.kk.api.quantization.controller;
 
-import com.kk.business.quantization.dao.entity.CnM;
 import com.kk.business.quantization.dao.entity.Daily;
-import com.kk.business.quantization.model.res.BaseDataItemMapGetRes;
-import com.kk.business.quantization.model.tushare.DailyVo;
+import com.kk.business.quantization.model.dto.BaseDataItemMapGetDto;
+import com.kk.business.quantization.model.po.tushare.DailyVo;
 import com.kk.business.quantization.model.vo.BaseDataItemMapGetVo;
 import com.kk.business.quantization.service.IBaseDataService;
 import com.kk.business.quantization.service.IDailyService;
 import com.kk.business.quantization.service.executor.ITaskExecutor;
 import com.kk.common.base.email.EmailSendMsg;
 import com.kk.common.base.email.EmailUtil;
-import com.kk.common.base.model.BasePage;
-import com.kk.common.base.model.PageResult;
 import com.kk.common.utils.JsonUtil;
 import com.kk.common.web.model.ApiResult;
 import io.swagger.annotations.Api;
@@ -54,7 +51,7 @@ public class BaseDataController {
             @ApiImplicitParam(name = "version", value = "版本号（1.0.0）", paramType = "header",  dataType = "String")
     })
     @PostMapping("/get_base_data_item_map")
-    public ApiResult<BaseDataItemMapGetRes> getBaseDataItemMap(@Valid @RequestBody BaseDataItemMapGetVo vo)   {
+    public ApiResult<BaseDataItemMapGetDto> getBaseDataItemMap(@Valid @RequestBody BaseDataItemMapGetVo vo)   {
 
         return new  ApiResult(baseDataService.getBaseDataItemMap(vo));
 

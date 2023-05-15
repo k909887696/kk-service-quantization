@@ -1,18 +1,13 @@
 package com.kk.business.quantization.service.executor.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.kk.business.quantization.dao.entity.Concept;
-import com.kk.business.quantization.dao.entity.TradeCal;
 import com.kk.business.quantization.dao.mapper.ConceptMapper;
-import com.kk.business.quantization.model.tushare.ConceptVo;
-import com.kk.business.quantization.model.tushare.TradeCalVo;
-import com.kk.business.quantization.model.tushare.TushareData;
+import com.kk.business.quantization.model.po.tushare.ConceptVo;
+import com.kk.business.quantization.model.po.tushare.TushareData;
 import com.kk.business.quantization.service.IConceptService;
-import com.kk.business.quantization.service.ITradeCalService;
 import com.kk.business.quantization.service.executor.ITaskExecutor;
 import com.kk.business.quantization.third.ITushareDataApi;
-import com.kk.common.utils.DateUtil;
 import com.kk.common.utils.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -20,8 +15,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 /**

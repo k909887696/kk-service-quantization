@@ -4,21 +4,17 @@ import static org.junit.Assert.assertTrue;
 
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.TypeReference;
-import com.kk.business.quantization.model.pdd.*;
+import com.kk.business.quantization.model.po.pdd.*;
 import com.kk.common.utils.DateUtil;
 import com.kk.common.utils.FileUtil;
 import com.kk.common.utils.JsonUtil;
 import com.kk.common.utils.httpUtil;
-import org.apache.commons.io.FilenameUtils;
 import org.junit.Test;
 
 import java.io.File;
-import java.lang.reflect.Type;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

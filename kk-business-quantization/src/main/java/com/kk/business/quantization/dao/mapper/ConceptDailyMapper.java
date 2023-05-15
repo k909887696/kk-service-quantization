@@ -1,10 +1,9 @@
 package com.kk.business.quantization.dao.mapper;
 
 import com.kk.business.quantization.dao.entity.ConceptDaily;
-import com.kk.business.quantization.model.DailyLeader;
+import com.kk.business.quantization.model.dto.DailyLeaderDto;
 import com.kk.business.quantization.model.vo.SearchDailyLeaderVo;
 import com.kk.common.dao.mapper.RootMapper;
-import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
@@ -25,6 +24,6 @@ public interface ConceptDailyMapper extends RootMapper<ConceptDaily> {
      * @param vo
      * @return
      */
-    public List<DailyLeader> selectLeaderListByRange(SearchDailyLeaderVo vo);
+    public List<DailyLeaderDto> selectLeaderListByRange(SearchDailyLeaderVo vo);
 
 }

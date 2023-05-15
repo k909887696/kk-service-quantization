@@ -1,10 +1,11 @@
 package com.kk.business.quantization.third;
 
 import com.kk.business.quantization.dao.entity.*;
-import com.kk.business.quantization.model.dfcf.DfcfConceptDailyVo;
-import com.kk.business.quantization.model.dfcf.DfcfConceptMoneyFlowVo;
-import com.kk.business.quantization.model.dfcf.DfcfData;
-import com.kk.business.quantization.model.tushare.*;
+import com.kk.business.quantization.model.po.dfcf.DfcfConceptDailyVo;
+import com.kk.business.quantization.model.po.dfcf.DfcfConceptMoneyFlowVo;
+import com.kk.business.quantization.model.po.dfcf.DfcfData;
+import com.kk.business.quantization.model.po.tushare.ConceptDetailVo;
+import com.kk.business.quantization.model.po.tushare.ConceptVo;
 
 /**
  * @Author: kk

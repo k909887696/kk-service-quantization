@@ -1,11 +1,8 @@
 package com.kk.business.quantization.service.executor.impl;
 
-import com.kk.business.quantization.dao.entity.CnM;
 import com.kk.business.quantization.dao.entity.IndexBasic;
-import com.kk.business.quantization.model.tushare.CnmVo;
-import com.kk.business.quantization.model.tushare.IndexBasicVo;
-import com.kk.business.quantization.model.tushare.TushareData;
-import com.kk.business.quantization.service.ICnMService;
+import com.kk.business.quantization.model.po.tushare.IndexBasicVo;
+import com.kk.business.quantization.model.po.tushare.TushareData;
 import com.kk.business.quantization.service.IIndexBasicService;
 import com.kk.business.quantization.service.executor.ITaskExecutor;
 import com.kk.business.quantization.third.ITushareDataApi;

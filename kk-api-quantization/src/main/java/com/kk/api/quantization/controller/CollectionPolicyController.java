@@ -5,9 +5,8 @@ import com.kk.business.quantization.dao.entity.CollectionPolicy;
 import com.kk.business.quantization.model.vo.ExecutePolicyVo;
 import com.kk.business.quantization.model.vo.SearchPolicyListVo;
 import com.kk.business.quantization.model.vo.SearchPolicyVo;
-import com.kk.business.quantization.schedule.TaskExecutorByHand;
+import com.kk.business.quantization.service.schedule.TaskExecutorSchedule;
 import com.kk.business.quantization.service.ICollectionPolicyService;
-import com.kk.common.base.model.BasePage;
 import com.kk.common.base.model.PageResult;
 import com.kk.common.web.model.ApiResult;
 import io.swagger.annotations.Api;
@@ -36,7 +35,7 @@ public class CollectionPolicyController {
     @Resource
     public ICollectionPolicyService service;
     @Resource
-    public TaskExecutorByHand taskExecutorByHand;
+    public TaskExecutorSchedule taskExecutorSchedule;
 
 
     @ApiOperation("新增策略")
@@ -110,7 +109,7 @@ public class CollectionPolicyController {
     @PostMapping("/execute_policy")
     public ApiResult< String > executePolicy(@Valid @RequestBody ExecutePolicyVo vo)   {
 
-        return new  ApiResult(taskExecutorByHand.policyScheduleByHand(vo.getPolicyIds()));
+        return new  ApiResult(taskExecutorSchedule.policyScheduleByHand(vo.getPolicyIds()));
 
     }
 

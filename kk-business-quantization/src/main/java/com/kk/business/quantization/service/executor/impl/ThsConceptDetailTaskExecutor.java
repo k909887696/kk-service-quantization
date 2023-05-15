@@ -1,15 +1,14 @@
 package com.kk.business.quantization.service.executor.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.kk.business.quantization.dao.entity.CollectionPolicy;
 import com.kk.business.quantization.dao.entity.CollectionTask;
 import com.kk.business.quantization.dao.entity.Concept;
 import com.kk.business.quantization.dao.entity.ConceptDetail;
 import com.kk.business.quantization.dao.mapper.ConceptDetailMapper;
-import com.kk.business.quantization.model.tushare.ConceptDetailVo;
-import com.kk.business.quantization.model.tushare.ConceptVo;
-import com.kk.business.quantization.model.tushare.TushareData;
+import com.kk.business.quantization.model.po.tushare.ConceptDetailVo;
+import com.kk.business.quantization.model.po.tushare.ConceptVo;
+import com.kk.business.quantization.model.po.tushare.TushareData;
 import com.kk.business.quantization.service.IConceptDetailService;
 import com.kk.business.quantization.service.IConceptService;
 import com.kk.business.quantization.service.executor.ITaskExecutor;

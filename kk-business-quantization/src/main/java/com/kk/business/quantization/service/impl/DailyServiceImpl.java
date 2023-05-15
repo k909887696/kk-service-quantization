@@ -1,16 +1,14 @@
 package com.kk.business.quantization.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.jeffreyning.mybatisplus.service.MppServiceImpl;
 import com.kk.business.quantization.dao.entity.Daily;
 import com.kk.business.quantization.dao.mapper.DailyMapper;
-import com.kk.business.quantization.model.DailyKdj;
+import com.kk.business.quantization.model.dto.DailyKdjDto;
 import com.kk.business.quantization.model.vo.SearchDailyVo;
 import com.kk.business.quantization.service.IDailyService;
-import com.kk.common.base.model.BasePage;
 import com.kk.common.base.model.PageResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -106,15 +104,15 @@ public class DailyServiceImpl extends MppServiceImpl<DailyMapper, Daily> impleme
      * @param vo 请求参数
      * @return 结果集
      */
-    public PageResult<DailyKdj>  getPageResultEx(SearchDailyVo vo) {
+    public PageResult<DailyKdjDto>  getPageResultEx(SearchDailyVo vo) {
 
 
-        IPage<DailyKdj> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
+        IPage<DailyKdjDto> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
 
 
 
         page = mapper.selectDailyExList(page,vo);
-        PageResult<DailyKdj>  pageResult = new PageResult<>();
+        PageResult<DailyKdjDto>  pageResult = new PageResult<>();
 
         pageResult.setResult(page.getRecords());
         pageResult.setTotalCount(page.getTotal());

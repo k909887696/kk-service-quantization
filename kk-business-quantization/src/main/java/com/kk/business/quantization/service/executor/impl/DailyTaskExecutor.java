@@ -4,10 +4,10 @@ import com.kk.business.quantization.dao.entity.CollectionPolicy;
 import com.kk.business.quantization.dao.entity.CollectionTask;
 import com.kk.business.quantization.dao.entity.Daily;
 import com.kk.business.quantization.dao.entity.StockBasic;
-import com.kk.business.quantization.model.tushare.TushareData;
+import com.kk.business.quantization.model.po.tushare.TushareData;
 import com.kk.business.quantization.service.IStockBasicService;
 import com.kk.business.quantization.service.executor.ITaskExecutor;
-import com.kk.business.quantization.model.tushare.DailyVo;
+import com.kk.business.quantization.model.po.tushare.DailyVo;
 import com.kk.business.quantization.service.IDailyService;
 import com.kk.business.quantization.third.ITushareDataApi;
 import com.kk.common.base.model.BasePage;
@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 

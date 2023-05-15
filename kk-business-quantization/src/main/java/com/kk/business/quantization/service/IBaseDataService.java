@@ -1,6 +1,6 @@
 package com.kk.business.quantization.service;
 
-import com.kk.business.quantization.model.res.BaseDataItemMapGetRes;
+import com.kk.business.quantization.model.dto.BaseDataItemMapGetDto;
 import com.kk.business.quantization.model.vo.BaseDataItemMapGetVo;
 
 public interface IBaseDataService {
@@ -10,5 +10,5 @@ public interface IBaseDataService {
      * @param vo
      * @return
      */
-    public BaseDataItemMapGetRes getBaseDataItemMap(BaseDataItemMapGetVo vo);
+    public BaseDataItemMapGetDto getBaseDataItemMap(BaseDataItemMapGetVo vo);
 }

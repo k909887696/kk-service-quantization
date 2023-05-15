@@ -1,9 +1,8 @@
 package com.kk.business.quantization.third;
 
 import com.kk.business.quantization.dao.entity.*;
-import com.kk.business.quantization.model.tushare.*;
+import com.kk.business.quantization.model.po.tushare.*;
 
-import java.util.List;
 
 /**
  * @Author: kk

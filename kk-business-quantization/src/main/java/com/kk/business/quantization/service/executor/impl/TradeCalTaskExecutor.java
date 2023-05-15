@@ -1,12 +1,8 @@
 package com.kk.business.quantization.service.executor.impl;
 
-import com.kk.business.quantization.dao.entity.StockBasic;
 import com.kk.business.quantization.dao.entity.TradeCal;
-import com.kk.business.quantization.dao.mapper.StockBasicMapper;
-import com.kk.business.quantization.model.tushare.StockBasicVo;
-import com.kk.business.quantization.model.tushare.TradeCalVo;
-import com.kk.business.quantization.model.tushare.TushareData;
-import com.kk.business.quantization.service.IStockBasicService;
+import com.kk.business.quantization.model.po.tushare.TradeCalVo;
+import com.kk.business.quantization.model.po.tushare.TushareData;
 import com.kk.business.quantization.service.ITradeCalService;
 import com.kk.business.quantization.service.executor.ITaskExecutor;
 import com.kk.business.quantization.third.ITushareDataApi;

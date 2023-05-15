@@ -1,6 +1,6 @@
 package com.kk.business.quantization.utils;
 
-import com.kk.business.quantization.model.tushare.TushareBaseRes;
+import com.kk.business.quantization.model.po.tushare.TushareBaseRes;
 import com.kk.common.utils.HumpUtil;
 
 import java.lang.reflect.Field;

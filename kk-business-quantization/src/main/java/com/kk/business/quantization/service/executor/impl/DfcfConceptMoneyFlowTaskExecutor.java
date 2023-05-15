@@ -1,20 +1,17 @@
 package com.kk.business.quantization.service.executor.impl;
 
 import com.kk.business.quantization.dao.entity.*;
-import com.kk.business.quantization.dao.mapper.ConceptDailyMapper;
 import com.kk.business.quantization.dao.mapper.ConceptMoneyFlowMapper;
-import com.kk.business.quantization.model.dfcf.DfcfConceptDailyVo;
-import com.kk.business.quantization.model.dfcf.DfcfConceptMoneyFlowVo;
-import com.kk.business.quantization.model.dfcf.DfcfData;
-import com.kk.business.quantization.model.tushare.ConceptVo;
-import com.kk.business.quantization.service.IConceptDailyService;
+import com.kk.business.quantization.model.po.dfcf.DfcfConceptDailyVo;
+import com.kk.business.quantization.model.po.dfcf.DfcfConceptMoneyFlowVo;
+import com.kk.business.quantization.model.po.dfcf.DfcfData;
+import com.kk.business.quantization.model.po.tushare.ConceptVo;
 import com.kk.business.quantization.service.IConceptMoneyFlowService;
 import com.kk.business.quantization.service.IConceptService;
 import com.kk.business.quantization.service.ITradeCalService;
 import com.kk.business.quantization.service.executor.ITaskExecutor;
 import com.kk.business.quantization.third.IDfcfDataApi;
 import com.kk.common.base.model.PageResult;
-import com.kk.common.utils.DateUtil;
 import com.kk.common.utils.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -22,7 +19,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 

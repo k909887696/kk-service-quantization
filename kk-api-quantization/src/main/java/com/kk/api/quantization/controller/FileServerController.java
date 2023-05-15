@@ -1,20 +1,16 @@
 package com.kk.api.quantization.controller;
 
 import com.kk.business.quantization.dao.entity.Daily;
-import com.kk.business.quantization.model.FileSliceInfo;
-import com.kk.business.quantization.model.tushare.DailyVo;
-import com.kk.business.quantization.service.IDailyService;
+import com.kk.business.quantization.model.vo.FileSliceInfoVo;
 import com.kk.business.quantization.service.executor.ITaskExecutor;
 import com.kk.common.base.email.EmailSendMsg;
 import com.kk.common.base.email.EmailUtil;
-import com.kk.common.utils.JsonUtil;
 import com.kk.common.web.model.ApiResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.jni.FileInfo;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -63,11 +59,11 @@ public class FileServerController {
 
     }
 
-    private static HashMap<String, FileSliceInfo> fileMap = new HashMap();
+    private static HashMap<String, FileSliceInfoVo> fileMap = new HashMap();
     // 模拟保存的位置
     private String savePath="E:\\data";
     @PostMapping(value = "/upload4slice")
-    public void fileUpload(FileSliceInfo fileInfo, HttpServletRequest request) throws IOException {
+    public void fileUpload(FileSliceInfoVo fileInfo, HttpServletRequest request) throws IOException {
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         MultipartFile multipartFile = multipartRequest.getFile("file"); // 通过参数名获取指定文件
         //创建分片
@@ -86,7 +82,7 @@ public class FileServerController {
         fileMap.put(fileInfo.getHasdCode(),fileInfo);
     }
     @GetMapping("/getfile/{hashCode}")
-    public FileSliceInfo getFileInfoByCode(@PathVariable("hashCode") String hashCode){
+    public FileSliceInfoVo getFileInfoByCode(@PathVariable("hashCode") String hashCode){
         return fileMap.get(hashCode);
     }
 }

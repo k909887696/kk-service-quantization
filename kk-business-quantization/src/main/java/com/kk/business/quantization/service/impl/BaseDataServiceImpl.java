@@ -2,7 +2,7 @@ package com.kk.business.quantization.service.impl;
 
 import com.kk.business.quantization.constant.BaseDataItemMapType;
 import com.kk.business.quantization.constant.InvokeCycleType;
-import com.kk.business.quantization.model.res.BaseDataItemMapGetRes;
+import com.kk.business.quantization.model.dto.BaseDataItemMapGetDto;
 import com.kk.business.quantization.model.vo.BaseDataItemMapGetVo;
 import com.kk.business.quantization.service.IBaseDataService;
 import org.springframework.stereotype.Service;
@@ -19,10 +19,10 @@ public class BaseDataServiceImpl implements IBaseDataService {
      * @param vo
      * @return
      */
-    public BaseDataItemMapGetRes getBaseDataItemMap(BaseDataItemMapGetVo vo)
+    public BaseDataItemMapGetDto getBaseDataItemMap(BaseDataItemMapGetVo vo)
     {
 
-        BaseDataItemMapGetRes res = new BaseDataItemMapGetRes();
+        BaseDataItemMapGetDto res = new BaseDataItemMapGetDto();
         Map<String, Map<String,Object>> result = new HashMap<>();
 
         if(null != vo && vo.getQueryTypeList() != null) {

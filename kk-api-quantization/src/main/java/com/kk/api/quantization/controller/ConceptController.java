@@ -2,9 +2,8 @@ package com.kk.api.quantization.controller;
 
 
 import com.kk.business.quantization.dao.entity.Concept;
-import com.kk.business.quantization.model.tushare.ConceptVo;
+import com.kk.business.quantization.model.po.tushare.ConceptVo;
 import com.kk.business.quantization.service.IConceptService;
-import com.kk.common.base.model.BasePage;
 import com.kk.common.base.model.PageResult;
 import com.kk.common.web.model.ApiResult;
 import io.swagger.annotations.Api;

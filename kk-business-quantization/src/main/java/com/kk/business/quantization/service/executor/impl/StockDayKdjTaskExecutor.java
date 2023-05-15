@@ -1,10 +1,8 @@
 package com.kk.business.quantization.service.executor.impl;
 
 import com.kk.business.quantization.dao.entity.*;
-import com.kk.business.quantization.model.DailyKdj;
-import com.kk.business.quantization.model.tushare.DailyKdjVo;
-import com.kk.business.quantization.model.tushare.DailyVo;
-import com.kk.business.quantization.model.tushare.TushareData;
+import com.kk.business.quantization.model.dto.DailyKdjDto;
+import com.kk.business.quantization.model.po.tushare.DailyKdjVo;
 import com.kk.business.quantization.model.vo.SearchDailyVo;
 import com.kk.business.quantization.service.IDailyService;
 import com.kk.business.quantization.service.IStockBasicService;
@@ -25,7 +23,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -84,14 +81,14 @@ public class StockDayKdjTaskExecutor implements ITaskExecutor {
             SearchDailyVo sdVo = mapperUtils.map(vo,SearchDailyVo.class);
             sdVo.setPageIndex(1);
             sdVo.setPageSize(50000);
-            PageResult<DailyKdj> res =  dailyService.getPageResultEx(sdVo);
+            PageResult<DailyKdjDto> res =  dailyService.getPageResultEx(sdVo);
             if(res ==null || res.getResult()==null || res.getTotalCount()<=0)
                 return ;
             for (String id : vo.getIds())
             {
-               List<DailyKdj> tempList = res.getResult().stream()
+               List<DailyKdjDto> tempList = res.getResult().stream()
                        .filter(t->t.getTsCode().equals(id))
-                       .sorted(Comparator.comparing(DailyKdj::getTradeDate))
+                       .sorted(Comparator.comparing(DailyKdjDto::getTradeDate))
                        .collect(Collectors.toList());
                List<StockDayKdj> stockDayKdjList = StochasticOscillatorUtil.ComputationKDJ(N,M1,M2,tempList);
                data.addAll(stockDayKdjList);
@@ -107,14 +104,14 @@ public class StockDayKdjTaskExecutor implements ITaskExecutor {
             sdVo.setTradeDate(null);
             sdVo.setPageIndex(1);
             sdVo.setPageSize(50000);
-            PageResult<DailyKdj> res =  dailyService.getPageResultEx(sdVo);
+            PageResult<DailyKdjDto> res =  dailyService.getPageResultEx(sdVo);
             if(res ==null || res.getResult()==null || res.getTotalCount()<=0) return ;
             log.info(JsonUtil.getJSONString(res.getResult()));
             for (String id : vo.getIds())
             {
-                List<DailyKdj> tempList = res.getResult().stream()
+                List<DailyKdjDto> tempList = res.getResult().stream()
                         .filter(t->t.getTsCode().equals(id))
-                        .sorted(Comparator.comparing(DailyKdj::getTradeDate))
+                        .sorted(Comparator.comparing(DailyKdjDto::getTradeDate))
                         .collect(Collectors.toList());
                 List<StockDayKdj> stockDayKdjsList = StochasticOscillatorUtil.ComputationKDJ(N,M1,M2,tempList);
                 data.addAll(stockDayKdjsList);
