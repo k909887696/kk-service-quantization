@@ -90,7 +90,7 @@ public class BaseDataController {
 
     }
 
-    @ApiOperation("daily1")
+    @ApiOperation("daily122")
     @ApiImplicitParams(  {
             // @ApiImplicitParam(name = "token", value = "身份令牌", paramType = "header", required = true, dataType = "String"),
             // @ApiImplicitParam(name = "signature", value = "签名", paramType = "header", required = true, dataType = "String"),
@@ -98,7 +98,7 @@ public class BaseDataController {
             // @ApiImplicitParam(name = "source", value = "来源（app/web/minotor）", paramType = "header", required = true, dataType = "String"),
             @ApiImplicitParam(name = "version", value = "版本号（1.0.0）", paramType = "header",  dataType = "String")
     })
-    @PostMapping("/daily1")
+    @PostMapping("/daily122")
     public ApiResult<List<Daily>> daily1(@Valid @RequestBody DailyVo vo) throws Exception {
         log.info("daily1===================");
         dailyTaskExecutor.executeTask(JsonUtil.getJSONString(vo));
