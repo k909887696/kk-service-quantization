@@ -38,8 +38,11 @@
             <if test="dailyListVo.tsCode != null and dailyListVo.tsCode != ''">
                 and ts_code = #{dailyListVo.tsCode}
             </if>
-            <if test="dailyListVo.tradeDate != null and dailyListVo.tradeDate != ''">
-                and trade_date = #{dailyListVo.tradeDate}
+            <if test="dailyListVo.tradeDateStart != null and dailyListVo.tradeDateStart != ''">
+                and trade_date >= #{dailyListVo.tradeDateStart}
+            </if>
+            <if test="dailyListVo.tradeDateEnd != null and dailyListVo.tradeDateEnd != ''">
+                and trade_date &lt;= #{dailyListVo.tradeDateEnd}
             </if>
             <if test="dailyListVo.open != null and dailyListVo.open != ''">
                 and open = #{dailyListVo.open}

@@ -39,8 +39,11 @@
             <if test="conceptDailyListVo.conceptId != null and conceptDailyListVo.conceptId != ''">
                 and concept_id = #{conceptDailyListVo.conceptId}
             </if>
-            <if test="conceptDailyListVo.tradeDate != null and conceptDailyListVo.tradeDate != ''">
-                and trade_date = #{conceptDailyListVo.tradeDate}
+            <if test="conceptDailyListVo.tradeDateStart != null and conceptDailyListVo.tradeDateStart != ''">
+                and trade_date >= #{conceptDailyListVo.tradeDateStart}
+            </if>
+            <if test="conceptDailyListVo.tradeDateEnd != null and conceptDailyListVo.tradeDateEnd != ''">
+                and trade_date &lt;= #{conceptDailyListVo.tradeDateEnd}
             </if>
             <if test="conceptDailyListVo.open != null and conceptDailyListVo.open != ''">
                 and open = #{conceptDailyListVo.open}

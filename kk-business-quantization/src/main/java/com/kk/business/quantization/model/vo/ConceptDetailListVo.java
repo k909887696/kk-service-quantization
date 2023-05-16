@@ -43,15 +43,27 @@ public class ConceptDetailListVo extends BasePage{
     @ApiModelProperty("股票名称")
     private String name;
     /**
-    * 加入日期
+    * 加入日期开始
     */
-    @ApiModelProperty("加入日期")
-    private String inDate;
+    @ApiModelProperty("加入日期开始")
+    private String inDateStart;
     /**
-    * 剔除日期
+    * 加入日期结束
     */
-    @ApiModelProperty("剔除日期")
-    private String outDate;
+    @ApiModelProperty("加入日期结束")
+    private String inDateEnd;
+
+    /**
+    * 剔除日期开始
+    */
+    @ApiModelProperty("剔除日期开始")
+    private String outDateStart;
+    /**
+    * 剔除日期结束
+    */
+    @ApiModelProperty("剔除日期结束")
+    private String outDateEnd;
+
     /**
     * 股票代码
     */

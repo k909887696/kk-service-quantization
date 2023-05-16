@@ -27,27 +27,30 @@
     <!-- 通用查询条件 -->
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
-           <if test="conceptListVo.code != null and conceptListVo.code != ''">
-               and code = #{conceptListVo.code}
-           </if>
-           <if test="conceptListVo.name != null and conceptListVo.name != ''">
-               and name like concat('%',#{conceptListVo.name},'%')
-           </if>
-           <if test="conceptListVo.src != null and conceptListVo.src != ''">
-               and src = #{conceptListVo.src}
-           </if>
-           <if test="conceptListVo.exchange != null and conceptListVo.exchange != ''">
-               and exchange = #{conceptListVo.exchange}
-           </if>
-           <if test="conceptListVo.listDate != null and conceptListVo.listDate != ''">
-               and list_date = #{conceptListVo.listDate}
-           </if>
-           <if test="conceptListVo.type != null and conceptListVo.type != ''">
-               and type = #{conceptListVo.type}
-           </if>
-           <if test="conceptListVo.count != null and conceptListVo.count != ''">
-               and count = #{conceptListVo.count}
-           </if>
+            <if test="conceptListVo.code != null and conceptListVo.code != ''">
+                and code = #{conceptListVo.code}
+            </if>
+            <if test="conceptListVo.name != null and conceptListVo.name != ''">
+                and name like concat('%',#{conceptListVo.name},'%')
+            </if>
+            <if test="conceptListVo.src != null and conceptListVo.src != ''">
+                and src = #{conceptListVo.src}
+            </if>
+            <if test="conceptListVo.exchange != null and conceptListVo.exchange != ''">
+                and exchange = #{conceptListVo.exchange}
+            </if>
+            <if test="conceptListVo.listDateStart != null and conceptListVo.listDateStart != ''">
+                and list_date >= #{conceptListVo.listDateStart}
+            </if>
+            <if test="conceptListVo.listDateEnd != null and conceptListVo.listDateEnd != ''">
+                and list_date &lt;= #{conceptListVo.listDateEnd}
+            </if>
+            <if test="conceptListVo.type != null and conceptListVo.type != ''">
+                and type = #{conceptListVo.type}
+            </if>
+            <if test="conceptListVo.count != null and conceptListVo.count != ''">
+                and count = #{conceptListVo.count}
+            </if>
         </trim>
     </sql>
 

@@ -10,20 +10,22 @@ import lombok.Data;
 import com.kk.common.base.model.BasePage;
 /**
  * <p>
- * 概念资金流向列表查询实体
+ * 概念资金流向	列表查询实体
  * </p>
  *
  * @author kk
  * @since 2023-05-16
  */
 @Data
-@ApiModel(value = "概念资金流向列表查询实体", description = "概念资金流向")
+@ApiModel(value = "概念资金流向	列表查询实体", description = "概念资金流向	")
 public class ConceptMoneyFlowListVo extends BasePage{
 
     private static final long serialVersionUID = 1L;
 
     private String code;
-    private String tradeDate;
+    private String tradeDateStart;
+    private String tradeDateEnd;
+
     private Integer buySmVol;
     private Double buySmAmount;
     private Integer sellSmVol;

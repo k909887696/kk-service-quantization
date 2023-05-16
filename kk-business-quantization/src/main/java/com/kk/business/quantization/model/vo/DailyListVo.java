@@ -10,14 +10,14 @@ import lombok.Data;
 import com.kk.common.base.model.BasePage;
 /**
  * <p>
- * 个股日线行情列表查询实体
+ * 个股日线行情	列表查询实体
  * </p>
  *
  * @author kk
  * @since 2023-05-16
  */
 @Data
-@ApiModel(value = "个股日线行情列表查询实体", description = "个股日线行情")
+@ApiModel(value = "个股日线行情	列表查询实体", description = "个股日线行情	")
 public class DailyListVo extends BasePage{
 
     private static final long serialVersionUID = 1L;
@@ -28,10 +28,16 @@ public class DailyListVo extends BasePage{
     @ApiModelProperty("股票代码")
     private String tsCode;
     /**
-    * 交易日期
+    * 交易日期开始
     */
-    @ApiModelProperty("交易日期")
-    private String tradeDate;
+    @ApiModelProperty("交易日期开始")
+    private String tradeDateStart;
+    /**
+    * 交易日期结束
+    */
+    @ApiModelProperty("交易日期结束")
+    private String tradeDateEnd;
+
     /**
     * 开盘价
     */

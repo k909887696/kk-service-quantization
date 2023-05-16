@@ -10,14 +10,14 @@ import lombok.Data;
 import com.kk.common.base.model.BasePage;
 /**
  * <p>
- * 概念分类列表查询实体
+ * 概念分类	列表查询实体
  * </p>
  *
  * @author kk
  * @since 2023-05-16
  */
 @Data
-@ApiModel(value = "概念分类列表查询实体", description = "概念分类")
+@ApiModel(value = "概念分类	列表查询实体", description = "概念分类	")
 public class ConceptListVo extends BasePage{
 
     private static final long serialVersionUID = 1L;
@@ -43,10 +43,16 @@ public class ConceptListVo extends BasePage{
     @ApiModelProperty("交易所")
     private String exchange;
     /**
-    * 上市日期
+    * 上市日期开始
     */
-    @ApiModelProperty("上市日期")
-    private String listDate;
+    @ApiModelProperty("上市日期开始")
+    private String listDateStart;
+    /**
+    * 上市日期结束
+    */
+    @ApiModelProperty("上市日期结束")
+    private String listDateEnd;
+
     /**
     * N概念指数S特色指数
     */

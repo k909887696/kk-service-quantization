@@ -23,20 +23,9 @@ public class CnMListVo extends BasePage{
     private static final long serialVersionUID = 1L;
 
     /**
-     * 月份开始 格式（yyyyMM）
-     */
-    @ApiModelProperty("月份开始 格式（yyyyMM）")
-    private String monthStart;
-
-    /**
-     * 月份结束 格式（yyyyMM）
-     */
-    @ApiModelProperty("月份结束 格式（yyyyMM）")
-    private String monthEnd;
-    /**
-     * 月份
-     */
-    @ApiModelProperty("月份 格式（yyyyMM）")
+    * 月份
+    */
+    @ApiModelProperty("月份")
     private String month;
     /**
     * 货币M0总量
