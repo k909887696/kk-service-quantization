@@ -1,6 +1,9 @@
 package com.kk.business.quantization.dao.mapper;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.kk.business.quantization.dao.entity.StockBasic;
+import com.kk.business.quantization.model.vo.StockBasicListVo;
 import com.kk.common.dao.mapper.RootMapper;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -15,6 +18,14 @@ import org.apache.ibatis.annotations.Mapper;
 
 public interface StockBasicMapper extends RootMapper<StockBasic> {
 
-    public void truncateTable();
+    /**
+     * 清空数据
+     */
+    void truncateTable();
+
+    /**
+     * 查询列表
+     */
+    Page selectPageList(IPage page, StockBasicListVo stockBasicListVo);
 
 }

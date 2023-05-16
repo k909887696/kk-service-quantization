@@ -2,6 +2,103 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kk.business.quantization.dao.mapper.StockBasicMapper">
 
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.StockBasic">
+        <id column="ts_code" property="tsCode" />
+        <result column="symbol" property="symbol" />
+        <result column="name" property="name" />
+        <result column="area" property="area" />
+        <result column="industry" property="industry" />
+        <result column="fullname" property="fullname" />
+        <result column="enname" property="enname" />
+        <result column="market" property="market" />
+        <result column="exchange" property="exchange" />
+        <result column="curr_type" property="currType" />
+        <result column="list_status" property="listStatus" />
+        <result column="list_date" property="listDate" />
+        <result column="delist_date" property="delistDate" />
+        <result column="is_hs" property="isHs" />
+        <result column="cnspell" property="cnspell" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        ts_code as 'tsCode',
+        symbol as 'symbol',
+        name as 'name',
+        area as 'area',
+        industry as 'industry',
+        fullname as 'fullname',
+        enname as 'enname',
+        market as 'market',
+        exchange as 'exchange',
+        curr_type as 'currType',
+        list_status as 'listStatus',
+        list_date as 'listDate',
+        delist_date as 'delistDate',
+        is_hs as 'isHs',
+        cnspell as 'cnspell'
+
+    </sql>
+    <!-- 通用查询条件 -->
+    <sql id="BaseWhere">
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="stockBasicListVo.tsCode != null and stockBasicListVo.tsCode != ''">
+                and ts_code = #{stockBasicListVo.tsCode}
+            </if>
+            <if test="stockBasicListVo.symbol != null and stockBasicListVo.symbol != ''">
+                and symbol = #{stockBasicListVo.symbol}
+            </if>
+            <if test="stockBasicListVo.name != null and stockBasicListVo.name != ''">
+                and name like concat('%',#{stockBasicListVo.name},'%')
+            </if>
+            <if test="stockBasicListVo.area != null and stockBasicListVo.area != ''">
+                and area = #{stockBasicListVo.area}
+            </if>
+            <if test="stockBasicListVo.industry != null and stockBasicListVo.industry != ''">
+                and industry = #{stockBasicListVo.industry}
+            </if>
+            <if test="stockBasicListVo.fullname != null and stockBasicListVo.fullname != ''">
+                and fullname like concat('%',#{stockBasicListVo.fullname},'%')
+            </if>
+            <if test="stockBasicListVo.enname != null and stockBasicListVo.enname != ''">
+                and enname like concat('%',#{stockBasicListVo.enname},'%')
+            </if>
+            <if test="stockBasicListVo.market != null and stockBasicListVo.market != ''">
+                and market = #{stockBasicListVo.market}
+            </if>
+            <if test="stockBasicListVo.exchange != null and stockBasicListVo.exchange != ''">
+                and exchange = #{stockBasicListVo.exchange}
+            </if>
+            <if test="stockBasicListVo.currType != null and stockBasicListVo.currType != ''">
+                and curr_type = #{stockBasicListVo.currType}
+            </if>
+            <if test="stockBasicListVo.listStatus != null and stockBasicListVo.listStatus != ''">
+                and list_status = #{stockBasicListVo.listStatus}
+            </if>
+            <if test="stockBasicListVo.listDate != null and stockBasicListVo.listDate != ''">
+                and list_date = #{stockBasicListVo.listDate}
+            </if>
+            <if test="stockBasicListVo.delistDate != null and stockBasicListVo.delistDate != ''">
+                and delist_date = #{stockBasicListVo.delistDate}
+            </if>
+            <if test="stockBasicListVo.isHs != null and stockBasicListVo.isHs != ''">
+                and is_hs = #{stockBasicListVo.isHs}
+            </if>
+            <if test="stockBasicListVo.cnspell != null and stockBasicListVo.cnspell != ''">
+                and cnspell = #{stockBasicListVo.cnspell}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.StockBasicListDto">
+        select <include refid="BaseColumnList"/>
+        from stock_basic
+        <include refid="BaseWhere"/>
+
+    </select>
+
     <delete id="truncateTable">
         truncate table stock_basic
     </delete>

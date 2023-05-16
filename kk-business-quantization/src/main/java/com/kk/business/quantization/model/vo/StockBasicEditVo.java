@@ -10,14 +10,14 @@ import lombok.Data;
 
 /**
  * <p>
- * 编辑实体
+ * 个股基本信息编辑实体
  * </p>
  *
  * @author kk
- * @since 2023-05-15
+ * @since 2023-05-16
  */
 @Data
-@ApiModel(value = "编辑实体", description = "")
+@ApiModel(value = "个股基本信息编辑实体", description = "个股基本信息")
 public class StockBasicEditVo implements Serializable {
 
     private static final long serialVersionUID = 1L;

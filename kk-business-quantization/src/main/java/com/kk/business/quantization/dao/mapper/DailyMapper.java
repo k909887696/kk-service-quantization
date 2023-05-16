@@ -3,6 +3,7 @@ package com.kk.business.quantization.dao.mapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.kk.business.quantization.dao.entity.Daily;
+import com.kk.business.quantization.model.vo.DailyListVo;
 import com.kk.business.quantization.model.vo.SearchDailyVo;
 import com.kk.common.dao.mapper.RootMapper;
 
@@ -25,5 +26,10 @@ public interface DailyMapper extends RootMapper<Daily> {
      * @return
      */
     Page selectDailyExList(IPage page, SearchDailyVo vo);
+
+    /**
+     * 查询列表
+     */
+    Page selectPageList(IPage page, DailyListVo dailyListVo);
 
 }

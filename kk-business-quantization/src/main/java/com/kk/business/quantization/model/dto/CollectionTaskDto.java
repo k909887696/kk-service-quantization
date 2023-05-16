@@ -11,18 +11,17 @@ import lombok.Data;
 
 /**
  * <p>
- * 详情返回实体
+ * 系统设置-数据任务详情返回实体
  * </p>
  *
  * @author kk
- * @since 2023-05-15
+ * @since 2023-05-16
  */
 @Data
-@ApiModel(value = "详情返回实体", description = "")
+@ApiModel(value = "系统设置-数据任务详情返回实体", description = "系统设置-数据任务")
 public class CollectionTaskDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
     /**
     * 任务编号
     */

@@ -10,18 +10,17 @@ import lombok.Data;
 
 /**
  * <p>
- * 详情返回实体
+ * 个股基本信息详情返回实体
  * </p>
  *
  * @author kk
- * @since 2023-05-15
+ * @since 2023-05-16
  */
 @Data
-@ApiModel(value = "详情返回实体", description = "")
+@ApiModel(value = "个股基本信息详情返回实体", description = "个股基本信息")
 public class StockBasicDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
     /**
     * ts股票代码
     */
