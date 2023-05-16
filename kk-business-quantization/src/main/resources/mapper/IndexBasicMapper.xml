@@ -2,4 +2,102 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kk.business.quantization.dao.mapper.IndexBasicMapper">
 
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.IndexBasic">
+        <result column="ts_code" property="tsCode" />
+        <result column="name" property="name" />
+        <result column="fullname" property="fullname" />
+        <result column="market" property="market" />
+        <result column="publisher" property="publisher" />
+        <result column="index_type" property="indexType" />
+        <result column="category" property="category" />
+        <result column="base_date" property="baseDate" />
+        <result column="base_point" property="basePoint" />
+        <result column="list_date" property="listDate" />
+        <result column="weight_rule" property="weightRule" />
+        <result column="desc" property="desc" />
+        <result column="exp_date" property="expDate" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        ts_code as 'tsCode',
+        name as 'name',
+        fullname as 'fullname',
+        market as 'market',
+        publisher as 'publisher',
+        index_type as 'indexType',
+        category as 'category',
+        base_date as 'baseDate',
+        base_point as 'basePoint',
+        list_date as 'listDate',
+        weight_rule as 'weightRule',
+        desc as 'desc',
+        exp_date as 'expDate'
+
+    </sql>
+    <!-- 通用查询条件 -->
+    <sql id="BaseWhere">
+        <trim prefix="where" prefixOverrides="and | or">
+           <if test="indexBasicListVo.tsCode != null and indexBasicListVo.tsCode != ''">
+               and ts_code = #{indexBasicListVo.tsCode}
+           </if>
+           <if test="indexBasicListVo.name != null and indexBasicListVo.name != ''">
+               and name like concat('%',#{indexBasicListVo.name},'%')
+           </if>
+           <if test="indexBasicListVo.fullname != null and indexBasicListVo.fullname != ''">
+               and fullname like concat('%',#{indexBasicListVo.fullname},'%')
+           </if>
+           <if test="indexBasicListVo.market != null and indexBasicListVo.market != ''">
+               and market = #{indexBasicListVo.market}
+           </if>
+           <if test="indexBasicListVo.publisher != null and indexBasicListVo.publisher != ''">
+               and publisher = #{indexBasicListVo.publisher}
+           </if>
+           <if test="indexBasicListVo.indexType != null and indexBasicListVo.indexType != ''">
+               and index_type = #{indexBasicListVo.indexType}
+           </if>
+           <if test="indexBasicListVo.category != null and indexBasicListVo.category != ''">
+               and category = #{indexBasicListVo.category}
+           </if>
+           <if test="indexBasicListVo.baseDateStart != null and indexBasicListVo.baseDateStart != ''">
+               and base_date >= #{indexBasicListVo.baseDateStart}
+           </if>
+           <if test="indexBasicListVo.baseDateEnd != null and indexBasicListVo.baseDateEnd != ''">
+               and base_date &lt;= #{indexBasicListVo.baseDateEnd}
+           </if>
+           <if test="indexBasicListVo.basePoint != null and indexBasicListVo.basePoint != ''">
+               and base_point = #{indexBasicListVo.basePoint}
+           </if>
+           <if test="indexBasicListVo.listDateStart != null and indexBasicListVo.listDateStart != ''">
+               and list_date >= #{indexBasicListVo.listDateStart}
+           </if>
+           <if test="indexBasicListVo.listDateEnd != null and indexBasicListVo.listDateEnd != ''">
+               and list_date &lt;= #{indexBasicListVo.listDateEnd}
+           </if>
+           <if test="indexBasicListVo.weightRule != null and indexBasicListVo.weightRule != ''">
+               and weight_rule = #{indexBasicListVo.weightRule}
+           </if>
+           <if test="indexBasicListVo.desc != null and indexBasicListVo.desc != ''">
+               and desc = #{indexBasicListVo.desc}
+           </if>
+           <if test="indexBasicListVo.expDateStart != null and indexBasicListVo.expDateStart != ''">
+               and exp_date >= #{indexBasicListVo.expDateStart}
+           </if>
+           <if test="indexBasicListVo.expDateEnd != null and indexBasicListVo.expDateEnd != ''">
+               and exp_date &lt;= #{indexBasicListVo.expDateEnd}
+           </if>
+        </trim>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.IndexBasicListDto">
+        select <include refid="BaseColumnList"/>
+        from index_basic
+        <include refid="BaseWhere"/>
+
+    </select>
+
+
+
 </mapper>

@@ -2,4 +2,131 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kk.business.quantization.dao.mapper.MoneyFlowMapper">
 
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.MoneyFlow">
+        <result column="ts_code" property="tsCode" />
+        <result column="trade_date" property="tradeDate" />
+        <result column="buy_sm_vol" property="buySmVol" />
+        <result column="buy_sm_amount" property="buySmAmount" />
+        <result column="sell_sm_vol" property="sellSmVol" />
+        <result column="sell_sm_amount" property="sellSmAmount" />
+        <result column="buy_md_vol" property="buyMdVol" />
+        <result column="buy_md_amount" property="buyMdAmount" />
+        <result column="sell_md_vol" property="sellMdVol" />
+        <result column="sell_md_amount" property="sellMdAmount" />
+        <result column="buy_lg_vol" property="buyLgVol" />
+        <result column="buy_lg_amount" property="buyLgAmount" />
+        <result column="sell_lg_vol" property="sellLgVol" />
+        <result column="sell_lg_amount" property="sellLgAmount" />
+        <result column="buy_elg_vol" property="buyElgVol" />
+        <result column="buy_elg_amount" property="buyElgAmount" />
+        <result column="sell_elg_vol" property="sellElgVol" />
+        <result column="sell_elg_amount" property="sellElgAmount" />
+        <result column="net_mf_vol" property="netMfVol" />
+        <result column="net_mf_amount" property="netMfAmount" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        ts_code as 'tsCode',
+        trade_date as 'tradeDate',
+        buy_sm_vol as 'buySmVol',
+        buy_sm_amount as 'buySmAmount',
+        sell_sm_vol as 'sellSmVol',
+        sell_sm_amount as 'sellSmAmount',
+        buy_md_vol as 'buyMdVol',
+        buy_md_amount as 'buyMdAmount',
+        sell_md_vol as 'sellMdVol',
+        sell_md_amount as 'sellMdAmount',
+        buy_lg_vol as 'buyLgVol',
+        buy_lg_amount as 'buyLgAmount',
+        sell_lg_vol as 'sellLgVol',
+        sell_lg_amount as 'sellLgAmount',
+        buy_elg_vol as 'buyElgVol',
+        buy_elg_amount as 'buyElgAmount',
+        sell_elg_vol as 'sellElgVol',
+        sell_elg_amount as 'sellElgAmount',
+        net_mf_vol as 'netMfVol',
+        net_mf_amount as 'netMfAmount'
+
+    </sql>
+    <!-- 通用查询条件 -->
+    <sql id="BaseWhere">
+        <trim prefix="where" prefixOverrides="and | or">
+           <if test="moneyFlowListVo.tsCode != null and moneyFlowListVo.tsCode != ''">
+               and ts_code = #{moneyFlowListVo.tsCode}
+           </if>
+           <if test="moneyFlowListVo.tradeDateStart != null and moneyFlowListVo.tradeDateStart != ''">
+               and trade_date >= #{moneyFlowListVo.tradeDateStart}
+           </if>
+           <if test="moneyFlowListVo.tradeDateEnd != null and moneyFlowListVo.tradeDateEnd != ''">
+               and trade_date &lt;= #{moneyFlowListVo.tradeDateEnd}
+           </if>
+           <if test="moneyFlowListVo.buySmVol != null and moneyFlowListVo.buySmVol != ''">
+               and buy_sm_vol = #{moneyFlowListVo.buySmVol}
+           </if>
+           <if test="moneyFlowListVo.buySmAmount != null and moneyFlowListVo.buySmAmount != ''">
+               and buy_sm_amount = #{moneyFlowListVo.buySmAmount}
+           </if>
+           <if test="moneyFlowListVo.sellSmVol != null and moneyFlowListVo.sellSmVol != ''">
+               and sell_sm_vol = #{moneyFlowListVo.sellSmVol}
+           </if>
+           <if test="moneyFlowListVo.sellSmAmount != null and moneyFlowListVo.sellSmAmount != ''">
+               and sell_sm_amount = #{moneyFlowListVo.sellSmAmount}
+           </if>
+           <if test="moneyFlowListVo.buyMdVol != null and moneyFlowListVo.buyMdVol != ''">
+               and buy_md_vol = #{moneyFlowListVo.buyMdVol}
+           </if>
+           <if test="moneyFlowListVo.buyMdAmount != null and moneyFlowListVo.buyMdAmount != ''">
+               and buy_md_amount = #{moneyFlowListVo.buyMdAmount}
+           </if>
+           <if test="moneyFlowListVo.sellMdVol != null and moneyFlowListVo.sellMdVol != ''">
+               and sell_md_vol = #{moneyFlowListVo.sellMdVol}
+           </if>
+           <if test="moneyFlowListVo.sellMdAmount != null and moneyFlowListVo.sellMdAmount != ''">
+               and sell_md_amount = #{moneyFlowListVo.sellMdAmount}
+           </if>
+           <if test="moneyFlowListVo.buyLgVol != null and moneyFlowListVo.buyLgVol != ''">
+               and buy_lg_vol = #{moneyFlowListVo.buyLgVol}
+           </if>
+           <if test="moneyFlowListVo.buyLgAmount != null and moneyFlowListVo.buyLgAmount != ''">
+               and buy_lg_amount = #{moneyFlowListVo.buyLgAmount}
+           </if>
+           <if test="moneyFlowListVo.sellLgVol != null and moneyFlowListVo.sellLgVol != ''">
+               and sell_lg_vol = #{moneyFlowListVo.sellLgVol}
+           </if>
+           <if test="moneyFlowListVo.sellLgAmount != null and moneyFlowListVo.sellLgAmount != ''">
+               and sell_lg_amount = #{moneyFlowListVo.sellLgAmount}
+           </if>
+           <if test="moneyFlowListVo.buyElgVol != null and moneyFlowListVo.buyElgVol != ''">
+               and buy_elg_vol = #{moneyFlowListVo.buyElgVol}
+           </if>
+           <if test="moneyFlowListVo.buyElgAmount != null and moneyFlowListVo.buyElgAmount != ''">
+               and buy_elg_amount = #{moneyFlowListVo.buyElgAmount}
+           </if>
+           <if test="moneyFlowListVo.sellElgVol != null and moneyFlowListVo.sellElgVol != ''">
+               and sell_elg_vol = #{moneyFlowListVo.sellElgVol}
+           </if>
+           <if test="moneyFlowListVo.sellElgAmount != null and moneyFlowListVo.sellElgAmount != ''">
+               and sell_elg_amount = #{moneyFlowListVo.sellElgAmount}
+           </if>
+           <if test="moneyFlowListVo.netMfVol != null and moneyFlowListVo.netMfVol != ''">
+               and net_mf_vol = #{moneyFlowListVo.netMfVol}
+           </if>
+           <if test="moneyFlowListVo.netMfAmount != null and moneyFlowListVo.netMfAmount != ''">
+               and net_mf_amount = #{moneyFlowListVo.netMfAmount}
+           </if>
+        </trim>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.MoneyFlowListDto">
+        select <include refid="BaseColumnList"/>
+        from money_flow
+        <include refid="BaseWhere"/>
+
+    </select>
+
+
+
 </mapper>

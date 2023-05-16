@@ -2,4 +2,86 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kk.business.quantization.dao.mapper.MonthlyMapper">
 
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.Monthly">
+        <result column="ts_code" property="tsCode" />
+        <result column="trade_date" property="tradeDate" />
+        <result column="open" property="open" />
+        <result column="high" property="high" />
+        <result column="low" property="low" />
+        <result column="close" property="close" />
+        <result column="pre_close" property="preClose" />
+        <result column="change" property="change" />
+        <result column="pct_chg" property="pctChg" />
+        <result column="vol" property="vol" />
+        <result column="amount" property="amount" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        ts_code as 'tsCode',
+        trade_date as 'tradeDate',
+        open as 'open',
+        high as 'high',
+        low as 'low',
+        close as 'close',
+        pre_close as 'preClose',
+        change as 'change',
+        pct_chg as 'pctChg',
+        vol as 'vol',
+        amount as 'amount'
+
+    </sql>
+    <!-- 通用查询条件 -->
+    <sql id="BaseWhere">
+        <trim prefix="where" prefixOverrides="and | or">
+           <if test="monthlyListVo.tsCode != null and monthlyListVo.tsCode != ''">
+               and ts_code = #{monthlyListVo.tsCode}
+           </if>
+           <if test="monthlyListVo.tradeDateStart != null and monthlyListVo.tradeDateStart != ''">
+               and trade_date >= #{monthlyListVo.tradeDateStart}
+           </if>
+           <if test="monthlyListVo.tradeDateEnd != null and monthlyListVo.tradeDateEnd != ''">
+               and trade_date &lt;= #{monthlyListVo.tradeDateEnd}
+           </if>
+           <if test="monthlyListVo.open != null and monthlyListVo.open != ''">
+               and open = #{monthlyListVo.open}
+           </if>
+           <if test="monthlyListVo.high != null and monthlyListVo.high != ''">
+               and high = #{monthlyListVo.high}
+           </if>
+           <if test="monthlyListVo.low != null and monthlyListVo.low != ''">
+               and low = #{monthlyListVo.low}
+           </if>
+           <if test="monthlyListVo.close != null and monthlyListVo.close != ''">
+               and close = #{monthlyListVo.close}
+           </if>
+           <if test="monthlyListVo.preClose != null and monthlyListVo.preClose != ''">
+               and pre_close = #{monthlyListVo.preClose}
+           </if>
+           <if test="monthlyListVo.change != null and monthlyListVo.change != ''">
+               and change = #{monthlyListVo.change}
+           </if>
+           <if test="monthlyListVo.pctChg != null and monthlyListVo.pctChg != ''">
+               and pct_chg = #{monthlyListVo.pctChg}
+           </if>
+           <if test="monthlyListVo.vol != null and monthlyListVo.vol != ''">
+               and vol = #{monthlyListVo.vol}
+           </if>
+           <if test="monthlyListVo.amount != null and monthlyListVo.amount != ''">
+               and amount = #{monthlyListVo.amount}
+           </if>
+        </trim>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.MonthlyListDto">
+        select <include refid="BaseColumnList"/>
+        from monthly
+        <include refid="BaseWhere"/>
+
+    </select>
+
+
+
 </mapper>

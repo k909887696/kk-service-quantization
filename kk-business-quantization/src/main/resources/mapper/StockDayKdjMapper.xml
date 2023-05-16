@@ -2,4 +2,66 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kk.business.quantization.dao.mapper.StockDayKdjMapper">
 
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.StockDayKdj">
+        <id column="ts_code" property="tsCode" />
+        <id column="trade_date" property="tradeDate" />
+        <result column="k_value" property="kValue" />
+        <result column="d_value" property="dValue" />
+        <result column="j_value" property="jValue" />
+        <result column="rsv" property="rsv" />
+        <result column="kdj_type" property="kdjType" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        ts_code as 'tsCode',
+        trade_date as 'tradeDate',
+        k_value as 'kValue',
+        d_value as 'dValue',
+        j_value as 'jValue',
+        rsv as 'rsv',
+        kdj_type as 'kdjType'
+
+    </sql>
+    <!-- 通用查询条件 -->
+    <sql id="BaseWhere">
+        <trim prefix="where" prefixOverrides="and | or">
+           <if test="stockDayKdjListVo.tsCode != null and stockDayKdjListVo.tsCode != ''">
+               and ts_code = #{stockDayKdjListVo.tsCode}
+           </if>
+           <if test="stockDayKdjListVo.tradeDateStart != null and stockDayKdjListVo.tradeDateStart != ''">
+               and trade_date >= #{stockDayKdjListVo.tradeDateStart}
+           </if>
+           <if test="stockDayKdjListVo.tradeDateEnd != null and stockDayKdjListVo.tradeDateEnd != ''">
+               and trade_date &lt;= #{stockDayKdjListVo.tradeDateEnd}
+           </if>
+           <if test="stockDayKdjListVo.kValue != null and stockDayKdjListVo.kValue != ''">
+               and k_value = #{stockDayKdjListVo.kValue}
+           </if>
+           <if test="stockDayKdjListVo.dValue != null and stockDayKdjListVo.dValue != ''">
+               and d_value = #{stockDayKdjListVo.dValue}
+           </if>
+           <if test="stockDayKdjListVo.jValue != null and stockDayKdjListVo.jValue != ''">
+               and j_value = #{stockDayKdjListVo.jValue}
+           </if>
+           <if test="stockDayKdjListVo.rsv != null and stockDayKdjListVo.rsv != ''">
+               and rsv = #{stockDayKdjListVo.rsv}
+           </if>
+           <if test="stockDayKdjListVo.kdjType != null and stockDayKdjListVo.kdjType != ''">
+               and kdj_type = #{stockDayKdjListVo.kdjType}
+           </if>
+        </trim>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.StockDayKdjListDto">
+        select <include refid="BaseColumnList"/>
+        from stock_day_kdj
+        <include refid="BaseWhere"/>
+
+    </select>
+
+
+
 </mapper>

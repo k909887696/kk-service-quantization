@@ -2,4 +2,69 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kk.business.quantization.dao.mapper.IndexMemberMapper">
 
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.IndexMember">
+        <result column="index_code" property="indexCode" />
+        <result column="index_name" property="indexName" />
+        <result column="con_code" property="conCode" />
+        <result column="con_name" property="conName" />
+        <result column="in_date" property="inDate" />
+        <result column="out_date" property="outDate" />
+        <result column="is_new" property="isNew" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        index_code as 'indexCode',
+        index_name as 'indexName',
+        con_code as 'conCode',
+        con_name as 'conName',
+        in_date as 'inDate',
+        out_date as 'outDate',
+        is_new as 'isNew'
+
+    </sql>
+    <!-- 通用查询条件 -->
+    <sql id="BaseWhere">
+        <trim prefix="where" prefixOverrides="and | or">
+           <if test="indexMemberListVo.indexCode != null and indexMemberListVo.indexCode != ''">
+               and index_code = #{indexMemberListVo.indexCode}
+           </if>
+           <if test="indexMemberListVo.indexName != null and indexMemberListVo.indexName != ''">
+               and index_name like concat('%',#{indexMemberListVo.indexName},'%')
+           </if>
+           <if test="indexMemberListVo.conCode != null and indexMemberListVo.conCode != ''">
+               and con_code = #{indexMemberListVo.conCode}
+           </if>
+           <if test="indexMemberListVo.conName != null and indexMemberListVo.conName != ''">
+               and con_name like concat('%',#{indexMemberListVo.conName},'%')
+           </if>
+           <if test="indexMemberListVo.inDateStart != null and indexMemberListVo.inDateStart != ''">
+               and in_date >= #{indexMemberListVo.inDateStart}
+           </if>
+           <if test="indexMemberListVo.inDateEnd != null and indexMemberListVo.inDateEnd != ''">
+               and in_date &lt;= #{indexMemberListVo.inDateEnd}
+           </if>
+           <if test="indexMemberListVo.outDateStart != null and indexMemberListVo.outDateStart != ''">
+               and out_date >= #{indexMemberListVo.outDateStart}
+           </if>
+           <if test="indexMemberListVo.outDateEnd != null and indexMemberListVo.outDateEnd != ''">
+               and out_date &lt;= #{indexMemberListVo.outDateEnd}
+           </if>
+           <if test="indexMemberListVo.isNew != null and indexMemberListVo.isNew != ''">
+               and is_new = #{indexMemberListVo.isNew}
+           </if>
+        </trim>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.IndexMemberListDto">
+        select <include refid="BaseColumnList"/>
+        from index_member
+        <include refid="BaseWhere"/>
+
+    </select>
+
+
+
 </mapper>

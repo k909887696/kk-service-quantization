@@ -2,4 +2,53 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kk.business.quantization.dao.mapper.IndexClassifyMapper">
 
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.IndexClassify">
+        <result column="index_code" property="indexCode" />
+        <result column="industry_name" property="industryName" />
+        <result column="level" property="level" />
+        <result column="industry_code" property="industryCode" />
+        <result column="src" property="src" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        index_code as 'indexCode',
+        industry_name as 'industryName',
+        level as 'level',
+        industry_code as 'industryCode',
+        src as 'src'
+
+    </sql>
+    <!-- 通用查询条件 -->
+    <sql id="BaseWhere">
+        <trim prefix="where" prefixOverrides="and | or">
+           <if test="indexClassifyListVo.indexCode != null and indexClassifyListVo.indexCode != ''">
+               and index_code = #{indexClassifyListVo.indexCode}
+           </if>
+           <if test="indexClassifyListVo.industryName != null and indexClassifyListVo.industryName != ''">
+               and industry_name like concat('%',#{indexClassifyListVo.industryName},'%')
+           </if>
+           <if test="indexClassifyListVo.level != null and indexClassifyListVo.level != ''">
+               and level = #{indexClassifyListVo.level}
+           </if>
+           <if test="indexClassifyListVo.industryCode != null and indexClassifyListVo.industryCode != ''">
+               and industry_code = #{indexClassifyListVo.industryCode}
+           </if>
+           <if test="indexClassifyListVo.src != null and indexClassifyListVo.src != ''">
+               and src = #{indexClassifyListVo.src}
+           </if>
+        </trim>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.IndexClassifyListDto">
+        select <include refid="BaseColumnList"/>
+        from index_classify
+        <include refid="BaseWhere"/>
+
+    </select>
+
+
+
 </mapper>

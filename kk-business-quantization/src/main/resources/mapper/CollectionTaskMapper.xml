@@ -2,6 +2,109 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kk.business.quantization.dao.mapper.CollectionTaskMapper">
 
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.CollectionTask">
+        <id column="task_id" property="taskId" />
+        <result column="name" property="name" />
+        <result column="policy_id" property="policyId" />
+        <result column="invoke_code" property="invokeCode" />
+        <result column="invoke_method" property="invokeMethod" />
+        <result column="invoke_params" property="invokeParams" />
+        <result column="pre_run_time" property="preRunTime" />
+        <result column="run_time" property="runTime" />
+        <result column="finish_time" property="finishTime" />
+        <result column="create_id" property="createId" />
+        <result column="create_name" property="createName" />
+        <result column="create_time" property="createTime" />
+        <result column="run_count" property="runCount" />
+        <result column="ex_msg" property="exMsg" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        task_id as 'taskId',
+        name as 'name',
+        policy_id as 'policyId',
+        invoke_code as 'invokeCode',
+        invoke_method as 'invokeMethod',
+        invoke_params as 'invokeParams',
+        pre_run_time as 'preRunTime',
+        run_time as 'runTime',
+        finish_time as 'finishTime',
+        create_id as 'createId',
+        create_name as 'createName',
+        create_time as 'createTime',
+        run_count as 'runCount',
+        ex_msg as 'exMsg'
+
+    </sql>
+    <!-- 通用查询条件 -->
+    <sql id="BaseWhere">
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="collectionTaskListVo.taskId != null and collectionTaskListVo.taskId != ''">
+                and task_id = #{collectionTaskListVo.taskId}
+            </if>
+            <if test="collectionTaskListVo.name != null and collectionTaskListVo.name != ''">
+                and name like concat('%',#{collectionTaskListVo.name},'%')
+            </if>
+            <if test="collectionTaskListVo.policyId != null and collectionTaskListVo.policyId != ''">
+                and policy_id = #{collectionTaskListVo.policyId}
+            </if>
+            <if test="collectionTaskListVo.invokeCode != null and collectionTaskListVo.invokeCode != ''">
+                and invoke_code = #{collectionTaskListVo.invokeCode}
+            </if>
+            <if test="collectionTaskListVo.invokeMethod != null and collectionTaskListVo.invokeMethod != ''">
+                and invoke_method = #{collectionTaskListVo.invokeMethod}
+            </if>
+            <if test="collectionTaskListVo.invokeParams != null and collectionTaskListVo.invokeParams != ''">
+                and invoke_params = #{collectionTaskListVo.invokeParams}
+            </if>
+            <if test="collectionTaskListVo.preRunTimeStart != null and collectionTaskListVo.preRunTimeStart != ''">
+                and pre_run_time >= #{collectionTaskListVo.preRunTimeStart}
+            </if>
+            <if test="collectionTaskListVo.preRunTimeEnd != null and collectionTaskListVo.preRunTimeEnd != ''">
+                and pre_run_time &lt;= #{collectionTaskListVo.preRunTimeEnd}
+            </if>
+            <if test="collectionTaskListVo.runTimeStart != null and collectionTaskListVo.runTimeStart != ''">
+                and run_time >= #{collectionTaskListVo.runTimeStart}
+            </if>
+            <if test="collectionTaskListVo.runTimeEnd != null and collectionTaskListVo.runTimeEnd != ''">
+                and run_time &lt;= #{collectionTaskListVo.runTimeEnd}
+            </if>
+            <if test="collectionTaskListVo.finishTimeStart != null and collectionTaskListVo.finishTimeStart != ''">
+                and finish_time >= #{collectionTaskListVo.finishTimeStart}
+            </if>
+            <if test="collectionTaskListVo.finishTimeEnd != null and collectionTaskListVo.finishTimeEnd != ''">
+                and finish_time &lt;= #{collectionTaskListVo.finishTimeEnd}
+            </if>
+            <if test="collectionTaskListVo.createId != null and collectionTaskListVo.createId != ''">
+                and create_id = #{collectionTaskListVo.createId}
+            </if>
+            <if test="collectionTaskListVo.createName != null and collectionTaskListVo.createName != ''">
+                and create_name like concat('%',#{collectionTaskListVo.createName},'%')
+            </if>
+            <if test="collectionTaskListVo.createTimeStart != null and collectionTaskListVo.createTimeStart != ''">
+                and create_time >= #{collectionTaskListVo.createTimeStart}
+            </if>
+            <if test="collectionTaskListVo.createTimeEnd != null and collectionTaskListVo.createTimeEnd != ''">
+                and create_time &lt;= #{collectionTaskListVo.createTimeEnd}
+            </if>
+            <if test="collectionTaskListVo.runCount != null and collectionTaskListVo.runCount != ''">
+                and run_count = #{collectionTaskListVo.runCount}
+            </if>
+            <if test="collectionTaskListVo.exMsg != null and collectionTaskListVo.exMsg != ''">
+                and ex_msg = #{collectionTaskListVo.exMsg}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.CollectionTaskListDto">
+        select <include refid="BaseColumnList"/>
+        from collection_task
+        <include refid="BaseWhere"/>
+
+    </select>
     <update id="updateExMsgAndRunCount"  >
         update collection_task set ex_msg=#{exMsg},run_count=run_count+1,run_time=now(),pre_run_time =DATE_ADD(pre_run_time,INTERVAL 2 MINUTE )  where task_id =#{taskId}
     </update>

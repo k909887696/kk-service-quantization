@@ -2,4 +2,91 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kk.business.quantization.dao.mapper.DailyTimeMapper">
 
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.DailyTime">
+        <result column="ts_code" property="tsCode" />
+        <result column="trade_date" property="tradeDate" />
+        <result column="trade_time" property="tradeTime" />
+        <result column="open" property="open" />
+        <result column="high" property="high" />
+        <result column="low" property="low" />
+        <result column="close" property="close" />
+        <result column="pre_close" property="preClose" />
+        <result column="change" property="change" />
+        <result column="pct_chg" property="pctChg" />
+        <result column="vol" property="vol" />
+        <result column="amount" property="amount" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        ts_code as 'tsCode',
+        trade_date as 'tradeDate',
+        trade_time as 'tradeTime',
+        open as 'open',
+        high as 'high',
+        low as 'low',
+        close as 'close',
+        pre_close as 'preClose',
+        change as 'change',
+        pct_chg as 'pctChg',
+        vol as 'vol',
+        amount as 'amount'
+
+    </sql>
+    <!-- 通用查询条件 -->
+    <sql id="BaseWhere">
+        <trim prefix="where" prefixOverrides="and | or">
+           <if test="dailyTimeListVo.tsCode != null and dailyTimeListVo.tsCode != ''">
+               and ts_code = #{dailyTimeListVo.tsCode}
+           </if>
+           <if test="dailyTimeListVo.tradeDateStart != null and dailyTimeListVo.tradeDateStart != ''">
+               and trade_date >= #{dailyTimeListVo.tradeDateStart}
+           </if>
+           <if test="dailyTimeListVo.tradeDateEnd != null and dailyTimeListVo.tradeDateEnd != ''">
+               and trade_date &lt;= #{dailyTimeListVo.tradeDateEnd}
+           </if>
+           <if test="dailyTimeListVo.tradeTime != null and dailyTimeListVo.tradeTime != ''">
+               and trade_time = #{dailyTimeListVo.tradeTime}
+           </if>
+           <if test="dailyTimeListVo.open != null and dailyTimeListVo.open != ''">
+               and open = #{dailyTimeListVo.open}
+           </if>
+           <if test="dailyTimeListVo.high != null and dailyTimeListVo.high != ''">
+               and high = #{dailyTimeListVo.high}
+           </if>
+           <if test="dailyTimeListVo.low != null and dailyTimeListVo.low != ''">
+               and low = #{dailyTimeListVo.low}
+           </if>
+           <if test="dailyTimeListVo.close != null and dailyTimeListVo.close != ''">
+               and close = #{dailyTimeListVo.close}
+           </if>
+           <if test="dailyTimeListVo.preClose != null and dailyTimeListVo.preClose != ''">
+               and pre_close = #{dailyTimeListVo.preClose}
+           </if>
+           <if test="dailyTimeListVo.change != null and dailyTimeListVo.change != ''">
+               and change = #{dailyTimeListVo.change}
+           </if>
+           <if test="dailyTimeListVo.pctChg != null and dailyTimeListVo.pctChg != ''">
+               and pct_chg = #{dailyTimeListVo.pctChg}
+           </if>
+           <if test="dailyTimeListVo.vol != null and dailyTimeListVo.vol != ''">
+               and vol = #{dailyTimeListVo.vol}
+           </if>
+           <if test="dailyTimeListVo.amount != null and dailyTimeListVo.amount != ''">
+               and amount = #{dailyTimeListVo.amount}
+           </if>
+        </trim>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.DailyTimeListDto">
+        select <include refid="BaseColumnList"/>
+        from daily_time
+        <include refid="BaseWhere"/>
+
+    </select>
+
+
+
 </mapper>

@@ -2,6 +2,88 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kk.business.quantization.dao.mapper.CollectionPolicyMapper">
 
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.CollectionPolicy">
+        <id column="policy_id" property="policyId" />
+        <result column="name" property="name" />
+        <result column="invoke_method" property="invokeMethod" />
+        <result column="invoke_code" property="invokeCode" />
+        <result column="invoke_cycle" property="invokeCycle" />
+        <result column="create_time" property="createTime" />
+        <result column="pre_run_time" property="preRunTime" />
+        <result column="invoke_params" property="invokeParams" />
+        <result column="run_count" property="runCount" />
+        <result column="ex_msg" property="exMsg" />
+        <result column="invoke_cycle_time" property="invokeCycleTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        policy_id as 'policyId',
+        name as 'name',
+        invoke_method as 'invokeMethod',
+        invoke_code as 'invokeCode',
+        invoke_cycle as 'invokeCycle',
+        create_time as 'createTime',
+        pre_run_time as 'preRunTime',
+        invoke_params as 'invokeParams',
+        run_count as 'runCount',
+        ex_msg as 'exMsg',
+        invoke_cycle_time as 'invokeCycleTime'
+
+    </sql>
+    <!-- 通用查询条件 -->
+    <sql id="BaseWhere">
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="collectionPolicyListVo.policyId != null and collectionPolicyListVo.policyId != ''">
+                and policy_id = #{collectionPolicyListVo.policyId}
+            </if>
+            <if test="collectionPolicyListVo.name != null and collectionPolicyListVo.name != ''">
+                and name like concat('%',#{collectionPolicyListVo.name},'%')
+            </if>
+            <if test="collectionPolicyListVo.invokeMethod != null and collectionPolicyListVo.invokeMethod != ''">
+                and invoke_method = #{collectionPolicyListVo.invokeMethod}
+            </if>
+            <if test="collectionPolicyListVo.invokeCode != null and collectionPolicyListVo.invokeCode != ''">
+                and invoke_code = #{collectionPolicyListVo.invokeCode}
+            </if>
+            <if test="collectionPolicyListVo.invokeCycle != null and collectionPolicyListVo.invokeCycle != ''">
+                and invoke_cycle = #{collectionPolicyListVo.invokeCycle}
+            </if>
+            <if test="collectionPolicyListVo.createTimeStart != null and collectionPolicyListVo.createTimeStart != ''">
+                and create_time >= #{collectionPolicyListVo.createTimeStart}
+            </if>
+            <if test="collectionPolicyListVo.createTimeEnd != null and collectionPolicyListVo.createTimeEnd != ''">
+                and create_time &lt;= #{collectionPolicyListVo.createTimeEnd}
+            </if>
+            <if test="collectionPolicyListVo.preRunTimeStart != null and collectionPolicyListVo.preRunTimeStart != ''">
+                and pre_run_time >= #{collectionPolicyListVo.preRunTimeStart}
+            </if>
+            <if test="collectionPolicyListVo.preRunTimeEnd != null and collectionPolicyListVo.preRunTimeEnd != ''">
+                and pre_run_time &lt;= #{collectionPolicyListVo.preRunTimeEnd}
+            </if>
+            <if test="collectionPolicyListVo.invokeParams != null and collectionPolicyListVo.invokeParams != ''">
+                and invoke_params = #{collectionPolicyListVo.invokeParams}
+            </if>
+            <if test="collectionPolicyListVo.runCount != null and collectionPolicyListVo.runCount != ''">
+                and run_count = #{collectionPolicyListVo.runCount}
+            </if>
+            <if test="collectionPolicyListVo.exMsg != null and collectionPolicyListVo.exMsg != ''">
+                and ex_msg = #{collectionPolicyListVo.exMsg}
+            </if>
+            <if test="collectionPolicyListVo.invokeCycleTime != null and collectionPolicyListVo.invokeCycleTime != ''">
+                and invoke_cycle_time = #{collectionPolicyListVo.invokeCycleTime}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.CollectionPolicyListDto">
+        select <include refid="BaseColumnList"/>
+        from collection_policy
+        <include refid="BaseWhere"/>
+
+    </select>
     <update id="updateExMsgAndRunCount"  >
         update collection_policy set ex_msg=#{exMsg},run_count=run_count+1 where policy_id =#{policyId}
     </update>

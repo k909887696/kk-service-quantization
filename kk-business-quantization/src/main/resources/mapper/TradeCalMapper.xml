@@ -2,4 +2,54 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kk.business.quantization.dao.mapper.TradeCalMapper">
 
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.TradeCal">
+        <id column="exchange" property="exchange" />
+        <id column="cal_date" property="calDate" />
+        <result column="is_open" property="isOpen" />
+        <result column="pretrade_date" property="pretradeDate" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        exchange as 'exchange',
+        cal_date as 'calDate',
+        is_open as 'isOpen',
+        pretrade_date as 'pretradeDate'
+
+    </sql>
+    <!-- 通用查询条件 -->
+    <sql id="BaseWhere">
+        <trim prefix="where" prefixOverrides="and | or">
+           <if test="tradeCalListVo.exchange != null and tradeCalListVo.exchange != ''">
+               and exchange = #{tradeCalListVo.exchange}
+           </if>
+           <if test="tradeCalListVo.calDateStart != null and tradeCalListVo.calDateStart != ''">
+               and cal_date >= #{tradeCalListVo.calDateStart}
+           </if>
+           <if test="tradeCalListVo.calDateEnd != null and tradeCalListVo.calDateEnd != ''">
+               and cal_date &lt;= #{tradeCalListVo.calDateEnd}
+           </if>
+           <if test="tradeCalListVo.isOpen != null and tradeCalListVo.isOpen != ''">
+               and is_open = #{tradeCalListVo.isOpen}
+           </if>
+           <if test="tradeCalListVo.pretradeDateStart != null and tradeCalListVo.pretradeDateStart != ''">
+               and pretrade_date >= #{tradeCalListVo.pretradeDateStart}
+           </if>
+           <if test="tradeCalListVo.pretradeDateEnd != null and tradeCalListVo.pretradeDateEnd != ''">
+               and pretrade_date &lt;= #{tradeCalListVo.pretradeDateEnd}
+           </if>
+        </trim>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.TradeCalListDto">
+        select <include refid="BaseColumnList"/>
+        from trade_cal
+        <include refid="BaseWhere"/>
+
+    </select>
+
+
+
 </mapper>

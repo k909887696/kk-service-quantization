@@ -2,4 +2,61 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kk.business.quantization.dao.mapper.InvokeTypeMapper">
 
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.InvokeType">
+        <id column="invoke_code" property="invokeCode" />
+        <result column="name" property="name" />
+        <result column="invoke_object" property="invokeObject" />
+        <result column="invoke_method" property="invokeMethod" />
+        <result column="create_time" property="createTime" />
+        <result column="invoke_params" property="invokeParams" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        invoke_code as 'invokeCode',
+        name as 'name',
+        invoke_object as 'invokeObject',
+        invoke_method as 'invokeMethod',
+        create_time as 'createTime',
+        invoke_params as 'invokeParams'
+
+    </sql>
+    <!-- 通用查询条件 -->
+    <sql id="BaseWhere">
+        <trim prefix="where" prefixOverrides="and | or">
+           <if test="invokeTypeListVo.invokeCode != null and invokeTypeListVo.invokeCode != ''">
+               and invoke_code = #{invokeTypeListVo.invokeCode}
+           </if>
+           <if test="invokeTypeListVo.name != null and invokeTypeListVo.name != ''">
+               and name like concat('%',#{invokeTypeListVo.name},'%')
+           </if>
+           <if test="invokeTypeListVo.invokeObject != null and invokeTypeListVo.invokeObject != ''">
+               and invoke_object = #{invokeTypeListVo.invokeObject}
+           </if>
+           <if test="invokeTypeListVo.invokeMethod != null and invokeTypeListVo.invokeMethod != ''">
+               and invoke_method = #{invokeTypeListVo.invokeMethod}
+           </if>
+           <if test="invokeTypeListVo.createTimeStart != null and invokeTypeListVo.createTimeStart != ''">
+               and create_time >= #{invokeTypeListVo.createTimeStart}
+           </if>
+           <if test="invokeTypeListVo.createTimeEnd != null and invokeTypeListVo.createTimeEnd != ''">
+               and create_time &lt;= #{invokeTypeListVo.createTimeEnd}
+           </if>
+           <if test="invokeTypeListVo.invokeParams != null and invokeTypeListVo.invokeParams != ''">
+               and invoke_params = #{invokeTypeListVo.invokeParams}
+           </if>
+        </trim>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.InvokeTypeListDto">
+        select <include refid="BaseColumnList"/>
+        from invoke_type
+        <include refid="BaseWhere"/>
+
+    </select>
+
+
+
 </mapper>

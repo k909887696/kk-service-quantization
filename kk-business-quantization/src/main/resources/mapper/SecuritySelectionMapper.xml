@@ -2,4 +2,46 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kk.business.quantization.dao.mapper.SecuritySelectionMapper">
 
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.SecuritySelection">
+        <result column="ts_code" property="tsCode" />
+        <result column="trade_date" property="tradeDate" />
+        <result column="select_type" property="selectType" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        ts_code as 'tsCode',
+        trade_date as 'tradeDate',
+        select_type as 'selectType'
+
+    </sql>
+    <!-- 通用查询条件 -->
+    <sql id="BaseWhere">
+        <trim prefix="where" prefixOverrides="and | or">
+           <if test="securitySelectionListVo.tsCode != null and securitySelectionListVo.tsCode != ''">
+               and ts_code = #{securitySelectionListVo.tsCode}
+           </if>
+           <if test="securitySelectionListVo.tradeDateStart != null and securitySelectionListVo.tradeDateStart != ''">
+               and trade_date >= #{securitySelectionListVo.tradeDateStart}
+           </if>
+           <if test="securitySelectionListVo.tradeDateEnd != null and securitySelectionListVo.tradeDateEnd != ''">
+               and trade_date &lt;= #{securitySelectionListVo.tradeDateEnd}
+           </if>
+           <if test="securitySelectionListVo.selectType != null and securitySelectionListVo.selectType != ''">
+               and select_type = #{securitySelectionListVo.selectType}
+           </if>
+        </trim>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.SecuritySelectionListDto">
+        select <include refid="BaseColumnList"/>
+        from security_selection
+        <include refid="BaseWhere"/>
+
+    </select>
+
+
+
 </mapper>

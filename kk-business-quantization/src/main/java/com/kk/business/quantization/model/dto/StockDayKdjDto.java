@@ -1,85 +1,61 @@
 package com.kk.business.quantization.model.dto;
 
-public class StockDayKdjDto {
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
+/**
+ * <p>
+ * 个股kdj数据详情返回实体
+ * </p>
+ *
+ * @author kk
+ * @since 2023-05-16
+ */
+@Data
+@ApiModel(value = "个股kdj数据详情返回实体", description = "个股kdj数据")
+public class StockDayKdjDto implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     /**
-     * ts代码
-     */
+    * 股票编号
+    */
+    @ApiModelProperty("股票编号")
     private String tsCode;
     /**
-     * 交易日期
-     */
+    * 交易日期
+    */
+    @ApiModelProperty("交易日期")
     private String tradeDate;
-
-    private double kValue ;
-
-    private double dValue ;
-
-    private double jValue ;
-
     /**
-     * rsv
-     */
-    private double rsv;
-
+    * k值
+    */
+    @ApiModelProperty("k值")
+    private Double kValue;
     /**
-     * kdj 类型（例如：9_3_3）
-     */
+    * d值
+    */
+    @ApiModelProperty("d值")
+    private Double dValue;
+    /**
+    * j值
+    */
+    @ApiModelProperty("j值")
+    private Double jValue;
+    /**
+    * rsv值
+    */
+    @ApiModelProperty("rsv值")
+    private Double rsv;
+    /**
+    * kdj类型（默认 9_3_3）
+    */
+    @ApiModelProperty("kdj类型（默认 9_3_3）")
     private String kdjType;
 
-    public String getTsCode() {
-        return tsCode;
-    }
 
-    public void setTsCode(String tsCode) {
-        this.tsCode = tsCode;
-    }
-
-    public String getTradeDate() {
-        return tradeDate;
-    }
-
-    public void setTradeDate(String tradeDate) {
-        this.tradeDate = tradeDate;
-    }
-
-    public double getkValue() {
-        return kValue;
-    }
-
-    public void setkValue(double kValue) {
-        this.kValue = kValue;
-    }
-
-    public double getdValue() {
-        return dValue;
-    }
-
-    public void setdValue(double dValue) {
-        this.dValue = dValue;
-    }
-
-    public double getjValue() {
-        return jValue;
-    }
-
-    public void setjValue(double jValue) {
-        this.jValue = jValue;
-    }
-
-    public double getRsv() {
-        return rsv;
-    }
-
-    public void setRsv(double rsv) {
-        this.rsv = rsv;
-    }
-
-    public String getKdjType() {
-        return kdjType;
-    }
-
-    public void setKdjType(String kdjType) {
-        this.kdjType = kdjType;
-    }
 }

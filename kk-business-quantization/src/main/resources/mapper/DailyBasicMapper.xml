@@ -2,4 +2,121 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kk.business.quantization.dao.mapper.DailyBasicMapper">
 
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.DailyBasic">
+        <id column="ts_code" property="tsCode" />
+        <id column="trade_date" property="tradeDate" />
+        <result column="close" property="close" />
+        <result column="turnover_rate" property="turnoverRate" />
+        <result column="turnover_rate_f" property="turnoverRateF" />
+        <result column="volume_ratio" property="volumeRatio" />
+        <result column="pe" property="pe" />
+        <result column="pe_ttm" property="peTtm" />
+        <result column="pb" property="pb" />
+        <result column="ps" property="ps" />
+        <result column="ps_ttm" property="psTtm" />
+        <result column="dv_ratio" property="dvRatio" />
+        <result column="dv_ttm" property="dvTtm" />
+        <result column="total_share" property="totalShare" />
+        <result column="float_share" property="floatShare" />
+        <result column="free_share" property="freeShare" />
+        <result column="total_mv" property="totalMv" />
+        <result column="circ_mv" property="circMv" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        ts_code as 'tsCode',
+        trade_date as 'tradeDate',
+        close as 'close',
+        turnover_rate as 'turnoverRate',
+        turnover_rate_f as 'turnoverRateF',
+        volume_ratio as 'volumeRatio',
+        pe as 'pe',
+        pe_ttm as 'peTtm',
+        pb as 'pb',
+        ps as 'ps',
+        ps_ttm as 'psTtm',
+        dv_ratio as 'dvRatio',
+        dv_ttm as 'dvTtm',
+        total_share as 'totalShare',
+        float_share as 'floatShare',
+        free_share as 'freeShare',
+        total_mv as 'totalMv',
+        circ_mv as 'circMv'
+
+    </sql>
+    <!-- 通用查询条件 -->
+    <sql id="BaseWhere">
+        <trim prefix="where" prefixOverrides="and | or">
+           <if test="dailyBasicListVo.tsCode != null and dailyBasicListVo.tsCode != ''">
+               and ts_code = #{dailyBasicListVo.tsCode}
+           </if>
+           <if test="dailyBasicListVo.tradeDateStart != null and dailyBasicListVo.tradeDateStart != ''">
+               and trade_date >= #{dailyBasicListVo.tradeDateStart}
+           </if>
+           <if test="dailyBasicListVo.tradeDateEnd != null and dailyBasicListVo.tradeDateEnd != ''">
+               and trade_date &lt;= #{dailyBasicListVo.tradeDateEnd}
+           </if>
+           <if test="dailyBasicListVo.close != null and dailyBasicListVo.close != ''">
+               and close = #{dailyBasicListVo.close}
+           </if>
+           <if test="dailyBasicListVo.turnoverRate != null and dailyBasicListVo.turnoverRate != ''">
+               and turnover_rate = #{dailyBasicListVo.turnoverRate}
+           </if>
+           <if test="dailyBasicListVo.turnoverRateF != null and dailyBasicListVo.turnoverRateF != ''">
+               and turnover_rate_f = #{dailyBasicListVo.turnoverRateF}
+           </if>
+           <if test="dailyBasicListVo.volumeRatio != null and dailyBasicListVo.volumeRatio != ''">
+               and volume_ratio = #{dailyBasicListVo.volumeRatio}
+           </if>
+           <if test="dailyBasicListVo.pe != null and dailyBasicListVo.pe != ''">
+               and pe = #{dailyBasicListVo.pe}
+           </if>
+           <if test="dailyBasicListVo.peTtm != null and dailyBasicListVo.peTtm != ''">
+               and pe_ttm = #{dailyBasicListVo.peTtm}
+           </if>
+           <if test="dailyBasicListVo.pb != null and dailyBasicListVo.pb != ''">
+               and pb = #{dailyBasicListVo.pb}
+           </if>
+           <if test="dailyBasicListVo.ps != null and dailyBasicListVo.ps != ''">
+               and ps = #{dailyBasicListVo.ps}
+           </if>
+           <if test="dailyBasicListVo.psTtm != null and dailyBasicListVo.psTtm != ''">
+               and ps_ttm = #{dailyBasicListVo.psTtm}
+           </if>
+           <if test="dailyBasicListVo.dvRatio != null and dailyBasicListVo.dvRatio != ''">
+               and dv_ratio = #{dailyBasicListVo.dvRatio}
+           </if>
+           <if test="dailyBasicListVo.dvTtm != null and dailyBasicListVo.dvTtm != ''">
+               and dv_ttm = #{dailyBasicListVo.dvTtm}
+           </if>
+           <if test="dailyBasicListVo.totalShare != null and dailyBasicListVo.totalShare != ''">
+               and total_share = #{dailyBasicListVo.totalShare}
+           </if>
+           <if test="dailyBasicListVo.floatShare != null and dailyBasicListVo.floatShare != ''">
+               and float_share = #{dailyBasicListVo.floatShare}
+           </if>
+           <if test="dailyBasicListVo.freeShare != null and dailyBasicListVo.freeShare != ''">
+               and free_share = #{dailyBasicListVo.freeShare}
+           </if>
+           <if test="dailyBasicListVo.totalMv != null and dailyBasicListVo.totalMv != ''">
+               and total_mv = #{dailyBasicListVo.totalMv}
+           </if>
+           <if test="dailyBasicListVo.circMv != null and dailyBasicListVo.circMv != ''">
+               and circ_mv = #{dailyBasicListVo.circMv}
+           </if>
+        </trim>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.DailyBasicListDto">
+        select <include refid="BaseColumnList"/>
+        from daily_basic
+        <include refid="BaseWhere"/>
+
+    </select>
+
+
+
 </mapper>

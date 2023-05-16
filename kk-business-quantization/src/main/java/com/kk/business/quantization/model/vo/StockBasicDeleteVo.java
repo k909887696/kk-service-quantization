@@ -10,14 +10,14 @@ import lombok.Data;
 
 /**
  * <p>
- * 个股基本信息删除实体
+ * 个股基本信息	删除实体
  * </p>
  *
  * @author kk
  * @since 2023-05-16
  */
 @Data
-@ApiModel(value = "个股基本信息删除实体", description = "个股基本信息")
+@ApiModel(value = "个股基本信息	删除实体", description = "个股基本信息	")
 public class StockBasicDeleteVo implements Serializable {
 
     private static final long serialVersionUID = 1L;

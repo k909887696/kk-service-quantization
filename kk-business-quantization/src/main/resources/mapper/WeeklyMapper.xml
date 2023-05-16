@@ -2,4 +2,86 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kk.business.quantization.dao.mapper.WeeklyMapper">
 
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.Weekly">
+        <result column="ts_code" property="tsCode" />
+        <result column="trade_date" property="tradeDate" />
+        <result column="open" property="open" />
+        <result column="high" property="high" />
+        <result column="low" property="low" />
+        <result column="close" property="close" />
+        <result column="pre_close" property="preClose" />
+        <result column="change" property="change" />
+        <result column="pct_chg" property="pctChg" />
+        <result column="vol" property="vol" />
+        <result column="amount" property="amount" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        ts_code as 'tsCode',
+        trade_date as 'tradeDate',
+        open as 'open',
+        high as 'high',
+        low as 'low',
+        close as 'close',
+        pre_close as 'preClose',
+        change as 'change',
+        pct_chg as 'pctChg',
+        vol as 'vol',
+        amount as 'amount'
+
+    </sql>
+    <!-- 通用查询条件 -->
+    <sql id="BaseWhere">
+        <trim prefix="where" prefixOverrides="and | or">
+           <if test="weeklyListVo.tsCode != null and weeklyListVo.tsCode != ''">
+               and ts_code = #{weeklyListVo.tsCode}
+           </if>
+           <if test="weeklyListVo.tradeDateStart != null and weeklyListVo.tradeDateStart != ''">
+               and trade_date >= #{weeklyListVo.tradeDateStart}
+           </if>
+           <if test="weeklyListVo.tradeDateEnd != null and weeklyListVo.tradeDateEnd != ''">
+               and trade_date &lt;= #{weeklyListVo.tradeDateEnd}
+           </if>
+           <if test="weeklyListVo.open != null and weeklyListVo.open != ''">
+               and open = #{weeklyListVo.open}
+           </if>
+           <if test="weeklyListVo.high != null and weeklyListVo.high != ''">
+               and high = #{weeklyListVo.high}
+           </if>
+           <if test="weeklyListVo.low != null and weeklyListVo.low != ''">
+               and low = #{weeklyListVo.low}
+           </if>
+           <if test="weeklyListVo.close != null and weeklyListVo.close != ''">
+               and close = #{weeklyListVo.close}
+           </if>
+           <if test="weeklyListVo.preClose != null and weeklyListVo.preClose != ''">
+               and pre_close = #{weeklyListVo.preClose}
+           </if>
+           <if test="weeklyListVo.change != null and weeklyListVo.change != ''">
+               and change = #{weeklyListVo.change}
+           </if>
+           <if test="weeklyListVo.pctChg != null and weeklyListVo.pctChg != ''">
+               and pct_chg = #{weeklyListVo.pctChg}
+           </if>
+           <if test="weeklyListVo.vol != null and weeklyListVo.vol != ''">
+               and vol = #{weeklyListVo.vol}
+           </if>
+           <if test="weeklyListVo.amount != null and weeklyListVo.amount != ''">
+               and amount = #{weeklyListVo.amount}
+           </if>
+        </trim>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.WeeklyListDto">
+        select <include refid="BaseColumnList"/>
+        from weekly
+        <include refid="BaseWhere"/>
+
+    </select>
+
+
+
 </mapper>

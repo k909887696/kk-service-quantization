@@ -2,4 +2,61 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kk.business.quantization.dao.mapper.StockFluctuationMapper">
 
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.StockFluctuation">
+        <result column="code" property="code" />
+        <result column="trade_date" property="tradeDate" />
+        <result column="max_up_count" property="maxUpCount" />
+        <result column="max_down_count" property="maxDownCount" />
+        <result column="max_up_15d_count" property="maxUp15dCount" />
+        <result column="max_down_15d_count" property="maxDown15dCount" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        code as 'code',
+        trade_date as 'tradeDate',
+        max_up_count as 'maxUpCount',
+        max_down_count as 'maxDownCount',
+        max_up_15d_count as 'maxUp15dCount',
+        max_down_15d_count as 'maxDown15dCount'
+
+    </sql>
+    <!-- 通用查询条件 -->
+    <sql id="BaseWhere">
+        <trim prefix="where" prefixOverrides="and | or">
+           <if test="stockFluctuationListVo.code != null and stockFluctuationListVo.code != ''">
+               and code = #{stockFluctuationListVo.code}
+           </if>
+           <if test="stockFluctuationListVo.tradeDateStart != null and stockFluctuationListVo.tradeDateStart != ''">
+               and trade_date >= #{stockFluctuationListVo.tradeDateStart}
+           </if>
+           <if test="stockFluctuationListVo.tradeDateEnd != null and stockFluctuationListVo.tradeDateEnd != ''">
+               and trade_date &lt;= #{stockFluctuationListVo.tradeDateEnd}
+           </if>
+           <if test="stockFluctuationListVo.maxUpCount != null and stockFluctuationListVo.maxUpCount != ''">
+               and max_up_count = #{stockFluctuationListVo.maxUpCount}
+           </if>
+           <if test="stockFluctuationListVo.maxDownCount != null and stockFluctuationListVo.maxDownCount != ''">
+               and max_down_count = #{stockFluctuationListVo.maxDownCount}
+           </if>
+           <if test="stockFluctuationListVo.maxUp15dCount != null and stockFluctuationListVo.maxUp15dCount != ''">
+               and max_up_15d_count = #{stockFluctuationListVo.maxUp15dCount}
+           </if>
+           <if test="stockFluctuationListVo.maxDown15dCount != null and stockFluctuationListVo.maxDown15dCount != ''">
+               and max_down_15d_count = #{stockFluctuationListVo.maxDown15dCount}
+           </if>
+        </trim>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.StockFluctuationListDto">
+        select <include refid="BaseColumnList"/>
+        from stock_fluctuation
+        <include refid="BaseWhere"/>
+
+    </select>
+
+
+
 </mapper>

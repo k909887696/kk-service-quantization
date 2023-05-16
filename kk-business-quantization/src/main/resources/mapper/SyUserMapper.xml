@@ -2,4 +2,46 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kk.business.quantization.dao.mapper.SyUserMapper">
 
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.SyUser">
+        <id column="user_id" property="userId" />
+        <result column="user_name" property="userName" />
+        <result column="b_day" property="bDay" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        user_id as 'userId',
+        user_name as 'userName',
+        b_day as 'bDay'
+
+    </sql>
+    <!-- 通用查询条件 -->
+    <sql id="BaseWhere">
+        <trim prefix="where" prefixOverrides="and | or">
+           <if test="syUserListVo.userId != null and syUserListVo.userId != ''">
+               and user_id = #{syUserListVo.userId}
+           </if>
+           <if test="syUserListVo.userName != null and syUserListVo.userName != ''">
+               and user_name like concat('%',#{syUserListVo.userName},'%')
+           </if>
+           <if test="syUserListVo.bDayStart != null and syUserListVo.bDayStart != ''">
+               and b_day >= #{syUserListVo.bDayStart}
+           </if>
+           <if test="syUserListVo.bDayEnd != null and syUserListVo.bDayEnd != ''">
+               and b_day &lt;= #{syUserListVo.bDayEnd}
+           </if>
+        </trim>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.SyUserListDto">
+        select <include refid="BaseColumnList"/>
+        from sy_user
+        <include refid="BaseWhere"/>
+
+    </select>
+
+
+
 </mapper>

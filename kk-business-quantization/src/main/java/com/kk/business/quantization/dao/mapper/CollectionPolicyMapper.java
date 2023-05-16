@@ -1,6 +1,9 @@
 package com.kk.business.quantization.dao.mapper;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.kk.business.quantization.dao.entity.CollectionPolicy;
+import com.kk.business.quantization.model.vo.CollectionPolicyListVo;
 import com.kk.common.dao.mapper.RootMapper;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -16,7 +19,10 @@ import java.util.Date;
  */
 
 public interface CollectionPolicyMapper extends RootMapper<CollectionPolicy> {
-
+    /**
+     * 查询列表
+     */
+    Page selectPageList(IPage page, CollectionPolicyListVo collectionPolicyListVo);
     /**
      * 更新策略异常信息
      * @param policyId

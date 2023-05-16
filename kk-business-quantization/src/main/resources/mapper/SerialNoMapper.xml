@@ -3,6 +3,48 @@
 <mapper namespace="com.kk.business.quantization.dao.mapper.SerialNoMapper">
 
 
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.SerialNo">
+        <id column="serial_name" property="serialName" />
+        <result column="next_value" property="nextValue" />
+        <result column="min" property="min" />
+        <result column="max" property="max" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        serial_name as 'serialName',
+        next_value as 'nextValue',
+        min as 'min',
+        max as 'max'
+
+    </sql>
+    <!-- 通用查询条件 -->
+    <sql id="BaseWhere">
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="serialNoListVo.serialName != null and serialNoListVo.serialName != ''">
+                and serial_name like concat('%',#{serialNoListVo.serialName},'%')
+            </if>
+            <if test="serialNoListVo.nextValue != null and serialNoListVo.nextValue != ''">
+                and next_value = #{serialNoListVo.nextValue}
+            </if>
+            <if test="serialNoListVo.min != null and serialNoListVo.min != ''">
+                and min = #{serialNoListVo.min}
+            </if>
+            <if test="serialNoListVo.max != null and serialNoListVo.max != ''">
+                and max = #{serialNoListVo.max}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.SerialNoListDto">
+        select <include refid="BaseColumnList"/>
+        from serial_no
+        <include refid="BaseWhere"/>
+
+    </select>
+
     <update id="updateNext"  >
 
         update serial_no set next_value = next_value + #{size} where serial_name = #{serialName}

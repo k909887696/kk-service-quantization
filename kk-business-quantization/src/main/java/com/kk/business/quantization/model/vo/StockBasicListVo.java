@@ -10,14 +10,14 @@ import lombok.Data;
 import com.kk.common.base.model.BasePage;
 /**
  * <p>
- * 个股基本信息列表查询实体
+ * 个股基本信息	列表查询实体
  * </p>
  *
  * @author kk
  * @since 2023-05-16
  */
 @Data
-@ApiModel(value = "个股基本信息列表查询实体", description = "个股基本信息")
+@ApiModel(value = "个股基本信息	列表查询实体", description = "个股基本信息	")
 public class StockBasicListVo extends BasePage{
 
     private static final long serialVersionUID = 1L;
@@ -78,15 +78,27 @@ public class StockBasicListVo extends BasePage{
     @ApiModelProperty("上市状态 L上市 D退市 P暂停上市")
     private String listStatus;
     /**
-    * 上市日期
+    * 上市日期开始
     */
-    @ApiModelProperty("上市日期")
-    private String listDate;
+    @ApiModelProperty("上市日期开始")
+    private String listDateStart;
     /**
-    * 退市日期
+    * 上市日期结束
     */
-    @ApiModelProperty("退市日期")
-    private String delistDate;
+    @ApiModelProperty("上市日期结束")
+    private String listDateEnd;
+
+    /**
+    * 退市日期开始
+    */
+    @ApiModelProperty("退市日期开始")
+    private String delistDateStart;
+    /**
+    * 退市日期结束
+    */
+    @ApiModelProperty("退市日期结束")
+    private String delistDateEnd;
+
     /**
     * 是否沪深港通标的，N否 H沪股通 S深股通
     */
