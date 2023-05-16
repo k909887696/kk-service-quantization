@@ -2,8 +2,10 @@ package com.kk.business.quantization.service;
 
 import com.github.jeffreyning.mybatisplus.service.IMppService;
 import com.kk.business.quantization.dao.entity.Daily;
+import com.kk.business.quantization.model.dto.DailyDto;
 import com.kk.business.quantization.model.dto.DailyKdjDto;
-import com.kk.business.quantization.model.vo.SearchDailyVo;
+import com.kk.business.quantization.model.dto.DailyListDto;
+import com.kk.business.quantization.model.vo.*;
 import com.kk.common.base.model.PageResult;
 
 import java.util.List;
@@ -18,18 +20,43 @@ import java.util.List;
  */
 public interface IDailyService extends IMppService<Daily> {
 
+
     /**
-    * 分批批量插入
-    * @param list 数据列表
-    * @return
-    */
+     * 分批批量插入
+     * @param list 数据列表
+     * @return
+     */
     void insertIgnoreBatch(List<Daily> list);
     /**
-    * 分页获取结果集
-    * @param vo 请求参数
-    * @return 结果集
-    */
-    PageResult<Daily> getDailyPageResult(SearchDailyVo vo);
+     * 分页获取结果集
+     * @param vo 请求参数
+     * @return 结果集
+     */
+    PageResult<DailyListDto>  selectPageList(DailyListVo vo);
+    /**
+     * 单条插入
+     * @param vo 请求参数
+     * @return 结果集
+     */
+    void insert(DailyAddVo vo);
+    /**
+     * 更新
+     * @param vo 请求参数
+     * @return 结果集
+     */
+    int update(DailyEditVo vo);
+    /**
+     * 单条查询
+     * @param vo 请求参数
+     * @return 结果集
+     */
+    DailyDto selectById(DailyDetailsVo vo);
+    /**
+     * 删除
+     * @param vo 请求参数
+     * @return 结果集
+     */
+    int deleteById(DailyDeleteVo vo);
 
     /**
      * 分页获取结果集

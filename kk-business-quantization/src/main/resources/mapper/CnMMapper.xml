@@ -2,4 +2,84 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kk.business.quantization.dao.mapper.CnMMapper">
 
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.CnM">
+        <id column="month" property="month" />
+        <result column="m0" property="m0" />
+        <result column="m0_yoy" property="m0Yoy" />
+        <result column="m0_mom" property="m0Mom" />
+        <result column="m1" property="m1" />
+        <result column="m1_yoy" property="m1Yoy" />
+        <result column="m1_mom" property="m1Mom" />
+        <result column="m2" property="m2" />
+        <result column="m2_yoy" property="m2Yoy" />
+        <result column="m2_mom" property="m2Mom" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        month as 'month',
+        m0 as 'm0',
+        m0_yoy as 'm0Yoy',
+        m0_mom as 'm0Mom',
+        m1 as 'm1',
+        m1_yoy as 'm1Yoy',
+        m1_mom as 'm1Mom',
+        m2 as 'm2',
+        m2_yoy as 'm2Yoy',
+        m2_mom as 'm2Mom'
+
+    </sql>
+    <!-- 通用查询条件 -->
+    <sql id="BaseWhere">
+        <trim prefix="where" prefixOverrides="and | or">
+           <if test="cnMListVo.month != null and cnMListVo.month != ''">
+            and month = #{cnMListVo.month}
+           </if>
+            <if test="cnMListVo.monthStart != null and cnMListVo.monthStart != ''">
+                and month >= #{cnMListVo.monthStart}
+            </if>
+            <if test="cnMListVo.monthEnd != null and cnMListVo.monthEnd != ''">
+                and month &lt;= #{cnMListVo.monthEnd}
+            </if>
+           <if test="cnMListVo.m0 != null and cnMListVo.m0 != ''">
+               and m0 = #{cnMListVo.m0}
+           </if>
+           <if test="cnMListVo.m0Yoy != null and cnMListVo.m0Yoy != ''">
+               and m0_yoy = #{cnMListVo.m0Yoy}
+           </if>
+           <if test="cnMListVo.m0Mom != null and cnMListVo.m0Mom != ''">
+               and m0_mom = #{cnMListVo.m0Mom}
+           </if>
+           <if test="cnMListVo.m1 != null and cnMListVo.m1 != ''">
+               and m1 = #{cnMListVo.m1}
+           </if>
+           <if test="cnMListVo.m1Yoy != null and cnMListVo.m1Yoy != ''">
+               and m1_yoy = #{cnMListVo.m1Yoy}
+           </if>
+           <if test="cnMListVo.m1Mom != null and cnMListVo.m1Mom != ''">
+               and m1_mom = #{cnMListVo.m1Mom}
+           </if>
+           <if test="cnMListVo.m2 != null and cnMListVo.m2 != ''">
+               and m2 = #{cnMListVo.m2}
+           </if>
+           <if test="cnMListVo.m2Yoy != null and cnMListVo.m2Yoy != ''">
+               and m2_yoy = #{cnMListVo.m2Yoy}
+           </if>
+           <if test="cnMListVo.m2Mom != null and cnMListVo.m2Mom != ''">
+               and m2_mom = #{cnMListVo.m2Mom}
+           </if>
+        </trim>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.CnMListDto">
+        select <include refid="BaseColumnList"/>
+        from cn_m
+        <include refid="BaseWhere"/>
+
+    </select>
+
+
+
 </mapper>

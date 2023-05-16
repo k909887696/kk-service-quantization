@@ -2,5 +2,63 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kk.business.quantization.dao.mapper.ConceptMapper">
 
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.Concept">
+        <id column="code" property="code" />
+        <result column="name" property="name" />
+        <result column="src" property="src" />
+        <result column="exchange" property="exchange" />
+        <result column="list_date" property="listDate" />
+        <result column="type" property="type" />
+        <result column="count" property="count" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        code as 'code',
+        name as 'name',
+        src as 'src',
+        exchange as 'exchange',
+        list_date as 'listDate',
+        type as 'type',
+        count as 'count'
+
+    </sql>
+    <!-- 通用查询条件 -->
+    <sql id="BaseWhere">
+        <trim prefix="where" prefixOverrides="and | or">
+           <if test="conceptListVo.code != null and conceptListVo.code != ''">
+               and code = #{conceptListVo.code}
+           </if>
+           <if test="conceptListVo.name != null and conceptListVo.name != ''">
+               and name like concat('%',#{conceptListVo.name},'%')
+           </if>
+           <if test="conceptListVo.src != null and conceptListVo.src != ''">
+               and src = #{conceptListVo.src}
+           </if>
+           <if test="conceptListVo.exchange != null and conceptListVo.exchange != ''">
+               and exchange = #{conceptListVo.exchange}
+           </if>
+           <if test="conceptListVo.listDate != null and conceptListVo.listDate != ''">
+               and list_date = #{conceptListVo.listDate}
+           </if>
+           <if test="conceptListVo.type != null and conceptListVo.type != ''">
+               and type = #{conceptListVo.type}
+           </if>
+           <if test="conceptListVo.count != null and conceptListVo.count != ''">
+               and count = #{conceptListVo.count}
+           </if>
+        </trim>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.ConceptListDto">
+        select <include refid="BaseColumnList"/>
+        from concept
+        <include refid="BaseWhere"/>
+
+    </select>
+
+
 
 </mapper>

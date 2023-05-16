@@ -1,19 +1,24 @@
 package com.kk.business.quantization.service;
 
-import com.github.jeffreyning.mybatisplus.service.IMppService;
 import com.kk.business.quantization.dao.entity.ConceptDaily;
-import com.kk.common.base.model.BasePage;
-import com.kk.common.base.model.PageResult;
+import com.github.jeffreyning.mybatisplus.service.IMppService;
 
 import java.util.List;
-
+import com.kk.business.quantization.model.vo.ConceptDailyListVo;
+import com.kk.business.quantization.model.dto.ConceptDailyListDto;
+import com.kk.business.quantization.model.vo.ConceptDailyAddVo;
+import com.kk.business.quantization.model.vo.ConceptDailyEditVo;
+import com.kk.business.quantization.model.dto.ConceptDailyDto;
+import com.kk.business.quantization.model.vo.ConceptDailyDetailsVo;
+import com.kk.business.quantization.model.vo.ConceptDailyDeleteVo;
+import com.kk.common.base.model.PageResult;
 /**
  * <p>
  * 概念日线行情 服务类
  * </p>
  *
  * @author kk
- * @since 2021-12-18
+ * @since 2023-05-16
  */
 public interface IConceptDailyService extends IMppService<ConceptDaily> {
 
@@ -28,6 +33,30 @@ public interface IConceptDailyService extends IMppService<ConceptDaily> {
     * @param vo 请求参数
     * @return 结果集
     */
-    PageResult<ConceptDaily> getConceptDailyPageResult(BasePage vo);
+    PageResult<ConceptDailyListDto>  selectPageList(ConceptDailyListVo vo);
+    /**
+    * 单条插入
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    void insert(ConceptDailyAddVo vo);
+    /**
+    * 更新
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    int update(ConceptDailyEditVo vo);
+    /**
+    * 单条查询
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    ConceptDailyDto selectById(ConceptDailyDetailsVo vo);
+    /**
+    * 删除
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    int deleteById(ConceptDailyDeleteVo vo);
 
 }

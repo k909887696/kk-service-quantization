@@ -1,19 +1,24 @@
 package com.kk.business.quantization.service;
 
-import com.github.jeffreyning.mybatisplus.service.IMppService;
 import com.kk.business.quantization.dao.entity.ConceptDetail;
-import com.kk.common.base.model.BasePage;
-import com.kk.common.base.model.PageResult;
+import com.github.jeffreyning.mybatisplus.service.IMppService;
 
 import java.util.List;
-
+import com.kk.business.quantization.model.vo.ConceptDetailListVo;
+import com.kk.business.quantization.model.dto.ConceptDetailListDto;
+import com.kk.business.quantization.model.vo.ConceptDetailAddVo;
+import com.kk.business.quantization.model.vo.ConceptDetailEditVo;
+import com.kk.business.quantization.model.dto.ConceptDetailDto;
+import com.kk.business.quantization.model.vo.ConceptDetailDetailsVo;
+import com.kk.business.quantization.model.vo.ConceptDetailDeleteVo;
+import com.kk.common.base.model.PageResult;
 /**
  * <p>
  * 概念明细 服务类
  * </p>
  *
  * @author kk
- * @since 2021-12-18
+ * @since 2023-05-16
  */
 public interface IConceptDetailService extends IMppService<ConceptDetail> {
 
@@ -28,6 +33,30 @@ public interface IConceptDetailService extends IMppService<ConceptDetail> {
     * @param vo 请求参数
     * @return 结果集
     */
-    PageResult<ConceptDetail> getConceptDetailPageResult(BasePage vo);
+    PageResult<ConceptDetailListDto>  selectPageList(ConceptDetailListVo vo);
+    /**
+    * 单条插入
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    void insert(ConceptDetailAddVo vo);
+    /**
+    * 更新
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    int update(ConceptDetailEditVo vo);
+    /**
+    * 单条查询
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    ConceptDetailDto selectById(ConceptDetailDetailsVo vo);
+    /**
+    * 删除
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    int deleteById(ConceptDetailDeleteVo vo);
 
 }

@@ -6,10 +6,14 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.jeffreyning.mybatisplus.service.MppServiceImpl;
 import com.kk.business.quantization.dao.entity.Daily;
 import com.kk.business.quantization.dao.mapper.DailyMapper;
+import com.kk.business.quantization.model.dto.DailyDto;
 import com.kk.business.quantization.model.dto.DailyKdjDto;
-import com.kk.business.quantization.model.vo.SearchDailyVo;
+import com.kk.business.quantization.model.dto.DailyListDto;
+import com.kk.business.quantization.model.vo.*;
 import com.kk.business.quantization.service.IDailyService;
 import com.kk.common.base.model.PageResult;
+import com.kk.common.exception.BusinessException;
+import com.kk.common.utils.MapperUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -29,12 +33,12 @@ import java.util.stream.Collectors;
 public class DailyServiceImpl extends MppServiceImpl<DailyMapper, Daily> implements IDailyService {
 
     @Resource
-    public DailyMapper mapper;
+    public MapperUtils mapperUtils;
     /**
-    * 分批批量插入
-    * @param list 数据列表
-    * @return
-    */
+     * 分批批量插入
+     * @param list 数据列表
+     * @return
+     */
     public void insertIgnoreBatch(List<Daily> list)
     {
 
@@ -48,48 +52,71 @@ public class DailyServiceImpl extends MppServiceImpl<DailyMapper, Daily> impleme
         for(;index<=totalPage;index++)
         {
             List<Daily> tempList = list.stream().skip((index-1)*size).limit(size).collect(Collectors.toList());
-            mapper.insertIgnoreBatchSomeColumn(tempList);
+            this.baseMapper.insertIgnoreBatchSomeColumn(tempList);
         }
     }
     /**
-    * 分页获取结果集
-    * @param vo 请求参数
-    * @return 结果集
-    */
-    public PageResult<Daily>  getDailyPageResult(SearchDailyVo vo){
-
-        LambdaQueryWrapper<Daily> query = new LambdaQueryWrapper<>();
-        IPage<Daily> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
-
-        //这里开始编写查询条件
-        if(StringUtils.isNotBlank(vo.getTsCode()))
+     * 单条插入
+     * @param vo 请求参数
+     * @return 结果集
+     */
+    public void insert(DailyAddVo vo)
+    {
+        Daily model = mapperUtils.map(vo,Daily.class);
+        this.baseMapper.insert(model);
+    }
+    /**
+     * 更新
+     * @param vo 请求参数
+     * @return 结果集
+     */
+    public int update(DailyEditVo vo)
+    {
+        Daily model = mapperUtils.map(vo,Daily.class);
+        int r = this.baseMapper.updateById(model);
+        if(r != 1)
         {
-            query.eq(Daily::getTsCode,vo.getTsCode());
+            throw new BusinessException("个股日线行情更新失败!");
         }
-
-        if(StringUtils.isNotBlank(vo.getTradeDate()))
+        return r;
+    }
+    /**
+     * 单条查询
+     * @param vo 请求参数
+     * @return 结果集
+     */
+    public DailyDto selectById(DailyDetailsVo vo)
+    {
+        Daily model = mapperUtils.map(vo,Daily.class);
+        Daily res = this.baseMapper.selectByMultiId(model);
+        DailyDto dto = mapperUtils.map(res,DailyDto.class);
+        return dto;
+    }
+    /**
+     * 删除
+     * @param vo 请求参数
+     * @return 结果集
+     */
+    public int deleteById(DailyDeleteVo vo)
+    {
+        Daily model = mapperUtils.map(vo,Daily.class);
+        int r = this.baseMapper.deleteByMultiId(model);
+        if(r != 1)
         {
-            query.eq(Daily::getTradeDate,vo.getTradeDate());
+            throw new BusinessException("个股日线行情删除失败!");
         }
+        return r;
+    }
+    /**
+     * 分页获取结果集
+     * @param vo 请求参数
+     * @return 结果集
+     */
+    public PageResult<DailyListDto>  selectPageList(DailyListVo vo){
 
-        if(StringUtils.isNotBlank(vo.getStartDate()))
-        {
-            query.ge(Daily::getTradeDate,vo.getStartDate());
-        }
-
-        if(StringUtils.isNotBlank(vo.getTsCode()))
-        {
-            query.le(Daily::getTradeDate,vo.getEndDate());
-        }
-
-        if(vo.getIds()!=null && vo.getIds().size()>0)
-        {
-            query.in(Daily::getTsCode,vo.getIds());
-        }
-
-
-        page = mapper.selectPage(page,query);
-        PageResult<Daily>  pageResult = new PageResult<>();
+        IPage<DailyListDto> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
+        page = this.baseMapper.selectPageList(page,vo);
+        PageResult<DailyListDto>  pageResult = new PageResult<>();
 
         pageResult.setResult(page.getRecords());
         pageResult.setTotalCount(page.getTotal());
@@ -111,7 +138,7 @@ public class DailyServiceImpl extends MppServiceImpl<DailyMapper, Daily> impleme
 
 
 
-        page = mapper.selectDailyExList(page,vo);
+        page = this.baseMapper.selectDailyExList(page,vo);
         PageResult<DailyKdjDto>  pageResult = new PageResult<>();
 
         pageResult.setResult(page.getRecords());

@@ -2,6 +2,67 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kk.business.quantization.dao.mapper.ConceptDetailMapper">
 
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.ConceptDetail">
+        <id column="concept_id" property="conceptId" />
+        <id column="ts_code" property="tsCode" />
+        <result column="concept_name" property="conceptName" />
+        <result column="name" property="name" />
+        <result column="in_date" property="inDate" />
+        <result column="out_date" property="outDate" />
+        <result column="symbol" property="symbol" />
+        <result column="weight" property="weight" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        concept_id as 'conceptId',
+        concept_name as 'conceptName',
+        ts_code as 'tsCode',
+        name as 'name',
+        in_date as 'inDate',
+        out_date as 'outDate',
+        symbol as 'symbol',
+        weight as 'weight'
+
+    </sql>
+    <!-- 通用查询条件 -->
+    <sql id="BaseWhere">
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="conceptDetailListVo.conceptId != null and conceptDetailListVo.conceptId != ''">
+                and concept_id = #{conceptDetailListVo.conceptId}
+            </if>
+            <if test="conceptDetailListVo.conceptName != null and conceptDetailListVo.conceptName != ''">
+                and concept_name = #{conceptDetailListVo.conceptName}
+            </if>
+            <if test="conceptDetailListVo.tsCode != null and conceptDetailListVo.tsCode != ''">
+                and ts_code = #{conceptDetailListVo.tsCode}
+            </if>
+            <if test="conceptDetailListVo.name != null and conceptDetailListVo.name != ''">
+                and name like concat('%',#{conceptDetailListVo.name},'%')
+            </if>
+            <if test="conceptDetailListVo.inDate != null and conceptDetailListVo.inDate != ''">
+                and in_date = #{conceptDetailListVo.inDate}
+            </if>
+            <if test="conceptDetailListVo.outDate != null and conceptDetailListVo.outDate != ''">
+                and out_date = #{conceptDetailListVo.outDate}
+            </if>
+            <if test="conceptDetailListVo.symbol != null and conceptDetailListVo.symbol != ''">
+                and symbol = #{conceptDetailListVo.symbol}
+            </if>
+            <if test="conceptDetailListVo.weight != null and conceptDetailListVo.weight != ''">
+                and weight = #{conceptDetailListVo.weight}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.ConceptDetailListDto">
+        select <include refid="BaseColumnList"/>
+        from concept_detail
+        <include refid="BaseWhere"/>
+
+    </select>
     <update id="updateSymbolByConceptIds">
         update concept_detail cd inner join stock_basic sb on sb.ts_code = cd.ts_code
             set cd.symbol = sb.symbol

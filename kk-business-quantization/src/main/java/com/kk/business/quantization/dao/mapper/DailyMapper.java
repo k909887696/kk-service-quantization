@@ -10,7 +10,7 @@ import com.kk.common.dao.mapper.RootMapper;
 
 /**
  * <p>
- *  Mapper 接口
+ *  个股日线行情 Mapper 接口
  * </p>
  *
  * @author kk

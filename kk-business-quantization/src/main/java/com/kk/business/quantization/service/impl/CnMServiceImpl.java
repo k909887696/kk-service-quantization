@@ -7,10 +7,14 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.jeffreyning.mybatisplus.service.MppServiceImpl;
 import com.kk.business.quantization.dao.entity.CnM;
 import com.kk.business.quantization.dao.mapper.CnMMapper;
-import com.kk.business.quantization.model.vo.SearchCnMVo;
+import com.kk.business.quantization.model.dto.CnMDto;
+import com.kk.business.quantization.model.dto.CnMListDto;
+import com.kk.business.quantization.model.vo.*;
 import com.kk.business.quantization.service.ICnMService;
 import com.kk.common.base.model.BasePage;
 import com.kk.common.base.model.PageResult;
+import com.kk.common.exception.BusinessException;
+import com.kk.common.utils.MapperUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -30,12 +34,12 @@ import java.util.stream.Collectors;
 public class CnMServiceImpl extends MppServiceImpl<CnMMapper, CnM> implements ICnMService {
 
     @Resource
-    public CnMMapper mapper;
+    public MapperUtils mapperUtils;
     /**
-    * 分批批量插入
-    * @param list 数据列表
-    * @return
-    */
+     * 分批批量插入
+     * @param list 数据列表
+     * @return
+     */
     public void insertIgnoreBatch(List<CnM> list)
     {
 
@@ -49,33 +53,71 @@ public class CnMServiceImpl extends MppServiceImpl<CnMMapper, CnM> implements IC
         for(;index<=totalPage;index++)
         {
             List<CnM> tempList = list.stream().skip((index-1)*size).limit(size).collect(Collectors.toList());
-            mapper.insertIgnoreBatchSomeColumn(tempList);
+            this.baseMapper.insertIgnoreBatchSomeColumn(tempList);
         }
     }
     /**
-    * 分页获取结果集
-    * @param vo 请求参数
-    * @return 结果集
-    */
-    public PageResult<CnM>  getCnMPageResult(SearchCnMVo vo){
-
-        LambdaQueryWrapper<CnM> query = new LambdaQueryWrapper<>();
-        IPage<CnM> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
-
-
-
-        //这里开始编写查询条件
-        if(StringUtils.isNotBlank(vo.getMonthStart()))
+     * 单条插入
+     * @param vo 请求参数
+     * @return 结果集
+     */
+    public void insert(CnMAddVo vo)
+    {
+        CnM model = mapperUtils.map(vo,CnM.class);
+        this.baseMapper.insert(model);
+    }
+    /**
+     * 更新
+     * @param vo 请求参数
+     * @return 结果集
+     */
+    public int update(CnMEditVo vo)
+    {
+        CnM model = mapperUtils.map(vo,CnM.class);
+        int r = this.baseMapper.updateById(model);
+        if(r != 1)
         {
-            query.ge(CnM::getMonth,vo.getMonthStart());
+            throw new BusinessException("人民币货币总量对象更新失败!");
         }
-        if(StringUtils.isNotBlank(vo.getMonthEnd()))
+        return r;
+    }
+    /**
+     * 单条查询
+     * @param vo 请求参数
+     * @return 结果集
+     */
+    public CnMDto selectById(CnMDetailsVo vo)
+    {
+        CnM model = mapperUtils.map(vo,CnM.class);
+        CnM res = this.baseMapper.selectByMultiId(model);
+        CnMDto dto = mapperUtils.map(res,CnMDto.class);
+        return dto;
+    }
+    /**
+     * 删除
+     * @param vo 请求参数
+     * @return 结果集
+     */
+    public int deleteById(CnMDeleteVo vo)
+    {
+        CnM model = mapperUtils.map(vo,CnM.class);
+        int r = this.baseMapper.deleteByMultiId(model);
+        if(r != 1)
         {
-            query.le(CnM::getMonth,vo.getMonthEnd());
+            throw new BusinessException("人民币货币总量对象删除失败!");
         }
+        return r;
+    }
+    /**
+     * 分页获取结果集
+     * @param vo 请求参数
+     * @return 结果集
+     */
+    public PageResult<CnMListDto>  selectPageList(CnMListVo vo){
 
-        page = mapper.selectPage(page,query);
-        PageResult<CnM>  pageResult = new PageResult<>();
+        IPage<CnMListDto> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
+        page = this.baseMapper.selectPageList(page,vo);
+        PageResult<CnMListDto>  pageResult = new PageResult<>();
 
         pageResult.setResult(page.getRecords());
         pageResult.setTotalCount(page.getTotal());
@@ -84,6 +126,8 @@ public class CnMServiceImpl extends MppServiceImpl<CnMMapper, CnM> implements IC
 
         return pageResult;
     }
+
+
 
 
 }

@@ -2,6 +2,83 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kk.business.quantization.dao.mapper.ConceptDailyMapper">
 
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.ConceptDaily">
+        <id column="concept_id" property="conceptId" />
+        <id column="trade_date" property="tradeDate" />
+        <result column="open" property="open" />
+        <result column="high" property="high" />
+        <result column="low" property="low" />
+        <result column="close" property="close" />
+        <result column="pre_close" property="preClose" />
+        <result column="change" property="change" />
+        <result column="pct_chg" property="pctChg" />
+        <result column="vol" property="vol" />
+        <result column="amount" property="amount" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        concept_id as 'conceptId',
+        trade_date as 'tradeDate',
+        open as 'open',
+        high as 'high',
+        low as 'low',
+        close as 'close',
+        pre_close as 'preClose',
+        change as 'change',
+        pct_chg as 'pctChg',
+        vol as 'vol',
+        amount as 'amount'
+
+    </sql>
+    <!-- 通用查询条件 -->
+    <sql id="BaseWhere">
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="conceptDailyListVo.conceptId != null and conceptDailyListVo.conceptId != ''">
+                and concept_id = #{conceptDailyListVo.conceptId}
+            </if>
+            <if test="conceptDailyListVo.tradeDate != null and conceptDailyListVo.tradeDate != ''">
+                and trade_date = #{conceptDailyListVo.tradeDate}
+            </if>
+            <if test="conceptDailyListVo.open != null and conceptDailyListVo.open != ''">
+                and open = #{conceptDailyListVo.open}
+            </if>
+            <if test="conceptDailyListVo.high != null and conceptDailyListVo.high != ''">
+                and high = #{conceptDailyListVo.high}
+            </if>
+            <if test="conceptDailyListVo.low != null and conceptDailyListVo.low != ''">
+                and low = #{conceptDailyListVo.low}
+            </if>
+            <if test="conceptDailyListVo.close != null and conceptDailyListVo.close != ''">
+                and close = #{conceptDailyListVo.close}
+            </if>
+            <if test="conceptDailyListVo.preClose != null and conceptDailyListVo.preClose != ''">
+                and pre_close = #{conceptDailyListVo.preClose}
+            </if>
+            <if test="conceptDailyListVo.change != null and conceptDailyListVo.change != ''">
+                and change = #{conceptDailyListVo.change}
+            </if>
+            <if test="conceptDailyListVo.pctChg != null and conceptDailyListVo.pctChg != ''">
+                and pct_chg = #{conceptDailyListVo.pctChg}
+            </if>
+            <if test="conceptDailyListVo.vol != null and conceptDailyListVo.vol != ''">
+                and vol = #{conceptDailyListVo.vol}
+            </if>
+            <if test="conceptDailyListVo.amount != null and conceptDailyListVo.amount != ''">
+                and amount = #{conceptDailyListVo.amount}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.ConceptDailyListDto">
+        select <include refid="BaseColumnList"/>
+        from concept_daily
+        <include refid="BaseWhere"/>
+
+    </select>
     <select id="selectLeaderListByRange">
         select  sb.name,dg.*,sd.close 'sd_close',ed.close 'ed_close'
         , round((ed.close - sd.close) / sd.close * 100 ,2)'se_pct'
