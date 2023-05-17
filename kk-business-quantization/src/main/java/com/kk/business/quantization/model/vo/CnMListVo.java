@@ -28,6 +28,16 @@ public class CnMListVo extends BasePage{
     @ApiModelProperty("月份")
     private String month;
     /**
+     * 月份-开始
+     */
+    @ApiModelProperty("月份-开始")
+    private String monthStart;
+    /**
+     * 月份-结束
+     */
+    @ApiModelProperty("月份-结束")
+    private String monthEnd;
+    /**
     * 货币M0总量
     */
     @ApiModelProperty("货币M0总量")

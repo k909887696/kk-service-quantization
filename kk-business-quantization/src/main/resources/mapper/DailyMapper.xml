@@ -21,12 +21,12 @@
     <sql id="BaseColumnList">
         ts_code as 'tsCode',
         trade_date as 'tradeDate',
-        open as 'open',
+        `open` as 'open',
         high as 'high',
         low as 'low',
-        close as 'close',
+        `close` as 'close',
         pre_close as 'preClose',
-        change as 'change',
+        `change` as 'change',
         pct_chg as 'pctChg',
         vol as 'vol',
         amount as 'amount'
@@ -45,7 +45,7 @@
                 and trade_date &lt;= #{dailyListVo.tradeDateEnd}
             </if>
             <if test="dailyListVo.open != null and dailyListVo.open != ''">
-                and open = #{dailyListVo.open}
+                and `open` = #{dailyListVo.open}
             </if>
             <if test="dailyListVo.high != null and dailyListVo.high != ''">
                 and high = #{dailyListVo.high}
@@ -54,13 +54,13 @@
                 and low = #{dailyListVo.low}
             </if>
             <if test="dailyListVo.close != null and dailyListVo.close != ''">
-                and close = #{dailyListVo.close}
+                and `close` = #{dailyListVo.close}
             </if>
             <if test="dailyListVo.preClose != null and dailyListVo.preClose != ''">
                 and pre_close = #{dailyListVo.preClose}
             </if>
             <if test="dailyListVo.change != null and dailyListVo.change != ''">
-                and change = #{dailyListVo.change}
+                and `change` = #{dailyListVo.change}
             </if>
             <if test="dailyListVo.pctChg != null and dailyListVo.pctChg != ''">
                 and pct_chg = #{dailyListVo.pctChg}
