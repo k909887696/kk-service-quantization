@@ -94,7 +94,7 @@ public class SerialNoServiceImpl extends MppServiceImpl<SerialNoMapper, SerialNo
     public SerialNoDto selectById(SerialNoDetailsVo vo)
     {
         SerialNo model = mapperUtils.map(vo,SerialNo.class);
-        SerialNo res = this.baseMapper.selectByMultiId(model);
+        SerialNo res = this.baseMapper.selectById(model);
         SerialNoDto dto = mapperUtils.map(res,SerialNoDto.class);
         return dto;
     }
@@ -106,7 +106,7 @@ public class SerialNoServiceImpl extends MppServiceImpl<SerialNoMapper, SerialNo
     public int deleteById(SerialNoDeleteVo vo)
     {
         SerialNo model = mapperUtils.map(vo,SerialNo.class);
-        int r = this.baseMapper.deleteByMultiId(model);
+        int r = this.baseMapper.deleteById(model);
         if(r != 1)
         {
             throw new BusinessException("自定义主键序号删除失败!");

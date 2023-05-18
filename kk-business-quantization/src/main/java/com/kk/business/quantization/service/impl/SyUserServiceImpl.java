@@ -35,10 +35,10 @@ public class SyUserServiceImpl extends MppServiceImpl<SyUserMapper, SyUser> impl
     @Resource
     public MapperUtils mapperUtils;
     /**
-    * 分批批量插入
-    * @param list 数据列表
-    * @return
-    */
+     * 分批批量插入
+     * @param list 数据列表
+     * @return
+     */
     public void insertIgnoreBatch(List<SyUser> list)
     {
 
@@ -56,20 +56,20 @@ public class SyUserServiceImpl extends MppServiceImpl<SyUserMapper, SyUser> impl
         }
     }
     /**
-    * 单条插入
-    * @param vo 请求参数
-    * @return 结果集
-    */
+     * 单条插入
+     * @param vo 请求参数
+     * @return 结果集
+     */
     public void insert(SyUserAddVo vo)
     {
         SyUser model = mapperUtils.map(vo,SyUser.class);
         this.baseMapper.insert(model);
     }
     /**
-    * 更新
-    * @param vo 请求参数
-    * @return 结果集
-    */
+     * 更新
+     * @param vo 请求参数
+     * @return 结果集
+     */
     public int update(SyUserEditVo vo)
     {
         SyUser model = mapperUtils.map(vo,SyUser.class);
@@ -81,26 +81,26 @@ public class SyUserServiceImpl extends MppServiceImpl<SyUserMapper, SyUser> impl
         return r;
     }
     /**
-    * 单条查询
-    * @param vo 请求参数
-    * @return 结果集
-    */
+     * 单条查询
+     * @param vo 请求参数
+     * @return 结果集
+     */
     public SyUserDto selectById(SyUserDetailsVo vo)
     {
         SyUser model = mapperUtils.map(vo,SyUser.class);
-        SyUser res = this.baseMapper.selectByMultiId(model);
+        SyUser res = this.baseMapper.selectById(model);
         SyUserDto dto = mapperUtils.map(res,SyUserDto.class);
         return dto;
     }
     /**
-    * 删除
-    * @param vo 请求参数
-    * @return 结果集
-    */
+     * 删除
+     * @param vo 请求参数
+     * @return 结果集
+     */
     public int deleteById(SyUserDeleteVo vo)
     {
         SyUser model = mapperUtils.map(vo,SyUser.class);
-        int r = this.baseMapper.deleteByMultiId(model);
+        int r = this.baseMapper.deleteById(model);
         if(r != 1)
         {
             throw new BusinessException("用户信息删除失败!");
@@ -108,10 +108,10 @@ public class SyUserServiceImpl extends MppServiceImpl<SyUserMapper, SyUser> impl
         return r;
     }
     /**
-    * 分页获取结果集
-    * @param vo 请求参数
-    * @return 结果集
-    */
+     * 分页获取结果集
+     * @param vo 请求参数
+     * @return 结果集
+     */
     public PageResult<SyUserListDto>  selectPageList(SyUserListVo vo){
 
         IPage<SyUserListDto> page = new Page<>(vo.getPageIndex(),vo.getPageSize());

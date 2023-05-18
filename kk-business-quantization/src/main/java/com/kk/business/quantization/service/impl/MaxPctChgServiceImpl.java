@@ -35,10 +35,10 @@ public class MaxPctChgServiceImpl extends MppServiceImpl<MaxPctChgMapper, MaxPct
     @Resource
     public MapperUtils mapperUtils;
     /**
-    * 分批批量插入
-    * @param list 数据列表
-    * @return
-    */
+     * 分批批量插入
+     * @param list 数据列表
+     * @return
+     */
     public void insertIgnoreBatch(List<MaxPctChg> list)
     {
 
@@ -56,20 +56,20 @@ public class MaxPctChgServiceImpl extends MppServiceImpl<MaxPctChgMapper, MaxPct
         }
     }
     /**
-    * 单条插入
-    * @param vo 请求参数
-    * @return 结果集
-    */
+     * 单条插入
+     * @param vo 请求参数
+     * @return 结果集
+     */
     public void insert(MaxPctChgAddVo vo)
     {
         MaxPctChg model = mapperUtils.map(vo,MaxPctChg.class);
         this.baseMapper.insert(model);
     }
     /**
-    * 更新
-    * @param vo 请求参数
-    * @return 结果集
-    */
+     * 更新
+     * @param vo 请求参数
+     * @return 结果集
+     */
     public int update(MaxPctChgEditVo vo)
     {
         MaxPctChg model = mapperUtils.map(vo,MaxPctChg.class);
@@ -81,26 +81,26 @@ public class MaxPctChgServiceImpl extends MppServiceImpl<MaxPctChgMapper, MaxPct
         return r;
     }
     /**
-    * 单条查询
-    * @param vo 请求参数
-    * @return 结果集
-    */
+     * 单条查询
+     * @param vo 请求参数
+     * @return 结果集
+     */
     public MaxPctChgDto selectById(MaxPctChgDetailsVo vo)
     {
         MaxPctChg model = mapperUtils.map(vo,MaxPctChg.class);
-        MaxPctChg res = this.baseMapper.selectByMultiId(model);
+        MaxPctChg res = this.baseMapper.selectById(model);
         MaxPctChgDto dto = mapperUtils.map(res,MaxPctChgDto.class);
         return dto;
     }
     /**
-    * 删除
-    * @param vo 请求参数
-    * @return 结果集
-    */
+     * 删除
+     * @param vo 请求参数
+     * @return 结果集
+     */
     public int deleteById(MaxPctChgDeleteVo vo)
     {
         MaxPctChg model = mapperUtils.map(vo,MaxPctChg.class);
-        int r = this.baseMapper.deleteByMultiId(model);
+        int r = this.baseMapper.deleteById(model);
         if(r != 1)
         {
             throw new BusinessException("各个市场涨跌幅限制删除失败!");
@@ -108,10 +108,10 @@ public class MaxPctChgServiceImpl extends MppServiceImpl<MaxPctChgMapper, MaxPct
         return r;
     }
     /**
-    * 分页获取结果集
-    * @param vo 请求参数
-    * @return 结果集
-    */
+     * 分页获取结果集
+     * @param vo 请求参数
+     * @return 结果集
+     */
     public PageResult<MaxPctChgListDto>  selectPageList(MaxPctChgListVo vo){
 
         IPage<MaxPctChgListDto> page = new Page<>(vo.getPageIndex(),vo.getPageSize());

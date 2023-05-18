@@ -35,10 +35,10 @@ public class IndexBasicServiceImpl extends MppServiceImpl<IndexBasicMapper, Inde
     @Resource
     public MapperUtils mapperUtils;
     /**
-    * 分批批量插入
-    * @param list 数据列表
-    * @return
-    */
+     * 分批批量插入
+     * @param list 数据列表
+     * @return
+     */
     public void insertIgnoreBatch(List<IndexBasic> list)
     {
 
@@ -56,20 +56,20 @@ public class IndexBasicServiceImpl extends MppServiceImpl<IndexBasicMapper, Inde
         }
     }
     /**
-    * 单条插入
-    * @param vo 请求参数
-    * @return 结果集
-    */
+     * 单条插入
+     * @param vo 请求参数
+     * @return 结果集
+     */
     public void insert(IndexBasicAddVo vo)
     {
         IndexBasic model = mapperUtils.map(vo,IndexBasic.class);
         this.baseMapper.insert(model);
     }
     /**
-    * 更新
-    * @param vo 请求参数
-    * @return 结果集
-    */
+     * 更新
+     * @param vo 请求参数
+     * @return 结果集
+     */
     public int update(IndexBasicEditVo vo)
     {
         IndexBasic model = mapperUtils.map(vo,IndexBasic.class);
@@ -81,26 +81,26 @@ public class IndexBasicServiceImpl extends MppServiceImpl<IndexBasicMapper, Inde
         return r;
     }
     /**
-    * 单条查询
-    * @param vo 请求参数
-    * @return 结果集
-    */
+     * 单条查询
+     * @param vo 请求参数
+     * @return 结果集
+     */
     public IndexBasicDto selectById(IndexBasicDetailsVo vo)
     {
         IndexBasic model = mapperUtils.map(vo,IndexBasic.class);
-        IndexBasic res = this.baseMapper.selectByMultiId(model);
+        IndexBasic res = this.baseMapper.selectById(model);
         IndexBasicDto dto = mapperUtils.map(res,IndexBasicDto.class);
         return dto;
     }
     /**
-    * 删除
-    * @param vo 请求参数
-    * @return 结果集
-    */
+     * 删除
+     * @param vo 请求参数
+     * @return 结果集
+     */
     public int deleteById(IndexBasicDeleteVo vo)
     {
         IndexBasic model = mapperUtils.map(vo,IndexBasic.class);
-        int r = this.baseMapper.deleteByMultiId(model);
+        int r = this.baseMapper.deleteById(model);
         if(r != 1)
         {
             throw new BusinessException("指数基本信息删除失败!");
@@ -108,10 +108,10 @@ public class IndexBasicServiceImpl extends MppServiceImpl<IndexBasicMapper, Inde
         return r;
     }
     /**
-    * 分页获取结果集
-    * @param vo 请求参数
-    * @return 结果集
-    */
+     * 分页获取结果集
+     * @param vo 请求参数
+     * @return 结果集
+     */
     public PageResult<IndexBasicListDto>  selectPageList(IndexBasicListVo vo){
 
         IPage<IndexBasicListDto> page = new Page<>(vo.getPageIndex(),vo.getPageSize());

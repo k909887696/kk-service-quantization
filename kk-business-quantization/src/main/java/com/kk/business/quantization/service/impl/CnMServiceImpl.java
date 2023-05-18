@@ -1,34 +1,33 @@
 package com.kk.business.quantization.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.github.jeffreyning.mybatisplus.service.MppServiceImpl;
-import com.kk.business.quantization.dao.entity.CnM;
-import com.kk.business.quantization.dao.mapper.CnMMapper;
-import com.kk.business.quantization.model.dto.CnMDto;
-import com.kk.business.quantization.model.dto.CnMListDto;
-import com.kk.business.quantization.model.vo.*;
-import com.kk.business.quantization.service.ICnMService;
-import com.kk.common.base.model.BasePage;
-import com.kk.common.base.model.PageResult;
-import com.kk.common.exception.BusinessException;
-import com.kk.common.utils.MapperUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Service;
 
+import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
-
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.kk.business.quantization.dao.entity.CnM;
+import com.kk.business.quantization.dao.mapper.CnMMapper;
+import com.kk.business.quantization.service.ICnMService;
+import com.github.jeffreyning.mybatisplus.service.MppServiceImpl;
+import com.kk.business.quantization.model.vo.CnMListVo;
+import com.kk.business.quantization.model.dto.CnMListDto;
+import com.kk.business.quantization.model.vo.CnMAddVo;
+import com.kk.business.quantization.model.vo.CnMEditVo;
+import com.kk.business.quantization.model.dto.CnMDto;
+import com.kk.business.quantization.model.vo.CnMDetailsVo;
+import com.kk.business.quantization.model.vo.CnMDeleteVo;
+import com.kk.common.utils.MapperUtils;
+import com.kk.common.base.model.PageResult;
+import com.kk.common.exception.BusinessException;
 /**
  * <p>
- * 人民币货币总量 服务实现类
+ * 人民币货币总量对象 服务实现类
  * </p>
  *
  * @author kk
- * @since 2021-12-18
+ * @since 2023-05-18
  */
 @Service
 public class CnMServiceImpl extends MppServiceImpl<CnMMapper, CnM> implements ICnMService {
@@ -89,7 +88,7 @@ public class CnMServiceImpl extends MppServiceImpl<CnMMapper, CnM> implements IC
     public CnMDto selectById(CnMDetailsVo vo)
     {
         CnM model = mapperUtils.map(vo,CnM.class);
-        CnM res = this.baseMapper.selectByMultiId(model);
+        CnM res = this.baseMapper.selectById(model);
         CnMDto dto = mapperUtils.map(res,CnMDto.class);
         return dto;
     }
@@ -101,7 +100,7 @@ public class CnMServiceImpl extends MppServiceImpl<CnMMapper, CnM> implements IC
     public int deleteById(CnMDeleteVo vo)
     {
         CnM model = mapperUtils.map(vo,CnM.class);
-        int r = this.baseMapper.deleteByMultiId(model);
+        int r = this.baseMapper.deleteById(model);
         if(r != 1)
         {
             throw new BusinessException("人民币货币总量对象删除失败!");
@@ -126,7 +125,6 @@ public class CnMServiceImpl extends MppServiceImpl<CnMMapper, CnM> implements IC
 
         return pageResult;
     }
-
 
 
 

@@ -88,7 +88,7 @@ public class InvokeTypeServiceImpl extends MppServiceImpl<InvokeTypeMapper, Invo
     public InvokeTypeDto selectById(InvokeTypeDetailsVo vo)
     {
         InvokeType model = mapperUtils.map(vo,InvokeType.class);
-        InvokeType res = this.baseMapper.selectByMultiId(model);
+        InvokeType res = this.baseMapper.selectById(model);
         InvokeTypeDto dto = mapperUtils.map(res,InvokeTypeDto.class);
         return dto;
     }
@@ -100,7 +100,7 @@ public class InvokeTypeServiceImpl extends MppServiceImpl<InvokeTypeMapper, Invo
     public int deleteById(InvokeTypeDeleteVo vo)
     {
         InvokeType model = mapperUtils.map(vo,InvokeType.class);
-        int r = this.baseMapper.deleteByMultiId(model);
+        int r = this.baseMapper.deleteById(model);
         if(r != 1)
         {
             throw new BusinessException("系统设置-调度类型删除失败!");

@@ -88,7 +88,7 @@ public class ConceptServiceImpl extends MppServiceImpl<ConceptMapper, Concept> i
     public ConceptDto selectById(ConceptDetailsVo vo)
     {
         Concept model = mapperUtils.map(vo,Concept.class);
-        Concept res = this.baseMapper.selectByMultiId(model);
+        Concept res = this.baseMapper.selectById(model);
         ConceptDto dto = mapperUtils.map(res,ConceptDto.class);
         return dto;
     }
@@ -100,7 +100,7 @@ public class ConceptServiceImpl extends MppServiceImpl<ConceptMapper, Concept> i
     public int deleteById(ConceptDeleteVo vo)
     {
         Concept model = mapperUtils.map(vo,Concept.class);
-        int r = this.baseMapper.deleteByMultiId(model);
+        int r = this.baseMapper.deleteById(model);
         if(r != 1)
         {
             throw new BusinessException("概念分类删除失败!");
@@ -125,6 +125,7 @@ public class ConceptServiceImpl extends MppServiceImpl<ConceptMapper, Concept> i
 
         return pageResult;
     }
+
     /**
     * 分页获取结果集
     * @param vo 请求参数

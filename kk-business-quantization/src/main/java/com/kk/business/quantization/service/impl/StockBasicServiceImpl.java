@@ -87,7 +87,7 @@ public class StockBasicServiceImpl extends MppServiceImpl<StockBasicMapper, Stoc
     public StockBasicDto selectById(StockBasicDetailsVo vo)
     {
         StockBasic model = mapperUtils.map(vo,StockBasic.class);
-        StockBasic res = this.baseMapper.selectByMultiId(model);
+        StockBasic res = this.baseMapper.selectById(model);
         StockBasicDto dto = mapperUtils.map(res,StockBasicDto.class);
         return dto;
     }
@@ -99,7 +99,7 @@ public class StockBasicServiceImpl extends MppServiceImpl<StockBasicMapper, Stoc
     public int deleteById(StockBasicDeleteVo vo)
     {
         StockBasic model = mapperUtils.map(vo,StockBasic.class);
-        int r = this.baseMapper.deleteByMultiId(model);
+        int r = this.baseMapper.deleteById(model);
         if(r != 1)
         {
             throw new BusinessException("个股基本信息删除失败!");
