@@ -33,7 +33,7 @@
                 and concept_id = #{conceptDetailListVo.conceptId}
             </if>
             <if test="conceptDetailListVo.conceptName != null and conceptDetailListVo.conceptName != ''">
-                and concept_name = #{conceptDetailListVo.conceptName}
+                and concept_name like concat('%',#{conceptDetailListVo.conceptName},'%')
             </if>
             <if test="conceptDetailListVo.tsCode != null and conceptDetailListVo.tsCode != ''">
                 and ts_code = #{conceptDetailListVo.tsCode}
@@ -41,11 +41,17 @@
             <if test="conceptDetailListVo.name != null and conceptDetailListVo.name != ''">
                 and name like concat('%',#{conceptDetailListVo.name},'%')
             </if>
-            <if test="conceptDetailListVo.inDate != null and conceptDetailListVo.inDate != ''">
-                and in_date = #{conceptDetailListVo.inDate}
+            <if test="conceptDetailListVo.inDateStart != null and conceptDetailListVo.inDateStart != ''">
+                and in_date >= #{conceptDetailListVo.inDateStart}
             </if>
-            <if test="conceptDetailListVo.outDate != null and conceptDetailListVo.outDate != ''">
-                and out_date = #{conceptDetailListVo.outDate}
+            <if test="conceptDetailListVo.inDateEnd != null and conceptDetailListVo.inDateEnd != ''">
+                and in_date &lt;= #{conceptDetailListVo.inDateEnd}
+            </if>
+            <if test="conceptDetailListVo.outDateStart != null and conceptDetailListVo.outDateStart != ''">
+                and out_date >= #{conceptDetailListVo.outDateStart}
+            </if>
+            <if test="conceptDetailListVo.outDateEnd != null and conceptDetailListVo.outDateEnd != ''">
+                and out_date &lt;= #{conceptDetailListVo.outDateEnd}
             </if>
             <if test="conceptDetailListVo.symbol != null and conceptDetailListVo.symbol != ''">
                 and symbol = #{conceptDetailListVo.symbol}

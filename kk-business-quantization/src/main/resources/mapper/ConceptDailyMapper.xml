@@ -22,12 +22,12 @@
     <sql id="BaseColumnList">
         concept_id as 'conceptId',
         trade_date as 'tradeDate',
-        open as 'open',
+        `open` as 'open',
         high as 'high',
         low as 'low',
-        close as 'close',
+        `close` as 'close',
         pre_close as 'preClose',
-        change as 'change',
+        `change` as 'change',
         pct_chg as 'pctChg',
         vol as 'vol',
         amount as 'amount'

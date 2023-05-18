@@ -41,6 +41,7 @@
 
     </sql>
     <!-- 通用查询条件 -->
+    <!-- 通用查询条件 -->
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
             <if test="stockBasicListVo.tsCode != null and stockBasicListVo.tsCode != ''">
@@ -76,11 +77,17 @@
             <if test="stockBasicListVo.listStatus != null and stockBasicListVo.listStatus != ''">
                 and list_status = #{stockBasicListVo.listStatus}
             </if>
-            <if test="stockBasicListVo.listDate != null and stockBasicListVo.listDate != ''">
-                and list_date = #{stockBasicListVo.listDate}
+            <if test="stockBasicListVo.listDateStart != null and stockBasicListVo.listDateStart != ''">
+                and list_date >= #{stockBasicListVo.listDateStart}
             </if>
-            <if test="stockBasicListVo.delistDate != null and stockBasicListVo.delistDate != ''">
-                and delist_date = #{stockBasicListVo.delistDate}
+            <if test="stockBasicListVo.listDateEnd != null and stockBasicListVo.listDateEnd != ''">
+                and list_date &lt;= #{stockBasicListVo.listDateEnd}
+            </if>
+            <if test="stockBasicListVo.delistDateStart != null and stockBasicListVo.delistDateStart != ''">
+                and delist_date >= #{stockBasicListVo.delistDateStart}
+            </if>
+            <if test="stockBasicListVo.delistDateEnd != null and stockBasicListVo.delistDateEnd != ''">
+                and delist_date &lt;= #{stockBasicListVo.delistDateEnd}
             </if>
             <if test="stockBasicListVo.isHs != null and stockBasicListVo.isHs != ''">
                 and is_hs = #{stockBasicListVo.isHs}
@@ -90,6 +97,7 @@
             </if>
         </trim>
     </sql>
+
 
     <!-- 分页查询 -->
     <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.StockBasicListDto">
