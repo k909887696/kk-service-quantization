@@ -1,19 +1,24 @@
 package com.kk.business.quantization.service;
 
-import com.github.jeffreyning.mybatisplus.service.IMppService;
 import com.kk.business.quantization.dao.entity.IndexMember;
-import com.kk.common.base.model.BasePage;
-import com.kk.common.base.model.PageResult;
+import com.github.jeffreyning.mybatisplus.service.IMppService;
 
 import java.util.List;
-
+import com.kk.business.quantization.model.vo.IndexMemberListVo;
+import com.kk.business.quantization.model.dto.IndexMemberListDto;
+import com.kk.business.quantization.model.vo.IndexMemberAddVo;
+import com.kk.business.quantization.model.vo.IndexMemberEditVo;
+import com.kk.business.quantization.model.dto.IndexMemberDto;
+import com.kk.business.quantization.model.vo.IndexMemberDetailsVo;
+import com.kk.business.quantization.model.vo.IndexMemberDeleteVo;
+import com.kk.common.base.model.PageResult;
 /**
  * <p>
- *  服务类
+ * 申万行业明细 服务类
  * </p>
  *
  * @author kk
- * @since 2021-12-18
+ * @since 2023-05-18
  */
 public interface IIndexMemberService extends IMppService<IndexMember> {
 
@@ -28,6 +33,30 @@ public interface IIndexMemberService extends IMppService<IndexMember> {
     * @param vo 请求参数
     * @return 结果集
     */
-    PageResult<IndexMember> getPageResult(BasePage vo);
+    PageResult<IndexMemberListDto>  selectPageList(IndexMemberListVo vo);
+    /**
+    * 单条插入
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    void insert(IndexMemberAddVo vo);
+    /**
+    * 更新
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    int update(IndexMemberEditVo vo);
+    /**
+    * 单条查询
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    IndexMemberDto selectById(IndexMemberDetailsVo vo);
+    /**
+    * 删除
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    int deleteById(IndexMemberDeleteVo vo);
 
 }

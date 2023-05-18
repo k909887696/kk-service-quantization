@@ -1,33 +1,39 @@
 package com.kk.business.quantization.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.github.jeffreyning.mybatisplus.service.MppServiceImpl;
-import com.kk.business.quantization.dao.entity.Weekly;
-import com.kk.business.quantization.dao.mapper.WeeklyMapper;
-import com.kk.business.quantization.service.IWeeklyService;
-import com.kk.common.base.model.BasePage;
-import com.kk.common.base.model.PageResult;
-import org.springframework.stereotype.Service;
 
+import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
-
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.kk.business.quantization.dao.entity.Weekly;
+import com.kk.business.quantization.dao.mapper.WeeklyMapper;
+import com.kk.business.quantization.service.IWeeklyService;
+import com.github.jeffreyning.mybatisplus.service.MppServiceImpl;
+import com.kk.business.quantization.model.vo.WeeklyListVo;
+import com.kk.business.quantization.model.dto.WeeklyListDto;
+import com.kk.business.quantization.model.vo.WeeklyAddVo;
+import com.kk.business.quantization.model.vo.WeeklyEditVo;
+import com.kk.business.quantization.model.dto.WeeklyDto;
+import com.kk.business.quantization.model.vo.WeeklyDetailsVo;
+import com.kk.business.quantization.model.vo.WeeklyDeleteVo;
+import com.kk.common.utils.MapperUtils;
+import com.kk.common.base.model.PageResult;
+import com.kk.common.exception.BusinessException;
 /**
  * <p>
  * 个股周线行情 服务实现类
  * </p>
  *
  * @author kk
- * @since 2021-12-18
+ * @since 2023-05-18
  */
 @Service
 public class WeeklyServiceImpl extends MppServiceImpl<WeeklyMapper, Weekly> implements IWeeklyService {
 
     @Resource
-    public WeeklyMapper mapper;
+    public MapperUtils mapperUtils;
     /**
     * 分批批量插入
     * @param list 数据列表
@@ -46,23 +52,71 @@ public class WeeklyServiceImpl extends MppServiceImpl<WeeklyMapper, Weekly> impl
         for(;index<=totalPage;index++)
         {
             List<Weekly> tempList = list.stream().skip((index-1)*size).limit(size).collect(Collectors.toList());
-            mapper.insertIgnoreBatchSomeColumn(tempList);
+            this.baseMapper.insertIgnoreBatchSomeColumn(tempList);
         }
+    }
+    /**
+    * 单条插入
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    public void insert(WeeklyAddVo vo)
+    {
+        Weekly model = mapperUtils.map(vo,Weekly.class);
+        this.baseMapper.insert(model);
+    }
+    /**
+    * 更新
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    public int update(WeeklyEditVo vo)
+    {
+        Weekly model = mapperUtils.map(vo,Weekly.class);
+        int r = this.baseMapper.updateByMultiId(model);
+        if(r != 1)
+        {
+            throw new BusinessException("个股周线行情更新失败!");
+        }
+        return r;
+    }
+    /**
+    * 单条查询
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    public WeeklyDto selectById(WeeklyDetailsVo vo)
+    {
+        Weekly model = mapperUtils.map(vo,Weekly.class);
+        Weekly res = this.baseMapper.selectByMultiId(model);
+        WeeklyDto dto = mapperUtils.map(res,WeeklyDto.class);
+        return dto;
+    }
+    /**
+    * 删除
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    public int deleteById(WeeklyDeleteVo vo)
+    {
+        Weekly model = mapperUtils.map(vo,Weekly.class);
+        int r = this.baseMapper.deleteByMultiId(model);
+        if(r != 1)
+        {
+            throw new BusinessException("个股周线行情删除失败!");
+        }
+        return r;
     }
     /**
     * 分页获取结果集
     * @param vo 请求参数
     * @return 结果集
     */
-    public PageResult<Weekly>  getPageResult(BasePage vo){
+    public PageResult<WeeklyListDto>  selectPageList(WeeklyListVo vo){
 
-        QueryWrapper<Weekly> query = new QueryWrapper<>();
-        IPage<Weekly> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
-
-        //这里开始编写查询条件
-
-        page = mapper.selectPage(page,query);
-        PageResult<Weekly>  pageResult = new PageResult<>();
+        IPage<WeeklyListDto> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
+        page = this.baseMapper.selectPageList(page,vo);
+        PageResult<WeeklyListDto>  pageResult = new PageResult<>();
 
         pageResult.setResult(page.getRecords());
         pageResult.setTotalCount(page.getTotal());
@@ -71,6 +125,7 @@ public class WeeklyServiceImpl extends MppServiceImpl<WeeklyMapper, Weekly> impl
 
         return pageResult;
     }
+
 
 
 }

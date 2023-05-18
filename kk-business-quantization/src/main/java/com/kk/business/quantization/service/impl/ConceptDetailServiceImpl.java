@@ -73,7 +73,7 @@ public class ConceptDetailServiceImpl extends MppServiceImpl<ConceptDetailMapper
     public int update(ConceptDetailEditVo vo)
     {
         ConceptDetail model = mapperUtils.map(vo,ConceptDetail.class);
-        int r = this.baseMapper.updateById(model);
+        int r = this.baseMapper.updateByMultiId(model);
         if(r != 1)
         {
             throw new BusinessException("概念明细更新失败!");

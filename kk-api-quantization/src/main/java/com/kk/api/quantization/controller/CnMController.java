@@ -60,8 +60,8 @@ public class CnMController {
             @ApiImplicitParam(name = "source", value = "来源（app/web/minotor）", paramType = "header", required = false, dataType = "String"),
             @ApiImplicitParam(name = "version", value = "版本号（1.0.0）", paramType = "header",  dataType = "String")
     })
-    @PostMapping("/delete")
-    public ApiResult<?> getCnMPageList(@Valid @RequestBody CnMDeleteVo vo)   {
+    @PostMapping("/delete_by_id")
+    public ApiResult<?> deleteById(@Valid @RequestBody CnMDeleteVo vo)   {
         cnMService.deleteById(vo);
         return ApiResult.SUCCESS;
 

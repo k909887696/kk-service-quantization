@@ -73,7 +73,7 @@ public class ConceptDailyServiceImpl extends MppServiceImpl<ConceptDailyMapper, 
     public int update(ConceptDailyEditVo vo)
     {
         ConceptDaily model = mapperUtils.map(vo,ConceptDaily.class);
-        int r = this.baseMapper.updateById(model);
+        int r = this.baseMapper.updateByMultiId(model);
         if(r != 1)
         {
             throw new BusinessException("概念日线行情更新失败!");

@@ -1,19 +1,24 @@
 package com.kk.business.quantization.service;
 
-import com.github.jeffreyning.mybatisplus.service.IMppService;
 import com.kk.business.quantization.dao.entity.SyUser;
-import com.kk.common.base.model.BasePage;
-import com.kk.common.base.model.PageResult;
+import com.github.jeffreyning.mybatisplus.service.IMppService;
 
 import java.util.List;
-
+import com.kk.business.quantization.model.vo.SyUserListVo;
+import com.kk.business.quantization.model.dto.SyUserListDto;
+import com.kk.business.quantization.model.vo.SyUserAddVo;
+import com.kk.business.quantization.model.vo.SyUserEditVo;
+import com.kk.business.quantization.model.dto.SyUserDto;
+import com.kk.business.quantization.model.vo.SyUserDetailsVo;
+import com.kk.business.quantization.model.vo.SyUserDeleteVo;
+import com.kk.common.base.model.PageResult;
 /**
  * <p>
- *  服务类
+ * 用户信息 服务类
  * </p>
  *
  * @author kk
- * @since 2021-12-18
+ * @since 2023-05-18
  */
 public interface ISyUserService extends IMppService<SyUser> {
 
@@ -28,6 +33,30 @@ public interface ISyUserService extends IMppService<SyUser> {
     * @param vo 请求参数
     * @return 结果集
     */
-    PageResult<SyUser> getPageResult(BasePage vo);
+    PageResult<SyUserListDto>  selectPageList(SyUserListVo vo);
+    /**
+    * 单条插入
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    void insert(SyUserAddVo vo);
+    /**
+    * 更新
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    int update(SyUserEditVo vo);
+    /**
+    * 单条查询
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    SyUserDto selectById(SyUserDetailsVo vo);
+    /**
+    * 删除
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    int deleteById(SyUserDeleteVo vo);
 
 }

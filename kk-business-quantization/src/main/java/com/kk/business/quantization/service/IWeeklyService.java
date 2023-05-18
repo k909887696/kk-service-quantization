@@ -1,19 +1,24 @@
 package com.kk.business.quantization.service;
 
-import com.github.jeffreyning.mybatisplus.service.IMppService;
 import com.kk.business.quantization.dao.entity.Weekly;
-import com.kk.common.base.model.BasePage;
-import com.kk.common.base.model.PageResult;
+import com.github.jeffreyning.mybatisplus.service.IMppService;
 
 import java.util.List;
-
+import com.kk.business.quantization.model.vo.WeeklyListVo;
+import com.kk.business.quantization.model.dto.WeeklyListDto;
+import com.kk.business.quantization.model.vo.WeeklyAddVo;
+import com.kk.business.quantization.model.vo.WeeklyEditVo;
+import com.kk.business.quantization.model.dto.WeeklyDto;
+import com.kk.business.quantization.model.vo.WeeklyDetailsVo;
+import com.kk.business.quantization.model.vo.WeeklyDeleteVo;
+import com.kk.common.base.model.PageResult;
 /**
  * <p>
  * 个股周线行情 服务类
  * </p>
  *
  * @author kk
- * @since 2021-12-18
+ * @since 2023-05-18
  */
 public interface IWeeklyService extends IMppService<Weekly> {
 
@@ -28,6 +33,30 @@ public interface IWeeklyService extends IMppService<Weekly> {
     * @param vo 请求参数
     * @return 结果集
     */
-    PageResult<Weekly> getPageResult(BasePage vo);
+    PageResult<WeeklyListDto>  selectPageList(WeeklyListVo vo);
+    /**
+    * 单条插入
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    void insert(WeeklyAddVo vo);
+    /**
+    * 更新
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    int update(WeeklyEditVo vo);
+    /**
+    * 单条查询
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    WeeklyDto selectById(WeeklyDetailsVo vo);
+    /**
+    * 删除
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    int deleteById(WeeklyDeleteVo vo);
 
 }

@@ -1,19 +1,24 @@
 package com.kk.business.quantization.service;
 
-import com.github.jeffreyning.mybatisplus.service.IMppService;
 import com.kk.business.quantization.dao.entity.SecuritySelection;
-import com.kk.common.base.model.BasePage;
-import com.kk.common.base.model.PageResult;
+import com.github.jeffreyning.mybatisplus.service.IMppService;
 
 import java.util.List;
-
+import com.kk.business.quantization.model.vo.SecuritySelectionListVo;
+import com.kk.business.quantization.model.dto.SecuritySelectionListDto;
+import com.kk.business.quantization.model.vo.SecuritySelectionAddVo;
+import com.kk.business.quantization.model.vo.SecuritySelectionEditVo;
+import com.kk.business.quantization.model.dto.SecuritySelectionDto;
+import com.kk.business.quantization.model.vo.SecuritySelectionDetailsVo;
+import com.kk.business.quantization.model.vo.SecuritySelectionDeleteVo;
+import com.kk.common.base.model.PageResult;
 /**
  * <p>
- *  服务类
+ * 个人自选股 服务类
  * </p>
  *
  * @author kk
- * @since 2021-12-18
+ * @since 2023-05-18
  */
 public interface ISecuritySelectionService extends IMppService<SecuritySelection> {
 
@@ -28,6 +33,30 @@ public interface ISecuritySelectionService extends IMppService<SecuritySelection
     * @param vo 请求参数
     * @return 结果集
     */
-    PageResult<SecuritySelection> getPageResult(BasePage vo);
+    PageResult<SecuritySelectionListDto>  selectPageList(SecuritySelectionListVo vo);
+    /**
+    * 单条插入
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    void insert(SecuritySelectionAddVo vo);
+    /**
+    * 更新
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    int update(SecuritySelectionEditVo vo);
+    /**
+    * 单条查询
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    SecuritySelectionDto selectById(SecuritySelectionDetailsVo vo);
+    /**
+    * 删除
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    int deleteById(SecuritySelectionDeleteVo vo);
 
 }

@@ -27,7 +27,7 @@ import com.kk.business.quantization.dao.entity.Concept;
  * </p>
  *
  * @author kk
- * @since 2023-05-16
+ * @since 2023-05-18
  */
 @Api(value = "/quantization/api/v1/concept",tags = "概念分类")
 @ResponseBody
@@ -40,11 +40,11 @@ public class ConceptController {
 
     @ApiOperation("获取分页结果集")
     @ApiImplicitParams(  {
-            @ApiImplicitParam(name = "token", value = "身份令牌", paramType = "header", required = false, dataType = "String"),
-            @ApiImplicitParam(name = "signature", value = "签名", paramType = "header", required = false, dataType = "String"),
-            @ApiImplicitParam(name = "timestamp", value = "时间戳", paramType = "header", required = false, dataType = "String"),
-            @ApiImplicitParam(name = "source", value = "来源（app/web/minotor）", paramType = "header", required = false, dataType = "String"),
-            @ApiImplicitParam(name = "version", value = "版本号（1.0.0）", paramType = "header",  dataType = "String")
+    @ApiImplicitParam(name = "token", value = "身份令牌", paramType = "header", required = false, dataType = "String"),
+    @ApiImplicitParam(name = "signature", value = "签名", paramType = "header", required = false, dataType = "String"),
+    @ApiImplicitParam(name = "timestamp", value = "时间戳", paramType = "header", required = false, dataType = "String"),
+    @ApiImplicitParam(name = "source", value = "来源（app/web/minotor）", paramType = "header", required = false, dataType = "String"),
+    @ApiImplicitParam(name = "version", value = "版本号（1.0.0）", paramType = "header",  dataType = "String")
     })
     @PostMapping("/get_concept_page_list")
     public ApiResult< PageResult<ConceptListDto> > getConceptPageList(@Valid @RequestBody ConceptListVo vo)   {
@@ -54,25 +54,25 @@ public class ConceptController {
     }
     @ApiOperation("删除")
     @ApiImplicitParams(  {
-            @ApiImplicitParam(name = "token", value = "身份令牌", paramType = "header", required = false, dataType = "String"),
-            @ApiImplicitParam(name = "signature", value = "签名", paramType = "header", required = false, dataType = "String"),
-            @ApiImplicitParam(name = "timestamp", value = "时间戳", paramType = "header", required = false, dataType = "String"),
-            @ApiImplicitParam(name = "source", value = "来源（app/web/minotor）", paramType = "header", required = false, dataType = "String"),
-            @ApiImplicitParam(name = "version", value = "版本号（1.0.0）", paramType = "header",  dataType = "String")
+    @ApiImplicitParam(name = "token", value = "身份令牌", paramType = "header", required = false, dataType = "String"),
+    @ApiImplicitParam(name = "signature", value = "签名", paramType = "header", required = false, dataType = "String"),
+    @ApiImplicitParam(name = "timestamp", value = "时间戳", paramType = "header", required = false, dataType = "String"),
+    @ApiImplicitParam(name = "source", value = "来源（app/web/minotor）", paramType = "header", required = false, dataType = "String"),
+    @ApiImplicitParam(name = "version", value = "版本号（1.0.0）", paramType = "header",  dataType = "String")
     })
-    @PostMapping("/delete")
-    public ApiResult<?> getConceptPageList(@Valid @RequestBody ConceptDeleteVo vo)   {
+    @PostMapping("/delete_by_id")
+    public ApiResult<?> deleteById(@Valid @RequestBody ConceptDeleteVo vo)   {
         conceptService.deleteById(vo);
         return ApiResult.SUCCESS;
 
     }
     @ApiOperation("插入")
     @ApiImplicitParams(  {
-            @ApiImplicitParam(name = "token", value = "身份令牌", paramType = "header", required = false, dataType = "String"),
-            @ApiImplicitParam(name = "signature", value = "签名", paramType = "header", required = false, dataType = "String"),
-            @ApiImplicitParam(name = "timestamp", value = "时间戳", paramType = "header", required = false, dataType = "String"),
-            @ApiImplicitParam(name = "source", value = "来源（app/web/minotor）", paramType = "header", required = false, dataType = "String"),
-            @ApiImplicitParam(name = "version", value = "版本号（1.0.0）", paramType = "header",  dataType = "String")
+    @ApiImplicitParam(name = "token", value = "身份令牌", paramType = "header", required = false, dataType = "String"),
+    @ApiImplicitParam(name = "signature", value = "签名", paramType = "header", required = false, dataType = "String"),
+    @ApiImplicitParam(name = "timestamp", value = "时间戳", paramType = "header", required = false, dataType = "String"),
+    @ApiImplicitParam(name = "source", value = "来源（app/web/minotor）", paramType = "header", required = false, dataType = "String"),
+    @ApiImplicitParam(name = "version", value = "版本号（1.0.0）", paramType = "header",  dataType = "String")
     })
     @PostMapping("/insert")
     public ApiResult<?> insert(@Valid @RequestBody ConceptAddVo vo)   {
@@ -82,11 +82,11 @@ public class ConceptController {
     }
     @ApiOperation("更新")
     @ApiImplicitParams(  {
-            @ApiImplicitParam(name = "token", value = "身份令牌", paramType = "header", required = false, dataType = "String"),
-            @ApiImplicitParam(name = "signature", value = "签名", paramType = "header", required = false, dataType = "String"),
-            @ApiImplicitParam(name = "timestamp", value = "时间戳", paramType = "header", required = false, dataType = "String"),
-            @ApiImplicitParam(name = "source", value = "来源（app/web/minotor）", paramType = "header", required = false, dataType = "String"),
-            @ApiImplicitParam(name = "version", value = "版本号（1.0.0）", paramType = "header",  dataType = "String")
+    @ApiImplicitParam(name = "token", value = "身份令牌", paramType = "header", required = false, dataType = "String"),
+    @ApiImplicitParam(name = "signature", value = "签名", paramType = "header", required = false, dataType = "String"),
+    @ApiImplicitParam(name = "timestamp", value = "时间戳", paramType = "header", required = false, dataType = "String"),
+    @ApiImplicitParam(name = "source", value = "来源（app/web/minotor）", paramType = "header", required = false, dataType = "String"),
+    @ApiImplicitParam(name = "version", value = "版本号（1.0.0）", paramType = "header",  dataType = "String")
     })
     @PostMapping("/update")
     public ApiResult<?> update(@Valid @RequestBody ConceptEditVo vo)   {
@@ -96,11 +96,11 @@ public class ConceptController {
     }
     @ApiOperation("查询详情")
     @ApiImplicitParams(  {
-            @ApiImplicitParam(name = "token", value = "身份令牌", paramType = "header", required = false, dataType = "String"),
-            @ApiImplicitParam(name = "signature", value = "签名", paramType = "header", required = false, dataType = "String"),
-            @ApiImplicitParam(name = "timestamp", value = "时间戳", paramType = "header", required = false, dataType = "String"),
-            @ApiImplicitParam(name = "source", value = "来源（app/web/minotor）", paramType = "header", required = false, dataType = "String"),
-            @ApiImplicitParam(name = "version", value = "版本号（1.0.0）", paramType = "header",  dataType = "String")
+    @ApiImplicitParam(name = "token", value = "身份令牌", paramType = "header", required = false, dataType = "String"),
+    @ApiImplicitParam(name = "signature", value = "签名", paramType = "header", required = false, dataType = "String"),
+    @ApiImplicitParam(name = "timestamp", value = "时间戳", paramType = "header", required = false, dataType = "String"),
+    @ApiImplicitParam(name = "source", value = "来源（app/web/minotor）", paramType = "header", required = false, dataType = "String"),
+    @ApiImplicitParam(name = "version", value = "版本号（1.0.0）", paramType = "header",  dataType = "String")
     })
     @PostMapping("/get_details")
     public ApiResult< ConceptDto > getDetails(@Valid @RequestBody ConceptDetailsVo vo)   {

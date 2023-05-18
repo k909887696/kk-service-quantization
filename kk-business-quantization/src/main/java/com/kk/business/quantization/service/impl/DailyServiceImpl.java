@@ -73,7 +73,7 @@ public class DailyServiceImpl extends MppServiceImpl<DailyMapper, Daily> impleme
     public int update(DailyEditVo vo)
     {
         Daily model = mapperUtils.map(vo,Daily.class);
-        int r = this.baseMapper.updateById(model);
+        int r = this.baseMapper.updateByMultiId(model);
         if(r != 1)
         {
             throw new BusinessException("个股日线行情更新失败!");

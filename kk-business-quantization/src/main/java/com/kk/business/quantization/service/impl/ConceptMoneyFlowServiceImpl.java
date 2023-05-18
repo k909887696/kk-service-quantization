@@ -73,7 +73,7 @@ public class ConceptMoneyFlowServiceImpl extends MppServiceImpl<ConceptMoneyFlow
     public int update(ConceptMoneyFlowEditVo vo)
     {
         ConceptMoneyFlow model = mapperUtils.map(vo,ConceptMoneyFlow.class);
-        int r = this.baseMapper.updateById(model);
+        int r = this.baseMapper.updateByMultiId(model);
         if(r != 1)
         {
             throw new BusinessException("概念资金流向更新失败!");
