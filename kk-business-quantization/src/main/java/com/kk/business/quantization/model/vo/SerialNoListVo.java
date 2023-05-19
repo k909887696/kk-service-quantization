@@ -10,14 +10,14 @@ import lombok.Data;
 import com.kk.common.base.model.BasePage;
 /**
  * <p>
- * 自定义主键序号	列表查询实体
+ * 自定义主键序号列表查询实体
  * </p>
  *
  * @author kk
- * @since 2023-05-16
+ * @since 2023-05-19
  */
 @Data
-@ApiModel(value = "自定义主键序号	列表查询实体", description = "自定义主键序号	")
+@ApiModel(value = "自定义主键序号列表查询实体", description = "自定义主键序号")
 public class SerialNoListVo extends BasePage{
 
     private static final long serialVersionUID = 1L;

@@ -11,14 +11,14 @@ import lombok.Data;
 
 /**
  * <p>
- * 系统设置-调度类型	详情返回实体
+ * 系统设置-调度类型详情返回实体
  * </p>
  *
  * @author kk
- * @since 2023-05-16
+ * @since 2023-05-19
  */
 @Data
-@ApiModel(value = "系统设置-调度类型	详情返回实体", description = "系统设置-调度类型	")
+@ApiModel(value = "系统设置-调度类型详情返回实体", description = "系统设置-调度类型")
 public class InvokeTypeDto implements Serializable {
 
     private static final long serialVersionUID = 1L;

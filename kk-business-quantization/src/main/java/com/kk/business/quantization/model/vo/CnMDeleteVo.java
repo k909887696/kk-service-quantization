@@ -14,7 +14,7 @@ import lombok.Data;
  * </p>
  *
  * @author kk
- * @since 2023-05-16
+ * @since 2023-05-19
  */
 @Data
 @ApiModel(value = "人民币货币总量对象删除实体", description = "人民币货币总量对象")

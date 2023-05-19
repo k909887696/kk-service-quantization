@@ -14,7 +14,7 @@ import lombok.Data;
  * </p>
  *
  * @author kk
- * @since 2023-05-16
+ * @since 2023-05-19
  */
 @Data
 @ApiModel(value = "概念明细详情返回实体", description = "概念明细")

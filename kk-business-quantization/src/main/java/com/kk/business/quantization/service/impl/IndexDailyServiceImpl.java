@@ -1,33 +1,39 @@
 package com.kk.business.quantization.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.github.jeffreyning.mybatisplus.service.MppServiceImpl;
-import com.kk.business.quantization.dao.entity.IndexDaily;
-import com.kk.business.quantization.dao.mapper.IndexDailyMapper;
-import com.kk.business.quantization.service.IIndexDailyService;
-import com.kk.common.base.model.BasePage;
-import com.kk.common.base.model.PageResult;
-import org.springframework.stereotype.Service;
 
+import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
-
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.kk.business.quantization.dao.entity.IndexDaily;
+import com.kk.business.quantization.dao.mapper.IndexDailyMapper;
+import com.kk.business.quantization.service.IIndexDailyService;
+import com.github.jeffreyning.mybatisplus.service.MppServiceImpl;
+import com.kk.business.quantization.model.vo.IndexDailyListVo;
+import com.kk.business.quantization.model.dto.IndexDailyListDto;
+import com.kk.business.quantization.model.vo.IndexDailyAddVo;
+import com.kk.business.quantization.model.vo.IndexDailyEditVo;
+import com.kk.business.quantization.model.dto.IndexDailyDto;
+import com.kk.business.quantization.model.vo.IndexDailyDetailsVo;
+import com.kk.business.quantization.model.vo.IndexDailyDeleteVo;
+import com.kk.common.utils.MapperUtils;
+import com.kk.common.base.model.PageResult;
+import com.kk.common.exception.BusinessException;
 /**
  * <p>
  * 指数日线行情 服务实现类
  * </p>
  *
  * @author kk
- * @since 2021-12-27
+ * @since 2023-05-19
  */
 @Service
 public class IndexDailyServiceImpl extends MppServiceImpl<IndexDailyMapper, IndexDaily> implements IIndexDailyService {
 
     @Resource
-    public IndexDailyMapper mapper;
+    public MapperUtils mapperUtils;
     /**
     * 分批批量插入
     * @param list 数据列表
@@ -46,23 +52,71 @@ public class IndexDailyServiceImpl extends MppServiceImpl<IndexDailyMapper, Inde
         for(;index<=totalPage;index++)
         {
             List<IndexDaily> tempList = list.stream().skip((index-1)*size).limit(size).collect(Collectors.toList());
-            mapper.insertIgnoreBatchSomeColumn(tempList);
+            this.baseMapper.insertIgnoreBatchSomeColumn(tempList);
         }
+    }
+    /**
+    * 单条插入
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    public void insert(IndexDailyAddVo vo)
+    {
+        IndexDaily model = mapperUtils.map(vo,IndexDaily.class);
+        this.baseMapper.insert(model);
+    }
+    /**
+    * 更新
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    public int update(IndexDailyEditVo vo)
+    {
+        IndexDaily model = mapperUtils.map(vo,IndexDaily.class);
+        int r = this.baseMapper.updateByMultiId(model);
+        if(r != 1)
+        {
+            throw new BusinessException("指数日线行情更新失败!");
+        }
+        return r;
+    }
+    /**
+    * 单条查询
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    public IndexDailyDto selectById(IndexDailyDetailsVo vo)
+    {
+        IndexDaily model = mapperUtils.map(vo,IndexDaily.class);
+        IndexDaily res = this.baseMapper.selectByMultiId(model);
+        IndexDailyDto dto = mapperUtils.map(res,IndexDailyDto.class);
+        return dto;
+    }
+    /**
+    * 删除
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    public int deleteById(IndexDailyDeleteVo vo)
+    {
+        IndexDaily model = mapperUtils.map(vo,IndexDaily.class);
+        int r = this.baseMapper.deleteByMultiId(model);
+        if(r != 1)
+        {
+            throw new BusinessException("指数日线行情删除失败!");
+        }
+        return r;
     }
     /**
     * 分页获取结果集
     * @param vo 请求参数
     * @return 结果集
     */
-    public PageResult<IndexDaily>  getPageResult(BasePage vo){
+    public PageResult<IndexDailyListDto>  selectPageList(IndexDailyListVo vo){
 
-        QueryWrapper<IndexDaily> query = new QueryWrapper<>();
-        IPage<IndexDaily> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
-
-        //这里开始编写查询条件
-
-        page = mapper.selectPage(page,query);
-        PageResult<IndexDaily>  pageResult = new PageResult<>();
+        IPage<IndexDailyListDto> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
+        page = this.baseMapper.selectPageList(page,vo);
+        PageResult<IndexDailyListDto>  pageResult = new PageResult<>();
 
         pageResult.setResult(page.getRecords());
         pageResult.setTotalCount(page.getTotal());
@@ -71,6 +125,7 @@ public class IndexDailyServiceImpl extends MppServiceImpl<IndexDailyMapper, Inde
 
         return pageResult;
     }
+
 
 
 }

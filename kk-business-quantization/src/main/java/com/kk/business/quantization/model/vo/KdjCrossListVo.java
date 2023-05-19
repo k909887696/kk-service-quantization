@@ -10,14 +10,14 @@ import lombok.Data;
 import com.kk.common.base.model.BasePage;
 /**
  * <p>
- * kdj交叉点	列表查询实体
+ * kdj交叉点列表查询实体
  * </p>
  *
  * @author kk
- * @since 2023-05-16
+ * @since 2023-05-19
  */
 @Data
-@ApiModel(value = "kdj交叉点	列表查询实体", description = "kdj交叉点	")
+@ApiModel(value = "kdj交叉点列表查询实体", description = "kdj交叉点")
 public class KdjCrossListVo extends BasePage{
 
     private static final long serialVersionUID = 1L;

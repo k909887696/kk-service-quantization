@@ -10,14 +10,14 @@ import lombok.Data;
 import com.kk.common.base.model.BasePage;
 /**
  * <p>
- * 个股每日指标	列表查询实体
+ * 个股每日指标列表查询实体
  * </p>
  *
  * @author kk
- * @since 2023-05-16
+ * @since 2023-05-19
  */
 @Data
-@ApiModel(value = "个股每日指标	列表查询实体", description = "个股每日指标	")
+@ApiModel(value = "个股每日指标列表查询实体", description = "个股每日指标")
 public class DailyBasicListVo extends BasePage{
 
     private static final long serialVersionUID = 1L;

@@ -4,9 +4,9 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.IndexMember">
-        <result column="index_code" property="indexCode" />
+        <id column="index_code" property="indexCode" />
+        <id column="con_code" property="conCode" />
         <result column="index_name" property="indexName" />
-        <result column="con_code" property="conCode" />
         <result column="con_name" property="conName" />
         <result column="in_date" property="inDate" />
         <result column="out_date" property="outDate" />

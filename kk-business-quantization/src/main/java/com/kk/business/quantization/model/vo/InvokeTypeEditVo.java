@@ -11,14 +11,14 @@ import lombok.Data;
 
 /**
  * <p>
- * 系统设置-调度类型	编辑实体
+ * 系统设置-调度类型编辑实体
  * </p>
  *
  * @author kk
- * @since 2023-05-16
+ * @since 2023-05-19
  */
 @Data
-@ApiModel(value = "系统设置-调度类型	编辑实体", description = "系统设置-调度类型	")
+@ApiModel(value = "系统设置-调度类型编辑实体", description = "系统设置-调度类型")
 public class InvokeTypeEditVo implements Serializable {
 
     private static final long serialVersionUID = 1L;

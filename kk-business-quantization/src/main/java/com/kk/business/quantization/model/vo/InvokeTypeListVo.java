@@ -11,14 +11,14 @@ import lombok.Data;
 import com.kk.common.base.model.BasePage;
 /**
  * <p>
- * 系统设置-调度类型	列表查询实体
+ * 系统设置-调度类型列表查询实体
  * </p>
  *
  * @author kk
- * @since 2023-05-16
+ * @since 2023-05-19
  */
 @Data
-@ApiModel(value = "系统设置-调度类型	列表查询实体", description = "系统设置-调度类型	")
+@ApiModel(value = "系统设置-调度类型列表查询实体", description = "系统设置-调度类型")
 public class InvokeTypeListVo extends BasePage{
 
     private static final long serialVersionUID = 1L;

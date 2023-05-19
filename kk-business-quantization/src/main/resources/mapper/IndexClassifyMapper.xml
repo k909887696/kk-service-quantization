@@ -4,10 +4,12 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.IndexClassify">
-        <result column="index_code" property="indexCode" />
+        <id column="index_code" property="indexCode" />
         <result column="industry_name" property="industryName" />
+        <result column="parent_code" property="parentCode" />
         <result column="level" property="level" />
         <result column="industry_code" property="industryCode" />
+        <result column="is_pub" property="isPub" />
         <result column="src" property="src" />
     </resultMap>
 
@@ -15,8 +17,10 @@
     <sql id="BaseColumnList">
         index_code as 'indexCode',
         industry_name as 'industryName',
+        parent_code as 'parentCode',
         level as 'level',
         industry_code as 'industryCode',
+        is_pub as 'isPub',
         src as 'src'
 
     </sql>
@@ -29,11 +33,17 @@
            <if test="indexClassifyListVo.industryName != null and indexClassifyListVo.industryName != ''">
                and industry_name like concat('%',#{indexClassifyListVo.industryName},'%')
            </if>
+           <if test="indexClassifyListVo.parentCode != null and indexClassifyListVo.parentCode != ''">
+               and parent_code = #{indexClassifyListVo.parentCode}
+           </if>
            <if test="indexClassifyListVo.level != null and indexClassifyListVo.level != ''">
                and level = #{indexClassifyListVo.level}
            </if>
            <if test="indexClassifyListVo.industryCode != null and indexClassifyListVo.industryCode != ''">
                and industry_code = #{indexClassifyListVo.industryCode}
+           </if>
+           <if test="indexClassifyListVo.isPub != null and indexClassifyListVo.isPub != ''">
+               and is_pub = #{indexClassifyListVo.isPub}
            </if>
            <if test="indexClassifyListVo.src != null and indexClassifyListVo.src != ''">
                and src = #{indexClassifyListVo.src}

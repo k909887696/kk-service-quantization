@@ -4,8 +4,8 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.MoneyFlow">
-        <result column="ts_code" property="tsCode" />
-        <result column="trade_date" property="tradeDate" />
+        <id column="ts_code" property="tsCode" />
+        <id column="trade_date" property="tradeDate" />
         <result column="buy_sm_vol" property="buySmVol" />
         <result column="buy_sm_amount" property="buySmAmount" />
         <result column="sell_sm_vol" property="sellSmVol" />

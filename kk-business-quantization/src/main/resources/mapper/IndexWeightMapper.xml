@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kk.business.quantization.dao.mapper.IndexWeightMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.IndexWeight">
+        <id column="index_code" property="indexCode" />
+        <id column="con_code" property="conCode" />
+        <result column="trade_date" property="tradeDate" />
+        <result column="weight" property="weight" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        index_code as 'indexCode',
+        con_code as 'conCode',
+        trade_date as 'tradeDate',
+        weight as 'weight'
+
+    </sql>
+    <!-- 通用查询条件 -->
+    <sql id="BaseWhere">
+        <trim prefix="where" prefixOverrides="and | or">
+           <if test="indexWeightListVo.indexCode != null and indexWeightListVo.indexCode != ''">
+               and index_code = #{indexWeightListVo.indexCode}
+           </if>
+           <if test="indexWeightListVo.conCode != null and indexWeightListVo.conCode != ''">
+               and con_code = #{indexWeightListVo.conCode}
+           </if>
+           <if test="indexWeightListVo.tradeDateStart != null and indexWeightListVo.tradeDateStart != ''">
+               and trade_date >= #{indexWeightListVo.tradeDateStart}
+           </if>
+           <if test="indexWeightListVo.tradeDateEnd != null and indexWeightListVo.tradeDateEnd != ''">
+               and trade_date &lt;= #{indexWeightListVo.tradeDateEnd}
+           </if>
+           <if test="indexWeightListVo.weight != null and indexWeightListVo.weight != ''">
+               and weight = #{indexWeightListVo.weight}
+           </if>
+        </trim>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.IndexWeightListDto">
+        select <include refid="BaseColumnList"/>
+        from index_weight
+        <include refid="BaseWhere"/>
+
+    </select>
+
+
+
+</mapper>

@@ -9,14 +9,14 @@ import lombok.Data;
 import com.kk.common.base.model.BasePage;
 /**
  * <p>
- * 各个市场涨跌幅限制	列表查询实体
+ * 各个市场涨跌幅限制列表查询实体
  * </p>
  *
  * @author kk
- * @since 2023-05-16
+ * @since 2023-05-19
  */
 @Data
-@ApiModel(value = "各个市场涨跌幅限制	列表查询实体", description = "各个市场涨跌幅限制	")
+@ApiModel(value = "各个市场涨跌幅限制列表查询实体", description = "各个市场涨跌幅限制")
 public class MaxPctChgListVo extends BasePage{
 
     private static final long serialVersionUID = 1L;

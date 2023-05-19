@@ -9,14 +9,14 @@ import lombok.Data;
 
 /**
  * <p>
- * 各个市场涨跌幅限制	列表返回实体
+ * 各个市场涨跌幅限制列表返回实体
  * </p>
  *
  * @author kk
- * @since 2023-05-16
+ * @since 2023-05-19
  */
 @Data
-@ApiModel(value = "各个市场涨跌幅限制	列表返回实体", description = "各个市场涨跌幅限制	")
+@ApiModel(value = "各个市场涨跌幅限制列表返回实体", description = "各个市场涨跌幅限制")
 public class MaxPctChgListDto implements Serializable {
 
     private static final long serialVersionUID = 1L;

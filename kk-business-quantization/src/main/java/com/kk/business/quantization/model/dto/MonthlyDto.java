@@ -9,14 +9,14 @@ import lombok.Data;
 
 /**
  * <p>
- * 个股月线行情	详情返回实体
+ * 个股月线行情详情返回实体
  * </p>
  *
  * @author kk
- * @since 2023-05-16
+ * @since 2023-05-19
  */
 @Data
-@ApiModel(value = "个股月线行情	详情返回实体", description = "个股月线行情	")
+@ApiModel(value = "个股月线行情详情返回实体", description = "个股月线行情")
 public class MonthlyDto implements Serializable {
 
     private static final long serialVersionUID = 1L;

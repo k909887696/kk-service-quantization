@@ -10,14 +10,14 @@ import lombok.Data;
 import com.kk.common.base.model.BasePage;
 /**
  * <p>
- * 概念日线行情	列表查询实体
+ * 概念日线行情列表查询实体
  * </p>
  *
  * @author kk
- * @since 2023-05-16
+ * @since 2023-05-19
  */
 @Data
-@ApiModel(value = "概念日线行情	列表查询实体", description = "概念日线行情	")
+@ApiModel(value = "概念日线行情列表查询实体", description = "概念日线行情")
 public class ConceptDailyListVo extends BasePage{
 
     private static final long serialVersionUID = 1L;

@@ -10,14 +10,14 @@ import lombok.Data;
 
 /**
  * <p>
- * kdj交叉点	详情返回实体
+ * kdj交叉点详情返回实体
  * </p>
  *
  * @author kk
- * @since 2023-05-16
+ * @since 2023-05-19
  */
 @Data
-@ApiModel(value = "kdj交叉点	详情返回实体", description = "kdj交叉点	")
+@ApiModel(value = "kdj交叉点详情返回实体", description = "kdj交叉点")
 public class KdjCrossDto implements Serializable {
 
     private static final long serialVersionUID = 1L;

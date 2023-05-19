@@ -3,19 +3,19 @@ package com.kk.business.quantization.dao.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
-import java.io.Serializable;
-
+import lombok.Data;
 /**
  * <p>
  * 指数基本信息
  * </p>
  *
  * @author kk
- * @since 2021-12-18
+ * @since 2023-05-19
  */
+@Data
 @TableName("index_basic")
 @ApiModel(value = "指数基本信息对象", description = "指数基本信息")
 public class IndexBasic implements Serializable {
@@ -23,9 +23,9 @@ public class IndexBasic implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-    * TS指数代码
+    * TS代码
     */
-    @ApiModelProperty("TS指数代码")
+    @ApiModelProperty("TS代码")
     @TableId("ts_code")
     private String tsCode;
 
@@ -51,9 +51,9 @@ public class IndexBasic implements Serializable {
     private String market;
 
     /**
-    * 发布方
+    * 	发布方
     */
-    @ApiModelProperty("发布方")
+    @ApiModelProperty("	发布方")
     @TableField("publisher")
     private String publisher;
 
@@ -103,7 +103,7 @@ public class IndexBasic implements Serializable {
     * 描述
     */
     @ApiModelProperty("描述")
-    @TableField("`desc`")
+    @TableField("desc")
     private String desc;
 
     /**
@@ -113,114 +113,5 @@ public class IndexBasic implements Serializable {
     @TableField("exp_date")
     private String expDate;
 
-    public String getTsCode() {
-        return tsCode;
-    }
 
-    public void setTsCode(String tsCode) {
-        this.tsCode = tsCode;
-    }
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-    public String getFullname() {
-        return fullname;
-    }
-
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
-    }
-    public String getMarket() {
-        return market;
-    }
-
-    public void setMarket(String market) {
-        this.market = market;
-    }
-    public String getPublisher() {
-        return publisher;
-    }
-
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
-    }
-    public String getIndexType() {
-        return indexType;
-    }
-
-    public void setIndexType(String indexType) {
-        this.indexType = indexType;
-    }
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-    public String getBaseDate() {
-        return baseDate;
-    }
-
-    public void setBaseDate(String baseDate) {
-        this.baseDate = baseDate;
-    }
-    public Double getBasePoint() {
-        return basePoint;
-    }
-
-    public void setBasePoint(Double basePoint) {
-        this.basePoint = basePoint;
-    }
-    public String getListDate() {
-        return listDate;
-    }
-
-    public void setListDate(String listDate) {
-        this.listDate = listDate;
-    }
-    public String getWeightRule() {
-        return weightRule;
-    }
-
-    public void setWeightRule(String weightRule) {
-        this.weightRule = weightRule;
-    }
-    public String getDesc() {
-        return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-    public String getExpDate() {
-        return expDate;
-    }
-
-    public void setExpDate(String expDate) {
-        this.expDate = expDate;
-    }
-
-    @Override
-    public String toString() {
-        return "IndexBasic{" +
-            "tsCode=" + tsCode +
-            ", name=" + name +
-            ", fullname=" + fullname +
-            ", market=" + market +
-            ", publisher=" + publisher +
-            ", indexType=" + indexType +
-            ", category=" + category +
-            ", baseDate=" + baseDate +
-            ", basePoint=" + basePoint +
-            ", listDate=" + listDate +
-            ", weightRule=" + weightRule +
-            ", desc=" + desc +
-            ", expDate=" + expDate +
-        "}";
-    }
 }

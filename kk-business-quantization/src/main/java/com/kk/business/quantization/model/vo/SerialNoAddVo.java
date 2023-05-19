@@ -10,14 +10,14 @@ import lombok.Data;
 
 /**
  * <p>
- * 自定义主键序号	新增实体
+ * 自定义主键序号新增实体
  * </p>
  *
  * @author kk
- * @since 2023-05-16
+ * @since 2023-05-19
  */
 @Data
-@ApiModel(value = "自定义主键序号	新增实体", description = "自定义主键序号	")
+@ApiModel(value = "自定义主键序号新增实体", description = "自定义主键序号")
 public class SerialNoAddVo implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -13,7 +13,7 @@ import com.kk.common.base.model.BasePage;
  * </p>
  *
  * @author kk
- * @since 2023-05-16
+ * @since 2023-05-19
  */
 @Data
 @ApiModel(value = "个股异常波动信息列表查询实体", description = "个股异常波动信息")

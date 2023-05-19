@@ -10,14 +10,14 @@ import lombok.Data;
 
 /**
  * <p>
- * 系统设置-数据任务-历史	列表返回实体
+ * 系统设置-数据任务-历史列表返回实体
  * </p>
  *
  * @author kk
- * @since 2023-05-16
+ * @since 2023-05-19
  */
 @Data
-@ApiModel(value = "系统设置-数据任务-历史	列表返回实体", description = "系统设置-数据任务-历史	")
+@ApiModel(value = "系统设置-数据任务-历史列表返回实体", description = "系统设置-数据任务-历史")
 public class CollectionTaskHistoryListDto implements Serializable {
 
     private static final long serialVersionUID = 1L;

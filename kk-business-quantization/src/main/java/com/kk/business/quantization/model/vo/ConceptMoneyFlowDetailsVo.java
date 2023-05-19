@@ -14,14 +14,22 @@ import lombok.Data;
  * </p>
  *
  * @author kk
- * @since 2023-05-16
+ * @since 2023-05-19
  */
 @Data
 @ApiModel(value = "概念资金流向查询详情实体", description = "概念资金流向")
 public class ConceptMoneyFlowDetailsVo implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    /**
+    * 概念代码
+    */
+    @ApiModelProperty("概念代码")
     private String code;
+    /**
+    * 交易日期
+    */
+    @ApiModelProperty("交易日期")
     private String tradeDate;
 
 

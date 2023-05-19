@@ -14,7 +14,7 @@ import lombok.Data;
  * </p>
  *
  * @author kk
- * @since 2023-05-16
+ * @since 2023-05-19
  */
 @Data
 @ApiModel(value = "概念资金流向编辑实体", description = "概念资金流向")
@@ -22,26 +22,110 @@ public class ConceptMoneyFlowEditVo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+    * 概念代码
+    */
+    @ApiModelProperty("概念代码")
     private String code;
+    /**
+    * 交易日期
+    */
+    @ApiModelProperty("交易日期")
     private String tradeDate;
+    /**
+    * 小单买入量（手）
+    */
+    @ApiModelProperty("小单买入量（手）")
     private Integer buySmVol;
+    /**
+    * 小单买入金额（万元）
+    */
+    @ApiModelProperty("小单买入金额（万元）")
     private Double buySmAmount;
+    /**
+    * 小单卖出量（手）
+    */
+    @ApiModelProperty("小单卖出量（手）")
     private Integer sellSmVol;
+    /**
+    * 小单卖出金额（万元）
+    */
+    @ApiModelProperty("小单卖出金额（万元）")
     private Double sellSmAmount;
+    /**
+    * 中单买入量（手）
+    */
+    @ApiModelProperty("中单买入量（手）")
     private Integer buyMdVol;
+    /**
+    * 中单买入金额（万元）
+    */
+    @ApiModelProperty("中单买入金额（万元）")
     private Double buyMdAmount;
+    /**
+    * 中单卖出量（手）
+    */
+    @ApiModelProperty("中单卖出量（手）")
     private Integer sellMdVol;
+    /**
+    * 中单卖出金额（万元）
+    */
+    @ApiModelProperty("中单卖出金额（万元）")
     private Double sellMdAmount;
+    /**
+    * 大单买入量（手）
+    */
+    @ApiModelProperty("大单买入量（手）")
     private Integer buyLgVol;
+    /**
+    * 大单买入金额（万元）
+    */
+    @ApiModelProperty("大单买入金额（万元）")
     private Double buyLgAmount;
+    /**
+    * 大单卖出量（手）
+    */
+    @ApiModelProperty("大单卖出量（手）")
     private Integer sellLgVol;
+    /**
+    * 大单卖出金额（万元）
+    */
+    @ApiModelProperty("大单卖出金额（万元）")
     private Double sellLgAmount;
+    /**
+    * 特大单买入量（手）
+    */
+    @ApiModelProperty("特大单买入量（手）")
     private Integer buyElgVol;
+    /**
+    * 特大单买入金额（万元）
+    */
+    @ApiModelProperty("特大单买入金额（万元）")
     private Double buyElgAmount;
+    /**
+    * 特大单卖出量（手）
+    */
+    @ApiModelProperty("特大单卖出量（手）")
     private Integer sellElgVol;
+    /**
+    * 特大单卖出金额（万元）
+    */
+    @ApiModelProperty("特大单卖出金额（万元）")
     private Double sellElgAmount;
+    /**
+    * 净流入量（手）
+    */
+    @ApiModelProperty("净流入量（手）")
     private Integer netMfVol;
+    /**
+    * 净流入额（万元）
+    */
+    @ApiModelProperty("净流入额（万元）")
     private Double netMfAmount;
+    /**
+    * 概念名称
+    */
+    @ApiModelProperty("概念名称")
     private String name;
 
 

@@ -4,7 +4,7 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.IndexBasic">
-        <result column="ts_code" property="tsCode" />
+        <id column="ts_code" property="tsCode" />
         <result column="name" property="name" />
         <result column="fullname" property="fullname" />
         <result column="market" property="market" />

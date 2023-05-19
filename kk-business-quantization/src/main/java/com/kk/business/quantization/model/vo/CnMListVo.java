@@ -14,7 +14,7 @@ import com.kk.common.base.model.BasePage;
  * </p>
  *
  * @author kk
- * @since 2023-05-16
+ * @since 2023-05-19
  */
 @Data
 @ApiModel(value = "人民币货币总量对象列表查询实体", description = "人民币货币总量对象")
@@ -27,16 +27,6 @@ public class CnMListVo extends BasePage{
     */
     @ApiModelProperty("月份")
     private String month;
-    /**
-     * 月份-开始
-     */
-    @ApiModelProperty("月份-开始")
-    private String monthStart;
-    /**
-     * 月份-结束
-     */
-    @ApiModelProperty("月份-结束")
-    private String monthEnd;
     /**
     * 货币M0总量
     */
