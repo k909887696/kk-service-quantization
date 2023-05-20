@@ -23,10 +23,15 @@ public class CnMListVo extends BasePage{
     private static final long serialVersionUID = 1L;
 
     /**
-    * 月份
+    * 月份-开始
     */
-    @ApiModelProperty("月份")
-    private String month;
+    @ApiModelProperty("月份-开始")
+    private String monthStart;
+    /**
+     * 月份-结束
+     */
+    @ApiModelProperty("月份-结束")
+    private String monthEnd;
     /**
     * 货币M0总量
     */
