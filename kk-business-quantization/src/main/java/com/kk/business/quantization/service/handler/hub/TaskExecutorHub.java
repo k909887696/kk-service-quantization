@@ -1,4 +1,4 @@
-package com.kk.business.quantization.service.schedule;
+package com.kk.business.quantization.service.handler.hub;
 
 import com.kk.business.quantization.dao.entity.CollectionPolicy;
 import com.kk.business.quantization.dao.entity.CollectionTask;
@@ -23,7 +23,7 @@ import java.util.List;
  */
 @Slf4j
 @Component
-public class TaskExecutorSchedule {
+public class TaskExecutorHub {
     @Resource
     public ICollectionPolicyService collectionPolicyService;
     @Resource

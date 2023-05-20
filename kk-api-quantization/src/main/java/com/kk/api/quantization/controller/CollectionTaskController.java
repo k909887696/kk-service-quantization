@@ -4,7 +4,7 @@ package com.kk.api.quantization.controller;
 import com.kk.business.quantization.dao.entity.CollectionTask;
 import com.kk.business.quantization.model.vo.ExecuteTaskVo;
 import com.kk.business.quantization.model.vo.SearchTaskListVo;
-import com.kk.business.quantization.service.schedule.TaskExecutorSchedule;
+import com.kk.business.quantization.service.handler.hub.TaskExecutorHub;
 import com.kk.business.quantization.service.ICollectionTaskService;
 import com.kk.common.base.model.PageResult;
 import com.kk.common.web.model.ApiResult;
@@ -34,7 +34,7 @@ public class CollectionTaskController {
     @Resource
     public ICollectionTaskService service;
     @Resource
-    public TaskExecutorSchedule taskExecutorSchedule;
+    public TaskExecutorHub taskExecutorHub;
     @ApiOperation("获取分页结果集")
     @ApiImplicitParams(  {
     @ApiImplicitParam(name = "token", value = "身份令牌", paramType = "header", required = false, dataType = "String"),
@@ -60,7 +60,7 @@ public class CollectionTaskController {
     })
     @PostMapping("/execute_task")
     public ApiResult< String > executeTask(@Valid @RequestBody ExecuteTaskVo vo)   {
-        taskExecutorSchedule.taskSchedule();
+        taskExecutorHub.taskSchedule();
         return new  ApiResult("");
 
     }
