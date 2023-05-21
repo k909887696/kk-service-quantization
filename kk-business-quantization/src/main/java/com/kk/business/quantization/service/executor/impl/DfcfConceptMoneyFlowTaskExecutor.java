@@ -33,8 +33,7 @@ public class DfcfConceptMoneyFlowTaskExecutor implements ITaskExecutor {
     public IDfcfDataApi dfcfDataApi;
     @Resource
     public IConceptMoneyFlowService conceptMoneyFlowService;
-    @Resource
-    public ConceptMoneyFlowMapper conceptMoneyFlowMapper;
+
     @Resource
     public IConceptService conceptService;
     @Resource

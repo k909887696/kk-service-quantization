@@ -35,8 +35,6 @@ public class DfcfConceptDailyTaskExecutor implements ITaskExecutor {
     @Resource
     public IConceptDailyService conceptDailyService;
     @Resource
-    public ConceptDailyMapper conceptDailyMapper;
-    @Resource
     public IConceptService conceptService;
     @Resource
     public ITradeCalService tradeCalService;
