@@ -5,6 +5,7 @@ import com.kk.business.quantization.dao.entity.CollectionTask;
 import com.kk.business.quantization.dao.entity.Daily;
 import com.kk.business.quantization.dao.entity.StockBasic;
 import com.kk.business.quantization.model.po.tushare.TushareData;
+import com.kk.business.quantization.model.vo.StockBasicList4InnVo;
 import com.kk.business.quantization.service.IStockBasicService;
 import com.kk.business.quantization.service.executor.ITaskExecutor;
 import com.kk.business.quantization.model.po.tushare.DailyVo;
@@ -80,7 +81,7 @@ public class DailyTaskExecutor implements ITaskExecutor {
         if(StringUtils.isBlank(vo.getTsCode()) && StringUtils.isBlank(vo.getTradeDate()))
         {
             int pageSize = 10000,pageIndex =1;
-            BasePage basePage = new BasePage();
+            StockBasicList4InnVo basePage = new StockBasicList4InnVo();
             basePage.setPageIndex(pageIndex);
             basePage.setPageSize(pageSize);
             PageResult<StockBasic> stockBasicPageResult = stockBasicService.getStockBasicPageResult(basePage);

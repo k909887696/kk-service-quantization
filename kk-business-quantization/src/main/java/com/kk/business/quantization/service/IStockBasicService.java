@@ -62,6 +62,6 @@ public interface IStockBasicService extends IMppService<StockBasic> {
     * @param vo 请求参数
     * @return 结果集
     */
-    PageResult<StockBasic> getStockBasicPageResult(BasePage vo);
+    PageResult<StockBasic> getStockBasicPageResult(StockBasicList4InnVo vo);
 
 }

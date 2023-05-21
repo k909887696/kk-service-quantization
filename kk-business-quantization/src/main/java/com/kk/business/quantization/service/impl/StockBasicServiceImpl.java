@@ -1,5 +1,6 @@
 package com.kk.business.quantization.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -129,13 +130,16 @@ public class StockBasicServiceImpl extends MppServiceImpl<StockBasicMapper, Stoc
     * @param vo 请求参数
     * @return 结果集
     */
-    public PageResult<StockBasic>  getStockBasicPageResult(BasePage vo){
+    public PageResult<StockBasic>  getStockBasicPageResult(StockBasicList4InnVo vo){
 
-        QueryWrapper<StockBasic> query = new QueryWrapper<>();
+        LambdaQueryWrapper<StockBasic> query = new LambdaQueryWrapper<>();
         IPage<StockBasic> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
 
         //这里开始编写查询条件
-
+        if(vo.getSymbolList() != null && vo.getSymbolList().size() > 0)
+        {
+            query.in(StockBasic::getSymbol,vo.getSymbolList());
+        }
         page = this.baseMapper.selectPage(page,query);
         PageResult<StockBasic>  pageResult = new PageResult<>();
 

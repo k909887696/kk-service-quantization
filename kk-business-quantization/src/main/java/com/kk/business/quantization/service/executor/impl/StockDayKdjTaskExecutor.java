@@ -4,6 +4,7 @@ import com.kk.business.quantization.dao.entity.*;
 import com.kk.business.quantization.model.dto.DailyKdjDto;
 import com.kk.business.quantization.model.po.tushare.DailyKdjVo;
 import com.kk.business.quantization.model.vo.SearchDailyVo;
+import com.kk.business.quantization.model.vo.StockBasicList4InnVo;
 import com.kk.business.quantization.service.IDailyService;
 import com.kk.business.quantization.service.IStockBasicService;
 import com.kk.business.quantization.service.IStockDayKdjService;
@@ -130,7 +131,7 @@ public class StockDayKdjTaskExecutor implements ITaskExecutor {
         if(StringUtils.isBlank(vo.getTsCode()))
         {
             int pageSize = 5000,pageIndex =1;
-            BasePage basePage = new BasePage();
+            StockBasicList4InnVo basePage = new StockBasicList4InnVo();
             basePage.setPageIndex(pageIndex);
             basePage.setPageSize(pageSize);
             PageResult<StockBasic> stockBasicPageResult = stockBasicService.getStockBasicPageResult(basePage);

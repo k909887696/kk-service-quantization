@@ -47,7 +47,7 @@ public class DfcfFieldsMap {
                 }}
         );
         CODE_VALUE_MAP.put(DFCF_CONCEPT_DETAIL,new HashMap<String,String>(){{
-                    put("f12","tsCode");
+                    put("f12","symbol");
 
                     put("f14","name");
                 }}

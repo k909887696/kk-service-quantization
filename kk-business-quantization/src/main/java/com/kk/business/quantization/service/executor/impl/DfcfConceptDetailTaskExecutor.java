@@ -1,19 +1,19 @@
 package com.kk.business.quantization.service.executor.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.kk.business.quantization.dao.entity.CollectionPolicy;
-import com.kk.business.quantization.dao.entity.CollectionTask;
-import com.kk.business.quantization.dao.entity.Concept;
-import com.kk.business.quantization.dao.entity.ConceptDetail;
+import com.kk.business.quantization.dao.entity.*;
 import com.kk.business.quantization.dao.mapper.ConceptDetailMapper;
 import com.kk.business.quantization.model.po.dfcf.DfcfData;
 import com.kk.business.quantization.model.po.tushare.ConceptDetailVo;
 import com.kk.business.quantization.model.po.tushare.ConceptVo;
+import com.kk.business.quantization.model.vo.StockBasicList4InnVo;
 import com.kk.business.quantization.service.IConceptDetailService;
 import com.kk.business.quantization.service.IConceptService;
+import com.kk.business.quantization.service.IStockBasicService;
 import com.kk.business.quantization.service.executor.ITaskExecutor;
 import com.kk.business.quantization.third.IDfcfDataApi;
 import com.kk.common.base.model.PageResult;
+import com.kk.common.exception.BusinessException;
 import com.kk.common.utils.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -39,6 +39,8 @@ public class DfcfConceptDetailTaskExecutor implements ITaskExecutor {
     public ConceptDetailMapper conceptDetailMapper;
     @Resource
     public IConceptService conceptService;
+    @Resource
+    public IStockBasicService stockBasicService;
 
 
     /**
@@ -50,6 +52,7 @@ public class DfcfConceptDetailTaskExecutor implements ITaskExecutor {
         if(StringUtils.isBlank(params)) return ;
         ConceptDetailVo vo = (ConceptDetailVo) JsonUtil.parseObject(params,ConceptDetailVo.class);
         List<ConceptDetail> data = new ArrayList<>();
+        List<ConceptDetail> indata = new ArrayList<>();
 
         if((vo.getIds()==null || vo.getIds().size()<=0) && StringUtils.isBlank(vo.getId()))
             return ;
@@ -67,18 +70,41 @@ public class DfcfConceptDetailTaskExecutor implements ITaskExecutor {
             DfcfData<ConceptDetail> res =  dfcfDataApi.conceptDetail(vo);
             data.addAll(res.getData());
         }
+        if(data != null && data.size() >0) {
+            List<String> symbolList = data.stream().map(t -> t.getSymbol()).collect(Collectors.toList());
+            int pageSize = 10000, pageIndex = 1;
+            StockBasicList4InnVo basePage = new StockBasicList4InnVo();
+            basePage.setSymbolList(symbolList);
+            basePage.setPageIndex(pageIndex);
+            basePage.setPageSize(pageSize);
+            PageResult<StockBasic> stockBasicPageResult = stockBasicService.getStockBasicPageResult(basePage);
+            if(stockBasicPageResult!=null&& stockBasicPageResult.getTotalCount() > 0) {
+                for (int i = 0; i < stockBasicPageResult.getResult().size(); i++) {
+                    StockBasic stockBasic = stockBasicPageResult.getResult().get(i);
+                    List<ConceptDetail> conceptDetailList = data.stream().filter(t->t.getSymbol().equals(stockBasic.getSymbol())).collect(Collectors.toList());
+                    if(conceptDetailList != null && conceptDetailList.size() > 0)
+                    {
+                        for (int j =0; j<conceptDetailList.size();j++)
+                        {
+                            conceptDetailList.get(j).setTsCode(stockBasic.getTsCode());
+                            conceptDetailList.get(j).setName(stockBasic.getName());
+                        }
+                    }
+                    indata.addAll(conceptDetailList);
+                }
+                if ("cover".equals(vo.getUpdateType())) {
+                    LambdaQueryWrapper<ConceptDetail> query = new LambdaQueryWrapper<>();
+                    query.in(ConceptDetail::getConceptId, vo.getIds());
+                    conceptDetailMapper.delete(query);
+                }
 
-        if("cover".equals(vo.getUpdateType()))
-        {
-            LambdaQueryWrapper<ConceptDetail> query = new LambdaQueryWrapper<>();
-            query.in(ConceptDetail::getConceptId,vo.getIds());
-            conceptDetailMapper.delete(query);
+                //插入db
+                conceptDetailService.insertIgnoreBatch(indata);
+                conceptDetailMapper.updateConceptNameByConceptIds(vo.getIds());
+            }else {
+                throw new BusinessException("个股基本信息未查询到任何数据！");
+            }
         }
-
-        //插入db
-        conceptDetailService.insertIgnoreBatch(data);
-        conceptDetailMapper.updateTsCodeByConceptIds(vo.getIds());
-        conceptDetailMapper.updateConceptNameByConceptIds(vo.getIds());
     }
 
     @Override
