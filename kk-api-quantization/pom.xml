@@ -6,7 +6,7 @@
         <groupId>com.kk</groupId>
         <artifactId>kk-service-quantization</artifactId>
         <version>1.0-SNAPSHOT</version>
-
+        <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.kk</groupId>
     <artifactId>kk-api-quantization</artifactId>
