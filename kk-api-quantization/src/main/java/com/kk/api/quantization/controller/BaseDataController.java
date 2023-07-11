@@ -58,7 +58,7 @@ public class BaseDataController {
     }
 
 
-    @ApiOperation("daily")
+    @ApiOperation("test-jenkins-deploy")
     @ApiImplicitParams(  {
             // @ApiImplicitParam(name = "token", value = "身份令牌", paramType = "header", required = true, dataType = "String"),
             // @ApiImplicitParam(name = "signature", value = "签名", paramType = "header", required = true, dataType = "String"),
