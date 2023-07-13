@@ -62,7 +62,13 @@ public class ConceptDetailTaskExecutor implements ITaskExecutor {
                 continue;
             vo.setId(id);
             TushareData<ConceptDetail> res =  tushareDataApi.conceptDetail(vo);
+
             data.addAll(res.getData());
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         if("cover".equals(vo.getUpdateType()))
