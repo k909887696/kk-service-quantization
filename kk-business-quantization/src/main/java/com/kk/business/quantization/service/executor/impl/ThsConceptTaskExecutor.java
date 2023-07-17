@@ -50,7 +50,7 @@ public class ThsConceptTaskExecutor implements ITaskExecutor {
         if("cover".equals(vo.getUpdateType()))
         {
             LambdaQueryWrapper<Concept> query = new LambdaQueryWrapper<>();
-            query.eq(Concept::getSrc,"ts");
+            query.eq(Concept::getSrc,"ths");
             conceptMapper.delete(query);
         }
         data.addAll(res.getData());

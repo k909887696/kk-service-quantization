@@ -46,7 +46,7 @@ public class DfcfConceptTaskExecutor implements ITaskExecutor {
         if("cover".equals(vo.getUpdateType()))
         {
             LambdaQueryWrapper<Concept> query = new LambdaQueryWrapper<>();
-            query.eq(Concept::getSrc,"ts");
+            query.eq(Concept::getSrc,"90");
             conceptMapper.delete(query);
         }
         data.addAll(res.getData());
