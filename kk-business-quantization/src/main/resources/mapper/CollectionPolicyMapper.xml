@@ -3,7 +3,7 @@
 <mapper namespace="com.kk.business.quantization.dao.mapper.CollectionPolicyMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.kk.quantization.dao.entity.CollectionPolicy">
+    <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.CollectionPolicy">
         <id column="policy_id" property="policyId" />
         <result column="name" property="name" />
         <result column="invoke_method" property="invokeMethod" />

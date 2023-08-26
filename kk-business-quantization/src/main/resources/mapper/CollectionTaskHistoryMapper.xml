@@ -5,7 +5,7 @@
 
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.kk.quantization.dao.entity.CollectionTaskHistory">
+    <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.CollectionTaskHistory">
         <result column="task_id" property="taskId" />
         <result column="name" property="name" />
         <result column="policy_id" property="policyId" />
