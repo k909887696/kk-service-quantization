@@ -31,6 +31,6 @@ public interface ConceptDailyMapper extends RootMapper<ConceptDaily> {
      * @param vo
      * @return
      */
-    public List<DailyLeaderDto> selectLeaderListByRange(SearchDailyLeaderVo vo);
+    Page selectConceptLeaderListByRange(IPage page,SearchDailyLeaderVo vo);
 
 }

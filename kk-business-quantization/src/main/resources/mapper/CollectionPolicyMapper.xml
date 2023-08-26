@@ -3,7 +3,7 @@
 <mapper namespace="com.kk.business.quantization.dao.mapper.CollectionPolicyMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.CollectionPolicy">
+    <resultMap id="BaseResultMap" type="com.kk.quantization.dao.entity.CollectionPolicy">
         <id column="policy_id" property="policyId" />
         <result column="name" property="name" />
         <result column="invoke_method" property="invokeMethod" />
@@ -15,6 +15,7 @@
         <result column="run_count" property="runCount" />
         <result column="ex_msg" property="exMsg" />
         <result column="invoke_cycle_time" property="invokeCycleTime" />
+        <result column="channel" property="channel" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -29,7 +30,8 @@
         invoke_params as 'invokeParams',
         run_count as 'runCount',
         ex_msg as 'exMsg',
-        invoke_cycle_time as 'invokeCycleTime'
+        invoke_cycle_time as 'invokeCycleTime',
+        channel as 'channel'
 
     </sql>
     <!-- 通用查询条件 -->
@@ -74,6 +76,9 @@
             <if test="collectionPolicyListVo.invokeCycleTime != null and collectionPolicyListVo.invokeCycleTime != ''">
                 and invoke_cycle_time = #{collectionPolicyListVo.invokeCycleTime}
             </if>
+            <if test="collectionPolicyListVo.channel != null and collectionPolicyListVo.channel != ''">
+                and channel = #{collectionPolicyListVo.channel}
+            </if>
         </trim>
     </sql>
 
@@ -90,5 +95,28 @@
     <update id="updatePreRunTime"  >
         update collection_policy set pre_run_time=#{preRunTime},run_count=0,ex_msg='' where policy_id =#{policyId}
     </update>
+
+    <select id="selectPreExecutePolicy" resultType="com.kk.business.quantization.dao.entity.CollectionPolicy">
+        select <include refid="BaseColumnList"/>
+        from collection_policy
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="vo.preRunTimeEnd != null and vo.preRunTimeEnd != ''">
+                and pre_run_time &lt; #{vo.preRunTimeEnd}
+            </if>
+            <if test="vo.runCount != null and vo.runCount != ''">
+                and run_count &lt; #{vo.runCount}
+            </if>
+            <choose>
+                <when test="vo.channel != null and vo.channel != ''">
+                    and channel = #{vo.channel}
+                </when>
+
+                <otherwise>
+                    and (channel is null or channel = '' )
+                </otherwise>
+            </choose>
+        </trim>
+        order by pre_run_time
+    </select>
 
 </mapper>

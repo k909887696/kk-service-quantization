@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.kk.business.quantization.dao.entity.CollectionPolicy;
 import com.kk.business.quantization.model.vo.CollectionPolicyListVo;
+import com.kk.business.quantization.model.vo.SelectPreExecutePolicyVo;
 import com.kk.common.dao.mapper.RootMapper;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -23,6 +24,14 @@ public interface CollectionPolicyMapper extends RootMapper<CollectionPolicy> {
      * 查询列表
      */
     Page selectPageList(IPage page, CollectionPolicyListVo collectionPolicyListVo);
+
+    /**
+     * 查询需要执行策略
+     * @param page
+     * @param vo
+     * @return
+     */
+    Page selectPreExecutePolicy(IPage page, SelectPreExecutePolicyVo vo);
     /**
      * 更新策略异常信息
      * @param policyId

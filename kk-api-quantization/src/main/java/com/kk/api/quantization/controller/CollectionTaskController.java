@@ -4,7 +4,6 @@ package com.kk.api.quantization.controller;
 import com.kk.business.quantization.dao.entity.CollectionTask;
 import com.kk.business.quantization.model.vo.ExecuteTaskVo;
 import com.kk.business.quantization.model.vo.SearchTaskListVo;
-import com.kk.business.quantization.service.handler.hub.TaskExecutorHub;
 import com.kk.business.quantization.service.ICollectionTaskService;
 import com.kk.common.base.model.PageResult;
 import com.kk.common.web.model.ApiResult;
@@ -33,8 +32,7 @@ public class CollectionTaskController {
 
     @Resource
     public ICollectionTaskService service;
-    @Resource
-    public TaskExecutorHub taskExecutorHub;
+
     @ApiOperation("获取分页结果集")
     @ApiImplicitParams(  {
     @ApiImplicitParam(name = "token", value = "身份令牌", paramType = "header", required = false, dataType = "String"),
@@ -50,19 +48,6 @@ public class CollectionTaskController {
 
     }
 
-    @ApiOperation("手动执行一次任务")
-    @ApiImplicitParams(  {
-            @ApiImplicitParam(name = "token", value = "身份令牌", paramType = "header", required = false, dataType = "String"),
-            @ApiImplicitParam(name = "signature", value = "签名", paramType = "header", required = false, dataType = "String"),
-            @ApiImplicitParam(name = "timestamp", value = "时间戳", paramType = "header", required = false, dataType = "String"),
-            @ApiImplicitParam(name = "source", value = "来源（app/web/minotor）", paramType = "header", required = false, dataType = "String"),
-            @ApiImplicitParam(name = "version", value = "版本号（1.0.0）", paramType = "header",  dataType = "String")
-    })
-    @PostMapping("/execute_task")
-    public ApiResult< String > executeTask(@Valid @RequestBody ExecuteTaskVo vo)   {
-        taskExecutorHub.taskSchedule();
-        return new  ApiResult("");
 
-    }
 
 }

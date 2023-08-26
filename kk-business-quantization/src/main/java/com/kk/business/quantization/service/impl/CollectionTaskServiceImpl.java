@@ -10,6 +10,7 @@ import com.kk.business.quantization.dao.entity.CollectionPolicy;
 import com.kk.business.quantization.dao.entity.CollectionTask;
 import com.kk.business.quantization.dao.mapper.CollectionTaskMapper;
 import com.kk.business.quantization.model.vo.SearchTaskListVo;
+import com.kk.business.quantization.model.vo.SelectPreExecuteTaskVo;
 import com.kk.business.quantization.service.ICollectionTaskService;
 import com.kk.business.quantization.utils.SerialNoUtil;
 import com.kk.common.base.model.BasePage;
@@ -122,24 +123,17 @@ public class CollectionTaskServiceImpl extends MppServiceImpl<CollectionTaskMapp
 
     /**
      * 获取需要处理的任务
-     * @param limit 前 limit 条
+     * @param vo
      * @return 任务集合
      */
-    public List<CollectionTask> getPreExecuteTask(int limit)
+    public List<CollectionTask> getPreExecuteTask(SelectPreExecuteTaskVo vo)
     {
         QueryWrapper<CollectionTask> query = new QueryWrapper<>();
-        limit = limit <= 0 ? 20 : limit ;
-        IPage<CollectionTask> page = new Page<>(1,limit);
+        IPage<CollectionTask> page = new Page<>(vo.getPageIndex(),vo.getPageSize() <=0 ? 20:vo.getPageSize());
 
-        query.lt("pre_run_time",new Date());
-        query.lt("run_count",10);
-        List<String> orderBy = new ArrayList<>();
-        orderBy.add("pre_run_time");
-        orderBy.add("run_count");
-
-        query.orderByAsc(orderBy);
-
-        page = mapper.selectPage(page,query);
+        vo.setRunCount(vo.getRunCount() == null || vo.getRunCount()<=0 ? 10 : vo.getRunCount());
+        vo.setPreRunTimeEnd(vo.getPreRunTimeEnd()==null ? new Date() : vo.getPreRunTimeEnd());
+        page = this.baseMapper.selectPreExecuteTask(page,vo);
         return page.getRecords();
     }
 

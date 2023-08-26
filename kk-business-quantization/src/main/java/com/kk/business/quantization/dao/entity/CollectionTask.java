@@ -3,22 +3,22 @@ package com.kk.business.quantization.dao.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-
 import java.io.Serializable;
 import java.util.Date;
-
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 /**
  * <p>
- * 数据任务
+ * 系统设置-数据任务
  * </p>
  *
  * @author kk
- * @since 2021-12-18
+ * @since 2023-08-24
  */
+@Data
 @TableName("collection_task")
-@ApiModel(value = "数据任务对象", description = "数据任务")
+@ApiModel(value = "系统设置-数据任务对象", description = "系统设置-数据任务")
 public class CollectionTask implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -121,122 +121,12 @@ public class CollectionTask implements Serializable {
     @TableField("ex_msg")
     private String exMsg;
 
-    public String getTaskId() {
-        return taskId;
-    }
+    /**
+    * 调度渠道（公共渠道：1，其余值为自定义调度作业单独执行）
+    */
+    @ApiModelProperty("调度渠道（公共渠道：1，其余值为自定义调度作业单独执行）")
+    @TableField("channel")
+    private String channel;
 
-    public void setTaskId(String taskId) {
-        this.taskId = taskId;
-    }
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-    public String getPolicyId() {
-        return policyId;
-    }
-
-    public void setPolicyId(String policyId) {
-        this.policyId = policyId;
-    }
-    public String getInvokeCode() {
-        return invokeCode;
-    }
-
-    public void setInvokeCode(String invokeCode) {
-        this.invokeCode = invokeCode;
-    }
-    public String getInvokeMethod() {
-        return invokeMethod;
-    }
-
-    public void setInvokeMethod(String invokeMethod) {
-        this.invokeMethod = invokeMethod;
-    }
-    public String getInvokeParams() {
-        return invokeParams;
-    }
-
-    public void setInvokeParams(String invokeParams) {
-        this.invokeParams = invokeParams;
-    }
-    public Date getPreRunTime() {
-        return preRunTime;
-    }
-
-    public void setPreRunTime(Date preRunTime) {
-        this.preRunTime = preRunTime;
-    }
-    public Date getRunTime() {
-        return runTime;
-    }
-
-    public void setRunTime(Date runTime) {
-        this.runTime = runTime;
-    }
-    public Date getFinishTime() {
-        return finishTime;
-    }
-
-    public void setFinishTime(Date finishTime) {
-        this.finishTime = finishTime;
-    }
-    public String getCreateId() {
-        return createId;
-    }
-
-    public void setCreateId(String createId) {
-        this.createId = createId;
-    }
-    public String getCreateName() {
-        return createName;
-    }
-
-    public void setCreateName(String createName) {
-        this.createName = createName;
-    }
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-    public Integer getRunCount() {
-        return runCount;
-    }
-
-    public void setRunCount(Integer runCount) {
-        this.runCount = runCount;
-    }
-    public String getExMsg() {
-        return exMsg;
-    }
-
-    public void setExMsg(String exMsg) {
-        this.exMsg = exMsg;
-    }
-
-    @Override
-    public String toString() {
-        return "CollectionTask{" +
-            "taskId=" + taskId +
-            ", name=" + name +
-            ", policyId=" + policyId +
-            ", invokeCode=" + invokeCode +
-            ", invokeMethod=" + invokeMethod +
-            ", invokeParams=" + invokeParams +
-            ", preRunTime=" + preRunTime +
-            ", runTime=" + runTime +
-            ", finishTime=" + finishTime +
-            ", createId=" + createId +
-            ", createName=" + createName +
-            ", createTime=" + createTime +
-            ", runCount=" + runCount +
-            ", exMsg=" + exMsg +
-        "}";
-    }
 }

@@ -82,23 +82,22 @@
         <include refid="BaseWhere"/>
 
     </select>
-    <select id="selectLeaderListByRange">
-        select  sb.name,dg.*,sd.close 'sd_close',ed.close 'ed_close'
-        , round((ed.close - sd.close) / sd.close * 100 ,2)'se_pct'
-        , round((ed.close - dg.high) / dg.high * 100 ,2)'roll_back_pct'
-        , round((dg.high - sd.close) / sd.close * 100,2) 'max_pct'
+    <select id="selectConceptLeaderListByRange" resultType="com.kk.business.quantization.model.dto.DailyLeaderDto">
+        select  sb.name,dg.*,sd.`close` 'start_close',ed.`close` 'end_close'
+        , round((ed.`close` - sd.`close`) / sd.`close` * 100 ,2) 'range_pct'
+        , round((ed.`close` - dg.high) / dg.high * 100 ,2) 'roll_back_pct'
+        , round((dg.high - sd.`close`) / sd.`close` * 100,2) 'max_pct'
         from (
         select concept_id 'ts_code', max(high) 'high', MIN(low) 'low'  from concept_daily
-        where trade_date <![CDATA[>=]]> #{startDate} and trade_date <![CDATA[<=]]> #{endDate} group by concept_id
+        where trade_date <![CDATA[>=]]> #{vo.startDate} and trade_date <![CDATA[<=]]> #{vo.endDate} group by concept_id
         ) dg
         left join
-        concept_daily sd on sd.trade_date = #{startDate} and dg.ts_code = sd.concept_id
+        concept_daily sd on sd.trade_date = #{vo.startDate} and dg.ts_code = sd.concept_id
         left join
-        concept_daily  ed on ed.trade_date = #{endDate} and dg.ts_code = ed.concept_id
+        concept_daily  ed on ed.trade_date = #{vo.endDate} and dg.ts_code = ed.concept_id
         left join
         concept sb on sb.code = dg.ts_code
-        order by (ed.close - sd.close)/sd.close desc
-        limit #{pageSize}
+        order by range_pct desc
     </select>
 
 </mapper>

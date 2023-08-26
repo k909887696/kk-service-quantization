@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.kk.business.quantization.dao.entity.CollectionTask;
 import com.kk.business.quantization.model.vo.CollectionTaskListVo;
+import com.kk.business.quantization.model.vo.SelectPreExecutePolicyVo;
+import com.kk.business.quantization.model.vo.SelectPreExecuteTaskVo;
 import com.kk.common.dao.mapper.RootMapper;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -28,5 +30,7 @@ public interface CollectionTaskMapper extends RootMapper<CollectionTask> {
      * @return
      */
     int updateExMsgAndRunCount(String taskId,String exMsg);
+
+    Page selectPreExecuteTask(IPage page, SelectPreExecuteTaskVo vo);
 
 }

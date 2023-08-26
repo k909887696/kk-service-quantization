@@ -10,8 +10,10 @@ import com.github.jeffreyning.mybatisplus.service.MppServiceImpl;
 import com.kk.business.quantization.constant.SerialNoType;
 import com.kk.business.quantization.dao.entity.CollectionPolicy;
 import com.kk.business.quantization.dao.mapper.CollectionPolicyMapper;
+import com.kk.business.quantization.model.vo.PreExecutePolicyVo;
 import com.kk.business.quantization.model.vo.SearchPolicyListVo;
 import com.kk.business.quantization.model.vo.SearchPolicyVo;
+import com.kk.business.quantization.model.vo.SelectPreExecutePolicyVo;
 import com.kk.business.quantization.service.ICollectionPolicyService;
 import com.kk.business.quantization.utils.SerialNoUtil;
 import com.kk.common.base.model.BasePage;
@@ -81,7 +83,7 @@ public class CollectionPolicyServiceImpl extends MppServiceImpl<CollectionPolicy
             throw new BusinessException("调用周期不能为空！");
         }
         if(vo.getInvokeCycle()==null) {
-            vo.setInvokeCycleTime(new Integer(1));
+            vo.setInvokeCycleTime("1");
         }
         vo.setCreateTime(new Date());
         if(StringUtils.isBlank(vo.getInvokeParams()))
@@ -127,7 +129,7 @@ public class CollectionPolicyServiceImpl extends MppServiceImpl<CollectionPolicy
             throw new BusinessException("调用周期不能为空！");
         }
         if(vo.getInvokeCycle()==null) {
-            vo.setInvokeCycleTime(new Integer(1));
+            vo.setInvokeCycleTime("1");
         }
 
         if(StringUtils.isBlank(vo.getInvokeParams()))
@@ -227,23 +229,18 @@ public class CollectionPolicyServiceImpl extends MppServiceImpl<CollectionPolicy
     }
     /**
      * 获取需要处理的任务策略
-     * @param limit 前 limit 条
+     * @param vo 前 limit 条
      * @return 任务策略集合
      */
-    public List<CollectionPolicy> getPreExecutePolicy(int limit)
+    public List<CollectionPolicy> getPreExecutePolicy(SelectPreExecutePolicyVo vo)
     {
         QueryWrapper<CollectionPolicy> query = new QueryWrapper<>();
-        limit = limit <= 0 ? 20 : limit ;
-        IPage<CollectionPolicy> page = new Page<>(1,limit);
 
-        query.lt("pre_run_time",new Date());
-        query.lt("run_count",10);
-        List<String> orderBy = new ArrayList<>();
-        orderBy.add("pre_run_time");
+        IPage<CollectionPolicy> page = new Page<>(vo.getPageIndex(),vo.getPageSize() <=0 ? 20:vo.getPageSize());
+        vo.setRunCount(vo.getRunCount() == null || vo.getRunCount()<=0 ? 10 : vo.getRunCount());
+        vo.setPreRunTimeEnd(vo.getPreRunTimeEnd()==null ? new Date() : vo.getPreRunTimeEnd());
+        page = this.baseMapper.selectPreExecutePolicy(page,vo);
 
-        query.orderByAsc(orderBy);
-
-        page = collectionPolicyMapper.selectPage(page,query);
         return page.getRecords();
     }
 

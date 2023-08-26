@@ -15,7 +15,7 @@ import lombok.Data;
  * </p>
  *
  * @author kk
- * @since 2023-05-19
+ * @since 2023-08-24
  */
 @Data
 @ApiModel(value = "系统设置-数据策略新增实体", description = "系统设置-数据策略")
@@ -77,6 +77,11 @@ public class CollectionPolicyAddVo implements Serializable {
     */
     @ApiModelProperty("执行周期大小")
     private String invokeCycleTime;
+    /**
+    * 调度渠道（公共渠道：1，其余值为自定义调度作业单独执行）
+    */
+    @ApiModelProperty("调度渠道（公共渠道：1，其余值为自定义调度作业单独执行）")
+    private String channel;
 
 
 }

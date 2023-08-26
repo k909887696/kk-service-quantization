@@ -6,7 +6,6 @@ import com.kk.business.quantization.model.vo.ExecutePolicyVo;
 import com.kk.business.quantization.model.vo.SearchPolicyListVo;
 import com.kk.business.quantization.model.vo.SearchPolicyVo;
 import com.kk.business.quantization.service.ICollectionPolicyService;
-import com.kk.business.quantization.service.handler.hub.TaskExecutorHub;
 import com.kk.common.base.model.PageResult;
 import com.kk.common.web.model.ApiResult;
 import io.swagger.annotations.Api;
@@ -34,8 +33,7 @@ public class CollectionPolicyController {
 
     @Resource
     public ICollectionPolicyService service;
-    @Resource
-    public TaskExecutorHub taskExecutorHub;
+
 
 
     @ApiOperation("新增策略")
@@ -98,19 +96,6 @@ public class CollectionPolicyController {
 
     }
 
-    @ApiOperation("手动执行一次策略")
-    @ApiImplicitParams(  {
-            @ApiImplicitParam(name = "token", value = "身份令牌", paramType = "header", required = false, dataType = "String"),
-            @ApiImplicitParam(name = "signature", value = "签名", paramType = "header", required = false, dataType = "String"),
-            @ApiImplicitParam(name = "timestamp", value = "时间戳", paramType = "header", required = false, dataType = "String"),
-            @ApiImplicitParam(name = "source", value = "来源（app/web/minotor）", paramType = "header", required = false, dataType = "String"),
-            @ApiImplicitParam(name = "version", value = "版本号（1.0.0）", paramType = "header",  dataType = "String")
-    })
-    @PostMapping("/execute_policy")
-    public ApiResult< String > executePolicy(@Valid @RequestBody ExecutePolicyVo vo)   {
 
-        return new  ApiResult(taskExecutorHub.policyScheduleByHand(vo.getPolicyIds()));
-
-    }
 
 }

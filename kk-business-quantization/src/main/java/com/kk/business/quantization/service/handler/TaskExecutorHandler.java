@@ -112,29 +112,29 @@ public class TaskExecutorHandler {
         {
             d = new Date();
         }
-
+        int cycleTime = Integer.parseInt( policy.getInvokeCycleTime());
         switch (policy.getInvokeCycle())
         {
             case InvokeCycleType.MIN:
-                d = DateUtil.addDate(d, Calendar.MINUTE,policy.getInvokeCycleTime());
+                d = DateUtil.addDate(d, Calendar.MINUTE,cycleTime);
                 break;
             case InvokeCycleType.HOUR:
-                d = DateUtil.addDate(d, Calendar.HOUR,policy.getInvokeCycleTime());
+                d = DateUtil.addDate(d, Calendar.HOUR,cycleTime);
                 break;
             case InvokeCycleType.DAY:
-                d = DateUtil.addDate(d, Calendar.DATE,policy.getInvokeCycleTime());
+                d = DateUtil.addDate(d, Calendar.DATE,cycleTime);
                 break;
             case InvokeCycleType.WEEK:
-                d = DateUtil.addDate(d, Calendar.DATE,policy.getInvokeCycleTime() * 7);
+                d = DateUtil.addDate(d, Calendar.DATE,cycleTime * 7);
                 break;
             case InvokeCycleType.MONTH:
-                d = DateUtil.addDate(d, Calendar.MONTH,policy.getInvokeCycleTime());
+                d = DateUtil.addDate(d, Calendar.MONTH,cycleTime);
                 break;
             case InvokeCycleType.YEAR:
-                d = DateUtil.addDate(d, Calendar.YEAR,policy.getInvokeCycleTime());
+                d = DateUtil.addDate(d, Calendar.YEAR,cycleTime);
                 break;
             default:
-                d = DateUtil.addDate(d, Calendar.YEAR,policy.getInvokeCycleTime() * 100);
+                d = DateUtil.addDate(d, Calendar.YEAR,cycleTime * 100);
                 break;
         }
 

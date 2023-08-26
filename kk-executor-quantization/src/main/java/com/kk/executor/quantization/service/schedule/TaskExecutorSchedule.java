@@ -2,12 +2,19 @@ package com.kk.executor.quantization.service.schedule;
 
 import com.kk.business.quantization.dao.entity.CollectionPolicy;
 import com.kk.business.quantization.dao.entity.CollectionTask;
+import com.kk.business.quantization.model.vo.JobParamVo;
+import com.kk.business.quantization.model.vo.PreExecutePolicyVo;
+import com.kk.business.quantization.model.vo.SelectPreExecutePolicyVo;
+import com.kk.business.quantization.model.vo.SelectPreExecuteTaskVo;
 import com.kk.business.quantization.service.ICollectionPolicyService;
 import com.kk.business.quantization.service.ICollectionTaskService;
 import com.kk.business.quantization.service.handler.TaskExecutorHandler;
 import com.kk.common.utils.DateUtil;
+import com.kk.common.utils.JsonUtil;
 import com.kk.executor.quantization.util.LogUtils;
+import com.xxl.job.core.context.XxlJobHelper;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.stereotype.Component;
 
@@ -35,14 +42,23 @@ public class TaskExecutorSchedule {
     /**
      * 执行需要处理的任务策略
      */
-    public void policySchedule()
+    public void policySchedule( )
     {
 
 
         LogUtils.logInfoXxlAnd4j("{}|{}"
                 ,"任务策略调度开始执行"
                 ,"policySchedule");
-        List<CollectionPolicy> list = collectionPolicyService.getPreExecutePolicy(40);
+        SelectPreExecutePolicyVo vo = new SelectPreExecutePolicyVo();
+        JobParamVo jobParamVo = new JobParamVo();
+        vo.setPageIndex(1);
+        vo.setPageSize(40);
+        if(!StringUtils.isBlank(XxlJobHelper.getJobParam()))
+        {
+            jobParamVo = ((JobParamVo)JsonUtil.parseObject(XxlJobHelper.getJobParam(), JobParamVo.class));
+        }
+        vo.setChannel(jobParamVo.getChannel());
+        List<CollectionPolicy> list = collectionPolicyService.getPreExecutePolicy(vo);
 
         if(list != null && list.size() > 0) {//没有需要执行策略
 
@@ -82,7 +98,16 @@ public class TaskExecutorSchedule {
         LogUtils.logInfoXxlAnd4j("{}|{}"
                 ,"任务调度开始执行"
                 ,"taskSchedule");
-        List<CollectionTask> list = collectionTaskService.getPreExecuteTask(20);
+        SelectPreExecuteTaskVo vo = new SelectPreExecuteTaskVo();
+        vo.setPageIndex(1);
+        vo.setPageSize(20);
+        JobParamVo jobParamVo = new JobParamVo();
+        if(!StringUtils.isBlank(XxlJobHelper.getJobParam()))
+        {
+            jobParamVo = ((JobParamVo)JsonUtil.parseObject(XxlJobHelper.getJobParam(), JobParamVo.class));
+        }
+        vo.setChannel(jobParamVo.getChannel());
+        List<CollectionTask> list = collectionTaskService.getPreExecuteTask(vo);
 
         if(list != null && list.size() > 0) {//没有需要执行任务
 

@@ -1,7 +1,9 @@
 package com.kk.business.quantization.model.dto;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
+@Data
 public class DailyLeaderDto {
 
     /**
@@ -29,17 +31,17 @@ public class DailyLeaderDto {
      * 开盘价
      */
     @ApiModelProperty("开盘价")
-    private Double sdClose;
+    private Double startClose;
     /**
      * 收盘价
      */
     @ApiModelProperty("收盘价")
-    private Double edClose;
+    private Double endClose;
     /**
      * 区间涨跌幅
      */
     @ApiModelProperty("区间涨跌幅")
-    private Double sePct;
+    private Double rangePct;
     /**
      * 区间回撤涨跌幅
      */
@@ -51,75 +53,4 @@ public class DailyLeaderDto {
     @ApiModelProperty("区间最大涨跌幅")
     private Double maxPct;
 
-    public String getTsCode() {
-        return tsCode;
-    }
-
-    public void setTsCode(String tsCode) {
-        this.tsCode = tsCode;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Double getHigh() {
-        return high;
-    }
-
-    public void setHigh(Double high) {
-        this.high = high;
-    }
-
-    public Double getLow() {
-        return low;
-    }
-
-    public void setLow(Double low) {
-        this.low = low;
-    }
-
-    public Double getSdClose() {
-        return sdClose;
-    }
-
-    public void setSdClose(Double sdClose) {
-        this.sdClose = sdClose;
-    }
-
-    public Double getEdClose() {
-        return edClose;
-    }
-
-    public void setEdClose(Double edClose) {
-        this.edClose = edClose;
-    }
-
-    public Double getSePct() {
-        return sePct;
-    }
-
-    public void setSePct(Double sePct) {
-        this.sePct = sePct;
-    }
-
-    public Double getRollBackPct() {
-        return rollBackPct;
-    }
-
-    public void setRollBackPct(Double rollBackPct) {
-        this.rollBackPct = rollBackPct;
-    }
-
-    public Double getMaxPct() {
-        return maxPct;
-    }
-
-    public void setMaxPct(Double maxPct) {
-        this.maxPct = maxPct;
-    }
 }

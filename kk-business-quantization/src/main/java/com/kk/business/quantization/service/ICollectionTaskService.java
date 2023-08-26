@@ -3,6 +3,7 @@ package com.kk.business.quantization.service;
 import com.github.jeffreyning.mybatisplus.service.IMppService;
 import com.kk.business.quantization.dao.entity.CollectionTask;
 import com.kk.business.quantization.model.vo.SearchTaskListVo;
+import com.kk.business.quantization.model.vo.SelectPreExecuteTaskVo;
 import com.kk.common.base.model.BasePage;
 import com.kk.common.base.model.PageResult;
 
@@ -47,10 +48,10 @@ public interface ICollectionTaskService extends IMppService<CollectionTask> {
 
     /**
      * 获取需要处理的任务
-     * @param limit 前 limit 条
+     * @param vo
      * @return 任务集合
      */
-    List<CollectionTask> getPreExecuteTask(int limit);
+    List<CollectionTask> getPreExecuteTask(SelectPreExecuteTaskVo vo);
     /**
      * 根据ids查询任务列表
      * @param ids

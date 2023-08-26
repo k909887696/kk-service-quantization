@@ -14,7 +14,7 @@ import com.kk.common.base.model.BasePage;
  * </p>
  *
  * @author kk
- * @since 2023-05-19
+ * @since 2023-08-24
  */
 @Data
 @ApiModel(value = "系统设置-数据任务-历史列表查询实体", description = "系统设置-数据任务-历史")
@@ -116,6 +116,11 @@ public class CollectionTaskHistoryListVo extends BasePage{
     */
     @ApiModelProperty("异常信息")
     private String exMsg;
+    /**
+    * 调度渠道（公共渠道：1，其余值为自定义调度作业单独执行）
+    */
+    @ApiModelProperty("调度渠道（公共渠道：1，其余值为自定义调度作业单独执行）")
+    private String channel;
 
 
 }

@@ -2,8 +2,10 @@ package com.kk.business.quantization.service;
 
 import com.github.jeffreyning.mybatisplus.service.IMppService;
 import com.kk.business.quantization.dao.entity.CollectionPolicy;
+import com.kk.business.quantization.model.vo.PreExecutePolicyVo;
 import com.kk.business.quantization.model.vo.SearchPolicyListVo;
 import com.kk.business.quantization.model.vo.SearchPolicyVo;
+import com.kk.business.quantization.model.vo.SelectPreExecutePolicyVo;
 import com.kk.common.base.model.BasePage;
 import com.kk.common.base.model.PageResult;
 
@@ -60,10 +62,10 @@ public interface ICollectionPolicyService extends IMppService<CollectionPolicy> 
 
     /**
      * 获取需要处理的任务策略
-     * @param limit 前 limit 条
+     * @param vo 请求参数
      * @return 任务策略集合
      */
-    List<CollectionPolicy> getPreExecutePolicy(int limit);
+    List<CollectionPolicy> getPreExecutePolicy(SelectPreExecutePolicyVo vo);
 
     /**
      * 根据ids获取任务策略列表

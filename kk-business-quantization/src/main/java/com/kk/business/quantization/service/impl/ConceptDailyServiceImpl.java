@@ -1,6 +1,8 @@
 package com.kk.business.quantization.service.impl;
 
 
+import com.kk.business.quantization.model.dto.DailyLeaderDto;
+import com.kk.business.quantization.model.vo.*;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
@@ -11,13 +13,8 @@ import com.kk.business.quantization.dao.entity.ConceptDaily;
 import com.kk.business.quantization.dao.mapper.ConceptDailyMapper;
 import com.kk.business.quantization.service.IConceptDailyService;
 import com.github.jeffreyning.mybatisplus.service.MppServiceImpl;
-import com.kk.business.quantization.model.vo.ConceptDailyListVo;
 import com.kk.business.quantization.model.dto.ConceptDailyListDto;
-import com.kk.business.quantization.model.vo.ConceptDailyAddVo;
-import com.kk.business.quantization.model.vo.ConceptDailyEditVo;
 import com.kk.business.quantization.model.dto.ConceptDailyDto;
-import com.kk.business.quantization.model.vo.ConceptDailyDetailsVo;
-import com.kk.business.quantization.model.vo.ConceptDailyDeleteVo;
 import com.kk.common.utils.MapperUtils;
 import com.kk.common.base.model.PageResult;
 import com.kk.common.exception.BusinessException;
@@ -126,6 +123,23 @@ public class ConceptDailyServiceImpl extends MppServiceImpl<ConceptDailyMapper, 
         return pageResult;
     }
 
+    /**
+     * 查询区间涨幅最大概念
+     * @param vo
+     * @return
+     */
+    public PageResult<DailyLeaderDto> selectConceptLeaderListByRange(SearchDailyLeaderVo vo)
+    {
+        IPage<DailyLeaderDto> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
+        page = this.baseMapper.selectConceptLeaderListByRange(page,vo);
+        PageResult<DailyLeaderDto>  pageResult = new PageResult<>();
 
+        pageResult.setResult(page.getRecords());
+        pageResult.setTotalCount(page.getTotal());
+        pageResult.setPageIndex(vo.getPageIndex());
+        pageResult.setPageSize(vo.getPageSize());
+
+        return pageResult;
+    }
 
 }

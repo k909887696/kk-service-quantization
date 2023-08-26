@@ -109,4 +109,14 @@
                 </if>
             </where>
     </select>
+    <select id="selectMaxMinByDateRange" resultType="com.kk.business.quantization.model.dto.SelectMaxMinByDateRangeDto">
+        select max(d.`close`) 'max_close',min(d.`close`) 'min_close' ,d.ts_code from daily d
+
+        where
+            <![CDATA[ and d.trade_date >= #{vo.startDate} ]]>
+
+            <![CDATA[ and d.trade_date <= #{vo.endDate}]]>
+
+        group by ts_code
+    </select>
 </mapper>

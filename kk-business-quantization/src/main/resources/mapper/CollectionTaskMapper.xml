@@ -3,7 +3,7 @@
 <mapper namespace="com.kk.business.quantization.dao.mapper.CollectionTaskMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.CollectionTask">
+    <resultMap id="BaseResultMap" type="com.kk.quantization.dao.entity.CollectionTask">
         <id column="task_id" property="taskId" />
         <result column="name" property="name" />
         <result column="policy_id" property="policyId" />
@@ -18,6 +18,7 @@
         <result column="create_time" property="createTime" />
         <result column="run_count" property="runCount" />
         <result column="ex_msg" property="exMsg" />
+        <result column="channel" property="channel" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -35,7 +36,8 @@
         create_name as 'createName',
         create_time as 'createTime',
         run_count as 'runCount',
-        ex_msg as 'exMsg'
+        ex_msg as 'exMsg',
+        channel as 'channel'
 
     </sql>
     <!-- 通用查询条件 -->
@@ -95,6 +97,9 @@
             <if test="collectionTaskListVo.exMsg != null and collectionTaskListVo.exMsg != ''">
                 and ex_msg = #{collectionTaskListVo.exMsg}
             </if>
+            <if test="collectionTaskListVo.channel != null and collectionTaskListVo.channel != ''">
+                and channel = #{collectionTaskListVo.channel}
+            </if>
         </trim>
     </sql>
 
@@ -104,6 +109,28 @@
         from collection_task
         <include refid="BaseWhere"/>
 
+    </select>
+    <select id="selectPreExecuteTask" resultType="com.kk.business.quantization.dao.entity.CollectionTask">
+        select <include refid="BaseColumnList"/>
+        from collection_task
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="vo.preRunTimeEnd != null and vo.preRunTimeEnd != ''">
+                and pre_run_time &lt; #{vo.preRunTimeEnd}
+            </if>
+            <if test="vo.runCount != null and vo.runCount != ''">
+                and run_count &lt; #{vo.runCount}
+            </if>
+            <choose>
+                <when test="vo.channel != null and vo.channel != ''">
+                    and channel = #{vo.channel}
+                </when>
+
+                <otherwise>
+                    and (channel is null or channel = '')
+                </otherwise>
+            </choose>
+        </trim>
+        order by pre_run_time
     </select>
     <update id="updateExMsgAndRunCount"  >
         update collection_task set ex_msg=#{exMsg},run_count=run_count+1,run_time=now(),pre_run_time =DATE_ADD(pre_run_time,INTERVAL 2 MINUTE )  where task_id =#{taskId}

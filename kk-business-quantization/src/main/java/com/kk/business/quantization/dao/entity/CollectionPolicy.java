@@ -3,22 +3,22 @@ package com.kk.business.quantization.dao.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-
 import java.io.Serializable;
 import java.util.Date;
-
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 /**
  * <p>
- * 数据策略
+ * 系统设置-数据策略
  * </p>
  *
  * @author kk
- * @since 2021-12-18
+ * @since 2023-08-24
  */
+@Data
 @TableName("collection_policy")
-@ApiModel(value = "数据策略对象", description = "数据策略")
+@ApiModel(value = "系统设置-数据策略对象", description = "系统设置-数据策略")
 public class CollectionPolicy implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -38,18 +38,18 @@ public class CollectionPolicy implements Serializable {
     private String name;
 
     /**
-    * 调用类编号
+    * 调度类型编号
     */
-    @ApiModelProperty("调用类编号")
-    @TableField("invoke_code")
-    private String invokeCode;
-
-    /**
-     * 调用类方法
-     */
-    @ApiModelProperty("调用类方法")
+    @ApiModelProperty("调度类型编号")
     @TableField("invoke_method")
     private String invokeMethod;
+
+    /**
+    * 调度类型方法
+    */
+    @ApiModelProperty("调度类型方法")
+    @TableField("invoke_code")
+    private String invokeCode;
 
     /**
     * 执行周期（min：每几分钟，hour：每几小时，day:每天，week：每周，month：每月，year：每年）
@@ -73,9 +73,9 @@ public class CollectionPolicy implements Serializable {
     private Date preRunTime;
 
     /**
-    * 调用类方法参数
+    * 调度类型参数
     */
-    @ApiModelProperty("调用类方法参数")
+    @ApiModelProperty("调度类型参数")
     @TableField("invoke_params")
     private String invokeParams;
 
@@ -98,102 +98,14 @@ public class CollectionPolicy implements Serializable {
     */
     @ApiModelProperty("执行周期大小")
     @TableField("invoke_cycle_time")
-    private Integer invokeCycleTime;
+    private String invokeCycleTime;
 
-    public String getPolicyId() {
-        return policyId;
-    }
-
-    public void setPolicyId(String policyId) {
-        this.policyId = policyId;
-    }
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-    public String getInvokeCode() {
-        return invokeCode;
-    }
-
-    public void setInvokeCode(String invokeCode) {
-        this.invokeCode = invokeCode;
-    }
-    public String getInvokeCycle() {
-        return invokeCycle;
-    }
-
-    public void setInvokeCycle(String invokeCycle) {
-        this.invokeCycle = invokeCycle;
-    }
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-    public Date getPreRunTime() {
-        return preRunTime;
-    }
-
-    public void setPreRunTime(Date preRunTime) {
-        this.preRunTime = preRunTime;
-    }
-    public String getInvokeParams() {
-        return invokeParams;
-    }
-
-    public void setInvokeParams(String invokeParams) {
-        this.invokeParams = invokeParams;
-    }
-    public Integer getRunCount() {
-        return runCount;
-    }
-
-    public void setRunCount(Integer runCount) {
-        this.runCount = runCount;
-    }
-    public String getExMsg() {
-        return exMsg;
-    }
-
-    public void setExMsg(String exMsg) {
-        this.exMsg = exMsg;
-    }
-    public Integer getInvokeCycleTime() {
-        return invokeCycleTime;
-    }
-
-    public void setInvokeCycleTime(Integer invokeCycleTime) {
-        this.invokeCycleTime = invokeCycleTime;
-    }
-
-    public String getInvokeMethod() {
-        return invokeMethod;
-    }
-
-    public void setInvokeMethod(String invokeMethod) {
-        this.invokeMethod = invokeMethod;
-    }
+    /**
+    * 调度渠道（公共渠道：1，其余值为自定义调度作业单独执行）
+    */
+    @ApiModelProperty("调度渠道（公共渠道：1，其余值为自定义调度作业单独执行）")
+    @TableField("channel")
+    private String channel;
 
 
-    @Override
-    public String toString() {
-        return "CollectionPolicy{" +
-                "policyId='" + policyId + '\'' +
-                ", name='" + name + '\'' +
-                ", invokeCode='" + invokeCode + '\'' +
-                ", invokeMethod='" + invokeMethod + '\'' +
-                ", invokeCycle='" + invokeCycle + '\'' +
-                ", createTime=" + createTime +
-                ", preRunTime=" + preRunTime +
-                ", invokeParams='" + invokeParams + '\'' +
-                ", runCount=" + runCount +
-                ", exMsg='" + exMsg + '\'' +
-                ", invokeCycleTime=" + invokeCycleTime +
-                '}';
-    }
 }

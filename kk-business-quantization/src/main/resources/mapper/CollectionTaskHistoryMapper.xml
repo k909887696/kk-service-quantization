@@ -5,7 +5,7 @@
 
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.CollectionTaskHistory">
+    <resultMap id="BaseResultMap" type="com.kk.quantization.dao.entity.CollectionTaskHistory">
         <result column="task_id" property="taskId" />
         <result column="name" property="name" />
         <result column="policy_id" property="policyId" />
@@ -20,6 +20,7 @@
         <result column="create_time" property="createTime" />
         <result column="run_count" property="runCount" />
         <result column="ex_msg" property="exMsg" />
+        <result column="channel" property="channel" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -37,7 +38,8 @@
         create_name as 'createName',
         create_time as 'createTime',
         run_count as 'runCount',
-        ex_msg as 'exMsg'
+        ex_msg as 'exMsg',
+        channel as 'channel'
 
     </sql>
     <!-- 通用查询条件 -->
@@ -96,6 +98,9 @@
             </if>
             <if test="collectionTaskHistoryListVo.exMsg != null and collectionTaskHistoryListVo.exMsg != ''">
                 and ex_msg = #{collectionTaskHistoryListVo.exMsg}
+            </if>
+            <if test="collectionTaskHistoryListVo.channel != null and collectionTaskHistoryListVo.channel != ''">
+                and channel = #{collectionTaskHistoryListVo.channel}
             </if>
         </trim>
     </sql>
