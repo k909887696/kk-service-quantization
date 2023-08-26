@@ -159,6 +159,7 @@ public class TaskExecutorHandler {
         task.setPreRunTime(d);
         task.setName(policy.getName()+"-"+ DateUtil.date2String(d,DateUtil.PATTERN_STANDARD12W));
         task.setRunCount(0);
+        task.setChannel(policy.getChannel());
         
         task.setCreateId("system");
         task.setCreateName("system");
