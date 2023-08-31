@@ -93,7 +93,7 @@ public class CollectionPolicyServiceImpl extends MppServiceImpl<CollectionPolicy
 
         String serialNo = SerialNoUtil.getSingleNextId(SerialNoType.COLLECTION_POLICY, DateUtil.PATTERN_STANDARD02W);
         vo.setPolicyId(serialNo);
-        collectionPolicyMapper.insert(vo);
+        this.baseMapper.insert(vo);
         return serialNo;
 
     }
@@ -137,17 +137,9 @@ public class CollectionPolicyServiceImpl extends MppServiceImpl<CollectionPolicy
             vo.setInvokeParams("{}");
         }
 
-        LambdaUpdateWrapper<CollectionPolicy> updateWrapper = new LambdaUpdateWrapper<>();
-        updateWrapper.set(CollectionPolicy::getInvokeCode,vo.getInvokeCode())
-                .set(CollectionPolicy::getInvokeCycle,vo.getInvokeCycle())
-                .set(CollectionPolicy::getInvokeCycleTime,vo.getInvokeCycleTime())
-                .set(CollectionPolicy::getInvokeParams,vo.getInvokeParams())
-                .set(CollectionPolicy::getInvokeMethod,vo.getInvokeMethod())
-                .set(CollectionPolicy::getName,vo.getName())
-                .set(CollectionPolicy::getPreRunTime,vo.getPreRunTime())
-                .set(CollectionPolicy::getRunCount,vo.getRunCount())
-                .eq(CollectionPolicy::getPolicyId,vo.getPolicyId());
-        collectionPolicyMapper.update(null,updateWrapper);
+       vo.setCreateTime(null);
+
+        this.baseMapper.updateById(vo);
         return vo.getPolicyId();
 
     }
