@@ -100,7 +100,7 @@
         select <include refid="BaseColumnList"/>
         from collection_policy
         <trim prefix="where" prefixOverrides="and | or">
-            <if test="vo.preRunTimeEnd != null and vo.preRunTimeEnd != ''">
+            <if test="vo.preRunTimeEnd != null ">
                 and pre_run_time &lt; #{vo.preRunTimeEnd}
             </if>
             <if test="vo.runCount != null and vo.runCount != ''">
