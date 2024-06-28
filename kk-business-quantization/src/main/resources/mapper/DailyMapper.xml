@@ -79,7 +79,7 @@
         select <include refid="BaseColumnList"/>
         from daily
         <include refid="BaseWhere"/>
-
+        order by trade_date desc
     </select>
     <select id="selectDailyExList" resultType="com.kk.business.quantization.model.dto.DailyKdjDto">
             select * from daily d

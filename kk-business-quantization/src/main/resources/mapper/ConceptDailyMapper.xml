@@ -80,7 +80,7 @@
         select <include refid="BaseColumnList"/>
         from concept_daily
         <include refid="BaseWhere"/>
-
+        order by trade_date desc
     </select>
     <select id="selectConceptLeaderListByRange" resultType="com.kk.business.quantization.model.dto.DailyLeaderDto">
         select  sb.name,dg.*,sd.`close` 'start_close',ed.`close` 'end_close'

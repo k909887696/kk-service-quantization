@@ -206,4 +206,23 @@ public class AppTest
         System.out.print(payChannelShoppingDate);
     }
 
+    @Test
+    public void testmap()
+    {
+         Map<String, String> BYTETOSTR = new HashMap<String, String>();
+
+
+  Integer t= 1;
+        BYTETOSTR.put("1", "周一");
+        BYTETOSTR.put("2", "周二");
+        BYTETOSTR.put("3", "周三");
+        BYTETOSTR.put("4", "周四");
+        BYTETOSTR.put("5", "周五");
+        BYTETOSTR.put("6", "周六");
+        BYTETOSTR.put("7", "周日");
+
+        System.out.print(BYTETOSTR.get("1"));
+
+
+    }
 }

@@ -129,7 +129,7 @@
         select <include refid="BaseColumnList"/>
         from concept_money_flow
         <include refid="BaseWhere"/>
-
+        order by trade_date desc
     </select>
 
 
