@@ -9,13 +9,9 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
     #配置基本属性
-    url: jdbc:mysql://192.168.2.235:3306/quantization?useUnicode=true&characterEncoding=UTF-8&useSSL=false&allowMultiQueries=true
-    username: root
-    password: .....
-
-    #url: jdbc:mysql://192.168.90.126:3309/quantization?useUnicode=true&characterEncoding=UTF-8&useSSL=false&allowMultiQueries=true
-    #username: hotel
-    #password: ^d4DD8$g,uccDB=F
+    url: jdbc:mysql://192.168.90.126:3309/quantization?useUnicode=true&characterEncoding=UTF-8&useSSL=false&allowMultiQueries=true
+    username: hotel
+    password: ^d4DD8$g,uccDB=F
     #druid相关配置
     druid:
       #监控统计拦截的filters

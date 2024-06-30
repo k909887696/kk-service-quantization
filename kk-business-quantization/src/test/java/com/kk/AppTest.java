@@ -10,9 +10,14 @@ import com.kk.common.utils.DateUtil;
 import com.kk.common.utils.FileUtil;
 import com.kk.common.utils.JsonUtil;
 import com.kk.common.utils.httpUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -192,9 +197,32 @@ public class AppTest
     }
 
     @Test
-    public  void testKdjExcuetor()
-    {
-
+    public  void testKdjExcuetor() throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd\'T\'HH:mm:ss");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String nowTime = simpleDateFormat.format(new Date());
+        Date payChannelShoppingDate = simpleDateFormat.parse("2023-08-31T12:00:36+08:00");
+        System.out.print(nowTime);
+        System.out.print(payChannelShoppingDate);
     }
 
+    @Test
+    public void testmap()
+    {
+         Map<String, String> BYTETOSTR = new HashMap<String, String>();
+
+
+  Integer t= 1;
+        BYTETOSTR.put("1", "周一");
+        BYTETOSTR.put("2", "周二");
+        BYTETOSTR.put("3", "周三");
+        BYTETOSTR.put("4", "周四");
+        BYTETOSTR.put("5", "周五");
+        BYTETOSTR.put("6", "周六");
+        BYTETOSTR.put("7", "周日");
+
+        System.out.print(BYTETOSTR.get("1"));
+
+
+    }
 }

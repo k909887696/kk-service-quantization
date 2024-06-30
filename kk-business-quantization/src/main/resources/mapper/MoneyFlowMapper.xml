@@ -124,7 +124,7 @@
         select <include refid="BaseColumnList"/>
         from money_flow
         <include refid="BaseWhere"/>
-
+        order by trade_date desc
     </select>
 
 
