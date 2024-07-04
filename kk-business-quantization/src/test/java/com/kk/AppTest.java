@@ -4,16 +4,35 @@ import static org.junit.Assert.assertTrue;
 
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfReader;
 import com.kk.business.quantization.model.po.pdd.*;
+import com.kk.business.quantization.utils.pdfUtils;
 import com.kk.common.utils.DateUtil;
 import com.kk.common.utils.FileUtil;
 import com.kk.common.utils.JsonUtil;
 import com.kk.common.utils.httpUtil;
+import jdk.internal.util.xml.impl.Input;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.printing.PDFPageable;
+import org.apache.pdfbox.rendering.PDFRenderer;
 import org.junit.Test;
+import org.ofdrw.converter.ConvertHelper;
+import org.ofdrw.converter.ofdconverter.DocConverter;
+import org.ofdrw.converter.ofdconverter.PDFConverter;
+import org.ofdrw.layout.OFDDoc;
+import org.ofdrw.layout.element.Paragraph;
+import org.ofdrw.reader.OFDReader;
 
-import java.io.File;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -23,7 +42,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+import org.ofdrw.layout.element.Img;
 /**
  * Unit test for simple App.
  */
@@ -225,4 +244,82 @@ public class AppTest
 
 
     }
+    @Test
+    public  void ofdToPdf() throws Exception {
+        String uploadUrl ="http://192.168.90.190:8080/file/apis/v1/file/uploadFile/report";
+        String downLoadUrl ="http://192.168.90.190:8080/file/apis/v1/file/downloadFile";
+        String pdfPath = "F:\\kk\\1.pdf";
+        File file = new File("F:\\kk\\0185444270932-24318018211000463811.ofd");
+       /* File pdffile = new File(pdfPath);*/
+
+        InputStream ofdInputStream = new FileInputStream(file);
+
+        ByteArrayOutputStream byteArrayOutputStream =new ByteArrayOutputStream();
+
+        ConvertHelper.usePDFBox();
+        ConvertHelper.toPdf(ofdInputStream,byteArrayOutputStream);
+        byte[] buffer =byteArrayOutputStream.toByteArray();
+        InputStream byteArrayInputStream = new ByteArrayInputStream(buffer);
+        String  res =  pdfUtils.inputStreamUpload(uploadUrl,"test.pdf",byteArrayInputStream);
+        System.out.print(res);
+
+        //pdf to ofd
+  /*      ByteArrayOutputStream ofdOutput =new ByteArrayOutputStream();
+        InputStream pdfInputStream = new FileInputStream(pdffile);
+        PDDocument pdDocument = PDDocument.load(pdfInputStream);*/
+        String tempOfdPath ="F:\\kk\\tempOfdPath21.ofd";
+
+     /*   OFDDoc doc = new OFDDoc(ofdOutput);
+        PDFPageable pageable = new PDFPageable(pdDocument);*/
+        Path src = Paths.get(tempOfdPath);
+
+        PDFConverter converter = new PDFConverter(src);
+        converter.convert(Paths.get(pdfPath));
+
+    }
+@Test
+    public void testPdf2Ofd()
+    {
+        String uploadUrl ="http://192.168.90.190:8080/file/apis/v1/file/uploadFile/report";
+        String downLoadUrl ="http://192.168.90.190:8080/file/apis/v1/file/downloadFile";
+        try {
+            // 加载PDF文件
+            PDDocument document = PDDocument.load(new File("F:\\kk\\1.pdf"));
+
+            // 获取PDF的页数
+            int pageCount = document.getNumberOfPages();
+            ByteArrayOutputStream ofdOutput =new ByteArrayOutputStream();
+            // 创建OFD文档
+            OFDDoc  ofdDocument = new OFDDoc (ofdOutput);
+
+            // 遍历PDF的每一页
+            for (int i = 0; i < pageCount; i++) {
+                // 获取PDF的当前页
+                PDPage page = document.getPage(i);
+
+                // 将PDF的当前页转为BufferedImage
+                PDFRenderer renderer = new PDFRenderer(document);
+                BufferedImage image = renderer.renderImageWithDPI(i, 300); // 设置分辨率为300dpi
+
+                // 将BufferedImage写入临时文件
+                File tempFile = File.createTempFile("temp", ".png");
+                ImageIO.write(image, "png", tempFile);
+                Img img =new Img(Paths.get(tempFile.getPath()));
+                // 将临时文件加入到OFD文档中
+                ofdDocument.add(img);
+            }
+
+            // 保存OFD文档
+            byte[] buffer =ofdOutput.toByteArray();
+            InputStream byteArrayInputStream = new ByteArrayInputStream(buffer);
+            String  res =  pdfUtils.inputStreamUpload(uploadUrl,"test.ofd",byteArrayInputStream);
+            System.out.print(res);
+            // 关闭PDF文档
+            document.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
