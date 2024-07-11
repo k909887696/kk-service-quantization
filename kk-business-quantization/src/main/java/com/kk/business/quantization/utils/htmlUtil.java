@@ -30,7 +30,7 @@ public class htmlUtil {
         {
             StringBuilder td = new StringBuilder();
             m.forEach((k,v)->{
-                td.append(String.format("<td>%s</td>",v.toString()));
+                td.append(String.format("<td>%s</td>",v==null ?"":v.toString()));
             });
             trList.append(String.format("<tr>%s</tr>",td.toString()));
         }
