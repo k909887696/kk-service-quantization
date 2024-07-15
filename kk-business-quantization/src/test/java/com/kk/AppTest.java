@@ -9,6 +9,7 @@ import com.alibaba.fastjson.TypeReference;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfReader;
 import com.kk.business.quantization.model.po.pdd.*;
+import com.kk.business.quantization.service.executor.impl.StrongPoolTaskExecutor;
 import com.kk.business.quantization.utils.pdfUtils;
 import com.kk.common.utils.DateUtil;
 import com.kk.common.utils.FileUtil;
@@ -21,6 +22,7 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.printing.PDFPageable;
 import org.apache.pdfbox.rendering.PDFRenderer;
 import org.junit.Test;
+import org.junit.jupiter.api.TestTemplate;
 import org.ofdrw.converter.ConvertHelper;
 import org.ofdrw.converter.ImageMaker;
 import org.ofdrw.converter.ofdconverter.DocConverter;
@@ -39,10 +41,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -59,6 +58,8 @@ public class AppTest {
     public void shouldAnswerWithTrue() {
         assertTrue(true);
     }
+
+
 
     @Test
     public void testUtils() {
@@ -242,6 +243,19 @@ public class AppTest {
         BYTETOSTR.put("7", "周日");
 
         System.out.print(BYTETOSTR.get("1"));
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(DateUtil.string2Date("2024-07-12 00:00:00",DateUtil.PATTERN_STANDARD19H));
+        for (int i = 1; i < 1; i++) {
+            cal.setFirstDayOfWeek(Calendar.MONDAY);
+            int day = cal.get(Calendar.DAY_OF_WEEK);
+            if(day==1){
+                cal.add(Calendar.DATE, cal.getFirstDayOfWeek() - day);
+            }else{
+                cal.add(Calendar.DATE, cal.getFirstDayOfWeek() - day+7);
+            }
+        }
+
+
 
 
     }

@@ -13,7 +13,12 @@ import java.util.Map;
  */
 public class htmlUtil {
 
+    public static String inner_style = "#innerTableClass:1px solid lightblue;#innerTableClass tr:1px solid lightblue;#innerTableClass td:1px solid lightblue;#innerTableClass th:1px solid lightblue;";
     public static String table_style = "border";
+
+    public static String tr_style = "border";
+
+    public static String td_style = "border";
 
     public static StringBuilder genHtmlTable(LinkedHashMap<String,String> headMap, List<LinkedHashMap<String, Object>> data,String style)
     {
@@ -36,7 +41,8 @@ public class htmlUtil {
         }
         thead.append(String.format("<thead>%s</thead>",th));
         tbody.append(String.format("<tbody>%s</tbody>",trList.toString()));
-        table.append(String.format("<table style=\"%s\">%s%s</table>", StringUtils.isBlank(style)?table_style:style,thead.toString(),tbody.toString()));
+        table.append(String.format("<style>%s</style>",inner_style));
+        table.append(String.format("<table id='innerTableClass' style=\"%s\">%s%s</table>", StringUtils.isBlank(style)?table_style:style,thead.toString(),tbody.toString()));
         return table;
     }
 }
