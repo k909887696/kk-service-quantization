@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public class htmlUtil {
 
-    public static String inner_style = "#innerTableClass:1px solid lightblue;#innerTableClass tr:1px solid lightblue;#innerTableClass td:1px solid lightblue;#innerTableClass th:1px solid lightblue;";
+    public static String inner_style = "#innerTableClass{1px solid lightblue;}#innerTableClass tr{1px solid lightblue;}#innerTableClass td{1px solid lightblue};#innerTableClass th{1px solid lightblue;}";
     public static String table_style = "border";
 
     public static String tr_style = "border";

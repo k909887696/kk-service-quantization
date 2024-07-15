@@ -115,7 +115,7 @@ public class StrongPoolTaskExecutor implements ITaskExecutor {
         EmailSendMsg msg = new EmailSendMsg();
         msg.setFrom("909887696@qq.com");
         msg.setText(table.toString());
-        msg.setSubject("test");
+        msg.setSubject("quantization-邮件通知");
         msg.setTo(new ArrayList<String>(){{add("909887696@qq.com");}});
         emailUtil.sendMimeMail(msg);
     }
