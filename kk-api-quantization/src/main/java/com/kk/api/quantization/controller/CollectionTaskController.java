@@ -49,5 +49,20 @@ public class CollectionTaskController {
     }
 
 
+    @ApiOperation("重新执行任务")
+    @ApiImplicitParams(  {
+            @ApiImplicitParam(name = "token", value = "身份令牌", paramType = "header", required = false, dataType = "String"),
+            @ApiImplicitParam(name = "signature", value = "签名", paramType = "header", required = false, dataType = "String"),
+            @ApiImplicitParam(name = "timestamp", value = "时间戳", paramType = "header", required = false, dataType = "String"),
+            @ApiImplicitParam(name = "source", value = "来源（app/web/minotor）", paramType = "header", required = false, dataType = "String"),
+            @ApiImplicitParam(name = "version", value = "版本号（1.0.0）", paramType = "header",  dataType = "String")
+    })
+    @PostMapping("/retry_execute_task")
+    public ApiResult< String > retryExecuteTask(@Valid @RequestBody SearchTaskListVo vo)   {
+        service.retryExecuteTask(vo.getTaskId());
+        return  ApiResult.getSuccessResult("请求成功");
+
+    }
+
 
 }

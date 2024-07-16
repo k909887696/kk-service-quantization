@@ -1,5 +1,6 @@
 package com.kk.executor.quantization.service.schedule;
 
+import com.kk.business.quantization.constant.CollectionHandType;
 import com.kk.business.quantization.dao.entity.CollectionPolicy;
 import com.kk.business.quantization.dao.entity.CollectionTask;
 import com.kk.business.quantization.model.vo.JobParamVo;
@@ -68,7 +69,7 @@ public class TaskExecutorSchedule {
                             p.getName() + "(" + p.getPolicyId() + ")"
                             , "开始执行"
                             , "policySchedule;" + p.getPolicyId());
-                    taskExecutorHandler.handlerPolicy(p);
+                    taskExecutorHandler.handlerPolicy(p, CollectionHandType.BySchedule);
                     LogUtils.logInfoXxlAnd4j("{}|{}|{}",
                             p.getName() + "(" + p.getPolicyId() + ")"
                             , "执行完成"

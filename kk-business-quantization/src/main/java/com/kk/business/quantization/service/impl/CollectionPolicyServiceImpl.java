@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.jeffreyning.mybatisplus.service.MppServiceImpl;
+import com.kk.business.quantization.constant.CollectionHandType;
 import com.kk.business.quantization.constant.SerialNoType;
 import com.kk.business.quantization.dao.entity.CollectionPolicy;
 import com.kk.business.quantization.dao.mapper.CollectionPolicyMapper;
@@ -15,6 +16,7 @@ import com.kk.business.quantization.model.vo.SearchPolicyListVo;
 import com.kk.business.quantization.model.vo.SearchPolicyVo;
 import com.kk.business.quantization.model.vo.SelectPreExecutePolicyVo;
 import com.kk.business.quantization.service.ICollectionPolicyService;
+import com.kk.business.quantization.service.handler.TaskExecutorHandler;
 import com.kk.business.quantization.utils.SerialNoUtil;
 import com.kk.common.base.model.BasePage;
 import com.kk.common.base.model.PageResult;
@@ -43,6 +45,8 @@ public class CollectionPolicyServiceImpl extends MppServiceImpl<CollectionPolicy
     @Resource
     public CollectionPolicyMapper collectionPolicyMapper;
 
+    @Resource
+    public TaskExecutorHandler taskExecutorHandler;
     /**
      * 查询单个实体
      * @param vo
@@ -252,4 +256,15 @@ public class CollectionPolicyServiceImpl extends MppServiceImpl<CollectionPolicy
         return list;
     }
 
+    /**
+     * 手动执行策略
+     * @param policyId 策略编号
+     */
+    public void executePolicyByHand(String policyId)
+    {
+        CollectionPolicy policy = collectionPolicyMapper.selectById(policyId);
+        if(policy==null)
+            throw new BusinessException("该策略不存在！");
+        taskExecutorHandler.handlerPolicy(policy, CollectionHandType.ByHand);
+    }
 }

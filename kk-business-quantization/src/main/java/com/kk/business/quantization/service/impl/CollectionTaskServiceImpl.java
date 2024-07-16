@@ -8,6 +8,8 @@ import com.github.jeffreyning.mybatisplus.service.MppServiceImpl;
 import com.kk.business.quantization.constant.SerialNoType;
 import com.kk.business.quantization.dao.entity.CollectionPolicy;
 import com.kk.business.quantization.dao.entity.CollectionTask;
+import com.kk.business.quantization.dao.entity.CollectionTaskHistory;
+import com.kk.business.quantization.dao.mapper.CollectionTaskHistoryMapper;
 import com.kk.business.quantization.dao.mapper.CollectionTaskMapper;
 import com.kk.business.quantization.model.vo.SearchTaskListVo;
 import com.kk.business.quantization.model.vo.SelectPreExecuteTaskVo;
@@ -16,6 +18,7 @@ import com.kk.business.quantization.utils.SerialNoUtil;
 import com.kk.common.base.model.BasePage;
 import com.kk.common.base.model.PageResult;
 import com.kk.common.utils.DateUtil;
+import com.kk.common.utils.MapperUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -38,7 +41,10 @@ public class CollectionTaskServiceImpl extends MppServiceImpl<CollectionTaskMapp
 
     @Resource
     public CollectionTaskMapper mapper;
-
+    @Resource
+    public CollectionTaskHistoryMapper collectionTaskHistoryMapper;
+    @Resource
+    public MapperUtils mapperUtils;
     /**
      * 更新异常信息(每次执行失败，隔2min 再执行)
      * @param taskId
@@ -150,5 +156,31 @@ public class CollectionTaskServiceImpl extends MppServiceImpl<CollectionTaskMapp
 
         List<CollectionTask> list = mapper.selectList(query);
         return list;
+    }
+
+    /**
+     * 重新执行一次任务
+     * @param taskId 任务编号
+     * @return
+     */
+    public void retryExecuteTask(String taskId)
+    {
+        CollectionTask task = mapper.selectById(taskId);
+        CollectionTaskHistory history = null;
+        if(task == null) {
+            history = collectionTaskHistoryMapper.selectById(taskId);
+            if(history==null)
+                return ;
+            task =  mapperUtils.map(history,CollectionTask.class);
+            task.setTaskId(SerialNoUtil.getSingleNextId(SerialNoType.COLLECTION_TASK, DateUtil.PATTERN_STANDARD02W));
+            task.setRunCount(0);
+            task.setPreRunTime(new Date());
+            mapper.insert(task);
+        }else{
+            task.setPreRunTime(new Date());
+            task.setRunCount(0);
+            mapper.updateById(task);
+        }
+
     }
 }

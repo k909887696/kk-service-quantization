@@ -2,6 +2,7 @@ package com.kk.api.quantization.controller;
 
 
 import com.kk.business.quantization.dao.entity.CollectionPolicy;
+import com.kk.business.quantization.model.vo.ExcutePolicyByHandVo;
 import com.kk.business.quantization.model.vo.ExecutePolicyVo;
 import com.kk.business.quantization.model.vo.SearchPolicyListVo;
 import com.kk.business.quantization.model.vo.SearchPolicyVo;
@@ -96,6 +97,20 @@ public class CollectionPolicyController {
 
     }
 
+    @ApiOperation("手动执行策略")
+    @ApiImplicitParams(  {
+            @ApiImplicitParam(name = "token", value = "身份令牌", paramType = "header", required = false, dataType = "String"),
+            @ApiImplicitParam(name = "signature", value = "签名", paramType = "header", required = false, dataType = "String"),
+            @ApiImplicitParam(name = "timestamp", value = "时间戳", paramType = "header", required = false, dataType = "String"),
+            @ApiImplicitParam(name = "source", value = "来源（app/web/minotor）", paramType = "header", required = false, dataType = "String"),
+            @ApiImplicitParam(name = "version", value = "版本号（1.0.0）", paramType = "header",  dataType = "String")
+    })
+    @PostMapping("/execute_policy_by_hand")
+    public ApiResult< CollectionPolicy > executePolicyByHand(@Valid @RequestBody ExcutePolicyByHandVo vo)   {
+        service.executePolicyByHand(vo.getPolicyId());
+        return ApiResult.getSuccessResult("请求成功！");
+
+    }
 
 
 }

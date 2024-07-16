@@ -59,4 +59,11 @@ public interface ICollectionTaskService extends IMppService<CollectionTask> {
      */
     List<CollectionTask> getTaskByIds(List<String> ids);
 
+    /**
+     * 重新执行一次任务
+     * @param taskId 任务编号
+     * @return
+     */
+    void retryExecuteTask(String taskId);
+
 }
