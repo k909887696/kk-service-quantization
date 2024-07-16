@@ -7,6 +7,8 @@ import java.util.Date;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import nonapi.io.github.classgraph.json.Id;
+
 /**
  * <p>
  * 系统设置-数据任务-历史
@@ -26,6 +28,7 @@ public class CollectionTaskHistory implements Serializable {
     * 任务编号
     */
     @ApiModelProperty("任务编号")
+    @Id
     @TableField("task_id")
     private String taskId;
 
