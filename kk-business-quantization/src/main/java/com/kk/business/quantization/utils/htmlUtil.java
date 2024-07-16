@@ -13,13 +13,13 @@ import java.util.Map;
  */
 public class htmlUtil {
 
-    public static String inner_style = "#innerTableClass{1px solid lightblue;}#innerTableClass tr{1px solid lightblue;}#innerTableClass td{1px solid lightblue};#innerTableClass th{1px solid lightblue;}";
-    public static String table_style = "border:1px solid lightblue;font-weight: 700;font-size: 16px;";
+    public static String table_style = "border:1px solid lightblue;font-weight: 700;font-size: 14px;";
     public static String th_style = "border:1px solid lightblue;padding:5px;";
     public static String thead_style = "border:1px solid lightblue;padding:5px;background-color: lightblue;color: rebeccapurple;";
-    public static String td_style = "border:1px solid lightblue;padding:5px;font-size: 15px;";
+    public static String td_style = "border:1px solid lightblue;padding:5px;font-size: 13px;";
     public static String tbody_style = "color: red;font-weight: 700;";
-    public static StringBuilder genHtmlTable(LinkedHashMap<String,String> headMap, List<LinkedHashMap<String, Object>> data,String style)
+    public static String title_style = "color: red;font-weight: 700;font-size: 15px;";
+    public static StringBuilder genHtmlTable(String title, LinkedHashMap<String,String> headMap, List<LinkedHashMap<String, Object>> data)
     {
         StringBuilder table = new StringBuilder();
         StringBuilder thead = new StringBuilder();
@@ -40,8 +40,8 @@ public class htmlUtil {
         }
         thead.append(String.format("<thead style=\"%s\">%s</thead>",thead_style,th));
         tbody.append(String.format("<tbody style=\"%s\">%s</tbody>",tbody_style,trList.toString()));
-        //table.append(String.format("<style>%s</style>",inner_style));
-        table.append(String.format("<table id='innerTableClass' style=\"%s\">%s%s</table>", StringUtils.isBlank(style)?table_style:style,thead.toString(),tbody.toString()));
+        table.append(String.format("<span style=\"%s\">%s</span>",title_style,title));
+        table.append(String.format("<table id='innerTableClass' style=\"%s\">%s%s</table>", table_style,thead.toString(),tbody.toString()));
         return table;
     }
 }

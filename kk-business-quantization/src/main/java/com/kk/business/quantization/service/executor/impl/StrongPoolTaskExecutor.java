@@ -107,7 +107,7 @@ public class StrongPoolTaskExecutor implements ITaskExecutor {
 
 
         StringBuilder html = new StringBuilder();
-        StringBuilder table= htmlUtil.genHtmlTable(head,dataList,"");
+        StringBuilder table= htmlUtil.genHtmlTable(String.format("%s ~ %s 期间强势股",startTradeCal.getCalDate(),endTradeCal.getCalDate()),head,dataList);
 
 
 
