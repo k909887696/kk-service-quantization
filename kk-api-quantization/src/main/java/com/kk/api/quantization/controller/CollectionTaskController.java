@@ -3,6 +3,7 @@ package com.kk.api.quantization.controller;
 
 import com.kk.business.quantization.dao.entity.CollectionTask;
 import com.kk.business.quantization.model.vo.ExecuteTaskVo;
+import com.kk.business.quantization.model.vo.RetryExecuteTaskVo;
 import com.kk.business.quantization.model.vo.SearchTaskListVo;
 import com.kk.business.quantization.service.ICollectionTaskService;
 import com.kk.common.base.model.PageResult;
@@ -58,7 +59,7 @@ public class CollectionTaskController {
             @ApiImplicitParam(name = "version", value = "版本号（1.0.0）", paramType = "header",  dataType = "String")
     })
     @PostMapping("/retry_execute_task")
-    public ApiResult< String > retryExecuteTask(@Valid @RequestBody SearchTaskListVo vo)   {
+    public ApiResult< String > retryExecuteTask(@Valid @RequestBody RetryExecuteTaskVo vo)   {
         service.retryExecuteTask(vo.getTaskId());
         return  ApiResult.getSuccessResult("请求成功");
 
