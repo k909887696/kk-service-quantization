@@ -49,7 +49,7 @@ public class ConceptDailyServiceImpl extends MppServiceImpl<ConceptDailyMapper, 
         for(;index<=totalPage;index++)
         {
             List<ConceptDaily> tempList = list.stream().skip((index-1)*size).limit(size).collect(Collectors.toList());
-            this.baseMapper.insertIgnoreBatchSomeColumn(tempList);
+            this.baseMapper.insertDuplicateKeyUpdate(tempList);
         }
     }
     /**

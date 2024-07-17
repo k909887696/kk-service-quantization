@@ -52,7 +52,7 @@ public class DailyServiceImpl extends MppServiceImpl<DailyMapper, Daily> impleme
         for(;index<=totalPage;index++)
         {
             List<Daily> tempList = list.stream().skip((index-1)*size).limit(size).collect(Collectors.toList());
-            this.baseMapper.insertIgnoreBatchSomeColumn(tempList);
+            this.baseMapper.insertDuplicateKeyUpdate(tempList);
         }
     }
     /**

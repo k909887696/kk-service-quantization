@@ -52,7 +52,7 @@ public class ConceptServiceImpl extends MppServiceImpl<ConceptMapper, Concept> i
         for(;index<=totalPage;index++)
         {
             List<Concept> tempList = list.stream().skip((index-1)*size).limit(size).collect(Collectors.toList());
-            this.baseMapper.insertIgnoreBatchSomeColumn(tempList);
+            this.baseMapper.insertDuplicateKeyUpdate(tempList);
         }
     }
     /**
