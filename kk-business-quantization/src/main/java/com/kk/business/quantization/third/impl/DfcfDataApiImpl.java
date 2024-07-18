@@ -152,23 +152,24 @@ public class DfcfDataApiImpl implements IDfcfDataApi {
         String resStr = httpUtil.doPost(reqUrl,"");
         resStr = dfcfResutlHandler(resStr,thirdDataConfig.getDfcfCb());
         DfcfHisBaseRes resObj= (DfcfHisBaseRes) JsonUtil.parseObject(resStr,DfcfHisBaseRes.class);
-
-        List<Map<String,Object>> diff = ThridDataUtils.dfcfKlinesHandler(resObj.getData().getKlines(),DfcfFieldsMap.CODE_VALUE_MAP.get(DfcfFieldsMap.DFCF_CONCEPT_MONEY_FLOW));
-        List<ConceptMoneyFlow> list = mapperUtils.map(diff,ConceptMoneyFlow.class);
-        if(list!=null && list.size() >0)
-        {
-            for (int i=0;i<list.size();i++)
-            {
-                list.get(i).setTradeDate(list.get(i).getTradeDate().replace("-",""));
-                list.get(i).setCode(resObj.getData().getCode());
-                list.get(i).setName(resObj.getData().getName());
-                list.get(i).setNetMfAmount(list.get(i).getBuyElgAmount()+list.get(i).getBuyLgAmount()+list.get(i).getBuyMdAmount()+list.get(i).getBuySmAmount());
+        if(resObj.getData()!=null && resObj.getData().getKlines() != null) {
+            List<Map<String, Object>> diff = ThridDataUtils.dfcfKlinesHandler(resObj.getData().getKlines(), DfcfFieldsMap.CODE_VALUE_MAP.get(DfcfFieldsMap.DFCF_CONCEPT_MONEY_FLOW));
+            List<ConceptMoneyFlow> list = mapperUtils.map(diff, ConceptMoneyFlow.class);
+            if (list != null && list.size() > 0) {
+                for (int i = 0; i < list.size(); i++) {
+                    list.get(i).setTradeDate(list.get(i).getTradeDate().replace("-", ""));
+                    list.get(i).setCode(resObj.getData().getCode());
+                    list.get(i).setName(resObj.getData().getName());
+                    list.get(i).setNetMfAmount(list.get(i).getBuyElgAmount() + list.get(i).getBuyLgAmount() + list.get(i).getBuyMdAmount() + list.get(i).getBuySmAmount());
+                }
             }
-        }
-        DfcfData<ConceptMoneyFlow> res = new DfcfData<>();
-        res.setData(list);
-        res.setTotal(resObj.getData().getDktotal());
+            DfcfData<ConceptMoneyFlow> res = new DfcfData<>();
+            res.setData(list);
+            res.setTotal(resObj.getData().getDktotal());
 
-        return res;
+            return res;
+        }else{
+            return null;
+        }
     }
 }
