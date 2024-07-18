@@ -111,7 +111,9 @@ public class TaskExecutorSchedule {
         vo.setChannel(jobParamVo.getChannel());
         PageResult<CollectionTask> list = collectionTaskService.getPreExecuteTask(vo);
         while(list != null && list.getResult()!= null && list.getResult().size() > 0) {
-
+            LogUtils.logInfoXxlAnd4j("{}|{}"
+                    ,"待执行任务数量",list.getResult().size()
+                    ,"taskSchedule");
             if (list != null && list.getResult() != null && list.getResult().size() > 0) {//没有需要执行任务
 
                 for (CollectionTask p : list.getResult()) {
