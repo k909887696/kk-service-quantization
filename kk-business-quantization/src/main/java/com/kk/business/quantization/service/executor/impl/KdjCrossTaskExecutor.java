@@ -74,8 +74,8 @@ public class KdjCrossTaskExecutor implements ITaskExecutor {
            {
                KdjCross kdjCross = new KdjCross();
                kdjCross.setCrossType(crossType);
-               kdjCross.setTsCode(templist.get(0).getTsCode());
-               kdjCross.setTradeDate(templist.get(0).getTradeDate());
+               kdjCross.setTsCode(templist.get(1).getTsCode());
+               kdjCross.setTradeDate(templist.get(1).getTradeDate());
                kdjCross.setAnalysisType(vo.getKdjType());
                data.add(kdjCross);
            }
