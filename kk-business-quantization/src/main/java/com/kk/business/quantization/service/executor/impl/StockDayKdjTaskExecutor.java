@@ -79,7 +79,9 @@ public class StockDayKdjTaskExecutor implements ITaskExecutor {
             }
             if(StringUtils.isNotBlank(vo.getTsCode()))
                 vo.getIds().add(vo.getTsCode());
+            TradeCal nowOpenTradeCal = tradeCalService.getRecentlyOpenByDay(vo.getStartDate(),N,"asc");
             SearchDailyVo sdVo = mapperUtils.map(vo,SearchDailyVo.class);
+            sdVo.setStartDate(nowOpenTradeCal.getCalDate());
             sdVo.setPageIndex(1);
             sdVo.setPageSize(50000);
             PageResult<DailyKdjDto> res =  dailyService.getPageResultEx(sdVo);
@@ -92,7 +94,7 @@ public class StockDayKdjTaskExecutor implements ITaskExecutor {
                        .sorted(Comparator.comparing(DailyKdjDto::getTradeDate))
                        .collect(Collectors.toList());
                List<StockDayKdj> stockDayKdjList = StochasticOscillatorUtil.ComputationKDJ(N,M1,M2,tempList);
-               data.addAll(stockDayKdjList);
+               data.addAll(stockDayKdjList.stream().filter(t->Integer.parseInt( t.getTradeDate())>=Integer.parseInt(vo.getStartDate())).collect(Collectors.toList()));
             }
         }else {
             stockDayKdjService.deleteByTradeDate(vo.getTradeDate());
@@ -115,7 +117,7 @@ public class StockDayKdjTaskExecutor implements ITaskExecutor {
                         .sorted(Comparator.comparing(DailyKdjDto::getTradeDate))
                         .collect(Collectors.toList());
                 List<StockDayKdj> stockDayKdjsList = StochasticOscillatorUtil.ComputationKDJ(N,M1,M2,tempList);
-                data.addAll(stockDayKdjsList);
+                data.addAll(stockDayKdjsList.stream().filter(t->t.getTradeDate().equals(vo.getTradeDate())).collect(Collectors.toList()));
             }
 
         }
