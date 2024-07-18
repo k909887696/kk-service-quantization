@@ -132,7 +132,7 @@ public class CollectionTaskServiceImpl extends MppServiceImpl<CollectionTaskMapp
      * @param vo
      * @return 任务集合
      */
-    public List<CollectionTask> getPreExecuteTask(SelectPreExecuteTaskVo vo)
+    public PageResult<CollectionTask> getPreExecuteTask(SelectPreExecuteTaskVo vo)
     {
         QueryWrapper<CollectionTask> query = new QueryWrapper<>();
         IPage<CollectionTask> page = new Page<>(vo.getPageIndex(),vo.getPageSize() <=0 ? 20:vo.getPageSize());
@@ -140,7 +140,13 @@ public class CollectionTaskServiceImpl extends MppServiceImpl<CollectionTaskMapp
         vo.setRunCount(vo.getRunCount() == null || vo.getRunCount()<=0 ? 10 : vo.getRunCount());
         vo.setPreRunTimeEnd(vo.getPreRunTimeEnd()==null ? new Date() : vo.getPreRunTimeEnd());
         page = this.baseMapper.selectPreExecuteTask(page,vo);
-        return page.getRecords();
+        PageResult<CollectionTask>  pageResult = new PageResult<>();
+
+        pageResult.setResult(page.getRecords());
+        pageResult.setTotalCount(page.getTotal());
+        pageResult.setPageIndex(vo.getPageIndex());
+        pageResult.setPageSize(vo.getPageSize());
+        return pageResult;
     }
 
     /**

@@ -10,6 +10,7 @@ import com.kk.business.quantization.model.vo.SelectPreExecuteTaskVo;
 import com.kk.business.quantization.service.ICollectionPolicyService;
 import com.kk.business.quantization.service.ICollectionTaskService;
 import com.kk.business.quantization.service.handler.TaskExecutorHandler;
+import com.kk.common.base.model.PageResult;
 import com.kk.common.utils.DateUtil;
 import com.kk.common.utils.JsonUtil;
 import com.kk.executor.quantization.util.LogUtils;
@@ -101,40 +102,45 @@ public class TaskExecutorSchedule {
                 ,"taskSchedule");
         SelectPreExecuteTaskVo vo = new SelectPreExecuteTaskVo();
         vo.setPageIndex(1);
-        vo.setPageSize(20);
+        vo.setPageSize(50);
         JobParamVo jobParamVo = new JobParamVo();
         if(!StringUtils.isBlank(XxlJobHelper.getJobParam()))
         {
             jobParamVo = ((JobParamVo)JsonUtil.parseObject(XxlJobHelper.getJobParam(), JobParamVo.class));
         }
         vo.setChannel(jobParamVo.getChannel());
-        List<CollectionTask> list = collectionTaskService.getPreExecuteTask(vo);
+        PageResult<CollectionTask> list = collectionTaskService.getPreExecuteTask(vo);
+        while(list != null && list.getResult()!= null && list.getResult().size() > 0) {
 
-        if(list != null && list.size() > 0) {//没有需要执行任务
+            if (list != null && list.getResult() != null && list.getResult().size() > 0) {//没有需要执行任务
 
-            for (CollectionTask p : list) {
-                try {
-                    LogUtils.logInfoXxlAnd4j("{}|{}|{}",
-                            p.getName() + "(" + p.getTaskId() + ")"
-                            , "开始执行"
-                            , "taskSchedule;" + p.getTaskId());
-                    taskExecutorHandler.handlerTask(p);
-                    LogUtils.logInfoXxlAnd4j("{}|{}|{}",
-                            p.getName() + "(" + p.getTaskId() + ")"
-                            , "执行完成"
-                            , "taskSchedule;" + p.getTaskId());
-                } catch (Exception e) {
-                    LogUtils.logErrorXxlAnd4j("{}|{}|{}|{}",
-                            "任务调度执行异常：" + p.getName() + "(" + p.getTaskId() + ")"
-                            , e.getMessage(), ExceptionUtils.getStackTrace(e)
-                            , "taskSchedule;" + p.getTaskId());
+                for (CollectionTask p : list.getResult()) {
+                    try {
+                        LogUtils.logInfoXxlAnd4j("{}|{}|{}",
+                                p.getName() + "(" + p.getTaskId() + ")"
+                                , "开始执行"
+                                , "taskSchedule;" + p.getTaskId());
+                        taskExecutorHandler.handlerTask(p);
+                        LogUtils.logInfoXxlAnd4j("{}|{}|{}",
+                                p.getName() + "(" + p.getTaskId() + ")"
+                                , "执行完成"
+                                , "taskSchedule;" + p.getTaskId());
+                    } catch (Exception e) {
+                        LogUtils.logErrorXxlAnd4j("{}|{}|{}|{}",
+                                "任务调度执行异常：" + p.getName() + "(" + p.getTaskId() + ")"
+                                , e.getMessage(), ExceptionUtils.getStackTrace(e)
+                                , "taskSchedule;" + p.getTaskId());
 
-                    p.setExMsg(e.getMessage() + "|" + ExceptionUtils.getStackTrace(e));
-                    p.setRunCount(p.getRunCount() +1);
-                    p.setRunTime(new Date());
-                    p.setPreRunTime(DateUtil.addDate(p.getPreRunTime(), Calendar.MINUTE,p.getRunCount()*(p.getRunCount()-1)));
-                    collectionTaskService.update(p);
+                        p.setExMsg(e.getMessage() + "|" + ExceptionUtils.getStackTrace(e));
+                        p.setRunCount(p.getRunCount() + 1);
+                        p.setRunTime(new Date());
+                        p.setPreRunTime(DateUtil.addDate(p.getPreRunTime(), Calendar.MINUTE, p.getRunCount() * (p.getRunCount() - 1)));
+                        collectionTaskService.update(p);
+                    }
                 }
+                list = collectionTaskService.getPreExecuteTask(vo);
+            }else {
+                break;
             }
         }
         LogUtils.logInfoXxlAnd4j("{}|{}"

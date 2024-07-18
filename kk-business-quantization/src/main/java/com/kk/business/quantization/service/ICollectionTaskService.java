@@ -51,7 +51,7 @@ public interface ICollectionTaskService extends IMppService<CollectionTask> {
      * @param vo
      * @return 任务集合
      */
-    List<CollectionTask> getPreExecuteTask(SelectPreExecuteTaskVo vo);
+    PageResult<CollectionTask>  getPreExecuteTask(SelectPreExecuteTaskVo vo);
     /**
      * 根据ids查询任务列表
      * @param ids
