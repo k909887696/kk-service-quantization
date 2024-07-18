@@ -8,8 +8,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfReader;
+import com.kk.business.quantization.constant.DfcfFieldsMap;
+import com.kk.business.quantization.model.po.dfcf.DfcfBaseRes;
+import com.kk.business.quantization.model.po.dfcf.DfcfHisBaseRes;
 import com.kk.business.quantization.model.po.pdd.*;
 import com.kk.business.quantization.service.executor.impl.StrongPoolTaskExecutor;
+import com.kk.business.quantization.utils.ThridDataUtils;
 import com.kk.business.quantization.utils.pdfUtils;
 import com.kk.common.utils.DateUtil;
 import com.kk.common.utils.FileUtil;
@@ -63,8 +67,13 @@ public class AppTest {
 
     @Test
     public void testUtils() {
-        String res = httpUtil.doPost("http://push2his.eastmoney.com/api/qt/stock/kline/get?ut=fa5fd1943c7b386f172d6893dbfba10b&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58&klt=101&fqt=1&smplmt=1524.6&_=1590670510425&cb=jQuery112402670742210902033_1584861859279&beg=20211223&end=20211226&lmt=5000&secid=90.BK0886", "");
-        System.out.println(res);
+        String res = httpUtil.doPost("http://push2his.eastmoney.com/api/qt/stock/kline/get?ut=fa5fd1943c7b386f172d6893dbfba10b&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58&klt=101&fqt=1&smplmt=1524.6&_=1590670510425&cb=jQuery112402670742210902033_1584861859279&beg=20240717&end=20240718&lmt=5000&secid=90.BK1076", "");
+        String result = res.replace("jQuery112402670742210902033_1584861859279","");
+        result = result.replace("(","");
+        result = result.replace(");","");
+        DfcfHisBaseRes resObj= (DfcfHisBaseRes) JsonUtil.parseObject(result, DfcfHisBaseRes.class);
+        List<Map<String,Object>> diff = ThridDataUtils.dfcfKlinesHandler(resObj.getData().getKlines(), DfcfFieldsMap.CODE_VALUE_MAP.get(DfcfFieldsMap.DFCF_CONCEPT_DAILY));
+        System.out.println(result);
     }
 
     @Test
