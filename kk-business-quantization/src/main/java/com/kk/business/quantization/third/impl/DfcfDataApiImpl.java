@@ -112,25 +112,27 @@ public class DfcfDataApiImpl implements IDfcfDataApi {
         resStr = dfcfResutlHandler(resStr,thirdDataConfig.getDfcfCb());
         DfcfHisBaseRes resObj= (DfcfHisBaseRes) JsonUtil.parseObject(resStr,DfcfHisBaseRes.class);
         log.info("{}|{}", JsonUtil.getJSONString(resObj),"conceptDaily");
-        List<Map<String,Object>> diff = ThridDataUtils.dfcfKlinesHandler(resObj.getData().getKlines(),DfcfFieldsMap.CODE_VALUE_MAP.get(DfcfFieldsMap.DFCF_CONCEPT_DAILY));
-        List<ConceptDaily> list = mapperUtils.map(diff,ConceptDaily.class);
-        if(list!=null && list.size() >0)
-        {
-            for (int i=1;i<list.size();i++)
-            {
-                list.get(i).setTradeDate(list.get(i).getTradeDate().replace("-",""));
-                list.get(i).setChange(list.get(i).getClose()-list.get(i-1).getClose());
-                list.get(i).setPreClose(list.get(i-1).getClose());
-                list.get(i).setPctChg(list.get(i).getChange()/list.get(i).getOpen()*100);
-                list.get(i).setConceptId(resObj.getData().getCode());
+        if(resObj.getData()!=null && resObj.getData().getKlines() != null) {
+            List<Map<String, Object>> diff = ThridDataUtils.dfcfKlinesHandler(resObj.getData().getKlines(), DfcfFieldsMap.CODE_VALUE_MAP.get(DfcfFieldsMap.DFCF_CONCEPT_DAILY));
+            List<ConceptDaily> list = mapperUtils.map(diff, ConceptDaily.class);
+            if (list != null && list.size() > 0) {
+                for (int i = 1; i < list.size(); i++) {
+                    list.get(i).setTradeDate(list.get(i).getTradeDate().replace("-", ""));
+                    list.get(i).setChange(list.get(i).getClose() - list.get(i - 1).getClose());
+                    list.get(i).setPreClose(list.get(i - 1).getClose());
+                    list.get(i).setPctChg(list.get(i).getChange() / list.get(i).getOpen() * 100);
+                    list.get(i).setConceptId(resObj.getData().getCode());
+                }
+                list.remove(0);
             }
-            list.remove(0);
-        }
-        DfcfData<ConceptDaily> res = new DfcfData<>();
-        res.setData(list);
-        res.setTotal(resObj.getData().getDktotal());
+            DfcfData<ConceptDaily> res = new DfcfData<>();
+            res.setData(list);
+            res.setTotal(resObj.getData().getDktotal());
 
-        return res;
+            return res;
+        }else {
+            return null;
+        }
     }
 
     /**
