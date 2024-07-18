@@ -85,12 +85,16 @@ public class DfcfDataApiImpl implements IDfcfDataApi {
         DfcfBaseRes resObj= (DfcfBaseRes) JsonUtil.parseObject(resStr,DfcfBaseRes.class);
         Map<String, Object> defaultFields = new HashMap<>();
         defaultFields.put("conceptId",vo.getId());
-        List<Map<String,Object>> diff = ThridDataUtils.dfcfMapTranferHandler(resObj.getData().getDiff(),DfcfFieldsMap.CODE_VALUE_MAP.get(DfcfFieldsMap.DFCF_CONCEPT_DETAIL),defaultFields);
-        List<ConceptDetail> list = mapperUtils.map(diff,ConceptDetail.class);
-        DfcfData<ConceptDetail> res = new DfcfData<>();
-        res.setData(list);
-        res.setTotal(resObj.getData().getTotal());
-        return res;
+        if(resObj.getData()!=null && resObj.getData().getDiff() != null) {
+            List<Map<String, Object>> diff = ThridDataUtils.dfcfMapTranferHandler(resObj.getData().getDiff(), DfcfFieldsMap.CODE_VALUE_MAP.get(DfcfFieldsMap.DFCF_CONCEPT_DETAIL), defaultFields);
+            List<ConceptDetail> list = mapperUtils.map(diff, ConceptDetail.class);
+            DfcfData<ConceptDetail> res = new DfcfData<>();
+            res.setData(list);
+            res.setTotal(resObj.getData().getTotal());
+            return res;
+        }else {
+            return null;
+        }
     }
 
     /**
