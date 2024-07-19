@@ -36,7 +36,7 @@ public class htmlUtil {
             m.forEach((k,v)->{
                 td.append(String.format("<td style=\"%s\">%s</td>",td_style,v==null ?"":v.toString()));
             });
-            trList.append(String.format("<tr>%s</tr>",td.toString()));
+            trList.append(String.format("<tr style=\"%s\">%s</tr>", m.get("style")!=null?m.get("style"):"",td.toString()));
         }
         thead.append(String.format("<thead style=\"%s\">%s</thead>",thead_style,th));
         tbody.append(String.format("<tbody style=\"%s\">%s</tbody>",tbody_style,trList.toString()));

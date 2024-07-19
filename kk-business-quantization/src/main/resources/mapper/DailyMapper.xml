@@ -119,4 +119,24 @@
 
         group by ts_code
     </select>
+
+    <select id="selectStockLeader" resultType="com.kk.business.quantization.model.dto.DailyLeaderDto">
+        select  sb.name,dg.*,sd.`close` 'start_close',ed.`close` 'end_close'
+        , round((ed.`close` - sd.`close`) / sd.`close` * 100 ,2) 'range_pct'
+        , round((ed.`close` - dg.high) / dg.high * 100 ,2) 'roll_back_pct'
+        , round((dg.high - sd.`close`) / sd.`close` * 100,2) 'max_pct'
+        from (
+                 select ts_code 'ts_code', max(high) 'high', MIN(low) 'low'  from daily d
+                 where trade_date <![CDATA[>=]]> #{vo.startDate} and trade_date <![CDATA[<=]]> #{vo.endDate}
+                   and ts_code in (select ts_code from concept_detail cd where cd.concept_id=#{vo.conceptId})
+                 group by ts_code
+             ) dg
+                 left join
+             daily   sd on sd.trade_date =  #{vo.startDate} and dg.ts_code = sd.ts_code
+                 left join
+             daily  ed on ed.trade_date = #{vo.endDate} and dg.ts_code = ed.ts_code
+                 left join
+             stock_basic   sb on sb.ts_code  = dg.ts_code
+        order by range_pct desc
+    </select>
 </mapper>

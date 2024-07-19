@@ -1,6 +1,7 @@
 package com.kk.business.quantization.model.vo;
 
 import com.kk.common.base.model.BasePage;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.List;
@@ -13,6 +14,11 @@ import java.util.List;
 @Data
 public class SearchDailyLeaderVo extends ExecutorBaseVo {
 
+    /**
+     * 概念分类编号
+     */
+    @ApiModelProperty("概念分类编号")
+    private String conceptId;
 
 
 }

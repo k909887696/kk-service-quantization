@@ -101,8 +101,29 @@ public class StrongPoolTaskExecutor implements ITaskExecutor {
                 put("rangePct",dto.getRangePct());
                 put("rollBackPct",dto.getRollBackPct());
                 put("maxPct",dto.getMaxPct());
+                put("style","background-color: lightcyan;");
             }};
             dataList.add(item);
+            searchDailyLeaderVo.setPageSize(5);
+            searchDailyLeaderVo.setConceptId(dto.getTsCode());
+            PageResult<DailyLeaderDto> stockLeaderList = dailyService.selectStockLeader(searchDailyLeaderVo);
+            if(stockLeaderList !=null && stockLeaderList.getResult() !=null)
+            {
+                for (DailyLeaderDto sdto : stockLeaderList.getResult()) {
+                    LinkedHashMap sitem = new LinkedHashMap() {{
+                        put("tsCode", sdto.getTsCode());
+                        put("name", sdto.getName());
+                        put("high", sdto.getHigh());
+                        put("low", sdto.getLow());
+                        put("startClose", sdto.getStartClose());
+                        put("endClose", sdto.getEndClose());
+                        put("rangePct", sdto.getRangePct());
+                        put("rollBackPct", sdto.getRollBackPct());
+                        put("maxPct", sdto.getMaxPct());
+                    }};
+                    dataList.add(sitem);
+                }
+            }
         }
 
 

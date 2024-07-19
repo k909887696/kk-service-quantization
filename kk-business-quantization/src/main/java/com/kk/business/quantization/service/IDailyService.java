@@ -4,6 +4,7 @@ import com.github.jeffreyning.mybatisplus.service.IMppService;
 import com.kk.business.quantization.dao.entity.Daily;
 import com.kk.business.quantization.model.dto.DailyDto;
 import com.kk.business.quantization.model.dto.DailyKdjDto;
+import com.kk.business.quantization.model.dto.DailyLeaderDto;
 import com.kk.business.quantization.model.dto.DailyListDto;
 import com.kk.business.quantization.model.vo.*;
 import com.kk.common.base.model.PageResult;
@@ -64,5 +65,11 @@ public interface IDailyService extends IMppService<Daily> {
      * @return 结果集
      */
     PageResult<DailyKdjDto>  getPageResultEx(SearchDailyVo vo);
+    /**
+     * 获取区间涨幅最好的概念
+     * @param vo
+     * @return
+     */
+    PageResult<DailyLeaderDto> selectStockLeader(SearchDailyLeaderVo vo);
 
 }
