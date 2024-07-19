@@ -157,7 +157,7 @@ public class StrongPoolTaskExecutor implements ITaskExecutor {
 
                 if(dailyKdjDtoPageResult!=null && dailyKdjDtoPageResult.getResult()!=null)
                 {
-                    DailyKdjDto dailyKdjDto = dailyKdjDtoPageResult.getResult().stream().filter(t->t.getTsCode().equals(sDto.getTsCode())).findFirst().get();
+                    Optional< DailyKdjDto> dailyKdjDto = dailyKdjDtoPageResult.getResult().stream().filter(t->t.getTsCode().equals(sDto.getTsCode())).findFirst();
                     if(dailyKdjDto!=null) {
                         LinkedHashMap item = new LinkedHashMap() {
                             {
@@ -165,12 +165,12 @@ public class StrongPoolTaskExecutor implements ITaskExecutor {
                                 put("name", sDto.getName());
                                 put("symbol", sDto.getSymbol());
 
-                                put("high", dailyKdjDto.getHigh());
-                                put("low", dailyKdjDto.getLow());
-                                put("open", dailyKdjDto.getOpen());
-                                put("close", dailyKdjDto.getClose());
-                                put("pctChg", dailyKdjDto.getPctChg());
-                                put("amount", dailyKdjDto.getAmount());
+                                put("high", dailyKdjDto.get().getHigh());
+                                put("low", dailyKdjDto.get().getLow());
+                                put("open", dailyKdjDto.get().getOpen());
+                                put("close", dailyKdjDto.get().getClose());
+                                put("pctChg", dailyKdjDto.get().getPctChg());
+                                put("amount", dailyKdjDto.get().getAmount());
 
                             }
                         };
