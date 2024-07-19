@@ -5,15 +5,10 @@ import com.kk.business.quantization.dao.entity.*;
 import com.kk.business.quantization.model.dto.DailyKdjDto;
 import com.kk.business.quantization.model.dto.DailyLeaderDto;
 import com.kk.business.quantization.model.dto.DailyListDto;
+import com.kk.business.quantization.model.dto.StockBasicListDto;
 import com.kk.business.quantization.model.po.tushare.DailyKdjVo;
-import com.kk.business.quantization.model.vo.DailyListVo;
-import com.kk.business.quantization.model.vo.SearchDailyLeaderVo;
-import com.kk.business.quantization.model.vo.SearchDailyVo;
-import com.kk.business.quantization.model.vo.StrongPoolTaskExecutorVo;
-import com.kk.business.quantization.service.IConceptDailyService;
-import com.kk.business.quantization.service.IDailyService;
-import com.kk.business.quantization.service.IKdjCrossService;
-import com.kk.business.quantization.service.ITradeCalService;
+import com.kk.business.quantization.model.vo.*;
+import com.kk.business.quantization.service.*;
 import com.kk.business.quantization.service.executor.ITaskExecutor;
 import com.kk.business.quantization.third.ITushareDataApi;
 import com.kk.business.quantization.utils.StochasticOscillatorUtil;
@@ -54,6 +49,8 @@ public class StrongPoolTaskExecutor implements ITaskExecutor {
     public IConceptDailyService conceptDailyService;
     @Resource
     public EmailUtil emailUtil;
+    @Resource
+    public IStockBasicService stockBasicService;
     /**
      * 下载数据
      * @param params
@@ -66,6 +63,9 @@ public class StrongPoolTaskExecutor implements ITaskExecutor {
         if(StringUtils.isBlank(vo.getTradeDate())) {
             throw new BusinessException("交易日期为空！");
         }
+        StringBuilder html = new StringBuilder();
+        //获取强势概念
+        List<String> conceptIds = new ArrayList<>();
         Date n = new Date();
         TradeCal startTradeCal = tradeCalService.getRecentlyOpenByDay(vo.getTradeDate(),20,"asc");
         TradeCal endTradeCal = tradeCalService.getRecentlyOpenByDay(vo.getTradeDate(),1,"desc");
@@ -75,8 +75,6 @@ public class StrongPoolTaskExecutor implements ITaskExecutor {
         searchDailyLeaderVo.setPageIndex(1);
         searchDailyLeaderVo.setPageSize(20);
         PageResult<DailyLeaderDto> conceptLeaderList = conceptDailyService.selectConceptLeaderListByRange(searchDailyLeaderVo);
-
-
         LinkedHashMap head = new LinkedHashMap(){{
                         put("tsCode","代码");
                         put("name","名称");
@@ -104,6 +102,7 @@ public class StrongPoolTaskExecutor implements ITaskExecutor {
                 put("style","background-color: #50e3e3;");
             }};
             dataList.add(item);
+            conceptIds.add(dto.getTsCode());
             searchDailyLeaderVo.setPageSize(5);
             searchDailyLeaderVo.setConceptId(dto.getTsCode());
             PageResult<DailyLeaderDto> stockLeaderList = dailyService.selectStockLeader(searchDailyLeaderVo);
@@ -126,16 +125,71 @@ public class StrongPoolTaskExecutor implements ITaskExecutor {
             }
         }
 
+        //获取强势概念下 kdj 运算的股票
+        StockBasicListVo stockBasicListVo = new StockBasicListVo();
+        stockBasicListVo.setConceptIds(conceptIds);
+        stockBasicListVo.setKdjCrossDate(vo.getTradeDate());
+        stockBasicListVo.setPageIndex(1);
+        stockBasicListVo.setPageSize(1000);
+        PageResult<StockBasicListDto>  stockBasicListDtoPageResult = stockBasicService.selectPageList(stockBasicListVo);
+        if(stockBasicListDtoPageResult != null && stockBasicListDtoPageResult.getResult() != null)
+        {
+            List<String> kdjCrossTsCodes = stockBasicListDtoPageResult.getResult().stream().map(t->t.getTsCode()).collect(Collectors.toList());
+            SearchDailyVo searchDailyVo = new SearchDailyVo();
+            searchDailyVo.setIds(kdjCrossTsCodes);
+            searchDailyVo.setTradeDate(vo.getTradeDate());
+            PageResult<DailyKdjDto> dailyKdjDtoPageResult = dailyService.getPageResultEx(searchDailyVo);
+            LinkedHashMap stockHead = new LinkedHashMap(){{
+                put("tsCode","代码");
+                put("name","名称");
+                put("symbol","股票代码");
+                put("high","最高价");
+                put("low","最低价");
+                put("open","开盘价");
+                put("close","收盘价");
+                put("pctChg","涨幅");
+                put("amount","成交额 （千元）");
 
-        StringBuilder html = new StringBuilder();
+            }};
+            List<LinkedHashMap<String,Object>> stockDataList = new ArrayList<>();
+
+            for (StockBasicListDto sDto :stockBasicListDtoPageResult.getResult()) {
+
+                if(dailyKdjDtoPageResult!=null && dailyKdjDtoPageResult.getResult()!=null)
+                {
+                    DailyKdjDto dailyKdjDto = dailyKdjDtoPageResult.getResult().stream().filter(t->t.getTsCode().equals(sDto.getTsCode())).findFirst().get();
+                    if(dailyKdjDto!=null) {
+                        LinkedHashMap item = new LinkedHashMap() {
+                            {
+                                put("tsCode", sDto.getTsCode());
+                                put("name", sDto.getName());
+                                put("symbol", sDto.getSymbol());
+
+                                put("high", dailyKdjDto.getHigh());
+                                put("low", dailyKdjDto.getLow());
+                                put("open", dailyKdjDto.getOpen());
+                                put("close", dailyKdjDto.getClose());
+                                put("pctChg", dailyKdjDto.getPctChg());
+                                put("amount", dailyKdjDto.getAmount());
+
+                            }
+                        };
+                        stockDataList.add(item);
+                    }
+                }
+
+
+            }
+            StringBuilder stockTable= htmlUtil.genHtmlTable(String.format("%s ~ %s 期间强势股中KDJ交叉点",startTradeCal.getCalDate(),endTradeCal.getCalDate()),stockHead,stockDataList);
+            html.append(stockTable);
+        }
         StringBuilder table= htmlUtil.genHtmlTable(String.format("%s ~ %s 期间强势股",startTradeCal.getCalDate(),endTradeCal.getCalDate()),head,dataList);
 
 
-
-       System.out.print(table.toString());
+        html.append(table);
         EmailSendMsg msg = new EmailSendMsg();
         msg.setFrom("909887696@qq.com");
-        msg.setText(table.toString());
+        msg.setText(html.toString());
         msg.setSubject("quantization-邮件通知");
         msg.setTo(new ArrayList<String>(){{add("909887696@qq.com");}});
         emailUtil.sendMimeMail(msg);

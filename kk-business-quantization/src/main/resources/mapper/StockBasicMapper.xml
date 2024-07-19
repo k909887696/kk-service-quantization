@@ -95,6 +95,17 @@
             <if test="stockBasicListVo.cnspell != null and stockBasicListVo.cnspell != ''">
                 and cnspell = #{stockBasicListVo.cnspell}
             </if>
+            <if test="stockBasicListVo.conceptIds != null and stockBasicListVo.conceptIds.size() >0 ">
+                and ts_code in (select cd.ts_code from concept_detail cd where cd.concept_id in
+                <foreach collection="stockBasicListVo.conceptIds" item="code" index="index" open="(" close=")"
+                         separator=",">
+                    #{code}
+                </foreach>
+                )
+            </if>
+            <if test="stockBasicListVo.kdjCrossDate != null and stockBasicListVo.kdjCrossDate != ''">
+                and ts_code  in (select kc.ts_code  from kdj_cross kc where   kc.trade_date = #{stockBasicListVo.kdjCrossDate})
+            </if>
         </trim>
     </sql>
 
@@ -110,5 +121,6 @@
     <delete id="truncateTable">
         truncate table stock_basic
     </delete>
+
 
 </mapper>

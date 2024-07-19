@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+import java.util.List;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -109,6 +111,16 @@ public class StockBasicListVo extends BasePage{
     */
     @ApiModelProperty("拼音缩写")
     private String cnspell;
+    /**
+     * 概念分类代码列表
+     */
+    @ApiModelProperty("概念分类代码列表")
+    private List<String> conceptIds;
+    /**
+     * kdj交叉日期
+     */
+    @ApiModelProperty("kdj交叉日期")
+    private String kdjCrossDate;
 
 
 }
