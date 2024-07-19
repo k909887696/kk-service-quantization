@@ -101,7 +101,7 @@ public class StrongPoolTaskExecutor implements ITaskExecutor {
                 put("rangePct",dto.getRangePct());
                 put("rollBackPct",dto.getRollBackPct());
                 put("maxPct",dto.getMaxPct());
-                put("style","background-color: lightcyan;");
+                put("style","background-color: #50e3e3;");
             }};
             dataList.add(item);
             searchDailyLeaderVo.setPageSize(5);
