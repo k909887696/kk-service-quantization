@@ -158,7 +158,7 @@ public class StrongPoolTaskExecutor implements ITaskExecutor {
                 if(dailyKdjDtoPageResult!=null && dailyKdjDtoPageResult.getResult()!=null)
                 {
                     Optional< DailyKdjDto> dailyKdjDto = dailyKdjDtoPageResult.getResult().stream().filter(t->t.getTsCode().equals(sDto.getTsCode())).findFirst();
-                    if(dailyKdjDto!=null) {
+                    if(dailyKdjDto!=null && dailyKdjDto.isPresent()) {
                         LinkedHashMap item = new LinkedHashMap() {
                             {
                                 put("tsCode", sDto.getTsCode());
