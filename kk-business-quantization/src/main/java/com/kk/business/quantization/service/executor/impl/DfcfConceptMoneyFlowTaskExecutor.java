@@ -63,7 +63,9 @@ public class DfcfConceptMoneyFlowTaskExecutor implements ITaskExecutor {
                 continue;
             vo.setConceptId(id);
             DfcfData<ConceptMoneyFlow> res =  dfcfDataApi.conceptMoneyFlow(vo);
-            data.addAll(res.getData());
+            if(res != null) {
+                data.addAll(res.getData());
+            }
         }
 
         //插入db

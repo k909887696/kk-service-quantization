@@ -63,7 +63,9 @@ public class DfcfConceptDailyTaskExecutor implements ITaskExecutor {
                 continue;
             vo.setConceptId(id);
             DfcfData<ConceptDaily> res =  dfcfDataApi.conceptDaily(vo);
-            data.addAll(res.getData());
+            if(res!=null) {
+                data.addAll(res.getData());
+            }
         }
 
         //插入db

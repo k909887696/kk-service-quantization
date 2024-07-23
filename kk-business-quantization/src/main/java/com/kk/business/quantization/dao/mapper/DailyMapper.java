@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.kk.business.quantization.dao.entity.Daily;
 import com.kk.business.quantization.model.vo.DailyListVo;
+import com.kk.business.quantization.model.vo.SearchDailyLeaderVo;
 import com.kk.business.quantization.model.vo.SearchDailyVo;
 import com.kk.business.quantization.model.vo.SelectMaxMinByDateRangeVo;
 import com.kk.common.dao.mapper.RootMapper;
@@ -40,5 +41,12 @@ public interface DailyMapper extends RootMapper<Daily> {
      * @return
      */
     Page selectMaxMinByDateRange(IPage page, SelectMaxMinByDateRangeVo vo);
+
+    /**
+     * 获取区间涨幅最好的概念
+     * @param vo
+     * @return
+     */
+    Page selectStockLeader(IPage page, SearchDailyLeaderVo vo);
 
 }

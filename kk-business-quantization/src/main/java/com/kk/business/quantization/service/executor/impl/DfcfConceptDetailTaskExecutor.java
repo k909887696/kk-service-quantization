@@ -68,7 +68,9 @@ public class DfcfConceptDetailTaskExecutor implements ITaskExecutor {
                 continue;
             vo.setId(id);
             DfcfData<ConceptDetail> res =  dfcfDataApi.conceptDetail(vo);
-            data.addAll(res.getData());
+            if(res !=null) {
+                data.addAll(res.getData());
+            }
         }
         if(data != null && data.size() >0) {
             List<String> symbolList = data.stream().map(t -> t.getSymbol()).collect(Collectors.toList());

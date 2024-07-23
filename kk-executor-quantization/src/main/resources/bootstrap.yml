@@ -116,7 +116,7 @@ xxl:
     admin:
       #调度中心部署跟地址：如调度中心集群部署存在多个地址则用逗号分隔。
       #执行器将会使用该地址进行"执行器心跳注册"和"任务结果回调"。
-      addresses: http://xxljob.dev.com/xxl-job-admin
+      addresses: http://192.168.90.220:6009/xxl-job-admin
 
 #自定义拦截器相关配置
 custom-web-mvc-config:

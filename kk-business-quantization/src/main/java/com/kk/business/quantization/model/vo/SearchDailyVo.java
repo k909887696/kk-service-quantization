@@ -38,6 +38,31 @@ public class SearchDailyVo extends BasePage {
      */
     private String kdjType;
 
+    /**
+     * 交叉点类型 DOWN：死叉 UP：金叉
+     */
+    private String crossType;
+    /**
+     * 股票概念编号列表
+     */
+    private List<String> conceptIds;
+
+    public List<String> getConceptIds() {
+        return conceptIds;
+    }
+
+    public void setConceptIds(List<String> conceptIds) {
+        this.conceptIds = conceptIds;
+    }
+
+    public String getCrossType() {
+        return crossType;
+    }
+
+    public void setCrossType(String crossType) {
+        this.crossType = crossType;
+    }
+
     public String getKdjType() {
         return kdjType;
     }

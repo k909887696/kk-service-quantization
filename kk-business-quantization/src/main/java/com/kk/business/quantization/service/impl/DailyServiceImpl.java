@@ -8,6 +8,7 @@ import com.kk.business.quantization.dao.entity.Daily;
 import com.kk.business.quantization.dao.mapper.DailyMapper;
 import com.kk.business.quantization.model.dto.DailyDto;
 import com.kk.business.quantization.model.dto.DailyKdjDto;
+import com.kk.business.quantization.model.dto.DailyLeaderDto;
 import com.kk.business.quantization.model.dto.DailyListDto;
 import com.kk.business.quantization.model.vo.*;
 import com.kk.business.quantization.service.IDailyService;
@@ -52,7 +53,7 @@ public class DailyServiceImpl extends MppServiceImpl<DailyMapper, Daily> impleme
         for(;index<=totalPage;index++)
         {
             List<Daily> tempList = list.stream().skip((index-1)*size).limit(size).collect(Collectors.toList());
-            this.baseMapper.insertIgnoreBatchSomeColumn(tempList);
+            this.baseMapper.insertDuplicateKeyUpdate(tempList);
         }
     }
     /**
@@ -148,5 +149,25 @@ public class DailyServiceImpl extends MppServiceImpl<DailyMapper, Daily> impleme
         return pageResult;
     }
 
+    /**
+     * 获取区间涨幅最好的概念
+     * @param vo
+     * @return
+     */
+    public PageResult<DailyLeaderDto> selectStockLeader(SearchDailyLeaderVo vo)
+    {
+        IPage<DailyLeaderDto> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
+
+
+
+        page = this.baseMapper.selectStockLeader(page,vo);
+        PageResult<DailyLeaderDto>  pageResult = new PageResult<>();
+
+        pageResult.setResult(page.getRecords());
+        pageResult.setTotalCount(page.getTotal());
+        pageResult.setPageIndex(vo.getPageIndex());
+        pageResult.setPageSize(vo.getPageSize());
+        return pageResult;
+    }
 
 }

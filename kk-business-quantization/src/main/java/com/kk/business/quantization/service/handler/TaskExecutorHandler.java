@@ -1,5 +1,6 @@
 package com.kk.business.quantization.service.handler;
 
+import com.kk.business.quantization.constant.CollectionHandType;
 import com.kk.business.quantization.constant.InvokeCycleType;
 import com.kk.business.quantization.dao.entity.CollectionPolicy;
 import com.kk.business.quantization.dao.entity.CollectionTask;
@@ -59,8 +60,9 @@ public class TaskExecutorHandler {
     /**
      * 任务策略处理
      * @param policy
+     * @param handType 1:手动，手动执行不更新下次执行时间；其余：调度自动
      */
-    public void handlerPolicy(CollectionPolicy policy)
+    public void handlerPolicy(CollectionPolicy policy,String handType)
     {
         if(StringUtils.isBlank(policy.getInvokeCode()))
             throw new BusinessException("任务策略任务执行器编码为空！");
@@ -94,9 +96,10 @@ public class TaskExecutorHandler {
 
         //保存任务
         collectionTaskService.insertIgnoreBatch(taskList);
-
-        //计算更新下次执行时间 且清空异常信息 与 执行错误次数
-        collectionPolicyMapper.updatePreRunTime(policy.getPolicyId(),generateNextRuntime(policy));
+        if(!CollectionHandType.ByHand.equals(handType)) {//非手动才更新下次执行时间
+            //计算更新下次执行时间 且清空异常信息 与 执行错误次数
+            collectionPolicyMapper.updatePreRunTime(policy.getPolicyId(), generateNextRuntime(policy));
+        }
 
     }
 

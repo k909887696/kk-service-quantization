@@ -52,7 +52,7 @@ public class StockDayKdjServiceImpl extends MppServiceImpl<StockDayKdjMapper, St
         for(;index<=totalPage;index++)
         {
             List<StockDayKdj> tempList = list.stream().skip((index-1)*size).limit(size).collect(Collectors.toList());
-            this.baseMapper.insertIgnoreBatchSomeColumn(tempList);
+            this.baseMapper.insertDuplicateKeyUpdate(tempList);
         }
     }
     /**

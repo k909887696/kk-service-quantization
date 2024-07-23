@@ -74,4 +74,9 @@ public interface ICollectionPolicyService extends IMppService<CollectionPolicy> 
      */
     List<CollectionPolicy> getPolicyByIds(List<String> ids);
 
+    /**
+     * 手动执行策略
+     * @param policyId 策略编号
+     */
+    void executePolicyByHand(String policyId);
 }

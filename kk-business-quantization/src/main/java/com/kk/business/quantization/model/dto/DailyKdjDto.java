@@ -4,8 +4,10 @@ import com.kk.business.quantization.dao.entity.Daily;
 
 public class DailyKdjDto extends Daily {
 
-
-
+    /**
+     * 股票名称
+     */
+    private String name;
     private double kValue ;
 
 
@@ -31,6 +33,26 @@ public class DailyKdjDto extends Daily {
      * 最大值
      */
     private double maxPrice;
+    /**
+     * kdj交叉类型
+     */
+    private String crossType;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCrossType() {
+        return crossType;
+    }
+
+    public void setCrossType(String crossType) {
+        this.crossType = crossType;
+    }
 
     public double getKValue() {
         return kValue;

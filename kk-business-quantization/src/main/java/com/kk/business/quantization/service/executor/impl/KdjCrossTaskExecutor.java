@@ -66,14 +66,16 @@ public class KdjCrossTaskExecutor implements ITaskExecutor {
         List<String> ids = dailyKdjList.getResult().stream().map(t->t.getTsCode()).collect(Collectors.toList());
         for (String code : ids)
         {
-           List<DailyKdjDto> templist =  dailyKdjList.getResult().stream().filter(t->t.getTsCode().equals(code)).collect(Collectors.toList());
+           List<DailyKdjDto> templist =  dailyKdjList.getResult().stream().filter(t->t.getTsCode().equals(code))
+                   .sorted(Comparator.comparing(DailyKdjDto::getTradeDate))
+                   .collect(Collectors.toList());
            String crossType = StochasticOscillatorUtil.IsKDJCrossAndType(templist);
            if(StringUtils.isNotBlank(crossType))
            {
                KdjCross kdjCross = new KdjCross();
                kdjCross.setCrossType(crossType);
-               kdjCross.setTsCode(templist.get(0).getTsCode());
-               kdjCross.setTradeDate(templist.get(0).getTradeDate());
+               kdjCross.setTsCode(templist.get(1).getTsCode());
+               kdjCross.setTradeDate(templist.get(1).getTradeDate());
                kdjCross.setAnalysisType(vo.getKdjType());
                data.add(kdjCross);
            }
