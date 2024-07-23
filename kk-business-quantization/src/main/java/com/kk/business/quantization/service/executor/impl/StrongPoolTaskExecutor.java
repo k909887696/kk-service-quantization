@@ -1,6 +1,7 @@
 package com.kk.business.quantization.service.executor.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.kk.business.quantization.constant.CorssTypeType;
 import com.kk.business.quantization.dao.entity.*;
 import com.kk.business.quantization.model.dto.DailyKdjDto;
 import com.kk.business.quantization.model.dto.DailyLeaderDto;
@@ -126,23 +127,20 @@ public class StrongPoolTaskExecutor implements ITaskExecutor {
         }
 
         //获取强势概念下 kdj 运算的股票
-        StockBasicListVo stockBasicListVo = new StockBasicListVo();
+        SearchDailyVo stockBasicListVo = new SearchDailyVo();
         stockBasicListVo.setConceptIds(conceptIds);
-        stockBasicListVo.setKdjCrossDate(vo.getTradeDate());
+        stockBasicListVo.setTradeDate(vo.getTradeDate());
+        stockBasicListVo.setCrossType(CorssTypeType.UP);
         stockBasicListVo.setPageIndex(1);
         stockBasicListVo.setPageSize(1000);
-        PageResult<StockBasicListDto>  stockBasicListDtoPageResult = stockBasicService.selectPageList(stockBasicListVo);
+        PageResult<DailyKdjDto>  stockBasicListDtoPageResult = dailyService.getPageResultEx(stockBasicListVo);
         if(stockBasicListDtoPageResult != null && stockBasicListDtoPageResult.getResult() != null)
         {
             List<String> kdjCrossTsCodes = stockBasicListDtoPageResult.getResult().stream().map(t->t.getTsCode()).collect(Collectors.toList());
-            SearchDailyVo searchDailyVo = new SearchDailyVo();
-            searchDailyVo.setIds(kdjCrossTsCodes);
-            searchDailyVo.setTradeDate(vo.getTradeDate());
-            PageResult<DailyKdjDto> dailyKdjDtoPageResult = dailyService.getPageResultEx(searchDailyVo);
+
             LinkedHashMap stockHead = new LinkedHashMap(){{
                 put("tsCode","代码");
                 put("name","名称");
-                put("symbol","股票代码");
                 put("high","最高价");
                 put("low","最低价");
                 put("open","开盘价");
@@ -153,30 +151,26 @@ public class StrongPoolTaskExecutor implements ITaskExecutor {
             }};
             List<LinkedHashMap<String,Object>> stockDataList = new ArrayList<>();
 
-            for (StockBasicListDto sDto :stockBasicListDtoPageResult.getResult()) {
+            for (DailyKdjDto sDto :stockBasicListDtoPageResult.getResult()) {
 
-                if(dailyKdjDtoPageResult!=null && dailyKdjDtoPageResult.getResult()!=null)
-                {
-                    Optional< DailyKdjDto> dailyKdjDto = dailyKdjDtoPageResult.getResult().stream().filter(t->t.getTsCode().equals(sDto.getTsCode())).findFirst();
-                    if(dailyKdjDto!=null && dailyKdjDto.isPresent()) {
+
                         LinkedHashMap item = new LinkedHashMap() {
                             {
                                 put("tsCode", sDto.getTsCode());
                                 put("name", sDto.getName());
-                                put("symbol", sDto.getSymbol());
 
-                                put("high", dailyKdjDto.get().getHigh());
-                                put("low", dailyKdjDto.get().getLow());
-                                put("open", dailyKdjDto.get().getOpen());
-                                put("close", dailyKdjDto.get().getClose());
-                                put("pctChg", dailyKdjDto.get().getPctChg());
-                                put("amount", dailyKdjDto.get().getAmount());
+
+                                put("high", sDto.getHigh());
+                                put("low", sDto.getLow());
+                                put("open", sDto.getOpen());
+                                put("close", sDto.getClose());
+                                put("pctChg", sDto.getPctChg());
+                                put("amount", sDto.getAmount());
 
                             }
                         };
                         stockDataList.add(item);
-                    }
-                }
+
 
 
             }

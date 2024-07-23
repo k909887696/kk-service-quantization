@@ -83,7 +83,9 @@
     </select>
     <select id="selectDailyExList" resultType="com.kk.business.quantization.model.dto.DailyKdjDto">
             select * from daily d
+            left join stock_basic sb on sb.ts_code = d.ts_code
             left join stock_day_kdj kdj on kdj.ts_code = d.ts_code and d.trade_date = kdj.trade_date
+            left join kdj_cross kc on kc.ts_code = kdj.ts_code and kc.trade_date = kdj.trade_date
             <where>
                 <if test="vo.tsCode != null and vo.tsCode != ''">
                     and d.ts_code = #{vo.tsCode}
@@ -107,7 +109,17 @@
                         #{code}
                     </foreach>
                 </if>
-
+                <if test="vo.conceptIds != null and vo.conceptIds.size() >0 ">
+                    and d.ts_code in (select cd.ts_code from concept_detail cd where cd.concept_id in
+                    <foreach collection="vo.conceptIds" item="code" index="index" open="(" close=")"
+                             separator=",">
+                        #{code}
+                    </foreach>
+                    )
+                </if>
+                <if test="vo.crossType != null and vo.crossType != ''">
+                    and kc.cross_type = #{crossType}
+                </if>
             </where>
     </select>
     <select id="selectMaxMinByDateRange" resultType="com.kk.business.quantization.model.dto.SelectMaxMinByDateRangeDto">
@@ -140,4 +152,6 @@
              stock_basic   sb on sb.ts_code  = dg.ts_code
         order by range_pct desc
     </select>
+
+
 </mapper>
