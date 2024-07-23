@@ -1,6 +1,7 @@
 package com.kk.business.quantization.dao.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
@@ -28,8 +29,7 @@ public class CollectionTaskHistory implements Serializable {
     * 任务编号
     */
     @ApiModelProperty("任务编号")
-    @Id
-    @TableField("task_id")
+    @TableId("task_id")
     private String taskId;
 
     /**
