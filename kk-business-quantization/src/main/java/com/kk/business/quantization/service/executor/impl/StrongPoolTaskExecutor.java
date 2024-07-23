@@ -137,7 +137,7 @@ public class StrongPoolTaskExecutor implements ITaskExecutor {
         if(stockBasicListDtoPageResult != null && stockBasicListDtoPageResult.getResult() != null)
         {
             List<String> kdjCrossTsCodes = stockBasicListDtoPageResult.getResult().stream().map(t->t.getTsCode()).collect(Collectors.toList());
-
+ 
             LinkedHashMap stockHead = new LinkedHashMap(){{
                 put("tsCode","代码");
                 put("name","名称");
