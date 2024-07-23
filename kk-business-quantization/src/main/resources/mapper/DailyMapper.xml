@@ -118,7 +118,7 @@
                     )
                 </if>
                 <if test="vo.crossType != null and vo.crossType != ''">
-                    and kc.cross_type = #{crossType}
+                    and kc.cross_type = #{vo.crossType}
                 </if>
             </where>
     </select>
