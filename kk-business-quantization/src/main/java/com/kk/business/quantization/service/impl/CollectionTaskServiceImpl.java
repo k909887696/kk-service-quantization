@@ -17,6 +17,7 @@ import com.kk.business.quantization.service.ICollectionTaskService;
 import com.kk.business.quantization.utils.SerialNoUtil;
 import com.kk.common.base.model.BasePage;
 import com.kk.common.base.model.PageResult;
+import com.kk.common.exception.BusinessException;
 import com.kk.common.utils.DateUtil;
 import com.kk.common.utils.MapperUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -175,8 +176,9 @@ public class CollectionTaskServiceImpl extends MppServiceImpl<CollectionTaskMapp
         CollectionTaskHistory history = null;
         if(task == null) {
             history = collectionTaskHistoryMapper.selectById(taskId);
-            if(history==null)
-                return ;
+            if(history==null) {
+                throw new BusinessException("历史任务不存在");
+            }
             task =  mapperUtils.map(history,CollectionTask.class);
             task.setTaskId(SerialNoUtil.getSingleNextId(SerialNoType.COLLECTION_TASK, DateUtil.PATTERN_STANDARD02W));
             task.setRunCount(0);
