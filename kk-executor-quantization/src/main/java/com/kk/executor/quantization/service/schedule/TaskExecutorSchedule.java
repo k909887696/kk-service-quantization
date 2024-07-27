@@ -41,6 +41,8 @@ public class TaskExecutorSchedule {
     @Resource
     public TaskExecutorHandler taskExecutorHandler;
 
+    public int MaxRunTaskCount=500;
+
     /**
      * 执行需要处理的任务策略
      */
@@ -110,6 +112,7 @@ public class TaskExecutorSchedule {
         }
         vo.setChannel(jobParamVo.getChannel());
         PageResult<CollectionTask> list = collectionTaskService.getPreExecuteTask(vo);
+        int runedCount=0;
         while(list != null && list.getResult()!= null && list.getResult().size() > 0) {
             LogUtils.logInfoXxlAnd4j("{}|{}"
                     ,"待执行任务数量",list.getResult().size()
@@ -127,6 +130,7 @@ public class TaskExecutorSchedule {
                                 p.getName() + "(" + p.getTaskId() + ")"
                                 , "执行完成"
                                 , "taskSchedule;" + p.getTaskId());
+                        runedCount++;
                     } catch (Exception e) {
                         LogUtils.logErrorXxlAnd4j("{}|{}|{}|{}",
                                 "任务调度执行异常：" + p.getName() + "(" + p.getTaskId() + ")"
@@ -139,6 +143,10 @@ public class TaskExecutorSchedule {
                         p.setPreRunTime(DateUtil.addDate(p.getPreRunTime(), Calendar.MINUTE, p.getRunCount() * (p.getRunCount() - 1)));
                         collectionTaskService.update(p);
                     }
+                }
+                if(runedCount>=MaxRunTaskCount)
+                {
+                    break;
                 }
                 list = collectionTaskService.getPreExecuteTask(vo);
             }else {
