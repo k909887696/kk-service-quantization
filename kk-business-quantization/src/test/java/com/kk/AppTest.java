@@ -13,6 +13,7 @@ import com.kk.business.quantization.model.po.dfcf.DfcfBaseRes;
 import com.kk.business.quantization.model.po.dfcf.DfcfHisBaseRes;
 import com.kk.business.quantization.model.po.pdd.*;
 import com.kk.business.quantization.service.executor.impl.StrongPoolTaskExecutor;
+import com.kk.business.quantization.utils.ModuleLogFactory;
 import com.kk.business.quantization.utils.ThridDataUtils;
 import com.kk.business.quantization.utils.pdfUtils;
 import com.kk.common.utils.DateUtil;
@@ -50,6 +51,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.ofdrw.layout.element.Img;
+import org.slf4j.Logger;
 
 /**
  * Unit test for simple App.
@@ -384,5 +386,20 @@ public class AppTest {
         hearder.put("source", "tmc");
         res = httpUtil.httpRestRequest(params, url, hearder, String.class);
         System.out.print(res);
+    }
+    @Test
+    public void testModuleLogger()
+    {
+System.out.println(DateUtil.date2String(new Date(),DateUtil.PATTERN_STANDARD19H));
+        for(int i=0;i<10000;i++) {
+
+            Logger log =  ModuleLogFactory.createLogger("kklog"+(i%3));
+            log.info("bu zhidao xie xie shen me ?gao kuai dian ba ."+i);
+            log.error("bu zhidao xie xie shen me ?gao kuai dian ba ."+i);
+            log.debug("bu zhidao xie xie shen me ?gao kuai dian ba ."+i);
+            log.warn("bu zhidao xie xie shen me ?gao kuai dian ba ."+i);
+
+            //ModuleLogFactory.stop("kklog"+(i%3));
+        }
     }
 }
