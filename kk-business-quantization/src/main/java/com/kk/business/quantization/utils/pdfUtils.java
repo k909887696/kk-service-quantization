@@ -17,6 +17,8 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 
 
 import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.nio.charset.Charset;
 
 
@@ -33,6 +35,16 @@ public class pdfUtils {
     }
 
     public final static String FILE_NAME = "fileName";
+
+    public static InputStream getInputStreamFromRemoteUrl(String path) throws Exception {
+        //http文件服务器文件处理
+        URL url = new URL(path);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+        // 创建输入流，读取Excel
+        return conn.getInputStream();
+
+    }
 
     public static String inputStreamUpload(String url, String fileName, InputStream inputStream) {
         //创建HttpClient对象

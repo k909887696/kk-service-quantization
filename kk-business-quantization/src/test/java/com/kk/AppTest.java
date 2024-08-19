@@ -4,6 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -13,6 +14,7 @@ import com.kk.business.quantization.model.po.dfcf.DfcfBaseRes;
 import com.kk.business.quantization.model.po.dfcf.DfcfHisBaseRes;
 import com.kk.business.quantization.model.po.pdd.*;
 import com.kk.business.quantization.service.executor.impl.StrongPoolTaskExecutor;
+import com.kk.business.quantization.utils.MD5Common;
 import com.kk.business.quantization.utils.ThridDataUtils;
 import com.kk.business.quantization.utils.pdfUtils;
 import com.kk.common.utils.DateUtil;
@@ -41,6 +43,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.MessageDigest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -63,8 +66,51 @@ public class AppTest {
         assertTrue(true);
     }
 
+    public static String MD5(String s) {
+        char hexDigits[]={'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
+        try {
+            byte[] btInput = s.getBytes();
+            // 获得MD5摘要算法的 MessageDigest 对象
+            MessageDigest mdInst = MessageDigest.getInstance("MD5");
+            // 使用指定的字节更新摘要
+            mdInst.update(btInput);
+            // 获得密文
+            byte[] md = mdInst.digest();
+            // 把密文转换成十六进制的字符串形式
+            int j = md.length;
+            char str[] = new char[j * 2];
+            int k = 0;
+            for (int i = 0; i < j; i++) {
+                byte byte0 = md[i];
+                str[k++] = hexDigits[byte0 >>> 4 & 0xf];
+                str[k++] = hexDigits[byte0 & 0xf];
+            }
+            return new String(str);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
+    /**
+     * net 旅客权限系统密码加密算法
+     * @param s
+     * @return
+     */
+    public static String NetPasswordMD5(String s)
+    {
+        String res =MD5(s);
+        res =MD5(res.substring(1,31));
+        res = res.substring(0,31);
+        return res;
+    }
+    @Test
+    public void testNetMd5() throws Exception {
+        MD5Common mdt = new MD5Common();
 
+        System.out.println(NetPasswordMD5("random2024"));
+        System.out.println(mdt.Md5Encrypt("random2024"));
+    }
     @Test
     public void testUtils() {
         String res = httpUtil.doPost("http://push2his.eastmoney.com/api/qt/stock/kline/get?ut=fa5fd1943c7b386f172d6893dbfba10b&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58&klt=101&fqt=1&smplmt=1524.6&_=1590670510425&cb=jQuery112402670742210902033_1584861859279&beg=20240717&end=20240718&lmt=5000&secid=90.BK1081", "");
@@ -276,8 +322,10 @@ public class AppTest {
         String pdfPath = "F:\\kk\\1.pdf";
         File file = new File("F:\\kk\\0185444270932-24318018211000463811.ofd");
         /* File pdffile = new File(pdfPath);*/
+        InputStream fileIs = pdfUtils.getInputStreamFromRemoteUrl("http://testtmcsz.shinetour.com/file/apis/v1/file/downloadFile?path=/invoicePzg/20240805/20240805175933113-2220611093871-90202406291449091273.ofd&fileName=2220611093871-90202406291449091273.ofd");
 
-        InputStream ofdInputStream = new FileInputStream(file);
+
+        InputStream ofdInputStream = fileIs;
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
@@ -348,10 +396,13 @@ public class AppTest {
         String uploadUrl = "http://192.168.90.190:8080/file/apis/v1/file/uploadFile/report";
         String downLoadUrl = "http://192.168.90.190:8080/file/apis/v1/file/downloadFile";
         String pdfPath = "F:\\kk\\1.pdf";
-        File file = new File("F:\\kk\\0185444270932-24318018211000463811.ofd");
+        File file = new File("F:\\kk\\2220611093871-90202406291449091273.ofd");
+
+        InputStream fileIs = pdfUtils.getInputStreamFromRemoteUrl("http://testtmcsz.shinetour.com/file/apis/v1/file/downloadFile?path=/invoicePzg/20240805/20240805175933113-2220611093871-90202406291449091273.ofd&fileName=2220611093871-90202406291449091273.ofd");
+
 
         //OFDDoc ofdDoc = new OFDDoc(Paths.get("F:\\kk\\pdftoofd.ofd"));
-        try (OFDReader reader = new OFDReader(Paths.get("F:\\kk\\pdftoofd.ofd"));) {
+        try (OFDReader reader = new OFDReader(fileIs);) {
             ImageMaker imageMaker = new ImageMaker(reader, 15);
             for (int i = 0; i < imageMaker.pageSize(); i++) {
                 // 4. 指定页码转换图片
@@ -361,7 +412,7 @@ public class AppTest {
                 // 5. 存储为指定格式图片
                 ImageIO.write(image, "JPG", ofdOutput);
                 InputStream byteArrayInputStream = new ByteArrayInputStream(ofdOutput.toByteArray());
-                String res = pdfUtils.inputStreamUpload(uploadUrl, "pdftoofd" + i + ".jpg", byteArrayInputStream);
+                String res = pdfUtils.inputStreamUpload(uploadUrl, "ofd2Img" + i + ".jpg", byteArrayInputStream);
                 byteArrayInputStream.close();
                 ofdOutput.close();
                 System.out.print(res);
@@ -382,6 +433,27 @@ public class AppTest {
         String url = "https://pay.shinetour.com/paycenter//apis/v1/paymentorders/batchPayOffline";
         hearder.put("sid", sid);
         hearder.put("source", "tmc");
+        res = httpUtil.httpRestRequest(params, url, hearder, String.class);
+        System.out.print(res);
+    }
+
+    @Test
+    public void testsendInvoiceEmail() {
+        String sid = "NET:4250626490584025715640_651851121AA8C6588F7CC93C626C9ED0";
+        String json = "{\"moneyRmb\":90000,\"payOfflineVoList\":[{\"businessOrders\":[{\"orderId\":\"IO2400040618\",\"moneyRmb\":15000,\"moneyOriginal\":15000}],\"currency\":\"CNY\",\"currencyOriginal\":\"CNY\",\"description\":\"\",\"payerType\":\"1\",\"money\":15000,\"moneyRmb\":15000,\"dealMoneyRmb\":15000,\"rateDifferenceFee\":0,\"exchangeRate\":1,\"orderEntry\":4,\"outsideFlowId\":\"TZW666\",\"payApplicationId\":\"\",\"payeeAccountId\":\"退转资金流水账号\",\"payeeAccountName\":\"商旅退转资金流水业务\",\"payeeFinancialInstitution\":\"中转账户\",\"payeeId\":\"PTSH000000\",\"payeeName\":\"广东美亚商旅科技有限公司\",\"payerAccountId\":\"退转资金流水账号\",\"payerAccountName\":\"商旅退转资金流水业务\",\"payerFinancialInstitution\":\"中转账户\",\"payerId\":\"S125477\",\"payerName\":\"杭州高品自动化设备有限公司\",\"remark\":\"\",\"records\":[{\"cardId\":\"\",\"companyId\":\"S125477\",\"companyName\":\"杭州高品自动化设备有限公司\",\"details\":[{\"businessOrderId\":\"IO2400040618\",\"payAmount\":90000,\"receivableAmount\":\"\",\"recordId\":\"\"}],\"order\":{\"kefuCode\":\"\",\"kefuName\":\"\",\"lv1CodeKf\":\"\",\"lv1NameKf\":\"\",\"lv2CodeKf\":\"\",\"lv2NameKf\":\"\",\"lv3CodeKf\":\"\",\"lv3NameKf\":\"\",\"lv4CodeKf\":\"\",\"lv4NameKf\":\"\",\"lv5CodeKf\":\"\",\"lv5NameKf\":\"\",\"orderOpTime\":\"\"},\"entry\":4,\"objectId\":\"IO2400040618\",\"payAmount\":90000,\"payChannel\":\"MeiYa\",\"payMethod\":\"10\",\"payMode\":\"4\",\"payType\":1,\"productName\":\"众安个人航空意外险-方案四\",\"receivableAmount\":\"\",\"tradingType\":\"1\"}],\"transactionTime\":\"2024-07-04 17:09:59\",\"writeOff\":0,\"createType\":1,\"claimMoneyFlowId\":\"KX240000108121\",\"files\":[]},{\"businessOrders\":[{\"orderId\":\"IO2400040618\",\"moneyRmb\":25000,\"moneyOriginal\":25000}],\"currency\":\"CNY\",\"currencyOriginal\":\"CNY\",\"description\":\"\",\"payerType\":\"1\",\"money\":25000,\"moneyRmb\":25000,\"dealMoneyRmb\":25000,\"rateDifferenceFee\":0,\"exchangeRate\":1,\"orderEntry\":4,\"outsideFlowId\":\"TZW666\",\"payApplicationId\":\"\",\"payeeAccountId\":\"退转资金流水账号\",\"payeeAccountName\":\"商旅退转资金流水业务\",\"payeeFinancialInstitution\":\"中转账户\",\"payeeId\":\"PTSH000000\",\"payeeName\":\"广东美亚商旅科技有限公司\",\"payerAccountId\":\"退转资金流水账号\",\"payerAccountName\":\"商旅退转资金流水业务\",\"payerFinancialInstitution\":\"中转账户\",\"payerId\":\"S125477\",\"payerName\":\"杭州高品自动化设备有限公司\",\"remark\":\"\",\"records\":[{\"cardId\":\"\",\"companyId\":\"S125477\",\"companyName\":\"杭州高品自动化设备有限公司\",\"details\":[{\"businessOrderId\":\"IO2400040618\",\"payAmount\":90000,\"receivableAmount\":\"\",\"recordId\":\"\"}],\"order\":{\"kefuCode\":\"\",\"kefuName\":\"\",\"lv1CodeKf\":\"\",\"lv1NameKf\":\"\",\"lv2CodeKf\":\"\",\"lv2NameKf\":\"\",\"lv3CodeKf\":\"\",\"lv3NameKf\":\"\",\"lv4CodeKf\":\"\",\"lv4NameKf\":\"\",\"lv5CodeKf\":\"\",\"lv5NameKf\":\"\",\"orderOpTime\":\"\"},\"entry\":4,\"objectId\":\"IO2400040618\",\"payAmount\":90000,\"payChannel\":\"MeiYa\",\"payMethod\":\"10\",\"payMode\":\"4\",\"payType\":1,\"productName\":\"众安个人航空意外险-方案四\",\"receivableAmount\":\"\",\"tradingType\":\"1\"}],\"transactionTime\":\"2024-07-04 17:08:31\",\"writeOff\":0,\"createType\":1,\"claimMoneyFlowId\":\"KX240000108118\",\"files\":[]},{\"businessOrders\":[{\"orderId\":\"IO2400040618\",\"moneyRmb\":25000,\"moneyOriginal\":25000}],\"currency\":\"CNY\",\"currencyOriginal\":\"CNY\",\"description\":\"\",\"payerType\":\"1\",\"money\":25000,\"moneyRmb\":25000,\"dealMoneyRmb\":25000,\"rateDifferenceFee\":0,\"exchangeRate\":1,\"orderEntry\":4,\"outsideFlowId\":\"TZW666\",\"payApplicationId\":\"\",\"payeeAccountId\":\"退转资金流水账号\",\"payeeAccountName\":\"商旅退转资金流水业务\",\"payeeFinancialInstitution\":\"中转账户\",\"payeeId\":\"PTSH000000\",\"payeeName\":\"广东美亚商旅科技有限公司\",\"payerAccountId\":\"退转资金流水账号\",\"payerAccountName\":\"商旅退转资金流水业务\",\"payerFinancialInstitution\":\"中转账户\",\"payerId\":\"S125477\",\"payerName\":\"杭州高品自动化设备有限公司\",\"remark\":\"\",\"records\":[{\"cardId\":\"\",\"companyId\":\"S125477\",\"companyName\":\"杭州高品自动化设备有限公司\",\"details\":[{\"businessOrderId\":\"IO2400040618\",\"payAmount\":90000,\"receivableAmount\":\"\",\"recordId\":\"\"}],\"order\":{\"kefuCode\":\"\",\"kefuName\":\"\",\"lv1CodeKf\":\"\",\"lv1NameKf\":\"\",\"lv2CodeKf\":\"\",\"lv2NameKf\":\"\",\"lv3CodeKf\":\"\",\"lv3NameKf\":\"\",\"lv4CodeKf\":\"\",\"lv4NameKf\":\"\",\"lv5CodeKf\":\"\",\"lv5NameKf\":\"\",\"orderOpTime\":\"\"},\"entry\":4,\"objectId\":\"IO2400040618\",\"payAmount\":90000,\"payChannel\":\"MeiYa\",\"payMethod\":\"10\",\"payMode\":\"4\",\"payType\":1,\"productName\":\"众安个人航空意外险-方案四\",\"receivableAmount\":\"\",\"tradingType\":\"1\"}],\"transactionTime\":\"2024-07-04 09:50:42\",\"writeOff\":0,\"createType\":1,\"claimMoneyFlowId\":\"KX240000107818\",\"files\":[]},{\"businessOrders\":[{\"orderId\":\"IO2400040618\",\"moneyRmb\":25000,\"moneyOriginal\":25000}],\"currency\":\"CNY\",\"currencyOriginal\":\"CNY\",\"description\":\"\",\"payerType\":\"1\",\"money\":25000,\"moneyRmb\":25000,\"dealMoneyRmb\":25000,\"rateDifferenceFee\":0,\"exchangeRate\":1,\"orderEntry\":4,\"outsideFlowId\":\"TZW666\",\"payApplicationId\":\"\",\"payeeAccountId\":\"退转资金流水账号\",\"payeeAccountName\":\"商旅退转资金流水业务\",\"payeeFinancialInstitution\":\"中转账户\",\"payeeId\":\"PTSH000000\",\"payeeName\":\"广东美亚商旅科技有限公司\",\"payerAccountId\":\"退转资金流水账号\",\"payerAccountName\":\"商旅退转资金流水业务\",\"payerFinancialInstitution\":\"中转账户\",\"payerId\":\"S125477\",\"payerName\":\"杭州高品自动化设备有限公司\",\"remark\":\"\",\"records\":[{\"cardId\":\"\",\"companyId\":\"S125477\",\"companyName\":\"杭州高品自动化设备有限公司\",\"details\":[{\"businessOrderId\":\"IO2400040618\",\"payAmount\":90000,\"receivableAmount\":\"\",\"recordId\":\"\"}],\"order\":{\"kefuCode\":\"\",\"kefuName\":\"\",\"lv1CodeKf\":\"\",\"lv1NameKf\":\"\",\"lv2CodeKf\":\"\",\"lv2NameKf\":\"\",\"lv3CodeKf\":\"\",\"lv3NameKf\":\"\",\"lv4CodeKf\":\"\",\"lv4NameKf\":\"\",\"lv5CodeKf\":\"\",\"lv5NameKf\":\"\",\"orderOpTime\":\"\"},\"entry\":4,\"objectId\":\"IO2400040618\",\"payAmount\":90000,\"payChannel\":\"MeiYa\",\"payMethod\":\"10\",\"payMode\":\"4\",\"payType\":1,\"productName\":\"众安个人航空意外险-方案四\",\"receivableAmount\":\"\",\"tradingType\":\"1\"}],\"transactionTime\":\"2024-07-04 09:50:35\",\"writeOff\":0,\"createType\":1,\"claimMoneyFlowId\":\"KX240000107817\",\"files\":[]}]}";
+        List<String>  iaCodes=new ArrayList<String>();
+        iaCodes.add("IA0000377247");
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("codes",iaCodes);
+        Map<String, Object> hearder = new HashMap<>();
+        String res = "";
+        String url = "https://tmc.shinetour.com/invoice//apis/v1/invoiceapply/send_invoiceapply_email";
+        hearder.put("sid", sid);
+        hearder.put("source", "tmc");
+
+
+
         res = httpUtil.httpRestRequest(params, url, hearder, String.class);
         System.out.print(res);
     }
