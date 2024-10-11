@@ -3,6 +3,10 @@ package com.kk;
 import static org.junit.Assert.assertTrue;
 
 
+import api.VoucherFileInfo;
+import api.VoucherFileUtil;
+import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.ExcelWriter;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -17,11 +21,11 @@ import com.kk.business.quantization.service.executor.impl.StrongPoolTaskExecutor
 import com.kk.business.quantization.utils.MD5Common;
 import com.kk.business.quantization.utils.ModuleLogFactory;
 import com.kk.business.quantization.utils.ThridDataUtils;
+import com.kk.business.quantization.utils.meiya.SHAUtil;
 import com.kk.business.quantization.utils.pdfUtils;
-import com.kk.common.utils.DateUtil;
-import com.kk.common.utils.FileUtil;
-import com.kk.common.utils.JsonUtil;
-import com.kk.common.utils.httpUtil;
+import com.kk.business.quantization.utils.readdatalistenter.MergeExcelDataListener;
+import com.kk.business.quantization.utils.readdatalistenter.MergeExcelDataWithStyleListener;
+import com.kk.common.utils.*;
 import jdk.internal.util.xml.impl.Input;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -55,6 +59,7 @@ import java.util.regex.Pattern;
 
 import org.ofdrw.layout.element.Img;
 import org.slf4j.Logger;
+import org.springframework.http.HttpMethod;
 
 /**
  * Unit test for simple App.
@@ -115,7 +120,7 @@ public class AppTest {
     }
     @Test
     public void testUtils() {
-        String res = httpUtil.doPost("http://push2his.eastmoney.com/api/qt/stock/kline/get?ut=fa5fd1943c7b386f172d6893dbfba10b&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58&klt=101&fqt=1&smplmt=1524.6&_=1590670510425&cb=jQuery112402670742210902033_1584861859279&beg=20240717&end=20240718&lmt=5000&secid=90.BK1081", "");
+        String res = httpUtil.doPost("http://push2his.eastmoney.com/api/qt/stock/kline/get?ut=fa5fd1943c7b386f172d6893dbfba10b&fields1=f1%2Cf2%2Cf3%2Cf4%2Cf5&fields2=f51%2Cf52%2Cf53%2Cf54%2Cf55%2Cf56%2Cf57%2Cf58&klt=101&fqt=1&smplmt=1524.6&_=1590670510425&cb=jQuery112402670742210902033_1584861859279&beg=20240717&end=20240718&lmt=5000&secid=90.BK1081", "",null);
         String result = res.replace("jQuery112402670742210902033_1584861859279","");
         result = result.replace("(","");
         result = result.replace(");","");
@@ -373,15 +378,16 @@ public class AppTest {
 
     @Test
     public void testTempfile() throws IOException {
-        File tempfiledir = new File("/temp");
+      /*  File tempfiledir = new File("/temp");
         File tempfile = new File("/temp/converterToPdf.ofd");
         if (!tempfiledir.exists()) {
             tempfiledir.mkdirs();
         }
         tempfile.createNewFile();
-        System.out.print(tempfile.getAbsolutePath());
-
-
+        System.out.print(tempfile.getAbsolutePath());*/
+        long lt =new Long( "1727083200000");
+        Date t = new Date(lt);
+        System.out.print(DateUtil.date2String(t,DateUtil.PATTERN_STANDARD19H));
     }
 
     @Test
@@ -427,12 +433,12 @@ public class AppTest {
 
     @Test
     public void testMYinterface() {
-        String sid = "NET:1220329420273038902270_0EFB89734F0358CC98AE2C847498E0A1";
-        String json = "{\"moneyRmb\":90000,\"payOfflineVoList\":[{\"businessOrders\":[{\"orderId\":\"IO2400040618\",\"moneyRmb\":15000,\"moneyOriginal\":15000}],\"currency\":\"CNY\",\"currencyOriginal\":\"CNY\",\"description\":\"\",\"payerType\":\"1\",\"money\":15000,\"moneyRmb\":15000,\"dealMoneyRmb\":15000,\"rateDifferenceFee\":0,\"exchangeRate\":1,\"orderEntry\":4,\"outsideFlowId\":\"TZW666\",\"payApplicationId\":\"\",\"payeeAccountId\":\"退转资金流水账号\",\"payeeAccountName\":\"商旅退转资金流水业务\",\"payeeFinancialInstitution\":\"中转账户\",\"payeeId\":\"PTSH000000\",\"payeeName\":\"广东美亚商旅科技有限公司\",\"payerAccountId\":\"退转资金流水账号\",\"payerAccountName\":\"商旅退转资金流水业务\",\"payerFinancialInstitution\":\"中转账户\",\"payerId\":\"S125477\",\"payerName\":\"杭州高品自动化设备有限公司\",\"remark\":\"\",\"records\":[{\"cardId\":\"\",\"companyId\":\"S125477\",\"companyName\":\"杭州高品自动化设备有限公司\",\"details\":[{\"businessOrderId\":\"IO2400040618\",\"payAmount\":90000,\"receivableAmount\":\"\",\"recordId\":\"\"}],\"order\":{\"kefuCode\":\"\",\"kefuName\":\"\",\"lv1CodeKf\":\"\",\"lv1NameKf\":\"\",\"lv2CodeKf\":\"\",\"lv2NameKf\":\"\",\"lv3CodeKf\":\"\",\"lv3NameKf\":\"\",\"lv4CodeKf\":\"\",\"lv4NameKf\":\"\",\"lv5CodeKf\":\"\",\"lv5NameKf\":\"\",\"orderOpTime\":\"\"},\"entry\":4,\"objectId\":\"IO2400040618\",\"payAmount\":90000,\"payChannel\":\"MeiYa\",\"payMethod\":\"10\",\"payMode\":\"4\",\"payType\":1,\"productName\":\"众安个人航空意外险-方案四\",\"receivableAmount\":\"\",\"tradingType\":\"1\"}],\"transactionTime\":\"2024-07-04 17:09:59\",\"writeOff\":0,\"createType\":1,\"claimMoneyFlowId\":\"KX240000108121\",\"files\":[]},{\"businessOrders\":[{\"orderId\":\"IO2400040618\",\"moneyRmb\":25000,\"moneyOriginal\":25000}],\"currency\":\"CNY\",\"currencyOriginal\":\"CNY\",\"description\":\"\",\"payerType\":\"1\",\"money\":25000,\"moneyRmb\":25000,\"dealMoneyRmb\":25000,\"rateDifferenceFee\":0,\"exchangeRate\":1,\"orderEntry\":4,\"outsideFlowId\":\"TZW666\",\"payApplicationId\":\"\",\"payeeAccountId\":\"退转资金流水账号\",\"payeeAccountName\":\"商旅退转资金流水业务\",\"payeeFinancialInstitution\":\"中转账户\",\"payeeId\":\"PTSH000000\",\"payeeName\":\"广东美亚商旅科技有限公司\",\"payerAccountId\":\"退转资金流水账号\",\"payerAccountName\":\"商旅退转资金流水业务\",\"payerFinancialInstitution\":\"中转账户\",\"payerId\":\"S125477\",\"payerName\":\"杭州高品自动化设备有限公司\",\"remark\":\"\",\"records\":[{\"cardId\":\"\",\"companyId\":\"S125477\",\"companyName\":\"杭州高品自动化设备有限公司\",\"details\":[{\"businessOrderId\":\"IO2400040618\",\"payAmount\":90000,\"receivableAmount\":\"\",\"recordId\":\"\"}],\"order\":{\"kefuCode\":\"\",\"kefuName\":\"\",\"lv1CodeKf\":\"\",\"lv1NameKf\":\"\",\"lv2CodeKf\":\"\",\"lv2NameKf\":\"\",\"lv3CodeKf\":\"\",\"lv3NameKf\":\"\",\"lv4CodeKf\":\"\",\"lv4NameKf\":\"\",\"lv5CodeKf\":\"\",\"lv5NameKf\":\"\",\"orderOpTime\":\"\"},\"entry\":4,\"objectId\":\"IO2400040618\",\"payAmount\":90000,\"payChannel\":\"MeiYa\",\"payMethod\":\"10\",\"payMode\":\"4\",\"payType\":1,\"productName\":\"众安个人航空意外险-方案四\",\"receivableAmount\":\"\",\"tradingType\":\"1\"}],\"transactionTime\":\"2024-07-04 17:08:31\",\"writeOff\":0,\"createType\":1,\"claimMoneyFlowId\":\"KX240000108118\",\"files\":[]},{\"businessOrders\":[{\"orderId\":\"IO2400040618\",\"moneyRmb\":25000,\"moneyOriginal\":25000}],\"currency\":\"CNY\",\"currencyOriginal\":\"CNY\",\"description\":\"\",\"payerType\":\"1\",\"money\":25000,\"moneyRmb\":25000,\"dealMoneyRmb\":25000,\"rateDifferenceFee\":0,\"exchangeRate\":1,\"orderEntry\":4,\"outsideFlowId\":\"TZW666\",\"payApplicationId\":\"\",\"payeeAccountId\":\"退转资金流水账号\",\"payeeAccountName\":\"商旅退转资金流水业务\",\"payeeFinancialInstitution\":\"中转账户\",\"payeeId\":\"PTSH000000\",\"payeeName\":\"广东美亚商旅科技有限公司\",\"payerAccountId\":\"退转资金流水账号\",\"payerAccountName\":\"商旅退转资金流水业务\",\"payerFinancialInstitution\":\"中转账户\",\"payerId\":\"S125477\",\"payerName\":\"杭州高品自动化设备有限公司\",\"remark\":\"\",\"records\":[{\"cardId\":\"\",\"companyId\":\"S125477\",\"companyName\":\"杭州高品自动化设备有限公司\",\"details\":[{\"businessOrderId\":\"IO2400040618\",\"payAmount\":90000,\"receivableAmount\":\"\",\"recordId\":\"\"}],\"order\":{\"kefuCode\":\"\",\"kefuName\":\"\",\"lv1CodeKf\":\"\",\"lv1NameKf\":\"\",\"lv2CodeKf\":\"\",\"lv2NameKf\":\"\",\"lv3CodeKf\":\"\",\"lv3NameKf\":\"\",\"lv4CodeKf\":\"\",\"lv4NameKf\":\"\",\"lv5CodeKf\":\"\",\"lv5NameKf\":\"\",\"orderOpTime\":\"\"},\"entry\":4,\"objectId\":\"IO2400040618\",\"payAmount\":90000,\"payChannel\":\"MeiYa\",\"payMethod\":\"10\",\"payMode\":\"4\",\"payType\":1,\"productName\":\"众安个人航空意外险-方案四\",\"receivableAmount\":\"\",\"tradingType\":\"1\"}],\"transactionTime\":\"2024-07-04 09:50:42\",\"writeOff\":0,\"createType\":1,\"claimMoneyFlowId\":\"KX240000107818\",\"files\":[]},{\"businessOrders\":[{\"orderId\":\"IO2400040618\",\"moneyRmb\":25000,\"moneyOriginal\":25000}],\"currency\":\"CNY\",\"currencyOriginal\":\"CNY\",\"description\":\"\",\"payerType\":\"1\",\"money\":25000,\"moneyRmb\":25000,\"dealMoneyRmb\":25000,\"rateDifferenceFee\":0,\"exchangeRate\":1,\"orderEntry\":4,\"outsideFlowId\":\"TZW666\",\"payApplicationId\":\"\",\"payeeAccountId\":\"退转资金流水账号\",\"payeeAccountName\":\"商旅退转资金流水业务\",\"payeeFinancialInstitution\":\"中转账户\",\"payeeId\":\"PTSH000000\",\"payeeName\":\"广东美亚商旅科技有限公司\",\"payerAccountId\":\"退转资金流水账号\",\"payerAccountName\":\"商旅退转资金流水业务\",\"payerFinancialInstitution\":\"中转账户\",\"payerId\":\"S125477\",\"payerName\":\"杭州高品自动化设备有限公司\",\"remark\":\"\",\"records\":[{\"cardId\":\"\",\"companyId\":\"S125477\",\"companyName\":\"杭州高品自动化设备有限公司\",\"details\":[{\"businessOrderId\":\"IO2400040618\",\"payAmount\":90000,\"receivableAmount\":\"\",\"recordId\":\"\"}],\"order\":{\"kefuCode\":\"\",\"kefuName\":\"\",\"lv1CodeKf\":\"\",\"lv1NameKf\":\"\",\"lv2CodeKf\":\"\",\"lv2NameKf\":\"\",\"lv3CodeKf\":\"\",\"lv3NameKf\":\"\",\"lv4CodeKf\":\"\",\"lv4NameKf\":\"\",\"lv5CodeKf\":\"\",\"lv5NameKf\":\"\",\"orderOpTime\":\"\"},\"entry\":4,\"objectId\":\"IO2400040618\",\"payAmount\":90000,\"payChannel\":\"MeiYa\",\"payMethod\":\"10\",\"payMode\":\"4\",\"payType\":1,\"productName\":\"众安个人航空意外险-方案四\",\"receivableAmount\":\"\",\"tradingType\":\"1\"}],\"transactionTime\":\"2024-07-04 09:50:35\",\"writeOff\":0,\"createType\":1,\"claimMoneyFlowId\":\"KX240000107817\",\"files\":[]}]}";
+        String sid = "NET:0200928430294150321760_98F3DFA34DBA86B1D645CAEABADCFCFC";
+        String json = "{\"image\":{\"code\":\"II24000189970\",\"invoiceType\":2,\"invoiceSubType\":7,\"invoiceClass\":2,\"invoiceStatus\":1,\"imageUrl\":\"//tmc.shinetour.com/file/apis/v1/file/downloadFile?path=/invoicePzg/20240812/20240812155614869-8365901041419-24138836211001486315.ofd&fileName=8365901041419-24138836211001486315.ofd\",\"imageUrlName\":\"凌莲静_24138836211001486315_8365901041419_null_TC2400053396_豪雅（上海）光学有限公司.ofd\",\"status\":3,\"clientCode\":\"S124869\",\"clientName\":\"豪雅（上海）光学有限公司\",\"groupCode\":\"G103647\",\"groupName\":\"豪雅集团\",\"creatorCode\":\"sys\",\"creator\":\"系统\",\"createTime\":\"2024-08-12 15:56:15\",\"invoiceNumber\":\"8365901041419\",\"invoiceCode\":\"24138836211001486315\",\"buyerCode\":null,\"buyerName\":\"豪雅（上海）光学有限公司\",\"buyerTaxNumber\":\"91310115752464377J\",\"buyerAddressTel\":null,\"buyerBankAccount\":null,\"saleCode\":null,\"saleName\":\"广东美亚商旅科技有限公司\",\"saleTaxNumber\":null,\"saleAddressTel\":null,\"saleBankAccount\":null,\"fillUnit\":null,\"checkCode\":null,\"sjhjAmount\":\"957.80\",\"totalTax\":\"86.2\",\"deductionRatio\":\"9\",\"totalAmount\":\"878.72\",\"billingDate\":\"2024-09-12\",\"billingTime\":\"17\",\"amountTax\":\"1044.00\",\"amountTaxCn\":\"壹仟零肆拾肆元\",\"administrativeDivisionName\":null,\"machineCode\":null,\"remark\":null,\"passenger\":{\"code\":\"II24000189970\",\"imageCode\":null,\"passengerCode\":\"P2981381\",\"passengerName\":\"凌莲静\",\"certificateId\":\"450621197702070020\",\"ticketNo\":\"8365901041419\",\"travelCode\":\"24138836211001486315\"},\"order\":{\"code\":\"II24000189970\",\"imageCode\":null,\"taxationFee\":\"0.00\",\"fuelSurtax\":\"0.00\",\"civilAviationDevelopmentFund\":\"0.00\",\"airTicketType\":\"国内机票\",\"insuranceFee\":\"0.00\",\"faceValue\":\"1044.00\",\"businessOrderId\":null},\"records\":[{\"code\":\"IE24001083995\",\"imageCode\":\"II24000189970\",\"businessOrderId\":\"TC2400053396\",\"passengerCode\":\"P2981381\",\"businessOrderType\":2,\"claimant\":\"系统\",\"claimantCode\":\"sys\",\"claimTime\":\"2024-08-12 15:56:15\",\"supplierCode\":null,\"supplierName\":null,\"sellingCost\":null,\"clientName\":null,\"clientCode\":null,\"airTicketType\":null,\"claimedAmount\":null,\"invoiceRecoveryStatus\":null,\"remarkReason\":null,\"segmentNo\":null,\"electronicOrderNumber\":null}],\"segments\":[{\"code\":\"IS24000118285\",\"imageCode\":\"II24000189970\",\"trainFlightNumber\":\"NS8558\",\"departureTime\":\"2024-07-24 14:10:00\",\"arrivalTime\":null,\"originCityCode\":null,\"originCityName\":\"上海\",\"destinationCityCode\":null,\"destinationCityName\":\"厦门\",\"seatType\":\"经济舱\",\"carrierCode\":null,\"carrierName\":\"厦门航空\"}],\"hasClaimRecord\":false,\"details\":[],\"fileKey\":null,\"signTaskId\":null,\"signedFileKey\":null,\"claimedAmount\":null,\"claimAmount\":null,\"deductionTaxAmount\":\"86.2\"}}";
         Map<String, Object> params = JSONObject.parseObject(json);
         Map<String, Object> hearder = new HashMap<>();
         String res = "";
-        String url = "https://pay.shinetour.com/paycenter//apis/v1/paymentorders/batchPayOffline";
+        String url = "https://tmc.shinetour.com/invoice//apis/v1/imageInvoice/update_image_invoice";
         hearder.put("sid", sid);
         hearder.put("source", "tmc");
         res = httpUtil.httpRestRequest(params, url, hearder, String.class);
@@ -441,16 +447,15 @@ public class AppTest {
 
     @Test
     public void testsendInvoiceEmail() {
-        String sid = "NET:4250626490584025715640_651851121AA8C6588F7CC93C626C9ED0";
-        String json = "{\"moneyRmb\":90000,\"payOfflineVoList\":[{\"businessOrders\":[{\"orderId\":\"IO2400040618\",\"moneyRmb\":15000,\"moneyOriginal\":15000}],\"currency\":\"CNY\",\"currencyOriginal\":\"CNY\",\"description\":\"\",\"payerType\":\"1\",\"money\":15000,\"moneyRmb\":15000,\"dealMoneyRmb\":15000,\"rateDifferenceFee\":0,\"exchangeRate\":1,\"orderEntry\":4,\"outsideFlowId\":\"TZW666\",\"payApplicationId\":\"\",\"payeeAccountId\":\"退转资金流水账号\",\"payeeAccountName\":\"商旅退转资金流水业务\",\"payeeFinancialInstitution\":\"中转账户\",\"payeeId\":\"PTSH000000\",\"payeeName\":\"广东美亚商旅科技有限公司\",\"payerAccountId\":\"退转资金流水账号\",\"payerAccountName\":\"商旅退转资金流水业务\",\"payerFinancialInstitution\":\"中转账户\",\"payerId\":\"S125477\",\"payerName\":\"杭州高品自动化设备有限公司\",\"remark\":\"\",\"records\":[{\"cardId\":\"\",\"companyId\":\"S125477\",\"companyName\":\"杭州高品自动化设备有限公司\",\"details\":[{\"businessOrderId\":\"IO2400040618\",\"payAmount\":90000,\"receivableAmount\":\"\",\"recordId\":\"\"}],\"order\":{\"kefuCode\":\"\",\"kefuName\":\"\",\"lv1CodeKf\":\"\",\"lv1NameKf\":\"\",\"lv2CodeKf\":\"\",\"lv2NameKf\":\"\",\"lv3CodeKf\":\"\",\"lv3NameKf\":\"\",\"lv4CodeKf\":\"\",\"lv4NameKf\":\"\",\"lv5CodeKf\":\"\",\"lv5NameKf\":\"\",\"orderOpTime\":\"\"},\"entry\":4,\"objectId\":\"IO2400040618\",\"payAmount\":90000,\"payChannel\":\"MeiYa\",\"payMethod\":\"10\",\"payMode\":\"4\",\"payType\":1,\"productName\":\"众安个人航空意外险-方案四\",\"receivableAmount\":\"\",\"tradingType\":\"1\"}],\"transactionTime\":\"2024-07-04 17:09:59\",\"writeOff\":0,\"createType\":1,\"claimMoneyFlowId\":\"KX240000108121\",\"files\":[]},{\"businessOrders\":[{\"orderId\":\"IO2400040618\",\"moneyRmb\":25000,\"moneyOriginal\":25000}],\"currency\":\"CNY\",\"currencyOriginal\":\"CNY\",\"description\":\"\",\"payerType\":\"1\",\"money\":25000,\"moneyRmb\":25000,\"dealMoneyRmb\":25000,\"rateDifferenceFee\":0,\"exchangeRate\":1,\"orderEntry\":4,\"outsideFlowId\":\"TZW666\",\"payApplicationId\":\"\",\"payeeAccountId\":\"退转资金流水账号\",\"payeeAccountName\":\"商旅退转资金流水业务\",\"payeeFinancialInstitution\":\"中转账户\",\"payeeId\":\"PTSH000000\",\"payeeName\":\"广东美亚商旅科技有限公司\",\"payerAccountId\":\"退转资金流水账号\",\"payerAccountName\":\"商旅退转资金流水业务\",\"payerFinancialInstitution\":\"中转账户\",\"payerId\":\"S125477\",\"payerName\":\"杭州高品自动化设备有限公司\",\"remark\":\"\",\"records\":[{\"cardId\":\"\",\"companyId\":\"S125477\",\"companyName\":\"杭州高品自动化设备有限公司\",\"details\":[{\"businessOrderId\":\"IO2400040618\",\"payAmount\":90000,\"receivableAmount\":\"\",\"recordId\":\"\"}],\"order\":{\"kefuCode\":\"\",\"kefuName\":\"\",\"lv1CodeKf\":\"\",\"lv1NameKf\":\"\",\"lv2CodeKf\":\"\",\"lv2NameKf\":\"\",\"lv3CodeKf\":\"\",\"lv3NameKf\":\"\",\"lv4CodeKf\":\"\",\"lv4NameKf\":\"\",\"lv5CodeKf\":\"\",\"lv5NameKf\":\"\",\"orderOpTime\":\"\"},\"entry\":4,\"objectId\":\"IO2400040618\",\"payAmount\":90000,\"payChannel\":\"MeiYa\",\"payMethod\":\"10\",\"payMode\":\"4\",\"payType\":1,\"productName\":\"众安个人航空意外险-方案四\",\"receivableAmount\":\"\",\"tradingType\":\"1\"}],\"transactionTime\":\"2024-07-04 17:08:31\",\"writeOff\":0,\"createType\":1,\"claimMoneyFlowId\":\"KX240000108118\",\"files\":[]},{\"businessOrders\":[{\"orderId\":\"IO2400040618\",\"moneyRmb\":25000,\"moneyOriginal\":25000}],\"currency\":\"CNY\",\"currencyOriginal\":\"CNY\",\"description\":\"\",\"payerType\":\"1\",\"money\":25000,\"moneyRmb\":25000,\"dealMoneyRmb\":25000,\"rateDifferenceFee\":0,\"exchangeRate\":1,\"orderEntry\":4,\"outsideFlowId\":\"TZW666\",\"payApplicationId\":\"\",\"payeeAccountId\":\"退转资金流水账号\",\"payeeAccountName\":\"商旅退转资金流水业务\",\"payeeFinancialInstitution\":\"中转账户\",\"payeeId\":\"PTSH000000\",\"payeeName\":\"广东美亚商旅科技有限公司\",\"payerAccountId\":\"退转资金流水账号\",\"payerAccountName\":\"商旅退转资金流水业务\",\"payerFinancialInstitution\":\"中转账户\",\"payerId\":\"S125477\",\"payerName\":\"杭州高品自动化设备有限公司\",\"remark\":\"\",\"records\":[{\"cardId\":\"\",\"companyId\":\"S125477\",\"companyName\":\"杭州高品自动化设备有限公司\",\"details\":[{\"businessOrderId\":\"IO2400040618\",\"payAmount\":90000,\"receivableAmount\":\"\",\"recordId\":\"\"}],\"order\":{\"kefuCode\":\"\",\"kefuName\":\"\",\"lv1CodeKf\":\"\",\"lv1NameKf\":\"\",\"lv2CodeKf\":\"\",\"lv2NameKf\":\"\",\"lv3CodeKf\":\"\",\"lv3NameKf\":\"\",\"lv4CodeKf\":\"\",\"lv4NameKf\":\"\",\"lv5CodeKf\":\"\",\"lv5NameKf\":\"\",\"orderOpTime\":\"\"},\"entry\":4,\"objectId\":\"IO2400040618\",\"payAmount\":90000,\"payChannel\":\"MeiYa\",\"payMethod\":\"10\",\"payMode\":\"4\",\"payType\":1,\"productName\":\"众安个人航空意外险-方案四\",\"receivableAmount\":\"\",\"tradingType\":\"1\"}],\"transactionTime\":\"2024-07-04 09:50:42\",\"writeOff\":0,\"createType\":1,\"claimMoneyFlowId\":\"KX240000107818\",\"files\":[]},{\"businessOrders\":[{\"orderId\":\"IO2400040618\",\"moneyRmb\":25000,\"moneyOriginal\":25000}],\"currency\":\"CNY\",\"currencyOriginal\":\"CNY\",\"description\":\"\",\"payerType\":\"1\",\"money\":25000,\"moneyRmb\":25000,\"dealMoneyRmb\":25000,\"rateDifferenceFee\":0,\"exchangeRate\":1,\"orderEntry\":4,\"outsideFlowId\":\"TZW666\",\"payApplicationId\":\"\",\"payeeAccountId\":\"退转资金流水账号\",\"payeeAccountName\":\"商旅退转资金流水业务\",\"payeeFinancialInstitution\":\"中转账户\",\"payeeId\":\"PTSH000000\",\"payeeName\":\"广东美亚商旅科技有限公司\",\"payerAccountId\":\"退转资金流水账号\",\"payerAccountName\":\"商旅退转资金流水业务\",\"payerFinancialInstitution\":\"中转账户\",\"payerId\":\"S125477\",\"payerName\":\"杭州高品自动化设备有限公司\",\"remark\":\"\",\"records\":[{\"cardId\":\"\",\"companyId\":\"S125477\",\"companyName\":\"杭州高品自动化设备有限公司\",\"details\":[{\"businessOrderId\":\"IO2400040618\",\"payAmount\":90000,\"receivableAmount\":\"\",\"recordId\":\"\"}],\"order\":{\"kefuCode\":\"\",\"kefuName\":\"\",\"lv1CodeKf\":\"\",\"lv1NameKf\":\"\",\"lv2CodeKf\":\"\",\"lv2NameKf\":\"\",\"lv3CodeKf\":\"\",\"lv3NameKf\":\"\",\"lv4CodeKf\":\"\",\"lv4NameKf\":\"\",\"lv5CodeKf\":\"\",\"lv5NameKf\":\"\",\"orderOpTime\":\"\"},\"entry\":4,\"objectId\":\"IO2400040618\",\"payAmount\":90000,\"payChannel\":\"MeiYa\",\"payMethod\":\"10\",\"payMode\":\"4\",\"payType\":1,\"productName\":\"众安个人航空意外险-方案四\",\"receivableAmount\":\"\",\"tradingType\":\"1\"}],\"transactionTime\":\"2024-07-04 09:50:35\",\"writeOff\":0,\"createType\":1,\"claimMoneyFlowId\":\"KX240000107817\",\"files\":[]}]}";
-        List<String>  iaCodes=new ArrayList<String>();
-        iaCodes.add("IA0000377247");
+        String sid = "NET:1210021490187300902037_7D702C595F3BA18D74FF9F4A03F3579A";
+        String json = "{\"billDetails\":[],\"payType\":4,\"billId\":\"ZD240004952302\",\"currency\":\"CNY\",\"money\":4000,\"moneyRmb\":4000,\"dealMoneyRmb\":4000,\"rateDifferenceFee\":0,\"exchangeRate\":1,\"orderEntry\":3,\"payApplicationId\":\"PR2400167877\",\"outsideFlowId\":\"PA0043212408290058\",\"payeeAccountId\":\"6212253602071000691\",\"payeeAccountName\":\"KIM CALVIN JUNGMIN\",\"payeeFinancialInstitution\":\"工商银行\",\"payeeId\":\"S120762\",\"payeeName\":\"US GZ Consulate\",\"payerAccountId\":\"120911249810301\",\"payerAccountName\":\"招商银行广州远洋支行（0301）\",\"payerFinancialInstitution\":\"招商银行广州远洋支行\",\"payerId\":\"PTSH000000\",\"payerName\":\"广东美亚商旅科技有限公司\",\"transactionTime\":\"2024-08-30 18:06\",\"files\":[]}";
+
 
         Map<String, Object> params = new HashMap<>();
-        params.put("codes",iaCodes);
+        params = JSONObject.parseObject(json);
         Map<String, Object> hearder = new HashMap<>();
         String res = "";
-        String url = "https://tmc.shinetour.com/invoice//apis/v1/invoiceapply/send_invoiceapply_email";
+        String url = "https://pay.shinetour.com/paycenter//apis/v1/paymentorders/billRefundOffline";
         hearder.put("sid", sid);
         hearder.put("source", "tmc");
 
@@ -459,11 +464,36 @@ public class AppTest {
         res = httpUtil.httpRestRequest(params, url, hearder, String.class);
         System.out.print(res);
     }
+    //
+
+    @Test
+    public void testMYinterfaceWithSign() {
+        Date n = new Date();
+        long timeStamp = n.getTime();
+        String apiKey = "AYATDI2B3XfV@Q%I7hJGSGS!SFU0Ew$7";
+        String json = "{\"nodeCode\":\"P1394118\",\"nodeName\":\"林11\",\"parentCode\":\"419054\",\"typeId\":null,\"status\":null,\"saleType\":null,\"opId\":\"飞书接口同步\",\"opDate\":\"2024-09-04 09:53:56\",\"groupId\":null,\"companyId\":null} ";
+        Map<String, Object> params = JSONObject.parseObject(json);
+        String sendJson = JsonUtil.getJSONString(params);
+        Map<String, Object> hearder = new HashMap<>();
+        String res = "";
+        String url = "https://testtmcsz.shinetour.com/crmjurisdiction/apiss/v1/netservice/update_node";
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append(sendJson);
+        stringBuffer.append("," + apiKey);
+        stringBuffer.append("," + timeStamp);
+        hearder.put("singature", SHAUtil.getSHA1(stringBuffer.toString()));
+        hearder.put("timestamp", timeStamp);
+        hearder.put("source", "tmc");
+        System.out.print(stringBuffer.toString());
+        System.out.print("|"+hearder.get("singature"));
+        res = httpUtil.httpRestRequest(JSONObject.parseObject(sendJson), url, hearder, String.class);
+        System.out.print(res);
+    }
     @Test
     public void testModuleLogger()
     {
-System.out.println(DateUtil.date2String(new Date(),DateUtil.PATTERN_STANDARD19H));
-        for(int i=0;i<10000;i++) {
+        System.out.println(DateUtil.date2String(new Date(),DateUtil.PATTERN_STANDARD19H));
+        for(int i=0;i<1000;i++) {
 
             Logger log =  ModuleLogFactory.createLogger("kklog"+(i%3));
             log.info("bu zhidao xie xie shen me ?gao kuai dian ba ."+i);
@@ -473,5 +503,187 @@ System.out.println(DateUtil.date2String(new Date(),DateUtil.PATTERN_STANDARD19H)
 
             //ModuleLogFactory.stop("kklog"+(i%3));
         }
+    }
+
+
+    @Test
+    public void testEs() {
+        String sid = "NET:0200928430294150321760_98F3DFA34DBA86B1D645CAEABADCFCFC";
+        String json =
+                "  {\"template\": {\n" +
+                "    \"settings\": {\n" +
+                "      \"number_of_shards\": \"5\",\n" +
+                "      \"number_of_replicas\": \"1\",\n" +
+                "\t  \"max_result_window\": 100000000\n" +
+                "    }\n" +
+                "    \n" +
+                "  }\n" +
+                "}";
+        Map<String, Object> params = JSONObject.parseObject(json);
+        Map<String, Object> hearder = new HashMap<>();
+        String res = "";
+        String url = "http://192.168.90.212:9200/";
+        String esOp ="_component_template/component_setting_base";
+        hearder.put("sid", sid);
+        hearder.put("source", "tmc");
+        res = httpUtil.httpRestRequest(params, url+esOp, hearder, String.class,HttpMethod.PUT);
+        System.out.print(res);
+    }
+
+    @Test
+    public void testReadExcel() throws Exception {
+        String filePath = "F:\\log\\增值产品消息配置新增公司规则.xlsx";
+        String sid = "NET:0230321410393201611076_7E99284246C77AD53F513B252D70640C";
+
+        Map<String, Object> hearder = new HashMap<>();
+        String res = "";
+        String url = "https://tmc.shinetour.com/infoservice//apis/v1/inforulecustomer/rules_save";
+        hearder.put("sid", sid);
+        hearder.put("source", "tmc");
+
+        List<Map<String,Object>> excelData = ExcelUtils.readExcel(filePath,null,0);
+
+        for(Map<String,Object> map : excelData)
+        {
+            System.out.println(map);
+            String json = "{\n" +
+                    "\t\"rules\": [\n" +
+                    "\t\t{\n" +
+                    "\n" +
+                    "\t\t\t\"infoTypeCode\": \"Market_Order_Granted\",\n" +
+                    "\t\t\t\"infoTypeName\": \"增值产品订单_发放通知\",\n" +
+                    "\t\t\t\"merchantCode\": \"PTSH000000\",\n" +
+                    "\t\t\t\"companyCode\": \"#company_code\",\n" +
+                    "\t\t\t\"source\": 28,\n" +
+                    "\t\t\t\"sourceName\": \"增值产品\",\n" +
+                    "\t\t\t\"section1\": \"增值产品订单\",\n" +
+                    "\t\t\t\"section2\": \"已发放\",\n" +
+                    "\t\t\t\"sendCondition\": \"状态变为已发放\",\n" +
+                    "\t\t\t\"sendConditionValue\": [],\n" +
+                    "\t\t\t\"receiveObjects\": [\n" +
+                    "\t\t\t\t{\n" +
+                    "\t\t\t\t\t\"name\": \"领取人\",\n" +
+                    "\t\t\t\t\t\"code\": \"45\",\n" +
+                    "\t\t\t\t\t\"additionalInfo\": null,\n" +
+                    "\t\t\t\t\t\"selected\": true\n" +
+                    "\t\t\t\t}\n" +
+                    "\t\t\t],\n" +
+                    "\t\t\t\"sendType\": [\n" +
+                    "\t\t\t\t{\n" +
+                    "\t\t\t\t\t\"name\": \"邮件\",\n" +
+                    "\t\t\t\t\t\"code\": \"3\",\n" +
+                    "\t\t\t\t\t\"additionalInfo\": null,\n" +
+                    "\t\t\t\t\t\"selected\": false\n" +
+                    "\t\t\t\t},\n" +
+                    "\t\t\t\t{\n" +
+                    "\t\t\t\t\t\"name\": \"短信\",\n" +
+                    "\t\t\t\t\t\"code\": \"1\",\n" +
+                    "\t\t\t\t\t\"additionalInfo\": null,\n" +
+                    "\t\t\t\t\t\"selected\": true\n" +
+                    "\t\t\t\t}\n" +
+                    "\t\t\t],\n" +
+                    "\t\t\t\"tags\": [\n" +
+                    "\t\t\t\t{\n" +
+                    "\t\t\t\t\t\"name\": \"国内机票\",\n" +
+                    "\t\t\t\t\t\"code\": \"0000000001\",\n" +
+                    "\t\t\t\t\t\"additionalInfo\": null,\n" +
+                    "\t\t\t\t\t\"selected\": false\n" +
+                    "\t\t\t\t},\n" +
+                    "\t\t\t\t{\n" +
+                    "\t\t\t\t\t\"name\": \"技术支持申报平台\",\n" +
+                    "\t\t\t\t\t\"code\": \"0000000002\",\n" +
+                    "\t\t\t\t\t\"additionalInfo\": null,\n" +
+                    "\t\t\t\t\t\"selected\": false\n" +
+                    "\t\t\t\t},\n" +
+                    "\t\t\t\t{\n" +
+                    "\t\t\t\t\t\"name\": \"回电通知\",\n" +
+                    "\t\t\t\t\t\"code\": \"0000000003\",\n" +
+                    "\t\t\t\t\t\"additionalInfo\": null,\n" +
+                    "\t\t\t\t\t\"selected\": false\n" +
+                    "\t\t\t\t},\n" +
+                    "\t\t\t\t{\n" +
+                    "\t\t\t\t\t\"name\": \"Q消息\",\n" +
+                    "\t\t\t\t\t\"code\": \"0000000004\",\n" +
+                    "\t\t\t\t\t\"additionalInfo\": null,\n" +
+                    "\t\t\t\t\t\"selected\": false\n" +
+                    "\t\t\t\t},\n" +
+                    "\t\t\t\t{\n" +
+                    "\t\t\t\t\t\"name\": \"酒店订单同步异常\",\n" +
+                    "\t\t\t\t\t\"code\": \"0000001001\",\n" +
+                    "\t\t\t\t\t\"additionalInfo\": null,\n" +
+                    "\t\t\t\t\t\"selected\": false\n" +
+                    "\t\t\t\t}\n" +
+                    "\t\t\t],\n" +
+                    "\t\t\t\"sendtimeRule\": null,\n" +
+                    "\t\t\t\"ranges\": [],\n" +
+                    "\t\t\t\"tmpTags\": []\n" +
+                    "\t\t}\n" +
+                    "\t],\n" +
+                    "\t\"companyCode\": \"#company_code\",\n" +
+                    "\t\"source\": \"28\",\n" +
+                    "\t\"infoTypeCate\": 2,\n" +
+                    "\t\"ruleType\": 3,\n" +
+                    "\t\"rangeValue\": 5\n" +
+                    "}";
+            json = json.replace("#company_code",map.get("company_code").toString());
+            Map<String, Object> params = new HashMap<>();
+            params = JSONObject.parseObject(json);
+            res = httpUtil.httpRestRequest(params, url, hearder, String.class);
+            System.out.print(res);
+        }
+    }
+
+    @Test
+    public void testvalidExcel() throws Exception {
+        String filePath = "F:\\log\\利润明细表2024-09-29_(2023-01-01_2024-09-29).xlsx";
+        List<Map<String,Object>> excelData1 = ExcelUtils.readExcel(filePath,"Sheet-2",0);
+        List<Map<String,Object>> excelData2 = ExcelUtils.readExcel(filePath,"Sheet-4",0);
+        Map<String,String> ordernoMap = new HashMap<>();
+        for(int i=0;i<excelData2.size();i++)
+        {
+            ordernoMap.put(excelData2.get(i).get("order_no").toString(),"");
+        }
+        System.out.println(excelData2.size());
+        for(int i=0;i<excelData1.size();i++)
+        {
+           if(!ordernoMap.containsKey(excelData1.get(i).get("order_no").toString()))
+           {
+               System.out.println(excelData1.get(i).get("order_no").toString());
+           }
+        }
+    }
+
+    @Test
+    public void mergeExcel() throws Exception {
+        String filePath = "F:\\log\\利润明细表2024-09-30_(2024-09-29_2024-09-29).xlsx";
+        String mergefilePath = "F:\\log\\利润明细表(mergefilePath).xlsx";
+        List<String> filePaths = Arrays.asList(
+                //"F:\\log\\利润明细表2024-05-141.xlsx"
+                "F:\\log\\利润明细表2024-09-30_(2024-09-29_2024-09-29).xlsx"
+                //,"F:\log\欠付明细表按月(20160101-20240331)-(20240301-20240307).xlsx"
+                //,"F:\log\欠付明细表按月(20160101-20240331)-(20240308-20240319).xlsx"
+        );
+        ExcelWriter excelWriter = EasyExcel.write(mergefilePath).build();
+
+        for(String path : filePaths) {
+            List<Integer> ignoreRows = new ArrayList<>();
+            ignoreRows.add(1);
+            FileInputStream fileInputStream = new FileInputStream(new File(path));
+            EasyExcel.read(fileInputStream, new MergeExcelDataWithStyleListener(mergefilePath, "sheet-1", ignoreRows, excelWriter)).sheet().doRead();
+            fileInputStream.close();
+
+        }
+        excelWriter.finish();
+    }
+    @Test
+    public void testSuijuGongju() throws Exception {
+        String fromFilePath="F:\\log\\TC2400065037--.ofd";
+        String fromPdf ="F:\\log\\TC2400065037--.pdf";
+        String outFilePath="F:\\log\\测试财政部工具转xml.xml";
+        VoucherFileInfo res = VoucherFileUtil.extractXBRLFromOFD(fromFilePath,outFilePath);
+        System.out.println(res);
+        String outFilePath1="F:\\log\\测试财政部工具转xml1.xml";
+        res = VoucherFileUtil.extractXBRLFromPDF(fromPdf,outFilePath1);
+        System.out.println(res);
     }
 }
