@@ -18,20 +18,22 @@ import com.kk.business.quantization.model.po.dfcf.DfcfBaseRes;
 import com.kk.business.quantization.model.po.dfcf.DfcfHisBaseRes;
 import com.kk.business.quantization.model.po.pdd.*;
 import com.kk.business.quantization.service.executor.impl.StrongPoolTaskExecutor;
-import com.kk.business.quantization.utils.MD5Common;
-import com.kk.business.quantization.utils.ModuleLogFactory;
-import com.kk.business.quantization.utils.ThridDataUtils;
+import com.kk.business.quantization.utils.*;
 import com.kk.business.quantization.utils.meiya.SHAUtil;
-import com.kk.business.quantization.utils.pdfUtils;
 import com.kk.business.quantization.utils.readdatalistenter.MergeExcelDataListener;
 import com.kk.business.quantization.utils.readdatalistenter.MergeExcelDataWithStyleListener;
 import com.kk.common.utils.*;
+import com.kk.common.utils.DateUtil;
+import com.kk.common.utils.ExcelUtils;
 import jdk.internal.util.xml.impl.Input;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.printing.PDFPageable;
 import org.apache.pdfbox.rendering.PDFRenderer;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.streaming.SXSSFSheet;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.junit.Test;
 import org.junit.jupiter.api.TestTemplate;
 import org.ofdrw.converter.ConvertHelper;
@@ -46,6 +48,9 @@ import org.ofdrw.reader.OFDReader;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.nio.channels.Channels;
+import java.nio.channels.FileChannel;
+import java.nio.channels.WritableByteChannel;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
@@ -56,6 +61,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.GZIPOutputStream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import org.ofdrw.layout.element.Img;
 import org.slf4j.Logger;
@@ -652,7 +660,28 @@ public class AppTest {
            }
         }
     }
+    @Test
+    public void testvalidExcelAmount() throws Exception {
+        String filePath = "F:\\log\\Query (1)(16).xlsx";
+        List<Map<String,Object>> excelData1 = ExcelUtils.readExcel(filePath,"Query",0);
+        List<Map<String,Object>> excelData2 = ExcelUtils.readExcel(filePath,"Sheet-4",0);
+        Map<String,String> ordernoMap = new HashMap<>();
 
+        for(int i=0;i<excelData1.size();i++)
+        {
+            double amount = Double.parseDouble(excelData1.get(i).get("claimed_amount").toString());
+            if(excelData1.get(i).get("claimed_amount3")==null)
+            {
+                System.out.println(excelData1.get(i).get("order_no").toString()+":"+excelData1.get(i).get("claimed_amount").toString()+"|"+excelData1.get(i).get("claimed_amount3"));
+                continue;
+            }
+            double amount3 = Double.parseDouble(excelData1.get(i).get("claimed_amount3").toString());
+            if(amount != amount3)
+            {
+                System.out.println(excelData1.get(i).get("order_no").toString()+":"+excelData1.get(i).get("claimed_amount").toString()+"||"+excelData1.get(i).get("claimed_amount3"));
+            }
+        }
+    }
     @Test
     public void mergeExcel() throws Exception {
         String filePath = "F:\\log\\利润明细表2024-09-30_(2024-09-29_2024-09-29).xlsx";
@@ -677,13 +706,150 @@ public class AppTest {
     }
     @Test
     public void testSuijuGongju() throws Exception {
-        String fromFilePath="F:\\log\\TC2400065037--.ofd";
-        String fromPdf ="F:\\log\\TC2400065037--.pdf";
-        String outFilePath="F:\\log\\测试财政部工具转xml.xml";
-        VoucherFileInfo res = VoucherFileUtil.extractXBRLFromOFD(fromFilePath,outFilePath);
-        System.out.println(res);
-        String outFilePath1="F:\\log\\测试财政部工具转xml1.xml";
-        res = VoucherFileUtil.extractXBRLFromPDF(fromPdf,outFilePath1);
-        System.out.println(res);
+        String uploadUrl = "http://192.168.90.190:8080/file/apis/v1/file/uploadFile/report";
+        String fromFilePath="F:\\log\\8803430284748-24468880211003276540.ofd";
+
+        String outFilePath="F:\\log\\A测试财政部工具转xmltt.xml";
+        InputStream fileInputStream = xmlUtils.ofdToXml(fromFilePath);
+        String uploadres = pdfUtils.inputStreamUpload(uploadUrl, "A测试财政部工具转xml.xml", fileInputStream);
+        fileInputStream.close();
+        System.out.println(uploadres);
+
+    }
+
+    @Test
+    public void testBigDataExcelExport() throws Exception {
+        System.setProperty("java.io.tmpdir","F:\\log");
+        //SXSSFWorkbook wb1 = new SXSSFWorkbook(1000);
+        SXSSFWorkbook wb = new SXSSFWorkbook(-1);
+        Font font = wb.createFont();
+        font.setColor(Font.COLOR_NORMAL);
+        font.setFontName(" 黑体  ");
+        font.setBold(true);
+        CellStyle cellStyle = wb.createCellStyle();
+        cellStyle.setFont(font);
+        cellStyle.setAlignment(HorizontalAlignment.CENTER);
+        SXSSFSheet currentSheet = wb.createSheet("Sheet1");
+        for(int i=0;i<200000;i++)
+        {
+            Row row = currentSheet.createRow(i);
+            for(int j =0;j<100;j++)
+            {
+                Cell cell= row.createCell((short) j);
+                cell.setCellStyle(cellStyle);
+                cell.setCellValue("我国第四批预备航天员已于今年8月入队参加训练，不仅要执行空间站任务，未来也将执行载人登月任务。针对执行空间站任务和未来执行载人登月任务的新特点，在训练内容设置上，既注重失重状态下生活工作与健康维护等基本技能，以及掌握出舱活动、设备维护维修、空间科学实/试验等技能，更面向未来载人登月任务，进一步培塑航天员从操控飞行器到驾驶月球车、从天体辨识到地质科考、从太空失重漂浮到月面负重行走的能力。:"+i+"-"+j);
+            }
+            if(i%100==0)
+            {
+                currentSheet.flushRows();
+            }
+        }
+        String tempexcelFilePath = "F:\\log\\bigdata1.xlsx";
+        FileOutputStream fos = new FileOutputStream(tempexcelFilePath);
+        BufferedOutputStream bos = new BufferedOutputStream(fos);
+        wb.write(bos);
+
+        wb.dispose();
+        bos.close();
+        fos.close();
+
+        String ZIP_FILE = "F:\\log\\bigdata1.zip";
+        File zipFile = new File(ZIP_FILE);
+        try (ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(zipFile));
+             BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(zipOut)) {
+            //开始时间
+            long beginTime = System.currentTimeMillis();
+
+                try (BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(tempexcelFilePath))) {
+                    zipOut.putNextEntry(new ZipEntry("bigdata1.xlsx"));
+                    int temp = 0;
+                    while ((temp = bufferedInputStream.read()) != -1) {
+                        bufferedOutputStream.write(temp);
+                    }
+                }
+
+
+            Date date = new Date();
+            System.out.println("zip耗时：" + (date.getTime() - beginTime));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void compreeenFile() {
+        List<String> filePath = Arrays.asList("F:\\log\\商旅系统：2024年03月欠付明细表按月(20160101-20240331).xlsx"
+                , "F:\\log\\bigdata.xlsx", "F:\\log\\bigdata1.xlsx","F:\\log\\server-rpc-tmcjurisdiction-1.0.0-SNAPSHOT.jar");
+       // List<String> filePath = new {};
+
+        String ZIP_FILE = "F:\\log\\bigdata1.zip";
+        File zipFile = new File(ZIP_FILE);
+        try (ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(zipFile));
+             BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(zipOut)) {
+            //开始时间
+            long beginTime = System.currentTimeMillis();
+            for (int i=0;i<filePath.size();i++) {
+                try (BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(filePath.get(i)))) {
+                    zipOut.putNextEntry(new ZipEntry("bigdata"+i+".xlsx"));
+                    int temp = 0;
+                    while ((temp = bufferedInputStream.read()) != -1) {
+                        bufferedOutputStream.write(temp);
+                    }
+                }
+            }
+
+            Date date = new Date();
+            System.out.println("zip耗时：" + (date.getTime() - beginTime));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void compreeenFileByChannel() {
+        List<String> filePath = Arrays.asList("F:\\log\\商旅系统：2024年03月欠付明细表按月(20160101-20240331).xlsx"
+                , "F:\\log\\bigdata.xlsx", "F:\\log\\bigdata1.xlsx","F:\\log\\server-rpc-tmcjurisdiction-1.0.0-SNAPSHOT.jar");
+        // List<String> filePath = new {};
+
+        String ZIP_FILE = "F:\\log\\bigdataChannel.zip";
+        File zipFile = new File(ZIP_FILE);
+        try (ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(zipFile));
+             WritableByteChannel writableByteChannel = Channels.newChannel(zipOut)) {
+            //开始时间
+            long beginTime = System.currentTimeMillis();
+            for (int i=0;i<filePath.size();i++) {
+                try (FileChannel fileChannel = new FileInputStream(filePath.get(i)).getChannel()) {
+                    zipOut.putNextEntry(new ZipEntry("bigdata"+i+".xlsx"));
+                    fileChannel.transferTo(0, fileChannel.size(), writableByteChannel);
+                }
+            }
+
+            Date date = new Date();
+            System.out.println("zip耗时：" + (date.getTime() - beginTime));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testGzipCompressor() throws Exception {
+        String sourceFilePath = "F:\\log\\bigdata1.xlsx";
+        String compressedFilePath = "F:\\log\\bigdata1.gz";
+        try (FileInputStream fis = new FileInputStream(sourceFilePath);
+             FileOutputStream fos = new FileOutputStream(compressedFilePath);
+             GZIPOutputStream gzos = new GZIPOutputStream(fos)) {
+
+            byte[] buffer = new byte[1024 * 1024]; // 1MB 缓冲区
+            int len;
+
+            while ((len = fis.read(buffer)) != -1) {
+                gzos.write(buffer, 0, len);
+            }
+
+            System.out.println("文件压缩完成");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
