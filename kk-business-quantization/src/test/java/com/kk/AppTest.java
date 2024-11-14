@@ -27,6 +27,8 @@ import com.kk.common.utils.DateUtil;
 import com.kk.common.utils.ExcelUtils;
 import jdk.internal.util.xml.impl.Input;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.pdfbox.io.MemoryUsageSetting;
+import org.apache.pdfbox.multipdf.PDFMergerUtility;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.printing.PDFPageable;
@@ -373,12 +375,12 @@ public class AppTest {
         }
         pdfConverter.convert(Paths.get(pdfFile2.getPath()));
         pdfConverter.close();
-        String uploadUrl = "http://192.168.90.190:8080/file/apis/v1/file/uploadFile/report";
+        String uploadUrl = "http://192.168.90.190:8080/file/apis/v1/file/uploadFile4Slice/testSlice";
 
         InputStream inputStream = new FileInputStream(tempfile);
         //pdfFile2.deleteOnExit();
         tempfile.deleteOnExit();
-        String res = pdfUtils.inputStreamUpload(uploadUrl, "converterToPdf.ofd", inputStream);
+        String res = pdfUtils.inputStreamUpload4Slice(uploadUrl, "converterToPdf.ofd",MD5("converterToPdf.ofd"+DateUtil.getCurrentTime(DateUtil.PATTERN_STANDARD17W)) ,1,1,inputStream);
         System.out.print(res);
         inputStream.close();
 
@@ -707,9 +709,10 @@ public class AppTest {
     @Test
     public void testSuijuGongju() throws Exception {
         String uploadUrl = "http://192.168.90.190:8080/file/apis/v1/file/uploadFile/report";
-        String fromFilePath="F:\\log\\8803430284748-24468880211003276540.ofd";
+        String fromFilePath="F:\\log\\24449123711000007882-电子发票--公司.ofd";
 
-        String outFilePath="F:\\log\\A测试财政部工具转xmltt.xml";
+        String outFilePath="F:\\log\\A测试财政部工具转xml火车票.xml";
+        VoucherFileUtil.extractXBRLFromOFD(fromFilePath,outFilePath);
         InputStream fileInputStream = xmlUtils.ofdToXml(fromFilePath);
         String uploadres = pdfUtils.inputStreamUpload(uploadUrl, "A测试财政部工具转xml.xml", fileInputStream);
         fileInputStream.close();
@@ -777,31 +780,81 @@ public class AppTest {
     }
 
     @Test
-    public void compreeenFile() {
-        List<String> filePath = Arrays.asList("F:\\log\\商旅系统：2024年03月欠付明细表按月(20160101-20240331).xlsx"
-                , "F:\\log\\bigdata.xlsx", "F:\\log\\bigdata1.xlsx","F:\\log\\server-rpc-tmcjurisdiction-1.0.0-SNAPSHOT.jar");
+    public void compreeenFile() throws IOException {
+        List<String> filePath = Arrays.asList("F:\\log\\20241104152335152-878748-利润明细表2024-11-04.xlsx","F:\\log\\行程单火车票统计 (1).xlsx");
        // List<String> filePath = new {};
 
-        String ZIP_FILE = "F:\\log\\bigdata1.zip";
+        String ZIP_FILE = "F:\\log\\bigdata1-1104.zip";
         File zipFile = new File(ZIP_FILE);
-        try (ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(zipFile));
-             BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(zipOut)) {
+       ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(zipFile));
+             BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(zipOut);
             //开始时间
             long beginTime = System.currentTimeMillis();
             for (int i=0;i<filePath.size();i++) {
                 try (BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(filePath.get(i)))) {
-                    zipOut.putNextEntry(new ZipEntry("bigdata"+i+".xlsx"));
+                    zipOut.putNextEntry(new ZipEntry("bigdata" + i + ".xlsx"));
                     int temp = 0;
                     while ((temp = bufferedInputStream.read()) != -1) {
                         bufferedOutputStream.write(temp);
                     }
+                    // bufferedOutputStream.close();
                 }
+                zipOut.closeEntry();
             }
 
+
+        //zipOut.close();
             Date date = new Date();
             System.out.println("zip耗时：" + (date.getTime() - beginTime));
-        } catch (Exception e) {
-            e.printStackTrace();
+        zipOut.finish();
+
+    }
+
+    //https://tmc.shinetour.com/file/apis/v1/file/downloadFile?path=/invoicePzg/20241114/20241114073127062-9992098013745-24118999211006411679.ofd&fileName=9992098013745-24118999211006411679.ofd
+    @Test
+    public void testCompressFileByRemoteUrl() throws Exception {
+        Map<String,String> files = new HashMap<>();
+        for(int i=0;i<10;i++)
+        {
+            files.put(""+i+"/test-ima-"+i+".ofd", "https://tmc.shinetour.com/file/apis/v1/file/downloadFile?path=/invoicePzg/20241114/20241114073127062-9992098013745-24118999211006411679.ofd&fileName=9992098013745-24118999211006411679.ofd");
+
+            // List<String> filePath = new {};
+        }
+        String ZIP_FILE = "F:\\log\\TestBigFileCompress-20241114.zip";
+        File zipFile = new File(ZIP_FILE);
+        try(ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(zipFile));
+        BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(zipOut)) {
+
+            //开始时间
+            long beginTime = System.currentTimeMillis();
+            for (String key : files.keySet()) {
+                InputStream inputStream = pdfUtils.getInputStreamFromRemoteUrl(files.get(key));
+                zipOut.putNextEntry(new ZipEntry(key));
+                byte[] buff = InputStreamtoByteArray(inputStream);
+                bufferedOutputStream.write(buff);
+
+                inputStream.close();
+            }
+
+
+            //zipOut.close();
+            Date date = new Date();
+            System.out.println("zip耗时：" + (date.getTime() - beginTime));
+            //zipOut.finish();
+        }
+    }
+
+    public  byte[] InputStreamtoByteArray(InputStream input) throws IOException {
+        try (InputStream in = input) {
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            ByteArrayOutputStream output = new ByteArrayOutputStream();
+
+            while ((bytesRead = in.read(buffer)) != -1) {
+                output.write(buffer, 0, bytesRead);
+            }
+
+            return output.toByteArray();
         }
     }
 
@@ -851,5 +904,91 @@ public class AppTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void uploadFile4Slice() throws IOException {
+        File tempfile = new File("F:\\log\\bigdataChannel.zip");
+
+        String uploadUrl = "http://192.168.90.190:8080/file/apis/v1/file/uploadFile4Slice/testSlice";
+        long fileSize = tempfile.length();
+        System.out.println(fileSize);
+        InputStream inputStream = new FileInputStream(tempfile);
+
+        int maxUploadByteSize = 1024 * 1024 * 50;//50M
+        int bufferSize = 2048; // or any other size
+        int readCount =0;
+        int shardIndex =0;
+        int totalShardSize = (int) (fileSize /  maxUploadByteSize);
+        if(maxUploadByteSize*totalShardSize<=fileSize)
+        {
+            totalShardSize++;
+        }
+        byte[] buffer = new byte[bufferSize];
+        int bytesRead = 0;
+        String fileName ="bigdataChannel.zip-"+DateUtil.getCurrentTime(DateUtil.PATTERN_STANDARD17W);
+        BufferedInputStream bis = new BufferedInputStream(inputStream);
+
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        while ((bytesRead = bis.read(buffer)) != -1) {
+            // bytesRead contains the number of bytes read into the buffer
+            // Do something with the buffer
+            bos.write(buffer);
+            readCount ++;
+            if(readCount>=maxUploadByteSize/bufferSize)
+            {
+                InputStream uploadInputStream = new ByteArrayInputStream(bos.toByteArray()) ;
+                String res = pdfUtils.inputStreamUpload4Slice(uploadUrl, "bigdataChannel.zip",MD5(fileName) ,shardIndex,totalShardSize,uploadInputStream);
+                System.out.print(res);
+                bos.flush();
+                bos.close();
+                bos = new ByteArrayOutputStream();
+                readCount =0;
+                shardIndex++;
+            }
+        }
+        if( totalShardSize>shardIndex) {
+            InputStream uploadInputStream = new ByteArrayInputStream(bos.toByteArray());
+            String res = pdfUtils.inputStreamUpload4Slice(uploadUrl, "bigdataChannel.zip", MD5(fileName), shardIndex, totalShardSize, uploadInputStream);
+            System.out.print(res);
+            bos.flush();
+            bos.close();
+        }
+
+        inputStream.close();
+
+    }
+
+    @Test
+    public void testMergePdf() throws Exception {
+        String oriFIle = "https://tmc.shinetour.com/file/apis/v1/file/downloadFile?path=/invoicePzg/20241114/20241114114055706-%E5%B9%BF%E5%B7%9E%E5%B8%82%E7%99%BE%E6%9E%9C%E5%9B%AD%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8_226855.49_24442000000546279953_%E5%B9%BF%E5%B7%9E%E5%B8%82%E7%99%BE%E6%9E%9C%E5%9B%AD%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8.pdf&fileName=%E5%B9%BF%E5%B7%9E%E5%B8%82%E7%99%BE%E6%9E%9C%E5%9B%AD%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8_226855.49_24442000000546279953_%E5%B9%BF%E5%B7%9E%E5%B8%82%E7%99%BE%E6%9E%9C%E5%9B%AD%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8.pdf";
+        String mergeFile = "F:\\log\\testMergeFile.pdf";
+
+Date  beginTime = new Date();
+
+        PDFMergerUtility mergePdf = new PDFMergerUtility();
+        PDDocument sourceDoc = PDDocument.load(new File(mergeFile));
+       // mergePdf.setDestinationFileName(mergeFile);
+
+            for(int i=0;i<100;i++)
+            {
+
+                InputStream inputStream = pdfUtils.getInputStreamFromRemoteUrl(oriFIle);
+                PDDocument targetDoc = PDDocument.load(new ByteArrayInputStream( InputStreamtoByteArray(inputStream)));
+               // mergePdf.addSource(new ByteArrayInputStream( InputStreamtoByteArray(inputStream)));
+                inputStream.close();
+                mergePdf.appendDocument(sourceDoc,targetDoc);
+               // if(i%100==0 && i>0)
+                {
+                    System.out.println(DateUtil.getCurrentTime(DateUtil.PATTERN_STANDARD19H)+"写入磁盘："+i);
+
+                }
+
+            }
+        Date  date = new Date();
+        System.out.println("zip耗时：" + (date.getTime() - beginTime.getTime()));
+        System.out.println("文件添加完成");
+        //mergePdf.mergeDocuments(MemoryUsageSetting.setupTempFileOnly());
+        System.out.println("文件合并完成");
     }
 }
