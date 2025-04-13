@@ -47,10 +47,10 @@ public class MergeExcelDataWithStyleListener extends AnalysisEventListener<Objec
     }
     @Override
     public void invoke(Object integerStringMap, AnalysisContext analysisContext) {
-        System.out.println("analysisContext:"+ JsonUtil.getJSONString(analysisContext));
+        //System.out.println("analysisContext:"+ JsonUtil.getJSONString(analysisContext));
 
         //log.info("解析到一条数据:{}", JSON.toJSONString(data));
-        System.out.println("行数:"+ JsonUtil.getJSONString(integerStringMap));
+        System.out.println("行数():"+analysisContext.readRowHolder().getRowIndex()+"|"+ JsonUtil.getJSONString(integerStringMap));
        /* if(ignoreRowNums!=null && ignoreRowNums.size()>0)
         {
             if(ignoreRowNums.contains(analysisContext.readRowHolder().getRowIndex()))

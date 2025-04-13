@@ -27,6 +27,7 @@ import com.kk.common.utils.DateUtil;
 import com.kk.common.utils.ExcelUtils;
 import jdk.internal.util.xml.impl.Input;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.pdfbox.io.MemoryUsageSetting;
 import org.apache.pdfbox.multipdf.PDFMergerUtility;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -474,19 +475,124 @@ public class AppTest {
         res = httpUtil.httpRestRequest(params, url, hearder, String.class);
         System.out.print(res);
     }
-    //
+    @Test
+    public void testMYinterface2() {
+        String sid = "NET:4220427491516135615265_80A9EA7EDA315A41AE66B3ADDE5D609A";
+        String json = "{\"flowId\":\"LS240329948\"}";
+        Map<String, Object> params = JSONObject.parseObject(json);
+        Map<String, Object> hearder = new HashMap<>();
+        String res = "";
+        String url = "https://pay.shinetour.com/paycenter/apis/v1/capitalflow/repeat_push_bkcapitalflow_2_orderprocess";
+        hearder.put("sid", sid);
+        hearder.put("source", "tmc");
+        res = httpUtil.httpRestRequest(params, url, hearder, String.class);
+        System.out.print(res);
+    }
 
     @Test
-    public void testMYinterfaceWithSign() {
+    public void testMYinterface3() {
         Date n = new Date();
         long timeStamp = n.getTime();
         String apiKey = "AYATDI2B3XfV@Q%I7hJGSGS!SFU0Ew$7";
-        String json = "{\"nodeCode\":\"P1394118\",\"nodeName\":\"林11\",\"parentCode\":\"419054\",\"typeId\":null,\"status\":null,\"saleType\":null,\"opId\":\"飞书接口同步\",\"opDate\":\"2024-09-04 09:53:56\",\"groupId\":null,\"companyId\":null} ";
+        String json = "{\"flowId\":\"LS240329948\"}";
         Map<String, Object> params = JSONObject.parseObject(json);
         String sendJson = JsonUtil.getJSONString(params);
         Map<String, Object> hearder = new HashMap<>();
         String res = "";
-        String url = "https://testtmcsz.shinetour.com/crmjurisdiction/apiss/v1/netservice/update_node";
+        String url = "https://pay.shinetour.com/paycenter/apis/v1/capitalflow/repeat_push_bkcapitalflow_2_orderprocess";
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append(sendJson);
+        stringBuffer.append("," + apiKey);
+        stringBuffer.append("," + timeStamp);
+        hearder.put("singature", SHAUtil.getSHA1(stringBuffer.toString()));
+        hearder.put("timestamp", timeStamp);
+        hearder.put("source", "tmc");
+        System.out.print(stringBuffer.toString());
+        System.out.print("|"+hearder.get("singature"));
+        res = httpUtil.httpRestRequest(JSONObject.parseObject(sendJson), url, hearder, String.class);
+        System.out.print(res);
+    }
+    @Test
+    public void testMYinterfaceWithSignjiedong() {
+        Date n = new Date();
+        long timeStamp = n.getTime();
+        String apiKey = "AYATDI2B3XfV@Q%I7hJGSGS!SFU0Ew$7";
+        String json = "{\"businessOrderId\":\"IO2500014412\",\"buyerId\":\"S119027\",\"opId\":\"系统\",\"opName\":\"系统\",\"remark\":\"解冻\"} ";
+        Map<String, Object> params = JSONObject.parseObject(json);
+        String sendJson = JsonUtil.getJSONString(params);
+        Map<String, Object> hearder = new HashMap<>();
+        String res = "";
+        String url = "https://pay.shinetour.com/paycenter/apiss/v1/paymentordersforinn/creditUnFreeze";
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append(sendJson);
+        stringBuffer.append("," + apiKey);
+        stringBuffer.append("," + timeStamp);
+        hearder.put("singature", SHAUtil.getSHA1(stringBuffer.toString()));
+        hearder.put("timestamp", timeStamp);
+        hearder.put("source", "tmc");
+        System.out.print(stringBuffer.toString());
+        System.out.print("|"+hearder.get("singature"));
+        res = httpUtil.httpRestRequest(JSONObject.parseObject(sendJson), url, hearder, String.class);
+        System.out.print(res);
+    }
+    @Test
+    public void testclaimmoneynotify() {
+        Date n = new Date();
+        long timeStamp = n.getTime();
+        String apiKey = "AYATDI2B3XfV@Q%I7hJGSGS!SFU0Ew$7";
+        String json = "{\"flowDetailList\":[{\"bankAccountCode\":\"3602001009200267463\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"招行CBS\",\"incomeFee\":107200,\"outSerialNumber\":\"2025041001399577\",\"paymentBankAccount\":\"9558854000009011946\",\"paymentBankName\":\"中广核（内蒙古）新能源投资有限公司包头分公司\",\"paymentFinOrg\":\"中国工商银行深圳市分行营业部\",\"procedureFee\":0,\"remitter\":\"202504100289443BU250220SW000005\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"11:41:00\",\"transactionAmount\":107200,\"transactionCurrency\":\"人民币\",\"purpose\":\"ZH43BU250220SW000005\",\"postscript\":null,\"remark\":null}]} ";
+        Map<String, Object> params = JSONObject.parseObject(json);
+        String sendJson = JsonUtil.getJSONString(params);
+        Map<String, Object> hearder = new HashMap<>();
+        String res = "";
+        String url = "https://pay.shinetour.com/paycenter/apiss/v1/claimmoneynotify/inserts";
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append(sendJson);
+        stringBuffer.append("," + apiKey);
+        stringBuffer.append("," + timeStamp);
+        hearder.put("singature", SHAUtil.getSHA1(stringBuffer.toString()));
+        hearder.put("timestamp", timeStamp);
+        hearder.put("source", "tmc");
+        System.out.print(stringBuffer.toString());
+        System.out.print("|"+hearder.get("singature"));
+        res = httpUtil.httpRestRequest(JSONObject.parseObject(sendJson), url, hearder, String.class);
+        System.out.print(res);
+    }
+
+    @Test
+    public void testsign() {
+        Date n = new Date();
+        long timeStamp = new Date().getTime();
+        String apiKey = "AYATDI2B3XfV@Q%I7hJGSGS!SFU0Ew$7";
+        String json = "{\"flowDetailList\":[{\"bankAccountCode\":\"st011@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":4800,\"outSerialNumber\":\"2025041022001442111427785646\",\"paymentBankAccount\":\"135******75\",\"paymentBankName\":\"**丰\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"1470649061112642111\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"07:17:15\",\"transactionAmount\":4800,\"transactionCurrency\":\"CNY\",\"purpose\":null,\"postscript\":null,\"remark\":null},{\"bankAccountCode\":\"st013@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":42700,\"outSerialNumber\":\"2025041022001452021410624551\",\"paymentBankAccount\":\"p28***@163.com\",\"paymentBankName\":\"*剑\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"1470650195183652021\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"07:50:03\",\"transactionAmount\":42700,\"transactionCurrency\":\"CNY\",\"purpose\":null,\"postscript\":null,\"remark\":null},{\"bankAccountCode\":\"st011@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":1700,\"outSerialNumber\":\"2025041022001467451458162170\",\"paymentBankAccount\":\"186******07\",\"paymentBankName\":\"**欢\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"1470654984027867451\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"08:09:24\",\"transactionAmount\":1700,\"transactionCurrency\":\"CNY\",\"purpose\":null,\"postscript\":null,\"remark\":null},{\"bankAccountCode\":\"st013@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":1700,\"outSerialNumber\":\"2025041022001461501444050812\",\"paymentBankAccount\":\"159******69\",\"paymentBankName\":\"**奇\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"1470659162440461501\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"08:36:03\",\"transactionAmount\":1700,\"transactionCurrency\":\"CNY\",\"purpose\":null,\"postscript\":null,\"remark\":null},{\"bankAccountCode\":\"st008@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":3600,\"outSerialNumber\":\"2025041022001491191426196693\",\"paymentBankAccount\":\"186******55\",\"paymentBankName\":\"**军\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"1470662234086691191\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"08:51:34\",\"transactionAmount\":3600,\"transactionCurrency\":\"CNY\",\"purpose\":null,\"postscript\":null,\"remark\":null},{\"bankAccountCode\":\"st008@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":20500,\"outSerialNumber\":\"2025041022001407371453907163\",\"paymentBankAccount\":\"xuq***@hotmail.com\",\"paymentBankName\":\"*强\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"1470680073147907371\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"08:56:37\",\"transactionAmount\":20500,\"transactionCurrency\":\"CNY\",\"purpose\":null,\"postscript\":null,\"remark\":null},{\"bankAccountCode\":\"st011@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":1000,\"outSerialNumber\":\"2025041022001402571422156425\",\"paymentBankAccount\":\"188******16\",\"paymentBankName\":\"**豪\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"1470623955261702571\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"09:43:35\",\"transactionAmount\":1000,\"transactionCurrency\":\"CNY\",\"purpose\":null,\"postscript\":null,\"remark\":null},{\"bankAccountCode\":\"st007@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":131000,\"outSerialNumber\":\"2025041022001459301448597484\",\"paymentBankAccount\":\"xuy***@sinopec.com\",\"paymentBankName\":\"*悦\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"1470668809815959301\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"10:00:07\",\"transactionAmount\":131000,\"transactionCurrency\":\"CNY\",\"purpose\":null,\"postscript\":null,\"remark\":null},{\"bankAccountCode\":\"st013@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":5400,\"outSerialNumber\":\"2025041022001447841404134676\",\"paymentBankAccount\":\"138******97\",\"paymentBankName\":\"*伟\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"1470637951749547841\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"10:28:30\",\"transactionAmount\":5400,\"transactionCurrency\":\"CNY\",\"purpose\":null,\"postscript\":null,\"remark\":null},{\"bankAccountCode\":\"myshinetour@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":384700,\"outSerialNumber\":\"20250410200040011100980015001364\",\"paymentBankAccount\":\"183******64\",\"paymentBankName\":\"**婷\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"1470633510341335981\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"11:22:02\",\"transactionAmount\":384700,\"transactionCurrency\":\"CNY\",\"purpose\":\"LEE SECHEUN机票\",\"postscript\":null,\"remark\":null},{\"bankAccountCode\":\"st007@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":52000,\"outSerialNumber\":\"2025041022001439171435785407\",\"paymentBankAccount\":\"189******58\",\"paymentBankName\":\"**辉\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"1470648192170139171\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"11:43:06\",\"transactionAmount\":52000,\"transactionCurrency\":\"CNY\",\"purpose\":null,\"postscript\":null,\"remark\":null},{\"bankAccountCode\":\"st008@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":16100,\"outSerialNumber\":\"2025041022001492931437598166\",\"paymentBankAccount\":\"134******28\",\"paymentBankName\":\"*超\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"1470666147210892931\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"11:50:31\",\"transactionAmount\":16100,\"transactionCurrency\":\"CNY\",\"purpose\":null,\"postscript\":null,\"remark\":null},{\"bankAccountCode\":\"st007@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":131000,\"outSerialNumber\":\"2025041022001442051456877958\",\"paymentBankAccount\":\"182******43\",\"paymentBankName\":\"**林\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"1470665263218242051\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"11:49:44\",\"transactionAmount\":131000,\"transactionCurrency\":\"CNY\",\"purpose\":null,\"postscript\":null,\"remark\":null},{\"bankAccountCode\":\"st013@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":200,\"outSerialNumber\":\"2025041022001437791446998019\",\"paymentBankAccount\":\"151******15\",\"paymentBankName\":\"*祥\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"1470657388400237791\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"11:59:57\",\"transactionAmount\":200,\"transactionCurrency\":\"CNY\",\"purpose\":null,\"postscript\":null,\"remark\":null},{\"bankAccountCode\":\"st008@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":60600,\"outSerialNumber\":\"2025041022001471531448223060\",\"paymentBankAccount\":\"176******88\",\"paymentBankName\":\"**亮\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"1470669469925171531\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"12:11:56\",\"transactionAmount\":60600,\"transactionCurrency\":\"CNY\",\"purpose\":null,\"postscript\":null,\"remark\":null},{\"bankAccountCode\":\"st008@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":16700,\"outSerialNumber\":\"2025041022001492931437623049\",\"paymentBankAccount\":\"134******28\",\"paymentBankName\":\"*超\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"1470666169022592931\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"12:20:50\",\"transactionAmount\":16700,\"transactionCurrency\":\"CNY\",\"purpose\":null,\"postscript\":null,\"remark\":null},{\"bankAccountCode\":\"myshinetour@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":284600,\"outSerialNumber\":\"2025041022001426211411963361\",\"paymentBankAccount\":\"186******48\",\"paymentBankName\":\"*胜\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"1470658285593526211\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"12:33:35\",\"transactionAmount\":284600,\"transactionCurrency\":\"CNY\",\"purpose\":null,\"postscript\":null,\"remark\":null},{\"bankAccountCode\":\"st008@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":1900,\"outSerialNumber\":\"2025041022001459241411646167\",\"paymentBankAccount\":\"138******02\",\"paymentBankName\":\"**娟\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"1470647542358359241\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"12:43:00\",\"transactionAmount\":1900,\"transactionCurrency\":\"CNY\",\"purpose\":null,\"postscript\":null,\"remark\":null},{\"bankAccountCode\":\"st008@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":9700,\"outSerialNumber\":\"2025041022001492931435847395\",\"paymentBankAccount\":\"134******28\",\"paymentBankName\":\"*超\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"1470666324054092931\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"12:53:54\",\"transactionAmount\":9700,\"transactionCurrency\":\"CNY\",\"purpose\":null,\"postscript\":null,\"remark\":null},{\"bankAccountCode\":\"st008@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":1000,\"outSerialNumber\":\"2025041022001442051457678114\",\"paymentBankAccount\":\"134******97\",\"paymentBankName\":\"**磊\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"1470665165759042051\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"13:06:46\",\"transactionAmount\":1000,\"transactionCurrency\":\"CNY\",\"purpose\":null,\"postscript\":null,\"remark\":null},{\"bankAccountCode\":\"st004@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":42400,\"outSerialNumber\":\"2025041022001475911430502134\",\"paymentBankAccount\":\"gzs***@163.com\",\"paymentBankName\":\"**胜\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"1470631778152675911\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"13:12:36\",\"transactionAmount\":42400,\"transactionCurrency\":\"CNY\",\"purpose\":null,\"postscript\":null,\"remark\":null},{\"bankAccountCode\":\"st013@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":700,\"outSerialNumber\":\"2025041022001483701406770410\",\"paymentBankAccount\":\"139******02\",\"paymentBankName\":\"**原\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"1470628114299583701\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"13:18:00\",\"transactionAmount\":700,\"transactionCurrency\":\"CNY\",\"purpose\":null,\"postscript\":null,\"remark\":null},{\"bankAccountCode\":\"myshinetour@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":110000,\"outSerialNumber\":\"20250410200040011100910016737140\",\"paymentBankAccount\":\"132******04\",\"paymentBankName\":\"**阳\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"1470633600211039911\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"13:23:09\",\"transactionAmount\":110000,\"transactionCurrency\":\"CNY\",\"purpose\":\"赵晨阳 东航退回1100元\",\"postscript\":null,\"remark\":null},{\"bankAccountCode\":\"st008@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":1500,\"outSerialNumber\":\"2025041022001420251424043325\",\"paymentBankAccount\":\"778***@qq.com\",\"paymentBankName\":\"*军\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"1470649695274320251\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"13:35:01\",\"transactionAmount\":1500,\"transactionCurrency\":\"CNY\",\"purpose\":null,\"postscript\":null,\"remark\":null},{\"bankAccountCode\":\"st008@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":2300,\"outSerialNumber\":\"2025041022001451181428532273\",\"paymentBankAccount\":\"liu***@163.com\",\"paymentBankName\":\"**旭\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"1470644813166551181\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"13:43:01\",\"transactionAmount\":2300,\"transactionCurrency\":\"CNY\",\"purpose\":null,\"postscript\":null,\"remark\":null},{\"bankAccountCode\":\"myshinetour@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":28000,\"outSerialNumber\":\"2025041022001432721401760242\",\"paymentBankAccount\":\"166******52\",\"paymentBankName\":\"* EWAN JOHN\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"1470621509294032721\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"14:09:59\",\"transactionAmount\":28000,\"transactionCurrency\":\"CNY\",\"purpose\":null,\"postscript\":null,\"remark\":null},{\"bankAccountCode\":\"st013@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":69200,\"outSerialNumber\":\"2025041022001400741448389089\",\"paymentBankAccount\":\"997***@qq.com\",\"paymentBankName\":\"**皞\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"1470998663054100741\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"14:16:26\",\"transactionAmount\":69200,\"transactionCurrency\":\"CNY\",\"purpose\":null,\"postscript\":null,\"remark\":null},{\"bankAccountCode\":\"st007@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":149000,\"outSerialNumber\":\"2025041022001477501444283936\",\"paymentBankAccount\":\"553***@qq.com\",\"paymentBankName\":\"**辰\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"1470657944583177501\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"14:16:11\",\"transactionAmount\":149000,\"transactionCurrency\":\"CNY\",\"purpose\":null,\"postscript\":null,\"remark\":null},{\"bankAccountCode\":\"st004@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":2600,\"outSerialNumber\":\"2025041022001429981421826073\",\"paymentBankAccount\":\"139******73\",\"paymentBankName\":\"**城\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"1470633961205329981\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"14:46:33\",\"transactionAmount\":2600,\"transactionCurrency\":\"CNY\",\"purpose\":null,\"postscript\":null,\"remark\":null},{\"bankAccountCode\":\"nicle@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":10000000,\"outSerialNumber\":\"20250410020070011550290081159524\",\"paymentBankAccount\":\"nicle@meiya.com\",\"paymentBankName\":\"广东美亚商旅科技有限公司\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"364958777573291\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"15:01:01\",\"transactionAmount\":10000000,\"transactionCurrency\":\"CNY\",\"purpose\":\"ZJDB2025041000548\",\"postscript\":null,\"remark\":null},{\"bankAccountCode\":\"st008@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":4700,\"outSerialNumber\":\"2025041022001421571416401864\",\"paymentBankAccount\":\"158******85\",\"paymentBankName\":\"*波\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"1470622653876821571\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"15:06:45\",\"transactionAmount\":4700,\"transactionCurrency\":\"CNY\",\"purpose\":null,\"postscript\":null,\"remark\":null},{\"bankAccountCode\":\"st008@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":4700,\"outSerialNumber\":\"2025041022001421571415603372\",\"paymentBankAccount\":\"158******85\",\"paymentBankName\":\"*波\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"1470622803802421571\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"15:12:05\",\"transactionAmount\":4700,\"transactionCurrency\":\"CNY\",\"purpose\":null,\"postscript\":null,\"remark\":null},{\"bankAccountCode\":\"st008@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":15100,\"outSerialNumber\":\"2025041022001428291404480461\",\"paymentBankAccount\":\"151******64\",\"paymentBankName\":\"**志\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"1470633216106728291\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"15:29:34\",\"transactionAmount\":15100,\"transactionCurrency\":\"CNY\",\"purpose\":null,\"postscript\":null,\"remark\":null},{\"bankAccountCode\":\"st008@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":2500,\"outSerialNumber\":\"2025041022001498591418961221\",\"paymentBankAccount\":\"115***@163.com\",\"paymentBankName\":\"**伟\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"1470640227372198591\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"15:47:18\",\"transactionAmount\":2500,\"transactionCurrency\":\"CNY\",\"purpose\":null,\"postscript\":null,\"remark\":null},{\"bankAccountCode\":\"st011@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":1700,\"outSerialNumber\":\"2025041022001488511444340911\",\"paymentBankAccount\":\"150******09\",\"paymentBankName\":\"*俊\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"1470662879220988511\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"16:08:02\",\"transactionAmount\":1700,\"transactionCurrency\":\"CNY\",\"purpose\":null,\"postscript\":null,\"remark\":null},{\"bankAccountCode\":\"st011@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":14000,\"outSerialNumber\":\"2025041022001444431449279734\",\"paymentBankAccount\":\"102***@qq.com\",\"paymentBankName\":\"**宇\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"1470664112752744431\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"16:15:29\",\"transactionAmount\":14000,\"transactionCurrency\":\"CNY\",\"purpose\":null,\"postscript\":null,\"remark\":null},{\"bankAccountCode\":\"st011@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":3700,\"outSerialNumber\":\"2025041022001428491448993283\",\"paymentBankAccount\":\"jxb***@gmail.com\",\"paymentBankName\":\"**昂\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"1470666682947328491\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"16:17:29\",\"transactionAmount\":3700,\"transactionCurrency\":\"CNY\",\"purpose\":null,\"postscript\":null,\"remark\":null},{\"bankAccountCode\":\"st013@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":19900,\"outSerialNumber\":\"2025041022001407121430454829\",\"paymentBankAccount\":\"186******57\",\"paymentBankName\":\"**峰\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"1470732839414107121\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"16:33:44\",\"transactionAmount\":19900,\"transactionCurrency\":\"CNY\",\"purpose\":null,\"postscript\":null,\"remark\":null},{\"bankAccountCode\":\"st011@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":35000,\"outSerialNumber\":\"2025041022001417991447490734\",\"paymentBankAccount\":\"zha***@lenovo.com\",\"paymentBankName\":\"**娟\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"1470637133676517991\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"16:55:53\",\"transactionAmount\":35000,\"transactionCurrency\":\"CNY\",\"purpose\":null,\"postscript\":null,\"remark\":null},{\"bankAccountCode\":\"st013@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":4500,\"outSerialNumber\":\"2025041022001470291411539928\",\"paymentBankAccount\":\"175******30\",\"paymentBankName\":\"*彬\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"1470632638103170291\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"17:39:01\",\"transactionAmount\":4500,\"transactionCurrency\":\"CNY\",\"purpose\":null,\"postscript\":null,\"remark\":null},{\"bankAccountCode\":\"st013@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":500,\"outSerialNumber\":\"2025041022001471751442871294\",\"paymentBankAccount\":\"493***@qq.com\",\"paymentBankName\":\"**涵\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"1470609659951071751\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"17:43:04\",\"transactionAmount\":500,\"transactionCurrency\":\"CNY\",\"purpose\":null,\"postscript\":null,\"remark\":null},{\"bankAccountCode\":\"st013@meiya.com\",\"bankAccountName\":\"广东美亚商旅科技有限公司\",\"createName\":\"系统\",\"incomeFee\":59400,\"outSerialNumber\":\"2025041022001469201410726869\",\"paymentBankAccount\":\"smi***@126.com\",\"paymentBankName\":\"**利\",\"paymentFinOrg\":\"支付宝\",\"procedureFee\":0,\"remitter\":\"1470646065982469201\",\"tradeDate\":\"2025-04-10\",\"tradeTime\":\"17:49:03\",\"transactionAmount\":59400,\"transactionCurrency\":\"CNY\",\"purpose\":null,\"postscript\":null,\"remark\":null}]}";
+        Map<String, Object> params = JSONObject.parseObject(json);
+        String sendJson = JSONObject.toJSONString(params);
+        Map<String, Object> hearder = new HashMap<>();
+        String res = "";
+        String url = "https://pay.shinetour.com/paycenter/apiss/v1/claimmoneynotify/inserts";
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append(json);
+        stringBuffer.append("," + apiKey);
+        stringBuffer.append("," + timeStamp);
+        hearder.put("singature", SHAUtil.getSHA1(stringBuffer.toString()));
+        hearder.put("timestamp", timeStamp);
+        hearder.put("source", "pc");
+        System.out.print(stringBuffer.toString());
+        System.out.print("|"+hearder.get("singature"));
+        res = httpUtil.doPost( url,json, hearder);
+        System.out.print(res);
+    }
+    @Test
+    public void testMYinterfaceWithSignAdvanceCardJieDong() {
+        Date n = new Date();
+        long timeStamp = n.getTime();
+        String apiKey = "AYATDI2B3XfV@Q%I7hJGSGS!SFU0Ew$7";
+        String json = "{\"objectId\":\"RB2400252299\",\"payStatus\":4,\"closeType\":\"3\",\"remark\":{\"remark\":\"订单取消\"}} ";
+        Map<String, Object> params = JSONObject.parseObject(json);
+        String sendJson = JsonUtil.getJSONString(params);
+        Map<String, Object> hearder = new HashMap<>();
+        String res = "";
+        String url = "https://pay.shinetour.com/paycenter/apiss/v1/innBkTradingRecord/updateBkTradingRecordPayStatusClose";
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append(sendJson);
         stringBuffer.append("," + apiKey);
@@ -664,23 +770,34 @@ public class AppTest {
     }
     @Test
     public void testvalidExcelAmount() throws Exception {
-        String filePath = "F:\\log\\Query (1)(16).xlsx";
-        List<Map<String,Object>> excelData1 = ExcelUtils.readExcel(filePath,"Query",0);
-        List<Map<String,Object>> excelData2 = ExcelUtils.readExcel(filePath,"Sheet-4",0);
+        String filePath = "F:\\log\\利润明细表2024-11-22_(2023-01-01_2024-11-22).xlsx";
+        String filePath2 = "F:\\log\\Query(97).xlsx";
+        List<Map<String,Object>> excelData1 = ExcelUtils.readExcel(filePath,"sheet-1",0);
+        List<Map<String,Object>> excelData2 = ExcelUtils.readExcel(filePath2,"sheet-1",0);
         Map<String,String> ordernoMap = new HashMap<>();
+        for(int i=0;i<excelData2.size();i++)
+        {
 
+            ordernoMap.put(excelData2.get(i).get("order_no").toString(),excelData2.get(i).get("cny_tmc_total_cost").toString());
+        }
         for(int i=0;i<excelData1.size();i++)
         {
-            double amount = Double.parseDouble(excelData1.get(i).get("claimed_amount").toString());
-            if(excelData1.get(i).get("claimed_amount3")==null)
+            String orderno=excelData1.get(i).get("订单编号").toString();
+            if(excelData1.get(i).get("应付")==null || StringUtils.isBlank(excelData1.get(i).get("应付").toString()))
             {
-                System.out.println(excelData1.get(i).get("order_no").toString()+":"+excelData1.get(i).get("claimed_amount").toString()+"|"+excelData1.get(i).get("claimed_amount3"));
+                System.out.println(orderno+":应付为空");
                 continue;
             }
-            double amount3 = Double.parseDouble(excelData1.get(i).get("claimed_amount3").toString());
-            if(amount != amount3)
+            double amount = Double.parseDouble(excelData1.get(i).get("应付").toString());
+            if(!ordernoMap.containsKey(orderno)){
+                System.out.println(orderno+":发票系统不存在");
+                continue;
+            }
+            double amount1 = Double.parseDouble(ordernoMap.get(orderno));
+
+            if(amount != amount1)
             {
-                System.out.println(excelData1.get(i).get("order_no").toString()+":"+excelData1.get(i).get("claimed_amount").toString()+"||"+excelData1.get(i).get("claimed_amount3"));
+                System.out.println(orderno+":应付="+amount+"||cny_tmc_total_cost="+amount1);
             }
         }
     }
@@ -706,17 +823,41 @@ public class AppTest {
         }
         excelWriter.finish();
     }
+
+    @Test
+    public void readExcel() throws Exception {
+        String filePath = "F:\\log\\利润明细表2024-11-22.xlsx";
+        String mergefilePath = "F:\\log\\利润明细表2024-11-22tttt.xlsx";
+        List<String> filePaths = Arrays.asList(
+                //"F:\\log\\利润明细表2024-05-141.xlsx"
+                "F:\\log\\利润明细表2024-11-22.xlsx"
+                //,"F:\log\欠付明细表按月(20160101-20240331)-(20240301-20240307).xlsx"
+                //,"F:\log\欠付明细表按月(20160101-20240331)-(20240308-20240319).xlsx"
+        );
+        ExcelWriter excelWriter = EasyExcel.write(mergefilePath).build();
+
+        for(String path : filePaths) {
+            List<Integer> ignoreRows = new ArrayList<>();
+            ignoreRows.add(1);
+            FileInputStream fileInputStream = new FileInputStream(new File(path));
+            EasyExcel.read(fileInputStream, new MergeExcelDataWithStyleListener(mergefilePath, "sheet-1", ignoreRows, excelWriter)).sheet().doRead();
+            fileInputStream.close();
+
+        }
+        excelWriter.finish();
+    }
     @Test
     public void testSuijuGongju() throws Exception {
         String uploadUrl = "http://192.168.90.190:8080/file/apis/v1/file/uploadFile/report";
-        String fromFilePath="F:\\log\\24449123711000007882-电子发票--公司.ofd";
+        String fromFilePath="F:\\log\\7843024343571-票价+燃油费.pdf";
 
-        String outFilePath="F:\\log\\A测试财政部工具转xml火车票.xml";
-        VoucherFileUtil.extractXBRLFromOFD(fromFilePath,outFilePath);
-        InputStream fileInputStream = xmlUtils.ofdToXml(fromFilePath);
-        String uploadres = pdfUtils.inputStreamUpload(uploadUrl, "A测试财政部工具转xml.xml", fileInputStream);
-        fileInputStream.close();
-        System.out.println(uploadres);
+        String outFilePath="F:\\log\\7843024343571-票价+燃油费.xml";
+        VoucherFileInfo res =VoucherFileUtil.extractXBRLFromPDF(fromFilePath,outFilePath);
+        /*InputStream fileInputStream = xmlUtils.ofdToXml(fromFilePath);
+        String uploadres = pdfUtils.inputStreamUpload(uploadUrl, "A测试财政部工具转xml.xml", fileInputStream);*/
+       // fileInputStream.close();
+        System.out.println(res);
+
 
     }
 
@@ -990,5 +1131,161 @@ Date  beginTime = new Date();
         System.out.println("文件添加完成");
         //mergePdf.mergeDocuments(MemoryUsageSetting.setupTempFileOnly());
         System.out.println("文件合并完成");
+    }
+
+    @Test
+    public void testGetFileIputStreamByRemoteUrl() throws Exception
+    {
+        String url ="https://dppt.guangdong.chinatax.gov.cn:8443/kpfw/fpjfzz/v1/exportDzfpwjEwm?Wjgs=pdf&Jym=A076&Fphm=24442000000552501573&Kprq=20241117210715&Czsj=1731848835900";
+
+        for(int i=0;i<100;i++)
+        {
+
+            try {
+                InputStream inputStream = pdfUtils.getInputStreamFromRemoteUrl(url);
+
+                File file = new File("F:\\log\\" + i + ".pdf");
+                FileOutputStream fos = new FileOutputStream(file);
+                fos.write(InputStreamtoByteArray(inputStream));
+                System.out.println(DateUtil.getCurrentTime(DateUtil.PATTERN_STANDARD19H) + "写入磁盘：" + i);
+            }catch (Exception e){
+                System.out.println(DateUtil.getCurrentTime(DateUtil.PATTERN_STANDARD19H) + "写入磁盘异常：" + e.getMessage());
+            }
+
+
+
+        }
+        Date  date = new Date();
+       // System.out.println("zip耗时：" + (date.getTime() - beginTime.getTime()));
+        System.out.println("文件添加完成");
+    }
+
+    @Test
+    public void testPostMeiyaInterface4Sign()
+    {
+
+    }
+
+    @Test
+    public void generateSql() throws Exception {
+        String filePath = "F:\\log\\Query (1)(31).xlsx";
+        String filePath2 = "F:\\log\\vo旅客编号更新.txt";
+        List<Map<String,Object>> excelData1 = ExcelUtils.readExcel(filePath,"Query",0);
+        List<Map<String,Object>> excelData2 = ExcelUtils.readExcel(filePath,"Query1",0);
+
+        Map<String,String> ordernoMap = new HashMap<>();
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath2))) {
+            for(int i=0;i<excelData1.size();i++)
+            {
+                String OrderNo = excelData1.get(i).get("orderno")==null ?"": excelData1.get(i).get("orderno").toString();
+                String passengerName = excelData1.get(i).get("passengerName")==null ?"": excelData1.get(i).get("passengerName").toString();
+                String newPsngrId = excelData1.get(i).get("PassengerNo")==null ?"": excelData1.get(i).get("PassengerNo").toString();
+
+                String line = "update st_payment.bl_purchase_pasenger  set psngr_id = '"+newPsngrId+"'  where business_order_id= '"+OrderNo+"'"+" and psngr_name= '"+passengerName+"';";
+                writer.write(line);
+                writer.newLine(); // 写入换行符
+                String line2 = "update st_payment.bl_purchase_record set version_number =now() where business_order_id = '"+OrderNo+"';";
+                writer.write(line2);
+                writer.newLine(); // 写入换行符
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Test
+    public void validExcelData() throws Exception {
+        String filePath = "F:\\log\\Query (1)(29).xlsx";
+        String filePath2 = "F:\\log\\商旅订单的城市数据.txt";
+        List<Map<String,Object>> excelData1 = ExcelUtils.readExcel(filePath,"Query",0);
+
+        Map<String,Double> ordernoSum = new HashMap<>();
+        Map<String,Double> ordernoReceivableFee = new HashMap<>();
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath2))) {
+            for(int i=0;i<excelData1.size();i++)
+            {
+                String OrderNo = excelData1.get(i).get("OrderNo").toString();
+                String PsngrId= excelData1.get(i).get("PsngrId").toString();
+                if(StringUtils.isBlank(OrderNo))
+                    continue;
+                double ServiceCharge = Double.parseDouble(excelData1.get(i).get("ServiceCharge").toString());
+                double CancellationFee = Double.parseDouble(excelData1.get(i).get("CancellationFee").toString());
+                double EndorsementFee = Double.parseDouble(excelData1.get(i).get("EndorsementFee").toString());
+                double FaceValuePrice = Double.parseDouble(excelData1.get(i).get("FaceValuePrice").toString());
+                double AirportConstructionFee = Double.parseDouble(excelData1.get(i).get("AirportConstructionFee").toString());
+                double FuelChargeFee = Double.parseDouble(excelData1.get(i).get("FuelChargeFee").toString());
+                double UpgradeFee = Double.parseDouble(excelData1.get(i).get("UpgradeFee").toString());
+                double ReceivableFee = Double.parseDouble(excelData1.get(i).get("ReceivableFee").toString());
+                double tempsum = ServiceCharge+CancellationFee+EndorsementFee+FaceValuePrice+AirportConstructionFee+FuelChargeFee+UpgradeFee;
+                String mapKey= OrderNo+"-"+PsngrId;
+                if(ordernoSum.keySet().contains(mapKey))
+                {
+                    double sum =ordernoSum.get(mapKey);
+                    tempsum += sum;
+                }
+                ordernoSum.put(mapKey ,tempsum);
+                ordernoReceivableFee.put(mapKey ,ReceivableFee);
+            }
+            for (String key : ordernoSum.keySet())
+            {
+                if(ordernoSum.get(key)-ordernoReceivableFee.get(key) != 0)
+                {
+                    System.out.println(key+":"+ordernoSum.get(key).toString()+"|"+ordernoReceivableFee.get(key).toString());
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testRemoteUrl() throws Exception {
+        String uploadUrl = "http://192.168.90.190:8080/file/apis/v1/file/uploadFile/report";
+        String downLoadUrl = "http://192.168.90.190:8080/file/apis/v1/file/downloadFile";
+        InputStream fileIs = pdfUtils.getInputStreamFromRemoteUrl("http://tmc.shinetour.com/file/apis/v1/file/downloadFile?path=/invoice/20250313/20250313153137914-%E4%B8%8A%E6%B5%B7%E5%87%BD%E5%A4%8F%E7%A7%91%E6%8A%80%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8_25442000000139259092_%E4%BB%A3%E8%AE%A2%E6%9C%BA%E7%A5%A8%E6%AC%BE_26177.00.pdf&fileName=%E4%B8%8A%E6%B5%B7%E5%87%BD%E5%A4%8F%E7%A7%91%E6%8A%80%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8_25442000000139259092_%E4%BB%A3%E8%AE%A2%E6%9C%BA%E7%A5%A8%E6%AC%BE_26177.00.pdf");
+        ByteArrayOutputStream buffer = inputStreamToByteArrayOutputStream(fileIs);
+        if(buffer.size()>0) {
+            InputStream byteArrayInputStream = new ByteArrayInputStream(buffer.toByteArray());
+            String res = pdfUtils.inputStreamUpload(uploadUrl, "test.pdf", byteArrayInputStream);
+            System.out.print(res);
+        }
+        //fileIs.in
+        InputStream fileIs2 = pdfUtils.getInputStreamFromRemoteUrl("http://testtmcsz.shinetour.com/file/apis/v1/file/downloadFile?path=/invoicePzg/20240805/20240805175933113-2220611093871-90202406291449091273.ofd&fileName=2220611093871-90202406291449091273.ofd");
+        ByteArrayOutputStream buffer2 = inputStreamToByteArrayOutputStream(fileIs2);
+        if(buffer2.size()>0) {
+            InputStream byteArrayInputStream = new ByteArrayInputStream(buffer2.toByteArray());
+            String res = pdfUtils.inputStreamUpload(uploadUrl, "test2.pdf", byteArrayInputStream);
+            System.out.print(res);
+        }
+    }
+
+    public static ByteArrayOutputStream inputStreamToByteArrayOutputStream(InputStream inputStream) throws IOException {
+        if (inputStream == null) {
+            return null; // 如果流为 null，视为空流
+        }
+
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        byte[] data = new byte[1024];
+        int bytesRead;
+        while ((bytesRead = inputStream.read(data, 0, data.length)) != -1) {
+            buffer.write(data, 0, bytesRead);
+        }
+
+         buffer.toByteArray();
+        return buffer;
+    }
+    @Test
+    public void testSubString()
+    {
+        String str ="//tmc.shinetour.com/file/apis/v1/file/downloadFile?path=/invoice/20250307/20250307092105653-%E4%B8%AD%E7%B2%AE%E7%A6%8F%E4%B8%B4%E9%97%A8%E9%A3%9F%E5%93%81%E8%90%A5%E9%94%80%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%E6%88%90%E9%83%BD%E5%88%86%E5%85%AC%E5%8F%B8_25442000000125860831_%E6%9C%8D%E5%8A%A1%E8%B4%B9_342.00.pdf&fileName=%E4%B8%AD%E7%B2%AE%E7%A6%8F%E4%B8%B4%E9%97%A8%E9%A3%9F%E5%93%81%E8%90%A5%E9%94%80%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%E6%88%90%E9%83%BD%E5%88%86%E5%85%AC%E5%8F%B8_342.0_25442000000125860831_ZD250001423739_%E4%B8%AD%E7%B2%AE%E7%A6%8F%E4%B8%B4%E9%97%A8%E9%A3%9F%E5%93%81%E8%90%A5%E9%94%80%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%E6%88%90%E9%83%BD%E5%88%86%E5%85%AC%E5%8F%B8.pdf";
+        String subStr = str.substring(0,str.lastIndexOf("&fileName="))+"&fileName=ddddddd.pdf" ;
+        System.out.print(DateFormatUtils.format(new Date(), "yyyy-MM-dd"));
+
+        Date d = new Date(Long.parseLong("1742296717913"));
+       System.out.println(d);
     }
 }
