@@ -20,6 +20,7 @@ import java.util.Set;
         ,"com.kk.common.web"
         , "com.kk.common.dao"
         ,"com.kk.common.base"
+        ,"com.kk.common.utils"
         ,"com.kk.business"})
 @MapperScan("com.kk.business.*.dao.mapper")
 @EnableDiscoveryClient

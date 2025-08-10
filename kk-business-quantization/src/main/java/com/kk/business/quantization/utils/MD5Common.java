@@ -1,7 +1,7 @@
 package com.kk.business.quantization.utils;
 
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+
+import java.util.Base64;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKeyFactory;
@@ -51,17 +51,17 @@ public class MD5Common {
     	} catch (Exception e){
     		e.printStackTrace();
     	}
-    	BASE64Encoder base64Encoder = new BASE64Encoder();
-		return base64Encoder.encode(pasByte);
+		byte[] encodedBytes = Base64.getEncoder().encode(pasByte);
+		String encodedString = new String(encodedBytes);
+		return encodedString;
 		
     }
 
     public String Md5Decrypt(String source) throws Exception {
     	Cipher deCipher = Cipher.getInstance("DES/CBC/PKCS5Padding");
 		deCipher.init(Cipher.DECRYPT_MODE, key, ivSpec);
-		BASE64Decoder base64Decoder = new BASE64Decoder();
-		byte[] pasByte = deCipher.doFinal(base64Decoder.decodeBuffer(source));
-		return new String(pasByte, "UTF-8");
+		byte[] decodedBytes = Base64.getDecoder().decode(source);
+		return new String(decodedBytes, "UTF-8");
     }
     
 	/*public static void main(String[] args) throws Exception {

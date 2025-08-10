@@ -33,6 +33,18 @@ spring:
       #打开PSCache，并指定每个连接上PSCache的大小。oracle设为true，mysql设为false。分库分表较多推荐设置为false
       pool-prepared-statements: false
       max-pool-prepared-statement-per-connection-size: 20
+  cache:
+    type: redis
+  redis:
+    host: 8.134.61.236
+    port: 6379
+    password: dQTuX&lEMu
+    lettuce:
+      pool:
+        max-active: 30
+        max-wait: 100ms
+        max-idle: 30
+        min-idle: 5
   main:
     #开启循环依赖
     allow-circular-references: true
@@ -102,8 +114,12 @@ mybatis-plus:
 
 #自定义拦截器相关配置
 custom-web-mvc-config:
+  enable: true
   #参数拦截器 记录请求参数
-  intercepter-parameter-pattern: /**
+  intercepter-parameter-pattern: /**/api/**
+  intercepter-login-pattern: /**/napi/**
+  intercepter-no-login-pattern: /**
+
 
 # Swagger相关配置
 springfox:
