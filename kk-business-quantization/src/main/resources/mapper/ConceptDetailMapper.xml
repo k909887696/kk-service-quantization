@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kk.business.quantization.dao.mapper.ConceptDetailMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.ConceptDetail">
+        <id column="concept_id" property="conceptId" />
+        <id column="ts_code" property="tsCode" />
+        <result column="concept_name" property="conceptName" />
+        <result column="name" property="name" />
+        <result column="in_date" property="inDate" />
+        <result column="out_date" property="outDate" />
+        <result column="symbol" property="symbol" />
+        <result column="weight" property="weight" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        concept_id as 'conceptId',
+        concept_name as 'conceptName',
+        ts_code as 'tsCode',
+        name as 'name',
+        in_date as 'inDate',
+        out_date as 'outDate',
+        symbol as 'symbol',
+        weight as 'weight'
+
+    </sql>
+    <!-- 通用查询条件 -->
+    <sql id="BaseWhere">
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="conceptDetailListVo.conceptId != null and conceptDetailListVo.conceptId != ''">
+                and concept_id = #{conceptDetailListVo.conceptId}
+            </if>
+            <if test="conceptDetailListVo.conceptName != null and conceptDetailListVo.conceptName != ''">
+                and concept_name like concat('%',#{conceptDetailListVo.conceptName},'%')
+            </if>
+            <if test="conceptDetailListVo.tsCode != null and conceptDetailListVo.tsCode != ''">
+                and ts_code = #{conceptDetailListVo.tsCode}
+            </if>
+            <if test="conceptDetailListVo.name != null and conceptDetailListVo.name != ''">
+                and name like concat('%',#{conceptDetailListVo.name},'%')
+            </if>
+            <if test="conceptDetailListVo.inDateStart != null and conceptDetailListVo.inDateStart != ''">
+                and in_date >= #{conceptDetailListVo.inDateStart}
+            </if>
+            <if test="conceptDetailListVo.inDateEnd != null and conceptDetailListVo.inDateEnd != ''">
+                and in_date &lt;= #{conceptDetailListVo.inDateEnd}
+            </if>
+            <if test="conceptDetailListVo.outDateStart != null and conceptDetailListVo.outDateStart != ''">
+                and out_date >= #{conceptDetailListVo.outDateStart}
+            </if>
+            <if test="conceptDetailListVo.outDateEnd != null and conceptDetailListVo.outDateEnd != ''">
+                and out_date &lt;= #{conceptDetailListVo.outDateEnd}
+            </if>
+            <if test="conceptDetailListVo.symbol != null and conceptDetailListVo.symbol != ''">
+                and symbol = #{conceptDetailListVo.symbol}
+            </if>
+            <if test="conceptDetailListVo.weight != null and conceptDetailListVo.weight != ''">
+                and weight = #{conceptDetailListVo.weight}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.ConceptDetailListDto">
+        select <include refid="BaseColumnList"/>
+        from concept_detail
+        <include refid="BaseWhere"/>
+
+    </select>
+    <update id="updateSymbolByConceptIds">
+        update concept_detail cd inner join stock_basic sb on sb.ts_code = cd.ts_code
+            set cd.symbol = sb.symbol
+        where cd.concept_id in
+              <foreach collection="conceptIds"  item="id" open="(" separator="," close=")">
+                  #{id}
+              </foreach>
+
+    </update>
+    <update id="updateTsCodeByConceptIds">
+        update concept_detail cd inner join stock_basic sb on sb.symbol = cd.ts_code
+        set cd.ts_code = sb.ts_code,cd.symbol = sb.symbol
+        where cd.concept_id in
+        <foreach collection="conceptIds"  item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+
+    </update>
+    <update id="updateConceptNameByConceptIds">
+        update concept_detail cd inner join concept c on c.code = cd.concept_id
+        set cd.concept_name = c.name
+        where cd.concept_id in
+        <foreach collection="conceptIds"  item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+
+    </update>
+
+</mapper>

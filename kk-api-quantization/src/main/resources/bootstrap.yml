@@ -1,0 +1,160 @@
+server:
+  port: 8001
+spring:
+  application:
+    name: kk-api-quantization
+    desc: 量化分析系统
+    version: 1.0
+  data:
+    redis:
+      host: ${auth-redis.host}
+      port: ${auth-redis.port}
+      password: ${auth-redis.password}
+      database: ${auth-redis.database}
+  cloud:
+    #alibaba nacos setting
+    nacos:
+      #nacos 服务注册发现
+      discovery:
+        enabled: true
+        namespace: kk_${spring.profiles.active}
+        register-enabled: true
+      config:
+        file-extension: yaml
+        prefix: ${spring.application.name}
+        namespace: kk_${spring.profiles.active}
+        group: DEFAULT_GROUP
+        enabled: true
+<<<<<<< .mine
+        # 引入共享配置
+        shared-configs:
+          - data-id: kk-api-common.yaml
+            group: DEFAULT_GROUP
+            refresh: true
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=======
+
+
+mybatis-plus:
+  # 以下配置均有默认值,可以不设置
+  configuration:
+    # 是否开启自动驼峰命名规则映射:从数据库列名到Java属性驼峰命名的类似映射
+    map-underscore-to-camel-case: true
+    # 如果查询结果中包含空值的列，则 MyBatis 在映射的时候，不会映射这个字段
+    call-setters-on-nulls: true
+    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    #全局超时时间 (秒)
+    default-statement-timeout: 180
+    #关闭一级缓存
+    local-cache-scope: statement
+  type-aliases-package: com.kk.business.quantization.dao.entity
+  mapper-locations: classpath:/mapper/*xml
+
+
+
+#自定义拦截器相关配置
+custom-web-mvc-config:
+  enable: true
+  #参数拦截器 记录请求参数
+  intercepter-parameter-pattern: /**/api/**
+  intercepter-login-pattern: /**/napi/**
+  intercepter-no-login-pattern: /**
+
+
+# Swagger相关配置
+springfox:
+  documentation:
+           #开启文档
+           enabled: true
+swagger:
+  enable: true
+  #swagger文档项目名称
+  application-name: ${spring.application.name}-${spring.profiles.active}
+  #swagger版本号
+  application-version: 1.0
+  application-description: 量化系统
+>>>>>>> .theirs
+logging:
+  level:
+    root=debug: INFO
+  # 指定 Log4j2 配置文件
+  config: classpath:log4j2.xml
+# Elasticsearch 配置
+business-es:
+  primary: default
+  nodes:
+    default:
+      host: http://192.168.90.103:9200
+      username: elastic
+      password: 123456
+      connectTimeout: 5000
+      socketTimeout: 30000
+      connectionRequestTimeout: 5000
+
+# 各站点独有的业务 Redis 配置依然保留在本地
+business-redis:
+  nodes:
+    order:
+      host: 192.168.90.44
+      port: 6379
+      password: RE9nJN0qefV7gE4O8tdw
+      database: 1
+    product:
+      host: 192.168.90.44
+      port: 6379
+      password: RE9nJN0qefV7gE4O8tdw
+      database: 2
+
+# 登录redis配置
+auth-redis:
+  host: 192.168.90.44
+  port: 6379
+  password: RE9nJN0qefV7gE4O8tdw
+  database: 0
+  jwt-secret-key: nAGyUgIQHZMREuc03WsFceSQZ1PZIilR
+sa-token:
+  token-name: token      # 建议改为通用的 Authorization
+  token-prefix:
+  timeout: 86400              # token 有效期(秒)，默认1天
+  is-concurrent: true            # 是否允许同一账号多地同时登录
+  is-share: false                # 每次登录生成新 token
+  token-style: simple-uuid       # token 风格 uuid：标准 UUID，例如 a1b2c3d4-e5f6-7890-... simple-uuid：去掉横杠的 UUID，例如 a1b2c3d4e5f67890... random-32 / random-64：随机生成的 32位或64位字符串
+  is-read-cookie: false          # 【重要】前后端分离必须关闭 cookie 读取
+  is-read-header: true           # 从 Header 中读取 Token
+  jwt-secret-key: ${auth-redis.jwt-secret-key} # 从 Nacos 读取 JWT 密钥

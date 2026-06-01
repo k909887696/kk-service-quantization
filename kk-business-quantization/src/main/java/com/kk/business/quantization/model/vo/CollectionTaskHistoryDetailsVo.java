@@ -1,0 +1,25 @@
+package com.kk.business.quantization.model.vo;
+
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
+import java.util.Date;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+
+/**
+ * <p>
+ * 系统设置-数据任务-历史查询详情实体
+ * </p>
+ *
+ * @author kk
+ * @since 2023-08-24
+ */
+@Data
+@Schema(name = "系统设置-数据任务-历史查询详情实体", description = "系统设置-数据任务-历史")
+public class CollectionTaskHistoryDetailsVo implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+
+}

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kk.business.quantization.dao.mapper.IndexDailyMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.IndexDaily">
+        <id column="ts_code" property="tsCode" />
+        <id column="trade_date" property="tradeDate" />
+        <result column="close" property="close" />
+        <result column="open" property="open" />
+        <result column="high" property="high" />
+        <result column="low" property="low" />
+        <result column="pre_close" property="preClose" />
+        <result column="change" property="change" />
+        <result column="pct_chg" property="pctChg" />
+        <result column="vol" property="vol" />
+        <result column="amount" property="amount" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        ts_code as 'tsCode',
+        trade_date as 'tradeDate',
+        `close` as 'close',
+        `open` as 'open',
+        high as 'high',
+        low as 'low',
+        pre_close as 'preClose',
+        `change` as 'change',
+        pct_chg as 'pctChg',
+        vol as 'vol',
+        amount as 'amount'
+
+    </sql>
+    <!-- 通用查询条件 -->
+    <sql id="BaseWhere">
+        <trim prefix="where" prefixOverrides="and | or">
+           <if test="indexDailyListVo.tsCode != null and indexDailyListVo.tsCode != ''">
+               and ts_code = #{indexDailyListVo.tsCode}
+           </if>
+           <if test="indexDailyListVo.tradeDateStart != null and indexDailyListVo.tradeDateStart != ''">
+               and trade_date >= #{indexDailyListVo.tradeDateStart}
+           </if>
+           <if test="indexDailyListVo.tradeDateEnd != null and indexDailyListVo.tradeDateEnd != ''">
+               and trade_date &lt;= #{indexDailyListVo.tradeDateEnd}
+           </if>
+           <if test="indexDailyListVo.close != null and indexDailyListVo.close != ''">
+               and close = #{indexDailyListVo.close}
+           </if>
+           <if test="indexDailyListVo.open != null and indexDailyListVo.open != ''">
+               and open = #{indexDailyListVo.open}
+           </if>
+           <if test="indexDailyListVo.high != null and indexDailyListVo.high != ''">
+               and high = #{indexDailyListVo.high}
+           </if>
+           <if test="indexDailyListVo.low != null and indexDailyListVo.low != ''">
+               and low = #{indexDailyListVo.low}
+           </if>
+           <if test="indexDailyListVo.preClose != null and indexDailyListVo.preClose != ''">
+               and pre_close = #{indexDailyListVo.preClose}
+           </if>
+           <if test="indexDailyListVo.change != null and indexDailyListVo.change != ''">
+               and change = #{indexDailyListVo.change}
+           </if>
+           <if test="indexDailyListVo.pctChg != null and indexDailyListVo.pctChg != ''">
+               and pct_chg = #{indexDailyListVo.pctChg}
+           </if>
+           <if test="indexDailyListVo.vol != null and indexDailyListVo.vol != ''">
+               and vol = #{indexDailyListVo.vol}
+           </if>
+           <if test="indexDailyListVo.amount != null and indexDailyListVo.amount != ''">
+               and amount = #{indexDailyListVo.amount}
+           </if>
+        </trim>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.IndexDailyListDto">
+        select <include refid="BaseColumnList"/>
+        from index_daily
+        <include refid="BaseWhere"/>
+
+    </select>
+
+
+
+</mapper>
