@@ -22,16 +22,12 @@ public class LogUtils {
      */
     public static void logInfoXxlAnd4j(String logkey,String appendLogPattern, Object... appendLogArguments)
     {
-        XxlJobHelper.log(appendLogPattern
-                ,appendLogArguments);
-        LogUtil.info(logger,logkey,appendLogPattern
-                ,appendLogArguments);
+       // XxlJobHelper.log(appendLogPattern ,appendLogArguments);
+        LogUtil.info(logger,logkey,appendLogPattern,appendLogArguments);
     }
     public static void logErrorXxlAnd4j(String logkey,String appendLogPattern, Object... appendLogArguments)
     {
-        XxlJobHelper.log(appendLogPattern
-                ,appendLogArguments);
-        LogUtil.error(logger,logkey,appendLogPattern
-                ,appendLogArguments);
+        //XxlJobHelper.log(appendLogPattern,appendLogArguments);
+        LogUtil.error(logger,logkey,appendLogPattern,appendLogArguments);
     }
 }
