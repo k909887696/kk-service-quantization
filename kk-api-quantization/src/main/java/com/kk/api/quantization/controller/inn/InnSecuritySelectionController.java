@@ -1,4 +1,4 @@
-package com.kk.api.quantization.controller.v;
+package com.kk.api.quantization.controller.inn;
 
 
 import org.springframework.web.bind.annotation.*;
@@ -26,16 +26,16 @@ import com.kk.business.quantization.model.vobase.req.SecuritySelectionDetailsReq
 import com.kk.business.quantization.model.vobase.req.SecuritySelectionDeleteReqVo;
 /**
  * <p>
- * 个人自选股 接口
+ * 个人自选股 内部接口
  * </p>
  *
  * @author kk
- * @since 2026-05-30
+ * @since 2026-06-04
  */
-@Tag(name = "/"+ ServiceSystemKey.ServiceName+"/"+SystemKey.ApiPrefixLogin + "/v1/SecuritySelection",description = "个人自选股(接口)")
+@Tag(name = "/"+ ServiceSystemKey.ServiceName+"/"+SystemKey.ApiPrefixInn + "/v1/InnSecuritySelection",description = "个人自选股(内部接口)")
 @RestController
-@RequestMapping("/"+ ServiceSystemKey.ServiceName+"/"+SystemKey.ApiPrefixLogin + "/v1/SecuritySelection")
-public class SecuritySelectionController {
+@RequestMapping("/"+ ServiceSystemKey.ServiceName+"/"+SystemKey.ApiPrefixInn + "/v1/InnSecuritySelection")
+public class InnSecuritySelectionController {
 
     @Resource
     public SecuritySelectionServiceApi securitySelectionServiceApi;

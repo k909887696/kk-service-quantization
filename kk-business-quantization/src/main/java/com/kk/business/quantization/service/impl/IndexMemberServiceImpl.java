@@ -5,21 +5,20 @@ import org.springframework.stereotype.Service;
 import jakarta.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.kk.business.quantization.dao.entity.IndexMember;
 import com.kk.business.quantization.dao.mapper.IndexMemberMapper;
 import com.kk.business.quantization.service.IIndexMemberService;
-import com.github.jeffreyning.mybatisplus.service.MppServiceImpl;
-import com.kk.business.quantization.model.vo.IndexMemberListVo;
-import com.kk.business.quantization.model.dto.IndexMemberListDto;
-import com.kk.business.quantization.model.vo.IndexMemberAddVo;
-import com.kk.business.quantization.model.vo.IndexMemberEditVo;
-import com.kk.business.quantization.model.dto.IndexMemberDto;
-import com.kk.business.quantization.model.vo.IndexMemberDetailsVo;
-import com.kk.business.quantization.model.vo.IndexMemberDeleteVo;
-import com.kk.common.utils.MapperUtils;
+import com.kk.business.quantization.model.vobase.req.IndexMemberListReqVo;
+import com.kk.business.quantization.model.vobase.res.IndexMemberListResVo;
+import com.kk.business.quantization.model.vobase.req.IndexMemberAddReqVo;
+import com.kk.business.quantization.model.vobase.req.IndexMemberEditReqVo;
+import com.kk.business.quantization.model.vobase.res.IndexMemberResVo;
+import com.kk.business.quantization.model.vobase.req.IndexMemberDetailsReqVo;
+import com.kk.business.quantization.model.vobase.req.IndexMemberDeleteReqVo;
 import com.kk.common.base.model.PageResult;
+import com.kk.common.utils.BeanUtil;
 import com.kk.common.exception.BusinessException;
 /**
  * <p>
@@ -27,19 +26,19 @@ import com.kk.common.exception.BusinessException;
  * </p>
  *
  * @author kk
- * @since 2023-05-18
+ * @since 2026-06-04
  */
 @Service
-public class IndexMemberServiceImpl extends MppServiceImpl<IndexMemberMapper, IndexMember> implements IIndexMemberService {
+public class IndexMemberServiceImpl extends ServiceImpl<IndexMemberMapper, IndexMember> implements IIndexMemberService {
 
-    @Resource
-    public MapperUtils mapperUtils;
+
     /**
-    * 分批批量插入
+    * 分批批量插入申万行业明细
     * @param list 数据列表
     * @return
     */
-    public void insertIgnoreBatch(List<IndexMember> list)
+    @Override
+    public void insertIndexMemberBatchSomeColumn(List<IndexMember> list)
     {
 
         if(list ==null || list.size()<=0) return ;
@@ -52,27 +51,31 @@ public class IndexMemberServiceImpl extends MppServiceImpl<IndexMemberMapper, In
         for(;index<=totalPage;index++)
         {
             List<IndexMember> tempList = list.stream().skip((index-1)*size).limit(size).collect(Collectors.toList());
-            this.baseMapper.insertIgnoreBatchSomeColumn(tempList);
+            this.baseMapper.insertDuplicateKeyUpdate(tempList);
         }
     }
     /**
-    * 单条插入
+    * 单条插入申万行业明细
     * @param vo 请求参数
     * @return 结果集
     */
-    public void insert(IndexMemberAddVo vo)
+    @Override
+    public void insertIndexMember(IndexMemberAddReqVo vo)
     {
-        IndexMember model = mapperUtils.map(vo,IndexMember.class);
+        IndexMember model = new IndexMember();
+        BeanUtil.copyProperties(vo,model);
         this.baseMapper.insert(model);
     }
     /**
-    * 更新
+    * 更新申万行业明细
     * @param vo 请求参数
     * @return 结果集
     */
-    public int update(IndexMemberEditVo vo)
+    @Override
+    public int updateIndexMember(IndexMemberEditReqVo vo)
     {
-        IndexMember model = mapperUtils.map(vo,IndexMember.class);
+        IndexMember model = new IndexMember();
+        BeanUtil.copyProperties(vo,model);
         int r = this.baseMapper.updateByMultiId(model);
         if(r != 1)
         {
@@ -81,25 +84,30 @@ public class IndexMemberServiceImpl extends MppServiceImpl<IndexMemberMapper, In
         return r;
     }
     /**
-    * 单条查询
+    * 单条查询申万行业明细
     * @param vo 请求参数
     * @return 结果集
     */
-    public IndexMemberDto selectById(IndexMemberDetailsVo vo)
+    @Override
+    public IndexMemberResVo selectIndexMemberById(IndexMemberDetailsReqVo vo)
     {
-        IndexMember model = mapperUtils.map(vo,IndexMember.class);
+        IndexMember model = new IndexMember();
+        BeanUtil.copyProperties(vo,model);
         IndexMember res = this.baseMapper.selectByMultiId(model);
-        IndexMemberDto dto = mapperUtils.map(res,IndexMemberDto.class);
-        return dto;
+        IndexMemberResVo resVo = new IndexMemberResVo();
+        BeanUtil.copyProperties(res,resVo);
+        return resVo;
     }
     /**
-    * 删除
+    * 删除申万行业明细
     * @param vo 请求参数
     * @return 结果集
     */
-    public int deleteById(IndexMemberDeleteVo vo)
+    @Override
+    public int deleteIndexMemberById(IndexMemberDeleteReqVo vo)
     {
-        IndexMember model = mapperUtils.map(vo,IndexMember.class);
+        IndexMember model = new IndexMember();
+        BeanUtil.copyProperties(vo,model);
         int r = this.baseMapper.deleteByMultiId(model);
         if(r != 1)
         {
@@ -108,22 +116,18 @@ public class IndexMemberServiceImpl extends MppServiceImpl<IndexMemberMapper, In
         return r;
     }
     /**
-    * 分页获取结果集
+    * 分页获取申万行业明细结果集
     * @param vo 请求参数
     * @return 结果集
     */
-    public PageResult<IndexMemberListDto>  selectPageList(IndexMemberListVo vo){
+    @Override
+    public PageResult<IndexMemberListResVo>  selectIndexMemberPageList(IndexMemberListReqVo vo){
 
-        IPage<IndexMemberListDto> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
-        page = this.baseMapper.selectPageList(page,vo);
-        PageResult<IndexMemberListDto>  pageResult = new PageResult<>();
+        Page<IndexMemberListResVo> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
+        Page<IndexMemberListResVo> results = this.baseMapper.selectIndexMemberPageList(page,vo);
+        PageResult<IndexMemberListResVo>  pageResult = new PageResult<>();
 
-        pageResult.setResult(page.getRecords());
-        pageResult.setTotalCount(page.getTotal());
-        pageResult.setPageIndex(vo.getPageIndex());
-        pageResult.setPageSize(vo.getPageSize());
-
-        return pageResult;
+        return pageResult.convertPage(results);
     }
 
 

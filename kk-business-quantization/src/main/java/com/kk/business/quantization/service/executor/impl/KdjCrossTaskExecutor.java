@@ -81,7 +81,7 @@ public class KdjCrossTaskExecutor implements ITaskExecutor {
            }
         }
         //插入db
-        kdjCrossService.insertIgnoreBatch(data);
+        kdjCrossService.insertKdjCrossBatchSomeColumn(data);
     }
 
     @Override

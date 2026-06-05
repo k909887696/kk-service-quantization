@@ -5,21 +5,20 @@ import org.springframework.stereotype.Service;
 import jakarta.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.kk.business.quantization.dao.entity.IndexWeight;
 import com.kk.business.quantization.dao.mapper.IndexWeightMapper;
 import com.kk.business.quantization.service.IIndexWeightService;
-import com.github.jeffreyning.mybatisplus.service.MppServiceImpl;
-import com.kk.business.quantization.model.vo.IndexWeightListVo;
-import com.kk.business.quantization.model.dto.IndexWeightListDto;
-import com.kk.business.quantization.model.vo.IndexWeightAddVo;
-import com.kk.business.quantization.model.vo.IndexWeightEditVo;
-import com.kk.business.quantization.model.dto.IndexWeightDto;
-import com.kk.business.quantization.model.vo.IndexWeightDetailsVo;
-import com.kk.business.quantization.model.vo.IndexWeightDeleteVo;
-import com.kk.common.utils.MapperUtils;
+import com.kk.business.quantization.model.vobase.req.IndexWeightListReqVo;
+import com.kk.business.quantization.model.vobase.res.IndexWeightListResVo;
+import com.kk.business.quantization.model.vobase.req.IndexWeightAddReqVo;
+import com.kk.business.quantization.model.vobase.req.IndexWeightEditReqVo;
+import com.kk.business.quantization.model.vobase.res.IndexWeightResVo;
+import com.kk.business.quantization.model.vobase.req.IndexWeightDetailsReqVo;
+import com.kk.business.quantization.model.vobase.req.IndexWeightDeleteReqVo;
 import com.kk.common.base.model.PageResult;
+import com.kk.common.utils.BeanUtil;
 import com.kk.common.exception.BusinessException;
 /**
  * <p>
@@ -27,19 +26,19 @@ import com.kk.common.exception.BusinessException;
  * </p>
  *
  * @author kk
- * @since 2023-05-19
+ * @since 2026-06-04
  */
 @Service
-public class IndexWeightServiceImpl extends MppServiceImpl<IndexWeightMapper, IndexWeight> implements IIndexWeightService {
+public class IndexWeightServiceImpl extends ServiceImpl<IndexWeightMapper, IndexWeight> implements IIndexWeightService {
 
-    @Resource
-    public MapperUtils mapperUtils;
+
     /**
-    * 分批批量插入
+    * 分批批量插入指数成分权重
     * @param list 数据列表
     * @return
     */
-    public void insertIgnoreBatch(List<IndexWeight> list)
+    @Override
+    public void insertIndexWeightBatchSomeColumn(List<IndexWeight> list)
     {
 
         if(list ==null || list.size()<=0) return ;
@@ -52,27 +51,31 @@ public class IndexWeightServiceImpl extends MppServiceImpl<IndexWeightMapper, In
         for(;index<=totalPage;index++)
         {
             List<IndexWeight> tempList = list.stream().skip((index-1)*size).limit(size).collect(Collectors.toList());
-            this.baseMapper.insertIgnoreBatchSomeColumn(tempList);
+            this.baseMapper.insertBatchSomeColumn(tempList);
         }
     }
     /**
-    * 单条插入
+    * 单条插入指数成分权重
     * @param vo 请求参数
     * @return 结果集
     */
-    public void insert(IndexWeightAddVo vo)
+    @Override
+    public void insertIndexWeight(IndexWeightAddReqVo vo)
     {
-        IndexWeight model = mapperUtils.map(vo,IndexWeight.class);
+        IndexWeight model = new IndexWeight();
+        BeanUtil.copyProperties(vo,model);
         this.baseMapper.insert(model);
     }
     /**
-    * 更新
+    * 更新指数成分权重
     * @param vo 请求参数
     * @return 结果集
     */
-    public int update(IndexWeightEditVo vo)
+    @Override
+    public int updateIndexWeight(IndexWeightEditReqVo vo)
     {
-        IndexWeight model = mapperUtils.map(vo,IndexWeight.class);
+        IndexWeight model = new IndexWeight();
+        BeanUtil.copyProperties(vo,model);
         int r = this.baseMapper.updateByMultiId(model);
         if(r != 1)
         {
@@ -81,25 +84,30 @@ public class IndexWeightServiceImpl extends MppServiceImpl<IndexWeightMapper, In
         return r;
     }
     /**
-    * 单条查询
+    * 单条查询指数成分权重
     * @param vo 请求参数
     * @return 结果集
     */
-    public IndexWeightDto selectById(IndexWeightDetailsVo vo)
+    @Override
+    public IndexWeightResVo selectIndexWeightById(IndexWeightDetailsReqVo vo)
     {
-        IndexWeight model = mapperUtils.map(vo,IndexWeight.class);
+        IndexWeight model = new IndexWeight();
+        BeanUtil.copyProperties(vo,model);
         IndexWeight res = this.baseMapper.selectByMultiId(model);
-        IndexWeightDto dto = mapperUtils.map(res,IndexWeightDto.class);
-        return dto;
+        IndexWeightResVo resVo = new IndexWeightResVo();
+        BeanUtil.copyProperties(res,resVo);
+        return resVo;
     }
     /**
-    * 删除
+    * 删除指数成分权重
     * @param vo 请求参数
     * @return 结果集
     */
-    public int deleteById(IndexWeightDeleteVo vo)
+    @Override
+    public int deleteIndexWeightById(IndexWeightDeleteReqVo vo)
     {
-        IndexWeight model = mapperUtils.map(vo,IndexWeight.class);
+        IndexWeight model = new IndexWeight();
+        BeanUtil.copyProperties(vo,model);
         int r = this.baseMapper.deleteByMultiId(model);
         if(r != 1)
         {
@@ -108,22 +116,18 @@ public class IndexWeightServiceImpl extends MppServiceImpl<IndexWeightMapper, In
         return r;
     }
     /**
-    * 分页获取结果集
+    * 分页获取指数成分权重结果集
     * @param vo 请求参数
     * @return 结果集
     */
-    public PageResult<IndexWeightListDto>  selectPageList(IndexWeightListVo vo){
+    @Override
+    public PageResult<IndexWeightListResVo>  selectIndexWeightPageList(IndexWeightListReqVo vo){
 
-        IPage<IndexWeightListDto> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
-        page = this.baseMapper.selectPageList(page,vo);
-        PageResult<IndexWeightListDto>  pageResult = new PageResult<>();
+        Page<IndexWeightListResVo> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
+        Page<IndexWeightListResVo> results = this.baseMapper.selectIndexWeightPageList(page,vo);
+        PageResult<IndexWeightListResVo>  pageResult = new PageResult<>();
 
-        pageResult.setResult(page.getRecords());
-        pageResult.setTotalCount(page.getTotal());
-        pageResult.setPageIndex(vo.getPageIndex());
-        pageResult.setPageSize(vo.getPageSize());
-
-        return pageResult;
+        return pageResult.convertPage(results);
     }
 
 

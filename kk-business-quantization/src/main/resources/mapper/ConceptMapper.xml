@@ -27,35 +27,35 @@
     <!-- 通用查询条件 -->
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
-            <if test="conceptListVo.code != null and conceptListVo.code != ''">
-                and code = #{conceptListVo.code}
-            </if>
-            <if test="conceptListVo.name != null and conceptListVo.name != ''">
-                and name like concat('%',#{conceptListVo.name},'%')
-            </if>
-            <if test="conceptListVo.src != null and conceptListVo.src != ''">
-                and src = #{conceptListVo.src}
-            </if>
-            <if test="conceptListVo.exchange != null and conceptListVo.exchange != ''">
-                and exchange = #{conceptListVo.exchange}
-            </if>
-            <if test="conceptListVo.listDateStart != null and conceptListVo.listDateStart != ''">
-                and list_date >= #{conceptListVo.listDateStart}
-            </if>
-            <if test="conceptListVo.listDateEnd != null and conceptListVo.listDateEnd != ''">
-                and list_date &lt;= #{conceptListVo.listDateEnd}
-            </if>
-            <if test="conceptListVo.type != null and conceptListVo.type != ''">
-                and type = #{conceptListVo.type}
-            </if>
-            <if test="conceptListVo.count != null and conceptListVo.count != ''">
-                and count = #{conceptListVo.count}
-            </if>
+           <if test="conceptListReqVo.code != null and conceptListReqVo.code != ''">
+               and code = #{conceptListVo.code}
+           </if>
+           <if test="conceptListReqVo.name != null and conceptListReqVo.name != ''">
+               and name like concat('%',#{conceptListVo.name},'%')
+           </if>
+           <if test="conceptListReqVo.src != null and conceptListReqVo.src != ''">
+               and src = #{conceptListVo.src}
+           </if>
+           <if test="conceptListReqVo.exchange != null and conceptListReqVo.exchange != ''">
+               and exchange = #{conceptListVo.exchange}
+           </if>
+           <if test="conceptListReqVo.listDateStart != null and conceptListReqVo.listDateStart != ''">
+               and list_date >= #{conceptListVo.listDateStart}
+           </if>
+           <if test="conceptListReqVo.listDateEnd != null and conceptListReqVo.listDateEnd != ''">
+               and list_date &lt;= #{conceptListVo.listDateEnd}
+           </if>
+           <if test="conceptListReqVo.type != null and conceptListReqVo.type != ''">
+               and type = #{conceptListVo.type}
+           </if>
+           <if test="conceptListReqVo.count != null and conceptListReqVo.count != ''">
+               and count = #{conceptListVo.count}
+           </if>
         </trim>
     </sql>
 
     <!-- 分页查询 -->
-    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.ConceptListDto">
+    <select id="selectConceptPageList" resultType="com.kk.business.quantization.model.vobase.res.ConceptListResVo">
         select <include refid="BaseColumnList"/>
         from concept
         <include refid="BaseWhere"/>

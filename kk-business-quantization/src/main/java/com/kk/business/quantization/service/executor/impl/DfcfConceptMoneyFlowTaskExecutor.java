@@ -69,7 +69,7 @@ public class DfcfConceptMoneyFlowTaskExecutor implements ITaskExecutor {
         }
 
         //插入db
-        conceptMoneyFlowService.insertIgnoreBatch(data);
+        conceptMoneyFlowService.insertConceptMoneyFlowBatchSomeColumn(data);
     }
 
     @Override

@@ -29,53 +29,54 @@
     <!-- 通用查询条件 -->
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
-            <if test="conceptDetailListVo.conceptId != null and conceptDetailListVo.conceptId != ''">
-                and concept_id = #{conceptDetailListVo.conceptId}
-            </if>
-            <if test="conceptDetailListVo.conceptName != null and conceptDetailListVo.conceptName != ''">
-                and concept_name like concat('%',#{conceptDetailListVo.conceptName},'%')
-            </if>
-            <if test="conceptDetailListVo.tsCode != null and conceptDetailListVo.tsCode != ''">
-                and ts_code = #{conceptDetailListVo.tsCode}
-            </if>
-            <if test="conceptDetailListVo.name != null and conceptDetailListVo.name != ''">
-                and name like concat('%',#{conceptDetailListVo.name},'%')
-            </if>
-            <if test="conceptDetailListVo.inDateStart != null and conceptDetailListVo.inDateStart != ''">
-                and in_date >= #{conceptDetailListVo.inDateStart}
-            </if>
-            <if test="conceptDetailListVo.inDateEnd != null and conceptDetailListVo.inDateEnd != ''">
-                and in_date &lt;= #{conceptDetailListVo.inDateEnd}
-            </if>
-            <if test="conceptDetailListVo.outDateStart != null and conceptDetailListVo.outDateStart != ''">
-                and out_date >= #{conceptDetailListVo.outDateStart}
-            </if>
-            <if test="conceptDetailListVo.outDateEnd != null and conceptDetailListVo.outDateEnd != ''">
-                and out_date &lt;= #{conceptDetailListVo.outDateEnd}
-            </if>
-            <if test="conceptDetailListVo.symbol != null and conceptDetailListVo.symbol != ''">
-                and symbol = #{conceptDetailListVo.symbol}
-            </if>
-            <if test="conceptDetailListVo.weight != null and conceptDetailListVo.weight != ''">
-                and weight = #{conceptDetailListVo.weight}
-            </if>
+           <if test="conceptDetailListReqVo.conceptId != null and conceptDetailListReqVo.conceptId != ''">
+               and concept_id = #{conceptDetailListVo.conceptId}
+           </if>
+           <if test="conceptDetailListReqVo.conceptName != null and conceptDetailListReqVo.conceptName != ''">
+               and concept_name like concat('%',#{conceptDetailListVo.conceptName},'%')
+           </if>
+           <if test="conceptDetailListReqVo.tsCode != null and conceptDetailListReqVo.tsCode != ''">
+               and ts_code = #{conceptDetailListVo.tsCode}
+           </if>
+           <if test="conceptDetailListReqVo.name != null and conceptDetailListReqVo.name != ''">
+               and name like concat('%',#{conceptDetailListVo.name},'%')
+           </if>
+           <if test="conceptDetailListReqVo.inDateStart != null and conceptDetailListReqVo.inDateStart != ''">
+               and in_date >= #{conceptDetailListVo.inDateStart}
+           </if>
+           <if test="conceptDetailListReqVo.inDateEnd != null and conceptDetailListReqVo.inDateEnd != ''">
+               and in_date &lt;= #{conceptDetailListVo.inDateEnd}
+           </if>
+           <if test="conceptDetailListReqVo.outDateStart != null and conceptDetailListReqVo.outDateStart != ''">
+               and out_date >= #{conceptDetailListVo.outDateStart}
+           </if>
+           <if test="conceptDetailListReqVo.outDateEnd != null and conceptDetailListReqVo.outDateEnd != ''">
+               and out_date &lt;= #{conceptDetailListVo.outDateEnd}
+           </if>
+           <if test="conceptDetailListReqVo.symbol != null and conceptDetailListReqVo.symbol != ''">
+               and symbol = #{conceptDetailListVo.symbol}
+           </if>
+           <if test="conceptDetailListReqVo.weight != null and conceptDetailListReqVo.weight != ''">
+               and weight = #{conceptDetailListVo.weight}
+           </if>
         </trim>
     </sql>
 
     <!-- 分页查询 -->
-    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.ConceptDetailListDto">
+    <select id="selectConceptDetailPageList" resultType="com.kk.business.quantization.model.vobase.res.ConceptDetailListResVo">
         select <include refid="BaseColumnList"/>
         from concept_detail
         <include refid="BaseWhere"/>
 
     </select>
+
     <update id="updateSymbolByConceptIds">
         update concept_detail cd inner join stock_basic sb on sb.ts_code = cd.ts_code
-            set cd.symbol = sb.symbol
+        set cd.symbol = sb.symbol
         where cd.concept_id in
-              <foreach collection="conceptIds"  item="id" open="(" separator="," close=")">
-                  #{id}
-              </foreach>
+        <foreach collection="conceptIds"  item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
 
     </update>
     <update id="updateTsCodeByConceptIds">

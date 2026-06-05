@@ -13,7 +13,7 @@ import lombok.Data;
  * </p>
  *
  * @author kk
- * @since 2026-05-30
+ * @since 2026-06-04
  */
 @Data
 @Schema(description = "人民币货币总量对象")

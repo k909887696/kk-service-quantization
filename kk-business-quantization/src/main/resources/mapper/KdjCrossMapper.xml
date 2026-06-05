@@ -21,26 +21,26 @@
     <!-- 通用查询条件 -->
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
-           <if test="kdjCrossListVo.tsCode != null and kdjCrossListVo.tsCode != ''">
+           <if test="kdjCrossListReqVo.tsCode != null and kdjCrossListReqVo.tsCode != ''">
                and ts_code = #{kdjCrossListVo.tsCode}
            </if>
-           <if test="kdjCrossListVo.tradeDateStart != null and kdjCrossListVo.tradeDateStart != ''">
+           <if test="kdjCrossListReqVo.tradeDateStart != null and kdjCrossListReqVo.tradeDateStart != ''">
                and trade_date >= #{kdjCrossListVo.tradeDateStart}
            </if>
-           <if test="kdjCrossListVo.tradeDateEnd != null and kdjCrossListVo.tradeDateEnd != ''">
+           <if test="kdjCrossListReqVo.tradeDateEnd != null and kdjCrossListReqVo.tradeDateEnd != ''">
                and trade_date &lt;= #{kdjCrossListVo.tradeDateEnd}
            </if>
-           <if test="kdjCrossListVo.crossType != null and kdjCrossListVo.crossType != ''">
+           <if test="kdjCrossListReqVo.crossType != null and kdjCrossListReqVo.crossType != ''">
                and cross_type = #{kdjCrossListVo.crossType}
            </if>
-           <if test="kdjCrossListVo.analysisType != null and kdjCrossListVo.analysisType != ''">
+           <if test="kdjCrossListReqVo.analysisType != null and kdjCrossListReqVo.analysisType != ''">
                and analysis_type = #{kdjCrossListVo.analysisType}
            </if>
         </trim>
     </sql>
 
     <!-- 分页查询 -->
-    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.KdjCrossListDto">
+    <select id="selectKdjCrossPageList" resultType="com.kk.business.quantization.model.vobase.res.KdjCrossListResVo">
         select <include refid="BaseColumnList"/>
         from kdj_cross
         <include refid="BaseWhere"/>

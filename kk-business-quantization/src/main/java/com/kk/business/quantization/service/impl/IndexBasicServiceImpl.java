@@ -5,21 +5,20 @@ import org.springframework.stereotype.Service;
 import jakarta.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.kk.business.quantization.dao.entity.IndexBasic;
 import com.kk.business.quantization.dao.mapper.IndexBasicMapper;
 import com.kk.business.quantization.service.IIndexBasicService;
-import com.github.jeffreyning.mybatisplus.service.MppServiceImpl;
-import com.kk.business.quantization.model.vo.IndexBasicListVo;
-import com.kk.business.quantization.model.dto.IndexBasicListDto;
-import com.kk.business.quantization.model.vo.IndexBasicAddVo;
-import com.kk.business.quantization.model.vo.IndexBasicEditVo;
-import com.kk.business.quantization.model.dto.IndexBasicDto;
-import com.kk.business.quantization.model.vo.IndexBasicDetailsVo;
-import com.kk.business.quantization.model.vo.IndexBasicDeleteVo;
-import com.kk.common.utils.MapperUtils;
+import com.kk.business.quantization.model.vobase.req.IndexBasicListReqVo;
+import com.kk.business.quantization.model.vobase.res.IndexBasicListResVo;
+import com.kk.business.quantization.model.vobase.req.IndexBasicAddReqVo;
+import com.kk.business.quantization.model.vobase.req.IndexBasicEditReqVo;
+import com.kk.business.quantization.model.vobase.res.IndexBasicResVo;
+import com.kk.business.quantization.model.vobase.req.IndexBasicDetailsReqVo;
+import com.kk.business.quantization.model.vobase.req.IndexBasicDeleteReqVo;
 import com.kk.common.base.model.PageResult;
+import com.kk.common.utils.BeanUtil;
 import com.kk.common.exception.BusinessException;
 /**
  * <p>
@@ -27,19 +26,19 @@ import com.kk.common.exception.BusinessException;
  * </p>
  *
  * @author kk
- * @since 2023-05-18
+ * @since 2026-06-04
  */
 @Service
-public class IndexBasicServiceImpl extends MppServiceImpl<IndexBasicMapper, IndexBasic> implements IIndexBasicService {
+public class IndexBasicServiceImpl extends ServiceImpl<IndexBasicMapper, IndexBasic> implements IIndexBasicService {
 
-    @Resource
-    public MapperUtils mapperUtils;
+
     /**
-     * 分批批量插入
-     * @param list 数据列表
-     * @return
-     */
-    public void insertIgnoreBatch(List<IndexBasic> list)
+    * 分批批量插入指数基本信息
+    * @param list 数据列表
+    * @return
+    */
+    @Override
+    public void insertIndexBasicBatchSomeColumn(List<IndexBasic> list)
     {
 
         if(list ==null || list.size()<=0) return ;
@@ -56,23 +55,27 @@ public class IndexBasicServiceImpl extends MppServiceImpl<IndexBasicMapper, Inde
         }
     }
     /**
-     * 单条插入
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    public void insert(IndexBasicAddVo vo)
+    * 单条插入指数基本信息
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    @Override
+    public void insertIndexBasic(IndexBasicAddReqVo vo)
     {
-        IndexBasic model = mapperUtils.map(vo,IndexBasic.class);
+        IndexBasic model = new IndexBasic();
+        BeanUtil.copyProperties(vo,model);
         this.baseMapper.insert(model);
     }
     /**
-     * 更新
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    public int update(IndexBasicEditVo vo)
+    * 更新指数基本信息
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    @Override
+    public int updateIndexBasic(IndexBasicEditReqVo vo)
     {
-        IndexBasic model = mapperUtils.map(vo,IndexBasic.class);
+        IndexBasic model = new IndexBasic();
+        BeanUtil.copyProperties(vo,model);
         int r = this.baseMapper.updateById(model);
         if(r != 1)
         {
@@ -81,25 +84,30 @@ public class IndexBasicServiceImpl extends MppServiceImpl<IndexBasicMapper, Inde
         return r;
     }
     /**
-     * 单条查询
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    public IndexBasicDto selectById(IndexBasicDetailsVo vo)
+    * 单条查询指数基本信息
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    @Override
+    public IndexBasicResVo selectIndexBasicById(IndexBasicDetailsReqVo vo)
     {
-        IndexBasic model = mapperUtils.map(vo,IndexBasic.class);
+        IndexBasic model = new IndexBasic();
+        BeanUtil.copyProperties(vo,model);
         IndexBasic res = this.baseMapper.selectById(model);
-        IndexBasicDto dto = mapperUtils.map(res,IndexBasicDto.class);
-        return dto;
+        IndexBasicResVo resVo = new IndexBasicResVo();
+        BeanUtil.copyProperties(res,resVo);
+        return resVo;
     }
     /**
-     * 删除
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    public int deleteById(IndexBasicDeleteVo vo)
+    * 删除指数基本信息
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    @Override
+    public int deleteIndexBasicById(IndexBasicDeleteReqVo vo)
     {
-        IndexBasic model = mapperUtils.map(vo,IndexBasic.class);
+        IndexBasic model = new IndexBasic();
+        BeanUtil.copyProperties(vo,model);
         int r = this.baseMapper.deleteById(model);
         if(r != 1)
         {
@@ -108,22 +116,18 @@ public class IndexBasicServiceImpl extends MppServiceImpl<IndexBasicMapper, Inde
         return r;
     }
     /**
-     * 分页获取结果集
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    public PageResult<IndexBasicListDto>  selectPageList(IndexBasicListVo vo){
+    * 分页获取指数基本信息结果集
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    @Override
+    public PageResult<IndexBasicListResVo>  selectIndexBasicPageList(IndexBasicListReqVo vo){
 
-        IPage<IndexBasicListDto> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
-        page = this.baseMapper.selectPageList(page,vo);
-        PageResult<IndexBasicListDto>  pageResult = new PageResult<>();
+        Page<IndexBasicListResVo> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
+        Page<IndexBasicListResVo> results = this.baseMapper.selectIndexBasicPageList(page,vo);
+        PageResult<IndexBasicListResVo>  pageResult = new PageResult<>();
 
-        pageResult.setResult(page.getRecords());
-        pageResult.setTotalCount(page.getTotal());
-        pageResult.setPageIndex(vo.getPageIndex());
-        pageResult.setPageSize(vo.getPageSize());
-
-        return pageResult;
+        return pageResult.convertPage(results);
     }
 
 

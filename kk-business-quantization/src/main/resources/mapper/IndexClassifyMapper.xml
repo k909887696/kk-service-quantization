@@ -27,32 +27,32 @@
     <!-- 通用查询条件 -->
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
-           <if test="indexClassifyListVo.indexCode != null and indexClassifyListVo.indexCode != ''">
+           <if test="indexClassifyListReqVo.indexCode != null and indexClassifyListReqVo.indexCode != ''">
                and index_code = #{indexClassifyListVo.indexCode}
            </if>
-           <if test="indexClassifyListVo.industryName != null and indexClassifyListVo.industryName != ''">
+           <if test="indexClassifyListReqVo.industryName != null and indexClassifyListReqVo.industryName != ''">
                and industry_name like concat('%',#{indexClassifyListVo.industryName},'%')
            </if>
-           <if test="indexClassifyListVo.parentCode != null and indexClassifyListVo.parentCode != ''">
+           <if test="indexClassifyListReqVo.parentCode != null and indexClassifyListReqVo.parentCode != ''">
                and parent_code = #{indexClassifyListVo.parentCode}
            </if>
-           <if test="indexClassifyListVo.level != null and indexClassifyListVo.level != ''">
+           <if test="indexClassifyListReqVo.level != null and indexClassifyListReqVo.level != ''">
                and level = #{indexClassifyListVo.level}
            </if>
-           <if test="indexClassifyListVo.industryCode != null and indexClassifyListVo.industryCode != ''">
+           <if test="indexClassifyListReqVo.industryCode != null and indexClassifyListReqVo.industryCode != ''">
                and industry_code = #{indexClassifyListVo.industryCode}
            </if>
-           <if test="indexClassifyListVo.isPub != null and indexClassifyListVo.isPub != ''">
+           <if test="indexClassifyListReqVo.isPub != null and indexClassifyListReqVo.isPub != ''">
                and is_pub = #{indexClassifyListVo.isPub}
            </if>
-           <if test="indexClassifyListVo.src != null and indexClassifyListVo.src != ''">
+           <if test="indexClassifyListReqVo.src != null and indexClassifyListReqVo.src != ''">
                and src = #{indexClassifyListVo.src}
            </if>
         </trim>
     </sql>
 
     <!-- 分页查询 -->
-    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.IndexClassifyListDto">
+    <select id="selectIndexClassifyPageList" resultType="com.kk.business.quantization.model.vobase.res.IndexClassifyListResVo">
         select <include refid="BaseColumnList"/>
         from index_classify
         <include refid="BaseWhere"/>

@@ -5,21 +5,20 @@ import org.springframework.stereotype.Service;
 import jakarta.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.kk.business.quantization.dao.entity.MoneyFlow;
 import com.kk.business.quantization.dao.mapper.MoneyFlowMapper;
 import com.kk.business.quantization.service.IMoneyFlowService;
-import com.github.jeffreyning.mybatisplus.service.MppServiceImpl;
-import com.kk.business.quantization.model.vo.MoneyFlowListVo;
-import com.kk.business.quantization.model.dto.MoneyFlowListDto;
-import com.kk.business.quantization.model.vo.MoneyFlowAddVo;
-import com.kk.business.quantization.model.vo.MoneyFlowEditVo;
-import com.kk.business.quantization.model.dto.MoneyFlowDto;
-import com.kk.business.quantization.model.vo.MoneyFlowDetailsVo;
-import com.kk.business.quantization.model.vo.MoneyFlowDeleteVo;
-import com.kk.common.utils.MapperUtils;
+import com.kk.business.quantization.model.vobase.req.MoneyFlowListReqVo;
+import com.kk.business.quantization.model.vobase.res.MoneyFlowListResVo;
+import com.kk.business.quantization.model.vobase.req.MoneyFlowAddReqVo;
+import com.kk.business.quantization.model.vobase.req.MoneyFlowEditReqVo;
+import com.kk.business.quantization.model.vobase.res.MoneyFlowResVo;
+import com.kk.business.quantization.model.vobase.req.MoneyFlowDetailsReqVo;
+import com.kk.business.quantization.model.vobase.req.MoneyFlowDeleteReqVo;
 import com.kk.common.base.model.PageResult;
+import com.kk.common.utils.BeanUtil;
 import com.kk.common.exception.BusinessException;
 /**
  * <p>
@@ -27,19 +26,19 @@ import com.kk.common.exception.BusinessException;
  * </p>
  *
  * @author kk
- * @since 2023-05-18
+ * @since 2026-06-04
  */
 @Service
-public class MoneyFlowServiceImpl extends MppServiceImpl<MoneyFlowMapper, MoneyFlow> implements IMoneyFlowService {
+public class MoneyFlowServiceImpl extends ServiceImpl<MoneyFlowMapper, MoneyFlow> implements IMoneyFlowService {
 
-    @Resource
-    public MapperUtils mapperUtils;
+
     /**
-    * 分批批量插入
+    * 分批批量插入个股资金流向
     * @param list 数据列表
     * @return
     */
-    public void insertIgnoreBatch(List<MoneyFlow> list)
+    @Override
+    public void insertMoneyFlowBatchSomeColumn(List<MoneyFlow> list)
     {
 
         if(list ==null || list.size()<=0) return ;
@@ -56,23 +55,27 @@ public class MoneyFlowServiceImpl extends MppServiceImpl<MoneyFlowMapper, MoneyF
         }
     }
     /**
-    * 单条插入
+    * 单条插入个股资金流向
     * @param vo 请求参数
     * @return 结果集
     */
-    public void insert(MoneyFlowAddVo vo)
+    @Override
+    public void insertMoneyFlow(MoneyFlowAddReqVo vo)
     {
-        MoneyFlow model = mapperUtils.map(vo,MoneyFlow.class);
+        MoneyFlow model = new MoneyFlow();
+        BeanUtil.copyProperties(vo,model);
         this.baseMapper.insert(model);
     }
     /**
-    * 更新
+    * 更新个股资金流向
     * @param vo 请求参数
     * @return 结果集
     */
-    public int update(MoneyFlowEditVo vo)
+    @Override
+    public int updateMoneyFlow(MoneyFlowEditReqVo vo)
     {
-        MoneyFlow model = mapperUtils.map(vo,MoneyFlow.class);
+        MoneyFlow model = new MoneyFlow();
+        BeanUtil.copyProperties(vo,model);
         int r = this.baseMapper.updateByMultiId(model);
         if(r != 1)
         {
@@ -81,25 +84,30 @@ public class MoneyFlowServiceImpl extends MppServiceImpl<MoneyFlowMapper, MoneyF
         return r;
     }
     /**
-    * 单条查询
+    * 单条查询个股资金流向
     * @param vo 请求参数
     * @return 结果集
     */
-    public MoneyFlowDto selectById(MoneyFlowDetailsVo vo)
+    @Override
+    public MoneyFlowResVo selectMoneyFlowById(MoneyFlowDetailsReqVo vo)
     {
-        MoneyFlow model = mapperUtils.map(vo,MoneyFlow.class);
+        MoneyFlow model = new MoneyFlow();
+        BeanUtil.copyProperties(vo,model);
         MoneyFlow res = this.baseMapper.selectByMultiId(model);
-        MoneyFlowDto dto = mapperUtils.map(res,MoneyFlowDto.class);
-        return dto;
+        MoneyFlowResVo resVo = new MoneyFlowResVo();
+        BeanUtil.copyProperties(res,resVo);
+        return resVo;
     }
     /**
-    * 删除
+    * 删除个股资金流向
     * @param vo 请求参数
     * @return 结果集
     */
-    public int deleteById(MoneyFlowDeleteVo vo)
+    @Override
+    public int deleteMoneyFlowById(MoneyFlowDeleteReqVo vo)
     {
-        MoneyFlow model = mapperUtils.map(vo,MoneyFlow.class);
+        MoneyFlow model = new MoneyFlow();
+        BeanUtil.copyProperties(vo,model);
         int r = this.baseMapper.deleteByMultiId(model);
         if(r != 1)
         {
@@ -108,22 +116,18 @@ public class MoneyFlowServiceImpl extends MppServiceImpl<MoneyFlowMapper, MoneyF
         return r;
     }
     /**
-    * 分页获取结果集
+    * 分页获取个股资金流向结果集
     * @param vo 请求参数
     * @return 结果集
     */
-    public PageResult<MoneyFlowListDto>  selectPageList(MoneyFlowListVo vo){
+    @Override
+    public PageResult<MoneyFlowListResVo>  selectMoneyFlowPageList(MoneyFlowListReqVo vo){
 
-        IPage<MoneyFlowListDto> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
-        page = this.baseMapper.selectPageList(page,vo);
-        PageResult<MoneyFlowListDto>  pageResult = new PageResult<>();
+        Page<MoneyFlowListResVo> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
+        Page<MoneyFlowListResVo> results = this.baseMapper.selectMoneyFlowPageList(page,vo);
+        PageResult<MoneyFlowListResVo>  pageResult = new PageResult<>();
 
-        pageResult.setResult(page.getRecords());
-        pageResult.setTotalCount(page.getTotal());
-        pageResult.setPageIndex(vo.getPageIndex());
-        pageResult.setPageSize(vo.getPageSize());
-
-        return pageResult;
+        return pageResult.convertPage(results);
     }
 
 

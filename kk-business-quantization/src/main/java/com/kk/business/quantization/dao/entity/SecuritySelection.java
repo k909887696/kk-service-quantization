@@ -13,7 +13,7 @@ import com.github.jeffreyning.mybatisplus.anno.MppMultiId;
  * </p>
  *
  * @author kk
- * @since 2026-05-30
+ * @since 2026-06-04
  */
 @Data
 @TableName("security_selection")

@@ -1,16 +1,14 @@
 package com.kk.business.quantization.service;
 
 import com.kk.business.quantization.dao.entity.KdjCross;
-import com.github.jeffreyning.mybatisplus.service.IMppService;
-
 import java.util.List;
-import com.kk.business.quantization.model.vo.KdjCrossListVo;
-import com.kk.business.quantization.model.dto.KdjCrossListDto;
-import com.kk.business.quantization.model.vo.KdjCrossAddVo;
-import com.kk.business.quantization.model.vo.KdjCrossEditVo;
-import com.kk.business.quantization.model.dto.KdjCrossDto;
-import com.kk.business.quantization.model.vo.KdjCrossDetailsVo;
-import com.kk.business.quantization.model.vo.KdjCrossDeleteVo;
+import com.kk.business.quantization.model.vobase.req.KdjCrossListReqVo;
+import com.kk.business.quantization.model.vobase.res.KdjCrossListResVo;
+import com.kk.business.quantization.model.vobase.req.KdjCrossAddReqVo;
+import com.kk.business.quantization.model.vobase.req.KdjCrossEditReqVo;
+import com.kk.business.quantization.model.vobase.res.KdjCrossResVo;
+import com.kk.business.quantization.model.vobase.req.KdjCrossDetailsReqVo;
+import com.kk.business.quantization.model.vobase.req.KdjCrossDeleteReqVo;
 import com.kk.common.base.model.PageResult;
 /**
  * <p>
@@ -18,45 +16,45 @@ import com.kk.common.base.model.PageResult;
  * </p>
  *
  * @author kk
- * @since 2023-05-18
+ * @since 2026-06-04
  */
-public interface IKdjCrossService extends IMppService<KdjCross> {
+public interface IKdjCrossService  {
 
     /**
-     * 分批批量插入
-     * @param list 数据列表
-     * @return
-     */
-    void insertIgnoreBatch(List<KdjCross> list);
+    * 分批批量插入kdj交叉点
+    * @param list 数据列表
+    * @return
+    */
+    void insertKdjCrossBatchSomeColumn(List<KdjCross> list);
     /**
-     * 分页获取结果集
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    PageResult<KdjCrossListDto>  selectPageList(KdjCrossListVo vo);
+    * 单条插入kdj交叉点
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    void insertKdjCross(KdjCrossAddReqVo vo);
     /**
-     * 单条插入
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    void insert(KdjCrossAddVo vo);
+    * 更新kdj交叉点
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    int updateKdjCross(KdjCrossEditReqVo vo);
     /**
-     * 更新
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    int update(KdjCrossEditVo vo);
+    * 单条查询kdj交叉点
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    KdjCrossResVo selectKdjCrossById(KdjCrossDetailsReqVo vo);
     /**
-     * 单条查询
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    KdjCrossDto selectById(KdjCrossDetailsVo vo);
+    * 删除kdj交叉点
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    int deleteKdjCrossById(KdjCrossDeleteReqVo vo);
     /**
-     * 删除
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    int deleteById(KdjCrossDeleteVo vo);
-
+    * 分页获取kdj交叉点结果集
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    PageResult<KdjCrossListResVo>  selectKdjCrossPageList(KdjCrossListReqVo vo);
 }
+

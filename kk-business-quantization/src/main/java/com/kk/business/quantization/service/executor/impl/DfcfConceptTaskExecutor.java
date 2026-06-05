@@ -51,7 +51,7 @@ public class DfcfConceptTaskExecutor implements ITaskExecutor {
         }
         data.addAll(res.getData());
         //插入db
-        conceptService.insertIgnoreBatch(data);
+        conceptService.insertConceptBatchSomeColumn(data);
     }
 
 

@@ -95,7 +95,7 @@ public class TaskExecutorHandler {
         }
 
         //保存任务
-        collectionTaskService.insertIgnoreBatch(taskList);
+        collectionTaskService.insertCollectionTaskBatchSomeColumn(taskList);
         if(!CollectionHandType.ByHand.equals(handType)) {//非手动才更新下次执行时间
             //计算更新下次执行时间 且清空异常信息 与 执行错误次数
             collectionPolicyMapper.updatePreRunTime(policy.getPolicyId(), generateNextRuntime(policy));

@@ -21,12 +21,12 @@
     <sql id="BaseColumnList">
         ts_code as 'tsCode',
         trade_date as 'tradeDate',
-        `open` as 'open',
+        open as 'open',
         high as 'high',
         low as 'low',
-        `close` as 'close',
+        close as 'close',
         pre_close as 'preClose',
-        `change` as 'change',
+        change as 'change',
         pct_chg as 'pctChg',
         vol as 'vol',
         amount as 'amount'
@@ -35,92 +35,94 @@
     <!-- 通用查询条件 -->
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
-            <if test="dailyListVo.tsCode != null and dailyListVo.tsCode != ''">
-                and ts_code = #{dailyListVo.tsCode}
-            </if>
-            <if test="dailyListVo.tradeDateStart != null and dailyListVo.tradeDateStart != ''">
-                and trade_date >= #{dailyListVo.tradeDateStart}
-            </if>
-            <if test="dailyListVo.tradeDateEnd != null and dailyListVo.tradeDateEnd != ''">
-                and trade_date &lt;= #{dailyListVo.tradeDateEnd}
-            </if>
-            <if test="dailyListVo.open != null and dailyListVo.open != ''">
-                and `open` = #{dailyListVo.open}
-            </if>
-            <if test="dailyListVo.high != null and dailyListVo.high != ''">
-                and high = #{dailyListVo.high}
-            </if>
-            <if test="dailyListVo.low != null and dailyListVo.low != ''">
-                and low = #{dailyListVo.low}
-            </if>
-            <if test="dailyListVo.close != null and dailyListVo.close != ''">
-                and `close` = #{dailyListVo.close}
-            </if>
-            <if test="dailyListVo.preClose != null and dailyListVo.preClose != ''">
-                and pre_close = #{dailyListVo.preClose}
-            </if>
-            <if test="dailyListVo.change != null and dailyListVo.change != ''">
-                and `change` = #{dailyListVo.change}
-            </if>
-            <if test="dailyListVo.pctChg != null and dailyListVo.pctChg != ''">
-                and pct_chg = #{dailyListVo.pctChg}
-            </if>
-            <if test="dailyListVo.vol != null and dailyListVo.vol != ''">
-                and vol = #{dailyListVo.vol}
-            </if>
-            <if test="dailyListVo.amount != null and dailyListVo.amount != ''">
-                and amount = #{dailyListVo.amount}
-            </if>
+           <if test="dailyListReqVo.tsCode != null and dailyListReqVo.tsCode != ''">
+               and ts_code = #{dailyListVo.tsCode}
+           </if>
+           <if test="dailyListReqVo.tradeDateStart != null and dailyListReqVo.tradeDateStart != ''">
+               and trade_date >= #{dailyListVo.tradeDateStart}
+           </if>
+           <if test="dailyListReqVo.tradeDateEnd != null and dailyListReqVo.tradeDateEnd != ''">
+               and trade_date &lt;= #{dailyListVo.tradeDateEnd}
+           </if>
+           <if test="dailyListReqVo.open != null and dailyListReqVo.open != ''">
+               and open = #{dailyListVo.open}
+           </if>
+           <if test="dailyListReqVo.high != null and dailyListReqVo.high != ''">
+               and high = #{dailyListVo.high}
+           </if>
+           <if test="dailyListReqVo.low != null and dailyListReqVo.low != ''">
+               and low = #{dailyListVo.low}
+           </if>
+           <if test="dailyListReqVo.close != null and dailyListReqVo.close != ''">
+               and close = #{dailyListVo.close}
+           </if>
+           <if test="dailyListReqVo.preClose != null and dailyListReqVo.preClose != ''">
+               and pre_close = #{dailyListVo.preClose}
+           </if>
+           <if test="dailyListReqVo.change != null and dailyListReqVo.change != ''">
+               and change = #{dailyListVo.change}
+           </if>
+           <if test="dailyListReqVo.pctChg != null and dailyListReqVo.pctChg != ''">
+               and pct_chg = #{dailyListVo.pctChg}
+           </if>
+           <if test="dailyListReqVo.vol != null and dailyListReqVo.vol != ''">
+               and vol = #{dailyListVo.vol}
+           </if>
+           <if test="dailyListReqVo.amount != null and dailyListReqVo.amount != ''">
+               and amount = #{dailyListVo.amount}
+           </if>
         </trim>
     </sql>
 
     <!-- 分页查询 -->
-    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.DailyListDto">
+    <select id="selectDailyPageList" resultType="com.kk.business.quantization.model.vobase.res.DailyListResVo">
         select <include refid="BaseColumnList"/>
         from daily
         <include refid="BaseWhere"/>
-        order by trade_date desc
-    </select>
-    <select id="selectDailyExList" resultType="com.kk.business.quantization.model.dto.DailyKdjDto">
-            select * from daily d
-            left join stock_basic sb on sb.ts_code = d.ts_code
-            left join stock_day_kdj kdj on kdj.ts_code = d.ts_code and d.trade_date = kdj.trade_date
-            left join kdj_cross kc on kc.ts_code = kdj.ts_code and kc.trade_date = kdj.trade_date
-            <where>
-                <if test="vo.tsCode != null and vo.tsCode != ''">
-                    and d.ts_code = #{vo.tsCode}
-                </if>
-                <if test="vo.kdjType != null and vo.kdjType != ''">
-                    and kdj.kdj_type = #{vo.kdjType}
-                </if>
 
-                <if test="vo.tradeDate != null and vo.tradeDate != ''">
-                    and d.trade_date = #{vo.tradeDate}
-                </if>
-                <if test="vo.startDate != null and vo.startDate != ''">
-                    <![CDATA[ and d.trade_date >= #{vo.startDate} ]]>
-                </if>
-                <if test="vo.endDate != null and vo.endDate != ''">
-                    <![CDATA[ and d.trade_date <= #{vo.endDate}]]>
-                </if>
-                <if test="vo.ids != null and vo.ids.size() >0 ">
-                    and d.ts_code in
-                    <foreach collection="vo.ids" item="code" index="index" open="(" close=")" separator=",">
-                        #{code}
-                    </foreach>
-                </if>
-                <if test="vo.conceptIds != null and vo.conceptIds.size() >0 ">
-                    and d.ts_code in (select cd.ts_code from concept_detail cd where cd.concept_id in
-                    <foreach collection="vo.conceptIds" item="code" index="index" open="(" close=")"
-                             separator=",">
-                        #{code}
-                    </foreach>
-                    )
-                </if>
-                <if test="vo.crossType != null and vo.crossType != ''">
-                    and kc.cross_type = #{vo.crossType}
-                </if>
-            </where>
+    </select>
+
+
+    <select id="selectDailyExList" resultType="com.kk.business.quantization.model.dto.DailyKdjDto">
+        select * from daily d
+        left join stock_basic sb on sb.ts_code = d.ts_code
+        left join stock_day_kdj kdj on kdj.ts_code = d.ts_code and d.trade_date = kdj.trade_date
+        left join kdj_cross kc on kc.ts_code = kdj.ts_code and kc.trade_date = kdj.trade_date
+        <where>
+            <if test="vo.tsCode != null and vo.tsCode != ''">
+                and d.ts_code = #{vo.tsCode}
+            </if>
+            <if test="vo.kdjType != null and vo.kdjType != ''">
+                and kdj.kdj_type = #{vo.kdjType}
+            </if>
+
+            <if test="vo.tradeDate != null and vo.tradeDate != ''">
+                and d.trade_date = #{vo.tradeDate}
+            </if>
+            <if test="vo.startDate != null and vo.startDate != ''">
+                <![CDATA[ and d.trade_date >= #{vo.startDate} ]]>
+            </if>
+            <if test="vo.endDate != null and vo.endDate != ''">
+                <![CDATA[ and d.trade_date <= #{vo.endDate}]]>
+            </if>
+            <if test="vo.ids != null and vo.ids.size() >0 ">
+                and d.ts_code in
+                <foreach collection="vo.ids" item="code" index="index" open="(" close=")" separator=",">
+                    #{code}
+                </foreach>
+            </if>
+            <if test="vo.conceptIds != null and vo.conceptIds.size() >0 ">
+                and d.ts_code in (select cd.ts_code from concept_detail cd where cd.concept_id in
+                <foreach collection="vo.conceptIds" item="code" index="index" open="(" close=")"
+                         separator=",">
+                    #{code}
+                </foreach>
+                )
+            </if>
+            <if test="vo.crossType != null and vo.crossType != ''">
+                and kc.cross_type = #{vo.crossType}
+            </if>
+        </where>
     </select>
     <select id="selectMaxMinByDateRange" resultType="com.kk.business.quantization.model.dto.SelectMaxMinByDateRangeDto">
         select max(d.`close`) 'max_close',min(d.`close`) 'min_close' ,d.ts_code from daily d
@@ -152,6 +154,7 @@
              stock_basic   sb on sb.ts_code  = dg.ts_code
         order by range_pct desc
     </select>
+
 
 
 </mapper>

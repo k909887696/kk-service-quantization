@@ -3,28 +3,29 @@ package com.kk.business.quantization.dao.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.github.jeffreyning.mybatisplus.anno.MppMultiId;
-import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.Serializable;
-
+ import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+import com.github.jeffreyning.mybatisplus.anno.MppMultiId;
 /**
  * <p>
- * kdj数据
+ * 个股kdj数据
  * </p>
  *
  * @author kk
- * @since 2021-12-18
+ * @since 2026-06-04
  */
+@Data
 @TableName("stock_day_kdj")
-@Schema(name = "kdj数据对象", description = "kdj数据")
+@Schema(description = "个股kdj数据")
 public class StockDayKdj implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-    * ts股票代码
+    * 股票编号
     */
-    @Schema(description = "ts股票代码")
+    @Schema(description = "股票编号")
     @MppMultiId("ts_code")
     private String tsCode;
 
@@ -64,72 +65,11 @@ public class StockDayKdj implements Serializable {
     private Double rsv;
 
     /**
-    * kdj类型（9_3_3）
+    * kdj类型（默认 9_3_3）
     */
-    @Schema(description = "kdj类型（9_3_3）")
+    @Schema(description = "kdj类型（默认 9_3_3）")
     @TableField("kdj_type")
     private String kdjType;
 
-    public String getTsCode() {
-        return tsCode;
-    }
 
-    public void setTsCode(String tsCode) {
-        this.tsCode = tsCode;
-    }
-    public String getTradeDate() {
-        return tradeDate;
-    }
-
-    public void setTradeDate(String tradeDate) {
-        this.tradeDate = tradeDate;
-    }
-    public Double getKValue() {
-        return kValue;
-    }
-
-    public void setKValue(Double kValue) {
-        this.kValue = kValue;
-    }
-    public Double getDValue() {
-        return dValue;
-    }
-
-    public void setDValue(Double dValue) {
-        this.dValue = dValue;
-    }
-    public Double getJValue() {
-        return jValue;
-    }
-
-    public void setJValue(Double jValue) {
-        this.jValue = jValue;
-    }
-    public Double getRsv() {
-        return rsv;
-    }
-
-    public void setRsv(Double rsv) {
-        this.rsv = rsv;
-    }
-    public String getKdjType() {
-        return kdjType;
-    }
-
-    public void setKdjType(String kdjType) {
-        this.kdjType = kdjType;
-    }
-
-    @Override
-    public String toString() {
-        return "StockDayKdj{" +
-            "tsCode=" + tsCode +
-            ", tradeDate=" + tradeDate +
-            ", kValue=" + kValue +
-            ", dValue=" + dValue +
-            ", jValue=" + jValue +
-            ", rsv=" + rsv +
-            ", kdjType=" + kdjType +
-        "}";
-    }
 }

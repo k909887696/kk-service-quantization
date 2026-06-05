@@ -1,16 +1,14 @@
 package com.kk.business.quantization.service;
 
 import com.kk.business.quantization.dao.entity.MoneyFlow;
-import com.github.jeffreyning.mybatisplus.service.IMppService;
-
 import java.util.List;
-import com.kk.business.quantization.model.vo.MoneyFlowListVo;
-import com.kk.business.quantization.model.dto.MoneyFlowListDto;
-import com.kk.business.quantization.model.vo.MoneyFlowAddVo;
-import com.kk.business.quantization.model.vo.MoneyFlowEditVo;
-import com.kk.business.quantization.model.dto.MoneyFlowDto;
-import com.kk.business.quantization.model.vo.MoneyFlowDetailsVo;
-import com.kk.business.quantization.model.vo.MoneyFlowDeleteVo;
+import com.kk.business.quantization.model.vobase.req.MoneyFlowListReqVo;
+import com.kk.business.quantization.model.vobase.res.MoneyFlowListResVo;
+import com.kk.business.quantization.model.vobase.req.MoneyFlowAddReqVo;
+import com.kk.business.quantization.model.vobase.req.MoneyFlowEditReqVo;
+import com.kk.business.quantization.model.vobase.res.MoneyFlowResVo;
+import com.kk.business.quantization.model.vobase.req.MoneyFlowDetailsReqVo;
+import com.kk.business.quantization.model.vobase.req.MoneyFlowDeleteReqVo;
 import com.kk.common.base.model.PageResult;
 /**
  * <p>
@@ -18,45 +16,45 @@ import com.kk.common.base.model.PageResult;
  * </p>
  *
  * @author kk
- * @since 2023-05-18
+ * @since 2026-06-04
  */
-public interface IMoneyFlowService extends IMppService<MoneyFlow> {
+public interface IMoneyFlowService  {
 
     /**
-    * 分批批量插入
+    * 分批批量插入个股资金流向
     * @param list 数据列表
     * @return
     */
-    void insertIgnoreBatch(List<MoneyFlow> list);
+    void insertMoneyFlowBatchSomeColumn(List<MoneyFlow> list);
     /**
-    * 分页获取结果集
+    * 单条插入个股资金流向
     * @param vo 请求参数
     * @return 结果集
     */
-    PageResult<MoneyFlowListDto>  selectPageList(MoneyFlowListVo vo);
+    void insertMoneyFlow(MoneyFlowAddReqVo vo);
     /**
-    * 单条插入
+    * 更新个股资金流向
     * @param vo 请求参数
     * @return 结果集
     */
-    void insert(MoneyFlowAddVo vo);
+    int updateMoneyFlow(MoneyFlowEditReqVo vo);
     /**
-    * 更新
+    * 单条查询个股资金流向
     * @param vo 请求参数
     * @return 结果集
     */
-    int update(MoneyFlowEditVo vo);
+    MoneyFlowResVo selectMoneyFlowById(MoneyFlowDetailsReqVo vo);
     /**
-    * 单条查询
+    * 删除个股资金流向
     * @param vo 请求参数
     * @return 结果集
     */
-    MoneyFlowDto selectById(MoneyFlowDetailsVo vo);
+    int deleteMoneyFlowById(MoneyFlowDeleteReqVo vo);
     /**
-    * 删除
+    * 分页获取个股资金流向结果集
     * @param vo 请求参数
     * @return 结果集
     */
-    int deleteById(MoneyFlowDeleteVo vo);
-
+    PageResult<MoneyFlowListResVo>  selectMoneyFlowPageList(MoneyFlowListReqVo vo);
 }
+

@@ -3,19 +3,20 @@ package com.kk.business.quantization.dao.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.Serializable;
-
+ import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
 /**
  * <p>
  * 个股基本信息
  * </p>
  *
  * @author kk
- * @since 2021-12-18
+ * @since 2026-06-04
  */
+@Data
 @TableName("stock_basic")
-@Schema(name = "个股基本信息对象", description = "个股基本信息")
+@Schema(description = "个股基本信息")
 public class StockBasic implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -70,13 +71,6 @@ public class StockBasic implements Serializable {
     private String enname;
 
     /**
-    * 拼音缩写
-    */
-    @Schema(description = "拼音缩写")
-    @TableField("cnspell")
-    private String cnspell;
-
-    /**
     * 市场类型（主板/创业板/科创板/CDR）
     */
     @Schema(description = "市场类型（主板/创业板/科创板/CDR）")
@@ -125,130 +119,12 @@ public class StockBasic implements Serializable {
     @TableField("is_hs")
     private String isHs;
 
-    public String getTsCode() {
-        return tsCode;
-    }
+    /**
+    * 拼音缩写
+    */
+    @Schema(description = "拼音缩写")
+    @TableField("cnspell")
+    private String cnspell;
 
-    public void setTsCode(String tsCode) {
-        this.tsCode = tsCode;
-    }
-    public String getSymbol() {
-        return symbol;
-    }
 
-    public void setSymbol(String symbol) {
-        this.symbol = symbol;
-    }
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-    public String getArea() {
-        return area;
-    }
-
-    public void setArea(String area) {
-        this.area = area;
-    }
-    public String getIndustry() {
-        return industry;
-    }
-
-    public void setIndustry(String industry) {
-        this.industry = industry;
-    }
-    public String getFullname() {
-        return fullname;
-    }
-
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
-    }
-    public String getEnname() {
-        return enname;
-    }
-
-    public void setEnname(String enname) {
-        this.enname = enname;
-    }
-    public String getCnspell() {
-        return cnspell;
-    }
-
-    public void setCnspell(String cnspell) {
-        this.cnspell = cnspell;
-    }
-    public String getMarket() {
-        return market;
-    }
-
-    public void setMarket(String market) {
-        this.market = market;
-    }
-    public String getExchange() {
-        return exchange;
-    }
-
-    public void setExchange(String exchange) {
-        this.exchange = exchange;
-    }
-    public String getCurrType() {
-        return currType;
-    }
-
-    public void setCurrType(String currType) {
-        this.currType = currType;
-    }
-    public String getListStatus() {
-        return listStatus;
-    }
-
-    public void setListStatus(String listStatus) {
-        this.listStatus = listStatus;
-    }
-    public String getListDate() {
-        return listDate;
-    }
-
-    public void setListDate(String listDate) {
-        this.listDate = listDate;
-    }
-    public String getDelistDate() {
-        return delistDate;
-    }
-
-    public void setDelistDate(String delistDate) {
-        this.delistDate = delistDate;
-    }
-    public String getIsHs() {
-        return isHs;
-    }
-
-    public void setIsHs(String isHs) {
-        this.isHs = isHs;
-    }
-
-    @Override
-    public String toString() {
-        return "StockBasic{" +
-            "tsCode=" + tsCode +
-            ", symbol=" + symbol +
-            ", name=" + name +
-            ", area=" + area +
-            ", industry=" + industry +
-            ", fullname=" + fullname +
-            ", enname=" + enname +
-            ", cnspell=" + cnspell +
-            ", market=" + market +
-            ", exchange=" + exchange +
-            ", currType=" + currType +
-            ", listStatus=" + listStatus +
-            ", listDate=" + listDate +
-            ", delistDate=" + delistDate +
-            ", isHs=" + isHs +
-        "}";
-    }
 }

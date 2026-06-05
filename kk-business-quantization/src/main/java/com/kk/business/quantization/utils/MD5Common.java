@@ -1,13 +1,9 @@
 package com.kk.business.quantization.utils;
 
 
-<<<<<<< .mine
 
-
-=======
 import java.util.Base64;
 
->>>>>>> .theirs
 import javax.crypto.Cipher;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.IvParameterSpec;
@@ -38,31 +34,9 @@ public class MD5Common {
 		SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("DES");// 获得密钥工厂
 		key = keyFactory.generateSecret(keySpec);// 得到密钥对象
 	}
-	
-<<<<<<< .mine
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-=======
 	/**
 	 * MD5加密
 	 * @param strSource 需要加密的字符串
@@ -85,25 +59,7 @@ public class MD5Common {
 		return encodedString;
 		
     }
->>>>>>> .theirs
 
-<<<<<<< .mine
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-=======
     public String Md5Decrypt(String source) throws Exception {
     	Cipher deCipher = Cipher.getInstance("DES/CBC/PKCS5Padding");
 		deCipher.init(Cipher.DECRYPT_MODE, key, ivSpec);
@@ -111,13 +67,6 @@ public class MD5Common {
 		return new String(decodedBytes, "UTF-8");
     }
     
-	/*public static void main(String[] args) throws Exception {
-		MD5Common tools = new MD5Common();
-		System.out.println("加密:" + tools.Md5Encrypt("efgEFG456"));
-		System.out.println("解密:" + tools.Md5Decrypt("bvvhhf6UXqgTibrLt0w0Gg=="));
-//		String a = Md5Util.md5("kOJcNv2vJP2oy9sz");
-//		System.out.println(a);
-		
-	}*/
->>>>>>> .theirs
+
+
 }

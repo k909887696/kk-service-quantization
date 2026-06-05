@@ -25,32 +25,32 @@
     <!-- 通用查询条件 -->
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
-           <if test="invokeTypeListVo.invokeCode != null and invokeTypeListVo.invokeCode != ''">
+           <if test="invokeTypeListReqVo.invokeCode != null and invokeTypeListReqVo.invokeCode != ''">
                and invoke_code = #{invokeTypeListVo.invokeCode}
            </if>
-           <if test="invokeTypeListVo.name != null and invokeTypeListVo.name != ''">
+           <if test="invokeTypeListReqVo.name != null and invokeTypeListReqVo.name != ''">
                and name like concat('%',#{invokeTypeListVo.name},'%')
            </if>
-           <if test="invokeTypeListVo.invokeObject != null and invokeTypeListVo.invokeObject != ''">
+           <if test="invokeTypeListReqVo.invokeObject != null and invokeTypeListReqVo.invokeObject != ''">
                and invoke_object = #{invokeTypeListVo.invokeObject}
            </if>
-           <if test="invokeTypeListVo.invokeMethod != null and invokeTypeListVo.invokeMethod != ''">
+           <if test="invokeTypeListReqVo.invokeMethod != null and invokeTypeListReqVo.invokeMethod != ''">
                and invoke_method = #{invokeTypeListVo.invokeMethod}
            </if>
-           <if test="invokeTypeListVo.createTimeStart != null and invokeTypeListVo.createTimeStart != ''">
+           <if test="invokeTypeListReqVo.createTimeStart != null and invokeTypeListReqVo.createTimeStart != ''">
                and create_time >= #{invokeTypeListVo.createTimeStart}
            </if>
-           <if test="invokeTypeListVo.createTimeEnd != null and invokeTypeListVo.createTimeEnd != ''">
+           <if test="invokeTypeListReqVo.createTimeEnd != null and invokeTypeListReqVo.createTimeEnd != ''">
                and create_time &lt;= #{invokeTypeListVo.createTimeEnd}
            </if>
-           <if test="invokeTypeListVo.invokeParams != null and invokeTypeListVo.invokeParams != ''">
+           <if test="invokeTypeListReqVo.invokeParams != null and invokeTypeListReqVo.invokeParams != ''">
                and invoke_params = #{invokeTypeListVo.invokeParams}
            </if>
         </trim>
     </sql>
 
     <!-- 分页查询 -->
-    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.InvokeTypeListDto">
+    <select id="selectInvokeTypePageList" resultType="com.kk.business.quantization.model.vobase.res.InvokeTypeListResVo">
         select <include refid="BaseColumnList"/>
         from invoke_type
         <include refid="BaseWhere"/>

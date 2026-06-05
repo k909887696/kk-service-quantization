@@ -21,12 +21,12 @@
     <sql id="BaseColumnList">
         ts_code as 'tsCode',
         trade_date as 'tradeDate',
-        `close` as 'close',
-        `open` as 'open',
+        close as 'close',
+        open as 'open',
         high as 'high',
         low as 'low',
         pre_close as 'preClose',
-        `change` as 'change',
+        change as 'change',
         pct_chg as 'pctChg',
         vol as 'vol',
         amount as 'amount'
@@ -35,47 +35,47 @@
     <!-- 通用查询条件 -->
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
-           <if test="indexDailyListVo.tsCode != null and indexDailyListVo.tsCode != ''">
+           <if test="indexDailyListReqVo.tsCode != null and indexDailyListReqVo.tsCode != ''">
                and ts_code = #{indexDailyListVo.tsCode}
            </if>
-           <if test="indexDailyListVo.tradeDateStart != null and indexDailyListVo.tradeDateStart != ''">
+           <if test="indexDailyListReqVo.tradeDateStart != null and indexDailyListReqVo.tradeDateStart != ''">
                and trade_date >= #{indexDailyListVo.tradeDateStart}
            </if>
-           <if test="indexDailyListVo.tradeDateEnd != null and indexDailyListVo.tradeDateEnd != ''">
+           <if test="indexDailyListReqVo.tradeDateEnd != null and indexDailyListReqVo.tradeDateEnd != ''">
                and trade_date &lt;= #{indexDailyListVo.tradeDateEnd}
            </if>
-           <if test="indexDailyListVo.close != null and indexDailyListVo.close != ''">
+           <if test="indexDailyListReqVo.close != null and indexDailyListReqVo.close != ''">
                and close = #{indexDailyListVo.close}
            </if>
-           <if test="indexDailyListVo.open != null and indexDailyListVo.open != ''">
+           <if test="indexDailyListReqVo.open != null and indexDailyListReqVo.open != ''">
                and open = #{indexDailyListVo.open}
            </if>
-           <if test="indexDailyListVo.high != null and indexDailyListVo.high != ''">
+           <if test="indexDailyListReqVo.high != null and indexDailyListReqVo.high != ''">
                and high = #{indexDailyListVo.high}
            </if>
-           <if test="indexDailyListVo.low != null and indexDailyListVo.low != ''">
+           <if test="indexDailyListReqVo.low != null and indexDailyListReqVo.low != ''">
                and low = #{indexDailyListVo.low}
            </if>
-           <if test="indexDailyListVo.preClose != null and indexDailyListVo.preClose != ''">
+           <if test="indexDailyListReqVo.preClose != null and indexDailyListReqVo.preClose != ''">
                and pre_close = #{indexDailyListVo.preClose}
            </if>
-           <if test="indexDailyListVo.change != null and indexDailyListVo.change != ''">
+           <if test="indexDailyListReqVo.change != null and indexDailyListReqVo.change != ''">
                and change = #{indexDailyListVo.change}
            </if>
-           <if test="indexDailyListVo.pctChg != null and indexDailyListVo.pctChg != ''">
+           <if test="indexDailyListReqVo.pctChg != null and indexDailyListReqVo.pctChg != ''">
                and pct_chg = #{indexDailyListVo.pctChg}
            </if>
-           <if test="indexDailyListVo.vol != null and indexDailyListVo.vol != ''">
+           <if test="indexDailyListReqVo.vol != null and indexDailyListReqVo.vol != ''">
                and vol = #{indexDailyListVo.vol}
            </if>
-           <if test="indexDailyListVo.amount != null and indexDailyListVo.amount != ''">
+           <if test="indexDailyListReqVo.amount != null and indexDailyListReqVo.amount != ''">
                and amount = #{indexDailyListVo.amount}
            </if>
         </trim>
     </sql>
 
     <!-- 分页查询 -->
-    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.IndexDailyListDto">
+    <select id="selectIndexDailyPageList" resultType="com.kk.business.quantization.model.vobase.res.IndexDailyListResVo">
         select <include refid="BaseColumnList"/>
         from index_daily
         <include refid="BaseWhere"/>

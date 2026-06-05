@@ -55,12 +55,9 @@ public class StockBasicTaskExecutor implements ITaskExecutor {
             res = tushareDataApi.stockBasic(vo);
             data.addAll(res.getData());
         }
-        if("cover".equals(vo.getUpdateType()))//覆盖模式
-        {
-            stockBasicMapper.truncateTable();
-        }
+       
         //插入db
-        stockBasicService.insertIgnoreBatch(data);
+        stockBasicService.insertStockBasicBatchSomeColumn(data);
     }
 
 

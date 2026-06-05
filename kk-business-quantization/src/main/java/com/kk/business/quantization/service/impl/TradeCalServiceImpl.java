@@ -1,45 +1,46 @@
 package com.kk.business.quantization.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.github.jeffreyning.mybatisplus.service.MppServiceImpl;
-import com.kk.business.quantization.dao.entity.TradeCal;
-import com.kk.business.quantization.dao.mapper.TradeCalMapper;
-import com.kk.business.quantization.model.dto.TradeCalDto;
-import com.kk.business.quantization.model.dto.TradeCalListDto;
-import com.kk.business.quantization.model.vo.*;
-import com.kk.business.quantization.service.ITradeCalService;
-import com.kk.common.base.model.BasePage;
-import com.kk.common.base.model.PageResult;
-import com.kk.common.exception.BusinessException;
-import com.kk.common.utils.MapperUtils;
-import org.springframework.stereotype.Service;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import org.springframework.stereotype.Service;
 import jakarta.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
-
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.kk.business.quantization.dao.entity.TradeCal;
+import com.kk.business.quantization.dao.mapper.TradeCalMapper;
+import com.kk.business.quantization.service.ITradeCalService;
+import com.kk.business.quantization.model.vobase.req.TradeCalListReqVo;
+import com.kk.business.quantization.model.vobase.res.TradeCalListResVo;
+import com.kk.business.quantization.model.vobase.req.TradeCalAddReqVo;
+import com.kk.business.quantization.model.vobase.req.TradeCalEditReqVo;
+import com.kk.business.quantization.model.vobase.res.TradeCalResVo;
+import com.kk.business.quantization.model.vobase.req.TradeCalDetailsReqVo;
+import com.kk.business.quantization.model.vobase.req.TradeCalDeleteReqVo;
+import com.kk.common.base.model.PageResult;
+import com.kk.common.utils.BeanUtil;
+import com.kk.common.exception.BusinessException;
 /**
  * <p>
  * 交易日历 服务实现类
  * </p>
  *
  * @author kk
- * @since 2021-12-18
+ * @since 2026-06-04
  */
 @Service
-public class TradeCalServiceImpl extends MppServiceImpl<TradeCalMapper, TradeCal> implements ITradeCalService {
+public class TradeCalServiceImpl extends ServiceImpl<TradeCalMapper, TradeCal> implements ITradeCalService {
 
-    @Resource
-    public MapperUtils mapperUtils;
+
     /**
-     * 分批批量插入
-     * @param list 数据列表
-     * @return
-     */
-    public void insertIgnoreBatch(List<TradeCal> list)
+    * 分批批量插入交易日历
+    * @param list 数据列表
+    * @return
+    */
+    @Override
+    public void insertTradeCalBatchSomeColumn(List<TradeCal> list)
     {
 
         if(list ==null || list.size()<=0) return ;
@@ -52,27 +53,31 @@ public class TradeCalServiceImpl extends MppServiceImpl<TradeCalMapper, TradeCal
         for(;index<=totalPage;index++)
         {
             List<TradeCal> tempList = list.stream().skip((index-1)*size).limit(size).collect(Collectors.toList());
-            this.baseMapper.insertIgnoreBatchSomeColumn(tempList);
+            this.baseMapper.insertDuplicateKeyUpdate(tempList);
         }
     }
     /**
-     * 单条插入
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    public void insert(TradeCalAddVo vo)
+    * 单条插入交易日历
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    @Override
+    public void insertTradeCal(TradeCalAddReqVo vo)
     {
-        TradeCal model = mapperUtils.map(vo,TradeCal.class);
+        TradeCal model = new TradeCal();
+        BeanUtil.copyProperties(vo,model);
         this.baseMapper.insert(model);
     }
     /**
-     * 更新
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    public int update(TradeCalEditVo vo)
+    * 更新交易日历
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    @Override
+    public int updateTradeCal(TradeCalEditReqVo vo)
     {
-        TradeCal model = mapperUtils.map(vo,TradeCal.class);
+        TradeCal model = new TradeCal();
+        BeanUtil.copyProperties(vo,model);
         int r = this.baseMapper.updateByMultiId(model);
         if(r != 1)
         {
@@ -81,25 +86,30 @@ public class TradeCalServiceImpl extends MppServiceImpl<TradeCalMapper, TradeCal
         return r;
     }
     /**
-     * 单条查询
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    public TradeCalDto selectById(TradeCalDetailsVo vo)
+    * 单条查询交易日历
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    @Override
+    public TradeCalResVo selectTradeCalById(TradeCalDetailsReqVo vo)
     {
-        TradeCal model = mapperUtils.map(vo,TradeCal.class);
+        TradeCal model = new TradeCal();
+        BeanUtil.copyProperties(vo,model);
         TradeCal res = this.baseMapper.selectByMultiId(model);
-        TradeCalDto dto = mapperUtils.map(res,TradeCalDto.class);
-        return dto;
+        TradeCalResVo resVo = new TradeCalResVo();
+        BeanUtil.copyProperties(res,resVo);
+        return resVo;
     }
     /**
-     * 删除
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    public int deleteById(TradeCalDeleteVo vo)
+    * 删除交易日历
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    @Override
+    public int deleteTradeCalById(TradeCalDeleteReqVo vo)
     {
-        TradeCal model = mapperUtils.map(vo,TradeCal.class);
+        TradeCal model = new TradeCal();
+        BeanUtil.copyProperties(vo,model);
         int r = this.baseMapper.deleteByMultiId(model);
         if(r != 1)
         {
@@ -108,24 +118,19 @@ public class TradeCalServiceImpl extends MppServiceImpl<TradeCalMapper, TradeCal
         return r;
     }
     /**
-     * 分页获取结果集
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    public PageResult<TradeCalListDto>  selectPageList(TradeCalListVo vo){
+    * 分页获取交易日历结果集
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    @Override
+    public PageResult<TradeCalListResVo>  selectTradeCalPageList(TradeCalListReqVo vo){
 
-        IPage<TradeCalListDto> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
-        page = this.baseMapper.selectPageList(page,vo);
-        PageResult<TradeCalListDto>  pageResult = new PageResult<>();
+        Page<TradeCalListResVo> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
+        Page<TradeCalListResVo> results = this.baseMapper.selectTradeCalPageList(page,vo);
+        PageResult<TradeCalListResVo>  pageResult = new PageResult<>();
 
-        pageResult.setResult(page.getRecords());
-        pageResult.setTotalCount(page.getTotal());
-        pageResult.setPageIndex(vo.getPageIndex());
-        pageResult.setPageSize(vo.getPageSize());
-
-        return pageResult;
+        return pageResult.convertPage(results);
     }
-
     /**
      * 根据日期获取日期最近以往开市日期
      * @param date 日期
@@ -133,6 +138,7 @@ public class TradeCalServiceImpl extends MppServiceImpl<TradeCalMapper, TradeCal
      * @param order 默认asc 升序，desc 降序
      * @return
      */
+    @Override
     public TradeCal getRecentlyOpenByDay(String date,int limit,String order)
     {
         LambdaQueryWrapper<TradeCal> query = new LambdaQueryWrapper<>();

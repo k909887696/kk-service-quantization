@@ -1,16 +1,14 @@
 package com.kk.business.quantization.service;
 
 import com.kk.business.quantization.dao.entity.IndexClassify;
-import com.github.jeffreyning.mybatisplus.service.IMppService;
-
 import java.util.List;
-import com.kk.business.quantization.model.vo.IndexClassifyListVo;
-import com.kk.business.quantization.model.dto.IndexClassifyListDto;
-import com.kk.business.quantization.model.vo.IndexClassifyAddVo;
-import com.kk.business.quantization.model.vo.IndexClassifyEditVo;
-import com.kk.business.quantization.model.dto.IndexClassifyDto;
-import com.kk.business.quantization.model.vo.IndexClassifyDetailsVo;
-import com.kk.business.quantization.model.vo.IndexClassifyDeleteVo;
+import com.kk.business.quantization.model.vobase.req.IndexClassifyListReqVo;
+import com.kk.business.quantization.model.vobase.res.IndexClassifyListResVo;
+import com.kk.business.quantization.model.vobase.req.IndexClassifyAddReqVo;
+import com.kk.business.quantization.model.vobase.req.IndexClassifyEditReqVo;
+import com.kk.business.quantization.model.vobase.res.IndexClassifyResVo;
+import com.kk.business.quantization.model.vobase.req.IndexClassifyDetailsReqVo;
+import com.kk.business.quantization.model.vobase.req.IndexClassifyDeleteReqVo;
 import com.kk.common.base.model.PageResult;
 /**
  * <p>
@@ -18,45 +16,45 @@ import com.kk.common.base.model.PageResult;
  * </p>
  *
  * @author kk
- * @since 2023-05-18
+ * @since 2026-06-04
  */
-public interface IIndexClassifyService extends IMppService<IndexClassify> {
+public interface IIndexClassifyService  {
 
     /**
-    * 分批批量插入
+    * 分批批量插入申万行业分类
     * @param list 数据列表
     * @return
     */
-    void insertIgnoreBatch(List<IndexClassify> list);
+    void insertIndexClassifyBatchSomeColumn(List<IndexClassify> list);
     /**
-    * 分页获取结果集
+    * 单条插入申万行业分类
     * @param vo 请求参数
     * @return 结果集
     */
-    PageResult<IndexClassifyListDto>  selectPageList(IndexClassifyListVo vo);
+    void insertIndexClassify(IndexClassifyAddReqVo vo);
     /**
-    * 单条插入
+    * 更新申万行业分类
     * @param vo 请求参数
     * @return 结果集
     */
-    void insert(IndexClassifyAddVo vo);
+    int updateIndexClassify(IndexClassifyEditReqVo vo);
     /**
-    * 更新
+    * 单条查询申万行业分类
     * @param vo 请求参数
     * @return 结果集
     */
-    int update(IndexClassifyEditVo vo);
+    IndexClassifyResVo selectIndexClassifyById(IndexClassifyDetailsReqVo vo);
     /**
-    * 单条查询
+    * 删除申万行业分类
     * @param vo 请求参数
     * @return 结果集
     */
-    IndexClassifyDto selectById(IndexClassifyDetailsVo vo);
+    int deleteIndexClassifyById(IndexClassifyDeleteReqVo vo);
     /**
-    * 删除
+    * 分页获取申万行业分类结果集
     * @param vo 请求参数
     * @return 结果集
     */
-    int deleteById(IndexClassifyDeleteVo vo);
-
+    PageResult<IndexClassifyListResVo>  selectIndexClassifyPageList(IndexClassifyListReqVo vo);
 }
+

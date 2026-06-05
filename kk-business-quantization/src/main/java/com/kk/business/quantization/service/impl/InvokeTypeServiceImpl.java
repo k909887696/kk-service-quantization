@@ -5,21 +5,20 @@ import org.springframework.stereotype.Service;
 import jakarta.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.kk.business.quantization.dao.entity.InvokeType;
 import com.kk.business.quantization.dao.mapper.InvokeTypeMapper;
 import com.kk.business.quantization.service.IInvokeTypeService;
-import com.github.jeffreyning.mybatisplus.service.MppServiceImpl;
-import com.kk.business.quantization.model.vo.InvokeTypeListVo;
-import com.kk.business.quantization.model.dto.InvokeTypeListDto;
-import com.kk.business.quantization.model.vo.InvokeTypeAddVo;
-import com.kk.business.quantization.model.vo.InvokeTypeEditVo;
-import com.kk.business.quantization.model.dto.InvokeTypeDto;
-import com.kk.business.quantization.model.vo.InvokeTypeDetailsVo;
-import com.kk.business.quantization.model.vo.InvokeTypeDeleteVo;
-import com.kk.common.utils.MapperUtils;
+import com.kk.business.quantization.model.vobase.req.InvokeTypeListReqVo;
+import com.kk.business.quantization.model.vobase.res.InvokeTypeListResVo;
+import com.kk.business.quantization.model.vobase.req.InvokeTypeAddReqVo;
+import com.kk.business.quantization.model.vobase.req.InvokeTypeEditReqVo;
+import com.kk.business.quantization.model.vobase.res.InvokeTypeResVo;
+import com.kk.business.quantization.model.vobase.req.InvokeTypeDetailsReqVo;
+import com.kk.business.quantization.model.vobase.req.InvokeTypeDeleteReqVo;
 import com.kk.common.base.model.PageResult;
+import com.kk.common.utils.BeanUtil;
 import com.kk.common.exception.BusinessException;
 /**
  * <p>
@@ -27,19 +26,19 @@ import com.kk.common.exception.BusinessException;
  * </p>
  *
  * @author kk
- * @since 2023-05-18
+ * @since 2026-06-04
  */
 @Service
-public class InvokeTypeServiceImpl extends MppServiceImpl<InvokeTypeMapper, InvokeType> implements IInvokeTypeService {
+public class InvokeTypeServiceImpl extends ServiceImpl<InvokeTypeMapper, InvokeType> implements IInvokeTypeService {
 
-    @Resource
-    public MapperUtils mapperUtils;
+
     /**
-     * 分批批量插入
-     * @param list 数据列表
-     * @return
-     */
-    public void insertIgnoreBatch(List<InvokeType> list)
+    * 分批批量插入系统设置-调度类型
+    * @param list 数据列表
+    * @return
+    */
+    @Override
+    public void insertInvokeTypeBatchSomeColumn(List<InvokeType> list)
     {
 
         if(list ==null || list.size()<=0) return ;
@@ -52,27 +51,31 @@ public class InvokeTypeServiceImpl extends MppServiceImpl<InvokeTypeMapper, Invo
         for(;index<=totalPage;index++)
         {
             List<InvokeType> tempList = list.stream().skip((index-1)*size).limit(size).collect(Collectors.toList());
-            this.baseMapper.insertIgnoreBatchSomeColumn(tempList);
+            this.baseMapper.insertBatchSomeColumn(tempList);
         }
     }
     /**
-     * 单条插入
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    public void insert(InvokeTypeAddVo vo)
+    * 单条插入系统设置-调度类型
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    @Override
+    public void insertInvokeType(InvokeTypeAddReqVo vo)
     {
-        InvokeType model = mapperUtils.map(vo,InvokeType.class);
+        InvokeType model = new InvokeType();
+        BeanUtil.copyProperties(vo,model);
         this.baseMapper.insert(model);
     }
     /**
-     * 更新
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    public int update(InvokeTypeEditVo vo)
+    * 更新系统设置-调度类型
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    @Override
+    public int updateInvokeType(InvokeTypeEditReqVo vo)
     {
-        InvokeType model = mapperUtils.map(vo,InvokeType.class);
+        InvokeType model = new InvokeType();
+        BeanUtil.copyProperties(vo,model);
         int r = this.baseMapper.updateById(model);
         if(r != 1)
         {
@@ -81,25 +84,30 @@ public class InvokeTypeServiceImpl extends MppServiceImpl<InvokeTypeMapper, Invo
         return r;
     }
     /**
-     * 单条查询
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    public InvokeTypeDto selectById(InvokeTypeDetailsVo vo)
+    * 单条查询系统设置-调度类型
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    @Override
+    public InvokeTypeResVo selectInvokeTypeById(InvokeTypeDetailsReqVo vo)
     {
-        InvokeType model = mapperUtils.map(vo,InvokeType.class);
+        InvokeType model = new InvokeType();
+        BeanUtil.copyProperties(vo,model);
         InvokeType res = this.baseMapper.selectById(model);
-        InvokeTypeDto dto = mapperUtils.map(res,InvokeTypeDto.class);
-        return dto;
+        InvokeTypeResVo resVo = new InvokeTypeResVo();
+        BeanUtil.copyProperties(res,resVo);
+        return resVo;
     }
     /**
-     * 删除
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    public int deleteById(InvokeTypeDeleteVo vo)
+    * 删除系统设置-调度类型
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    @Override
+    public int deleteInvokeTypeById(InvokeTypeDeleteReqVo vo)
     {
-        InvokeType model = mapperUtils.map(vo,InvokeType.class);
+        InvokeType model = new InvokeType();
+        BeanUtil.copyProperties(vo,model);
         int r = this.baseMapper.deleteById(model);
         if(r != 1)
         {
@@ -108,22 +116,18 @@ public class InvokeTypeServiceImpl extends MppServiceImpl<InvokeTypeMapper, Invo
         return r;
     }
     /**
-     * 分页获取结果集
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    public PageResult<InvokeTypeListDto>  selectPageList(InvokeTypeListVo vo){
+    * 分页获取系统设置-调度类型结果集
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    @Override
+    public PageResult<InvokeTypeListResVo>  selectInvokeTypePageList(InvokeTypeListReqVo vo){
 
-        IPage<InvokeTypeListDto> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
-        page = this.baseMapper.selectPageList(page,vo);
-        PageResult<InvokeTypeListDto>  pageResult = new PageResult<>();
+        Page<InvokeTypeListResVo> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
+        Page<InvokeTypeListResVo> results = this.baseMapper.selectInvokeTypePageList(page,vo);
+        PageResult<InvokeTypeListResVo>  pageResult = new PageResult<>();
 
-        pageResult.setResult(page.getRecords());
-        pageResult.setTotalCount(page.getTotal());
-        pageResult.setPageIndex(vo.getPageIndex());
-        pageResult.setPageSize(vo.getPageSize());
-
-        return pageResult;
+        return pageResult.convertPage(results);
     }
 
 

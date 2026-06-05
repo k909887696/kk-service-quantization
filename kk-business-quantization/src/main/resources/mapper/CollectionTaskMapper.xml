@@ -43,68 +43,68 @@
     <!-- 通用查询条件 -->
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
-            <if test="collectionTaskListVo.taskId != null and collectionTaskListVo.taskId != ''">
-                and task_id = #{collectionTaskListVo.taskId}
-            </if>
-            <if test="collectionTaskListVo.name != null and collectionTaskListVo.name != ''">
-                and name like concat('%',#{collectionTaskListVo.name},'%')
-            </if>
-            <if test="collectionTaskListVo.policyId != null and collectionTaskListVo.policyId != ''">
-                and policy_id = #{collectionTaskListVo.policyId}
-            </if>
-            <if test="collectionTaskListVo.invokeCode != null and collectionTaskListVo.invokeCode != ''">
-                and invoke_code = #{collectionTaskListVo.invokeCode}
-            </if>
-            <if test="collectionTaskListVo.invokeMethod != null and collectionTaskListVo.invokeMethod != ''">
-                and invoke_method = #{collectionTaskListVo.invokeMethod}
-            </if>
-            <if test="collectionTaskListVo.invokeParams != null and collectionTaskListVo.invokeParams != ''">
-                and invoke_params = #{collectionTaskListVo.invokeParams}
-            </if>
-            <if test="collectionTaskListVo.preRunTimeStart != null and collectionTaskListVo.preRunTimeStart != ''">
-                and pre_run_time >= #{collectionTaskListVo.preRunTimeStart}
-            </if>
-            <if test="collectionTaskListVo.preRunTimeEnd != null and collectionTaskListVo.preRunTimeEnd != ''">
-                and pre_run_time &lt;= #{collectionTaskListVo.preRunTimeEnd}
-            </if>
-            <if test="collectionTaskListVo.runTimeStart != null and collectionTaskListVo.runTimeStart != ''">
-                and run_time >= #{collectionTaskListVo.runTimeStart}
-            </if>
-            <if test="collectionTaskListVo.runTimeEnd != null and collectionTaskListVo.runTimeEnd != ''">
-                and run_time &lt;= #{collectionTaskListVo.runTimeEnd}
-            </if>
-            <if test="collectionTaskListVo.finishTimeStart != null and collectionTaskListVo.finishTimeStart != ''">
-                and finish_time >= #{collectionTaskListVo.finishTimeStart}
-            </if>
-            <if test="collectionTaskListVo.finishTimeEnd != null and collectionTaskListVo.finishTimeEnd != ''">
-                and finish_time &lt;= #{collectionTaskListVo.finishTimeEnd}
-            </if>
-            <if test="collectionTaskListVo.createId != null and collectionTaskListVo.createId != ''">
-                and create_id = #{collectionTaskListVo.createId}
-            </if>
-            <if test="collectionTaskListVo.createName != null and collectionTaskListVo.createName != ''">
-                and create_name like concat('%',#{collectionTaskListVo.createName},'%')
-            </if>
-            <if test="collectionTaskListVo.createTimeStart != null and collectionTaskListVo.createTimeStart != ''">
-                and create_time >= #{collectionTaskListVo.createTimeStart}
-            </if>
-            <if test="collectionTaskListVo.createTimeEnd != null and collectionTaskListVo.createTimeEnd != ''">
-                and create_time &lt;= #{collectionTaskListVo.createTimeEnd}
-            </if>
-            <if test="collectionTaskListVo.runCount != null and collectionTaskListVo.runCount != ''">
-                and run_count = #{collectionTaskListVo.runCount}
-            </if>
-            <if test="collectionTaskListVo.exMsg != null and collectionTaskListVo.exMsg != ''">
-                and ex_msg = #{collectionTaskListVo.exMsg}
-            </if>
-            <if test="collectionTaskListVo.channel != null and collectionTaskListVo.channel != ''">
-                and channel = #{collectionTaskListVo.channel}
-            </if>
+           <if test="collectionTaskListReqVo.taskId != null and collectionTaskListReqVo.taskId != ''">
+               and task_id = #{collectionTaskListVo.taskId}
+           </if>
+           <if test="collectionTaskListReqVo.name != null and collectionTaskListReqVo.name != ''">
+               and name like concat('%',#{collectionTaskListVo.name},'%')
+           </if>
+           <if test="collectionTaskListReqVo.policyId != null and collectionTaskListReqVo.policyId != ''">
+               and policy_id = #{collectionTaskListVo.policyId}
+           </if>
+           <if test="collectionTaskListReqVo.invokeCode != null and collectionTaskListReqVo.invokeCode != ''">
+               and invoke_code = #{collectionTaskListVo.invokeCode}
+           </if>
+           <if test="collectionTaskListReqVo.invokeMethod != null and collectionTaskListReqVo.invokeMethod != ''">
+               and invoke_method = #{collectionTaskListVo.invokeMethod}
+           </if>
+           <if test="collectionTaskListReqVo.invokeParams != null and collectionTaskListReqVo.invokeParams != ''">
+               and invoke_params = #{collectionTaskListVo.invokeParams}
+           </if>
+           <if test="collectionTaskListReqVo.preRunTimeStart != null and collectionTaskListReqVo.preRunTimeStart != ''">
+               and pre_run_time >= #{collectionTaskListVo.preRunTimeStart}
+           </if>
+           <if test="collectionTaskListReqVo.preRunTimeEnd != null and collectionTaskListReqVo.preRunTimeEnd != ''">
+               and pre_run_time &lt;= #{collectionTaskListVo.preRunTimeEnd}
+           </if>
+           <if test="collectionTaskListReqVo.runTimeStart != null and collectionTaskListReqVo.runTimeStart != ''">
+               and run_time >= #{collectionTaskListVo.runTimeStart}
+           </if>
+           <if test="collectionTaskListReqVo.runTimeEnd != null and collectionTaskListReqVo.runTimeEnd != ''">
+               and run_time &lt;= #{collectionTaskListVo.runTimeEnd}
+           </if>
+           <if test="collectionTaskListReqVo.finishTimeStart != null and collectionTaskListReqVo.finishTimeStart != ''">
+               and finish_time >= #{collectionTaskListVo.finishTimeStart}
+           </if>
+           <if test="collectionTaskListReqVo.finishTimeEnd != null and collectionTaskListReqVo.finishTimeEnd != ''">
+               and finish_time &lt;= #{collectionTaskListVo.finishTimeEnd}
+           </if>
+           <if test="collectionTaskListReqVo.createId != null and collectionTaskListReqVo.createId != ''">
+               and create_id = #{collectionTaskListVo.createId}
+           </if>
+           <if test="collectionTaskListReqVo.createName != null and collectionTaskListReqVo.createName != ''">
+               and create_name like concat('%',#{collectionTaskListVo.createName},'%')
+           </if>
+           <if test="collectionTaskListReqVo.createTimeStart != null and collectionTaskListReqVo.createTimeStart != ''">
+               and create_time >= #{collectionTaskListVo.createTimeStart}
+           </if>
+           <if test="collectionTaskListReqVo.createTimeEnd != null and collectionTaskListReqVo.createTimeEnd != ''">
+               and create_time &lt;= #{collectionTaskListVo.createTimeEnd}
+           </if>
+           <if test="collectionTaskListReqVo.runCount != null and collectionTaskListReqVo.runCount != ''">
+               and run_count = #{collectionTaskListVo.runCount}
+           </if>
+           <if test="collectionTaskListReqVo.exMsg != null and collectionTaskListReqVo.exMsg != ''">
+               and ex_msg = #{collectionTaskListVo.exMsg}
+           </if>
+           <if test="collectionTaskListReqVo.channel != null and collectionTaskListReqVo.channel != ''">
+               and channel = #{collectionTaskListVo.channel}
+           </if>
         </trim>
     </sql>
 
     <!-- 分页查询 -->
-    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.CollectionTaskListDto">
+    <select id="selectCollectionTaskPageList" resultType="com.kk.business.quantization.model.vobase.res.CollectionTaskListResVo">
         select <include refid="BaseColumnList"/>
         from collection_task
         <include refid="BaseWhere"/>
@@ -135,4 +135,6 @@
     <update id="updateExMsgAndRunCount"  >
         update collection_task set ex_msg=#{exMsg},run_count=run_count+1,run_time=now(),pre_run_time =DATE_ADD(pre_run_time,INTERVAL 2 MINUTE )  where task_id =#{taskId}
     </update>
+
+
 </mapper>

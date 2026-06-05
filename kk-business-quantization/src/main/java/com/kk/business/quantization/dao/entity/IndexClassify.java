@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
-import io.swagger.v3.oas.annotations.media.Schema;
+ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 /**
  * <p>
@@ -12,11 +12,11 @@ import lombok.Data;
  * </p>
  *
  * @author kk
- * @since 2023-05-19
+ * @since 2026-06-04
  */
 @Data
 @TableName("index_classify")
-@Schema(name = "申万行业分类对象", description = "申万行业分类")
+@Schema(description = "申万行业分类")
 public class IndexClassify implements Serializable {
 
     private static final long serialVersionUID = 1L;

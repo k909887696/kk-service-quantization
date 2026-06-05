@@ -21,26 +21,26 @@
     <!-- 通用查询条件 -->
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
-           <if test="indexWeightListVo.indexCode != null and indexWeightListVo.indexCode != ''">
+           <if test="indexWeightListReqVo.indexCode != null and indexWeightListReqVo.indexCode != ''">
                and index_code = #{indexWeightListVo.indexCode}
            </if>
-           <if test="indexWeightListVo.conCode != null and indexWeightListVo.conCode != ''">
+           <if test="indexWeightListReqVo.conCode != null and indexWeightListReqVo.conCode != ''">
                and con_code = #{indexWeightListVo.conCode}
            </if>
-           <if test="indexWeightListVo.tradeDateStart != null and indexWeightListVo.tradeDateStart != ''">
+           <if test="indexWeightListReqVo.tradeDateStart != null and indexWeightListReqVo.tradeDateStart != ''">
                and trade_date >= #{indexWeightListVo.tradeDateStart}
            </if>
-           <if test="indexWeightListVo.tradeDateEnd != null and indexWeightListVo.tradeDateEnd != ''">
+           <if test="indexWeightListReqVo.tradeDateEnd != null and indexWeightListReqVo.tradeDateEnd != ''">
                and trade_date &lt;= #{indexWeightListVo.tradeDateEnd}
            </if>
-           <if test="indexWeightListVo.weight != null and indexWeightListVo.weight != ''">
+           <if test="indexWeightListReqVo.weight != null and indexWeightListReqVo.weight != ''">
                and weight = #{indexWeightListVo.weight}
            </if>
         </trim>
     </sql>
 
     <!-- 分页查询 -->
-    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.IndexWeightListDto">
+    <select id="selectIndexWeightPageList" resultType="com.kk.business.quantization.model.vobase.res.IndexWeightListResVo">
         select <include refid="BaseColumnList"/>
         from index_weight
         <include refid="BaseWhere"/>

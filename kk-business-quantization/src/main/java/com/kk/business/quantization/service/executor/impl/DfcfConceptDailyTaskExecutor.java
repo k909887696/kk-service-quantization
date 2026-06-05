@@ -69,7 +69,7 @@ public class DfcfConceptDailyTaskExecutor implements ITaskExecutor {
         }
 
         //插入db
-        conceptDailyService.insertIgnoreBatch(data);
+        conceptDailyService.insertConceptDailyBatchSomeColumn(data);
     }
 
     @Override

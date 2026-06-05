@@ -70,7 +70,7 @@ public class DailyTaskExecutor implements ITaskExecutor {
         }
 
         //插入db
-        dailyService.insertIgnoreBatch(data);
+        dailyService.insertDailyBatchSomeColumn(data);
     }
 
     @Override

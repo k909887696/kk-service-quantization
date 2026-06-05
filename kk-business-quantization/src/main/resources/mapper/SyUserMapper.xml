@@ -19,23 +19,23 @@
     <!-- 通用查询条件 -->
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
-           <if test="syUserListVo.userId != null and syUserListVo.userId != ''">
+           <if test="syUserListReqVo.userId != null and syUserListReqVo.userId != ''">
                and user_id = #{syUserListVo.userId}
            </if>
-           <if test="syUserListVo.userName != null and syUserListVo.userName != ''">
+           <if test="syUserListReqVo.userName != null and syUserListReqVo.userName != ''">
                and user_name like concat('%',#{syUserListVo.userName},'%')
            </if>
-           <if test="syUserListVo.bDayStart != null and syUserListVo.bDayStart != ''">
+           <if test="syUserListReqVo.bDayStart != null and syUserListReqVo.bDayStart != ''">
                and b_day >= #{syUserListVo.bDayStart}
            </if>
-           <if test="syUserListVo.bDayEnd != null and syUserListVo.bDayEnd != ''">
+           <if test="syUserListReqVo.bDayEnd != null and syUserListReqVo.bDayEnd != ''">
                and b_day &lt;= #{syUserListVo.bDayEnd}
            </if>
         </trim>
     </sql>
 
     <!-- 分页查询 -->
-    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.SyUserListDto">
+    <select id="selectSyUserPageList" resultType="com.kk.business.quantization.model.vobase.res.SyUserListResVo">
         select <include refid="BaseColumnList"/>
         from sy_user
         <include refid="BaseWhere"/>

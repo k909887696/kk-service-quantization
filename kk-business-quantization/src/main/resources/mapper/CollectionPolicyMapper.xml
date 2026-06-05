@@ -37,53 +37,53 @@
     <!-- 通用查询条件 -->
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
-            <if test="collectionPolicyListVo.policyId != null and collectionPolicyListVo.policyId != ''">
-                and policy_id = #{collectionPolicyListVo.policyId}
-            </if>
-            <if test="collectionPolicyListVo.name != null and collectionPolicyListVo.name != ''">
-                and name like concat('%',#{collectionPolicyListVo.name},'%')
-            </if>
-            <if test="collectionPolicyListVo.invokeMethod != null and collectionPolicyListVo.invokeMethod != ''">
-                and invoke_method = #{collectionPolicyListVo.invokeMethod}
-            </if>
-            <if test="collectionPolicyListVo.invokeCode != null and collectionPolicyListVo.invokeCode != ''">
-                and invoke_code = #{collectionPolicyListVo.invokeCode}
-            </if>
-            <if test="collectionPolicyListVo.invokeCycle != null and collectionPolicyListVo.invokeCycle != ''">
-                and invoke_cycle = #{collectionPolicyListVo.invokeCycle}
-            </if>
-            <if test="collectionPolicyListVo.createTimeStart != null and collectionPolicyListVo.createTimeStart != ''">
-                and create_time >= #{collectionPolicyListVo.createTimeStart}
-            </if>
-            <if test="collectionPolicyListVo.createTimeEnd != null and collectionPolicyListVo.createTimeEnd != ''">
-                and create_time &lt;= #{collectionPolicyListVo.createTimeEnd}
-            </if>
-            <if test="collectionPolicyListVo.preRunTimeStart != null and collectionPolicyListVo.preRunTimeStart != ''">
-                and pre_run_time >= #{collectionPolicyListVo.preRunTimeStart}
-            </if>
-            <if test="collectionPolicyListVo.preRunTimeEnd != null and collectionPolicyListVo.preRunTimeEnd != ''">
-                and pre_run_time &lt;= #{collectionPolicyListVo.preRunTimeEnd}
-            </if>
-            <if test="collectionPolicyListVo.invokeParams != null and collectionPolicyListVo.invokeParams != ''">
-                and invoke_params = #{collectionPolicyListVo.invokeParams}
-            </if>
-            <if test="collectionPolicyListVo.runCount != null and collectionPolicyListVo.runCount != ''">
-                and run_count = #{collectionPolicyListVo.runCount}
-            </if>
-            <if test="collectionPolicyListVo.exMsg != null and collectionPolicyListVo.exMsg != ''">
-                and ex_msg = #{collectionPolicyListVo.exMsg}
-            </if>
-            <if test="collectionPolicyListVo.invokeCycleTime != null and collectionPolicyListVo.invokeCycleTime != ''">
-                and invoke_cycle_time = #{collectionPolicyListVo.invokeCycleTime}
-            </if>
-            <if test="collectionPolicyListVo.channel != null and collectionPolicyListVo.channel != ''">
-                and channel = #{collectionPolicyListVo.channel}
-            </if>
+           <if test="collectionPolicyListReqVo.policyId != null and collectionPolicyListReqVo.policyId != ''">
+               and policy_id = #{collectionPolicyListVo.policyId}
+           </if>
+           <if test="collectionPolicyListReqVo.name != null and collectionPolicyListReqVo.name != ''">
+               and name like concat('%',#{collectionPolicyListVo.name},'%')
+           </if>
+           <if test="collectionPolicyListReqVo.invokeMethod != null and collectionPolicyListReqVo.invokeMethod != ''">
+               and invoke_method = #{collectionPolicyListVo.invokeMethod}
+           </if>
+           <if test="collectionPolicyListReqVo.invokeCode != null and collectionPolicyListReqVo.invokeCode != ''">
+               and invoke_code = #{collectionPolicyListVo.invokeCode}
+           </if>
+           <if test="collectionPolicyListReqVo.invokeCycle != null and collectionPolicyListReqVo.invokeCycle != ''">
+               and invoke_cycle = #{collectionPolicyListVo.invokeCycle}
+           </if>
+           <if test="collectionPolicyListReqVo.createTimeStart != null and collectionPolicyListReqVo.createTimeStart != ''">
+               and create_time >= #{collectionPolicyListVo.createTimeStart}
+           </if>
+           <if test="collectionPolicyListReqVo.createTimeEnd != null and collectionPolicyListReqVo.createTimeEnd != ''">
+               and create_time &lt;= #{collectionPolicyListVo.createTimeEnd}
+           </if>
+           <if test="collectionPolicyListReqVo.preRunTimeStart != null and collectionPolicyListReqVo.preRunTimeStart != ''">
+               and pre_run_time >= #{collectionPolicyListVo.preRunTimeStart}
+           </if>
+           <if test="collectionPolicyListReqVo.preRunTimeEnd != null and collectionPolicyListReqVo.preRunTimeEnd != ''">
+               and pre_run_time &lt;= #{collectionPolicyListVo.preRunTimeEnd}
+           </if>
+           <if test="collectionPolicyListReqVo.invokeParams != null and collectionPolicyListReqVo.invokeParams != ''">
+               and invoke_params = #{collectionPolicyListVo.invokeParams}
+           </if>
+           <if test="collectionPolicyListReqVo.runCount != null and collectionPolicyListReqVo.runCount != ''">
+               and run_count = #{collectionPolicyListVo.runCount}
+           </if>
+           <if test="collectionPolicyListReqVo.exMsg != null and collectionPolicyListReqVo.exMsg != ''">
+               and ex_msg = #{collectionPolicyListVo.exMsg}
+           </if>
+           <if test="collectionPolicyListReqVo.invokeCycleTime != null and collectionPolicyListReqVo.invokeCycleTime != ''">
+               and invoke_cycle_time = #{collectionPolicyListVo.invokeCycleTime}
+           </if>
+           <if test="collectionPolicyListReqVo.channel != null and collectionPolicyListReqVo.channel != ''">
+               and channel = #{collectionPolicyListVo.channel}
+           </if>
         </trim>
     </sql>
 
     <!-- 分页查询 -->
-    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.CollectionPolicyListDto">
+    <select id="selectCollectionPolicyPageList" resultType="com.kk.business.quantization.model.vobase.res.CollectionPolicyListResVo">
         select <include refid="BaseColumnList"/>
         from collection_policy
         <include refid="BaseWhere"/>
@@ -118,5 +118,6 @@
         </trim>
         order by pre_run_time
     </select>
+
 
 </mapper>

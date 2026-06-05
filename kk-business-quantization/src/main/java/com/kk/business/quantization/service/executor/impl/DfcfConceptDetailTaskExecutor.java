@@ -101,7 +101,7 @@ public class DfcfConceptDetailTaskExecutor implements ITaskExecutor {
                 }
 
                 //插入db
-                conceptDetailService.insertIgnoreBatch(indata);
+                conceptDetailService.insertConceptDetailBatchSomeColumn(indata);
                 conceptDetailMapper.updateConceptNameByConceptIds(vo.getIds());
             }else {
                 throw new BusinessException("个股基本信息未查询到任何数据！");

@@ -39,59 +39,59 @@
     <!-- 通用查询条件 -->
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
-           <if test="indexBasicListVo.tsCode != null and indexBasicListVo.tsCode != ''">
+           <if test="indexBasicListReqVo.tsCode != null and indexBasicListReqVo.tsCode != ''">
                and ts_code = #{indexBasicListVo.tsCode}
            </if>
-           <if test="indexBasicListVo.name != null and indexBasicListVo.name != ''">
+           <if test="indexBasicListReqVo.name != null and indexBasicListReqVo.name != ''">
                and name like concat('%',#{indexBasicListVo.name},'%')
            </if>
-           <if test="indexBasicListVo.fullname != null and indexBasicListVo.fullname != ''">
+           <if test="indexBasicListReqVo.fullname != null and indexBasicListReqVo.fullname != ''">
                and fullname like concat('%',#{indexBasicListVo.fullname},'%')
            </if>
-           <if test="indexBasicListVo.market != null and indexBasicListVo.market != ''">
+           <if test="indexBasicListReqVo.market != null and indexBasicListReqVo.market != ''">
                and market = #{indexBasicListVo.market}
            </if>
-           <if test="indexBasicListVo.publisher != null and indexBasicListVo.publisher != ''">
+           <if test="indexBasicListReqVo.publisher != null and indexBasicListReqVo.publisher != ''">
                and publisher = #{indexBasicListVo.publisher}
            </if>
-           <if test="indexBasicListVo.indexType != null and indexBasicListVo.indexType != ''">
+           <if test="indexBasicListReqVo.indexType != null and indexBasicListReqVo.indexType != ''">
                and index_type = #{indexBasicListVo.indexType}
            </if>
-           <if test="indexBasicListVo.category != null and indexBasicListVo.category != ''">
+           <if test="indexBasicListReqVo.category != null and indexBasicListReqVo.category != ''">
                and category = #{indexBasicListVo.category}
            </if>
-           <if test="indexBasicListVo.baseDateStart != null and indexBasicListVo.baseDateStart != ''">
+           <if test="indexBasicListReqVo.baseDateStart != null and indexBasicListReqVo.baseDateStart != ''">
                and base_date >= #{indexBasicListVo.baseDateStart}
            </if>
-           <if test="indexBasicListVo.baseDateEnd != null and indexBasicListVo.baseDateEnd != ''">
+           <if test="indexBasicListReqVo.baseDateEnd != null and indexBasicListReqVo.baseDateEnd != ''">
                and base_date &lt;= #{indexBasicListVo.baseDateEnd}
            </if>
-           <if test="indexBasicListVo.basePoint != null and indexBasicListVo.basePoint != ''">
+           <if test="indexBasicListReqVo.basePoint != null and indexBasicListReqVo.basePoint != ''">
                and base_point = #{indexBasicListVo.basePoint}
            </if>
-           <if test="indexBasicListVo.listDateStart != null and indexBasicListVo.listDateStart != ''">
+           <if test="indexBasicListReqVo.listDateStart != null and indexBasicListReqVo.listDateStart != ''">
                and list_date >= #{indexBasicListVo.listDateStart}
            </if>
-           <if test="indexBasicListVo.listDateEnd != null and indexBasicListVo.listDateEnd != ''">
+           <if test="indexBasicListReqVo.listDateEnd != null and indexBasicListReqVo.listDateEnd != ''">
                and list_date &lt;= #{indexBasicListVo.listDateEnd}
            </if>
-           <if test="indexBasicListVo.weightRule != null and indexBasicListVo.weightRule != ''">
+           <if test="indexBasicListReqVo.weightRule != null and indexBasicListReqVo.weightRule != ''">
                and weight_rule = #{indexBasicListVo.weightRule}
            </if>
-           <if test="indexBasicListVo.desc != null and indexBasicListVo.desc != ''">
+           <if test="indexBasicListReqVo.desc != null and indexBasicListReqVo.desc != ''">
                and desc = #{indexBasicListVo.desc}
            </if>
-           <if test="indexBasicListVo.expDateStart != null and indexBasicListVo.expDateStart != ''">
+           <if test="indexBasicListReqVo.expDateStart != null and indexBasicListReqVo.expDateStart != ''">
                and exp_date >= #{indexBasicListVo.expDateStart}
            </if>
-           <if test="indexBasicListVo.expDateEnd != null and indexBasicListVo.expDateEnd != ''">
+           <if test="indexBasicListReqVo.expDateEnd != null and indexBasicListReqVo.expDateEnd != ''">
                and exp_date &lt;= #{indexBasicListVo.expDateEnd}
            </if>
         </trim>
     </sql>
 
     <!-- 分页查询 -->
-    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.IndexBasicListDto">
+    <select id="selectIndexBasicPageList" resultType="com.kk.business.quantization.model.vobase.res.IndexBasicListResVo">
         select <include refid="BaseColumnList"/>
         from index_basic
         <include refid="BaseWhere"/>

@@ -1,36 +1,36 @@
 package com.kk.business.quantization.dao.mapper;
 
+
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.kk.business.quantization.dao.entity.CollectionTask;
-import com.kk.business.quantization.model.vo.CollectionTaskListVo;
-import com.kk.business.quantization.model.vo.SelectPreExecutePolicyVo;
 import com.kk.business.quantization.model.vo.SelectPreExecuteTaskVo;
 import com.kk.common.dao.mapper.RootMapper;
-import org.apache.ibatis.annotations.Mapper;
-
+import com.kk.business.quantization.model.vobase.res.CollectionTaskListResVo;
+import com.kk.business.quantization.model.vobase.req.CollectionTaskListReqVo;
 /**
  * <p>
  * 系统设置-数据任务 Mapper 接口
  * </p>
  *
  * @author kk
- * @since 2023-05-16
+ * @since 2026-06-04
  */
-
 public interface CollectionTaskMapper extends RootMapper<CollectionTask> {
-    /**
-     * 查询列表
+     /**
+     * 查询系统设置-数据任务列表
      */
-    Page selectPageList(IPage page, CollectionTaskListVo collectionTaskListVo);
-    /**
-     * 更新异常信息
-     * @param taskId
-     * @param exMsg
-     * @return
+     Page<CollectionTaskListResVo> selectCollectionTaskPageList(Page page, CollectionTaskListReqVo collectionTaskListReqVo);
+     /**
+     * 获取需要处理任务
      */
-    int updateExMsgAndRunCount(String taskId,String exMsg);
+     Page<CollectionTask>  selectPreExecuteTask(Page page, SelectPreExecuteTaskVo vo);
 
-    Page selectPreExecuteTask(IPage page, SelectPreExecuteTaskVo vo);
-
+     /**
+      * 更新异常信息
+      * @param taskId
+      * @param exMsg
+      * @return
+      */
+     int updateExMsgAndRunCount(String taskId,String exMsg);
 }

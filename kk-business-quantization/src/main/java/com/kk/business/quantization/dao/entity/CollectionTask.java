@@ -3,23 +3,21 @@ package com.kk.business.quantization.dao.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
-
 import java.io.Serializable;
 import java.util.Date;
-
+ import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
 /**
  * <p>
  * 系统设置-数据任务
  * </p>
  *
  * @author kk
- * @since 2023-08-24
+ * @since 2026-06-04
  */
 @Data
 @TableName("collection_task")
-@Schema(name = "系统设置-数据任务对象", description = "系统设置-数据任务")
+@Schema(description = "系统设置-数据任务")
 public class CollectionTask implements Serializable {
 
     private static final long serialVersionUID = 1L;

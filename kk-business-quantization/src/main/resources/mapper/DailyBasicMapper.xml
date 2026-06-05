@@ -49,72 +49,72 @@
     <!-- 通用查询条件 -->
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
-           <if test="dailyBasicListVo.tsCode != null and dailyBasicListVo.tsCode != ''">
+           <if test="dailyBasicListReqVo.tsCode != null and dailyBasicListReqVo.tsCode != ''">
                and ts_code = #{dailyBasicListVo.tsCode}
            </if>
-           <if test="dailyBasicListVo.tradeDateStart != null and dailyBasicListVo.tradeDateStart != ''">
+           <if test="dailyBasicListReqVo.tradeDateStart != null and dailyBasicListReqVo.tradeDateStart != ''">
                and trade_date >= #{dailyBasicListVo.tradeDateStart}
            </if>
-           <if test="dailyBasicListVo.tradeDateEnd != null and dailyBasicListVo.tradeDateEnd != ''">
+           <if test="dailyBasicListReqVo.tradeDateEnd != null and dailyBasicListReqVo.tradeDateEnd != ''">
                and trade_date &lt;= #{dailyBasicListVo.tradeDateEnd}
            </if>
-           <if test="dailyBasicListVo.close != null and dailyBasicListVo.close != ''">
+           <if test="dailyBasicListReqVo.close != null and dailyBasicListReqVo.close != ''">
                and close = #{dailyBasicListVo.close}
            </if>
-           <if test="dailyBasicListVo.turnoverRate != null and dailyBasicListVo.turnoverRate != ''">
+           <if test="dailyBasicListReqVo.turnoverRate != null and dailyBasicListReqVo.turnoverRate != ''">
                and turnover_rate = #{dailyBasicListVo.turnoverRate}
            </if>
-           <if test="dailyBasicListVo.turnoverRateF != null and dailyBasicListVo.turnoverRateF != ''">
+           <if test="dailyBasicListReqVo.turnoverRateF != null and dailyBasicListReqVo.turnoverRateF != ''">
                and turnover_rate_f = #{dailyBasicListVo.turnoverRateF}
            </if>
-           <if test="dailyBasicListVo.volumeRatio != null and dailyBasicListVo.volumeRatio != ''">
+           <if test="dailyBasicListReqVo.volumeRatio != null and dailyBasicListReqVo.volumeRatio != ''">
                and volume_ratio = #{dailyBasicListVo.volumeRatio}
            </if>
-           <if test="dailyBasicListVo.pe != null and dailyBasicListVo.pe != ''">
+           <if test="dailyBasicListReqVo.pe != null and dailyBasicListReqVo.pe != ''">
                and pe = #{dailyBasicListVo.pe}
            </if>
-           <if test="dailyBasicListVo.peTtm != null and dailyBasicListVo.peTtm != ''">
+           <if test="dailyBasicListReqVo.peTtm != null and dailyBasicListReqVo.peTtm != ''">
                and pe_ttm = #{dailyBasicListVo.peTtm}
            </if>
-           <if test="dailyBasicListVo.pb != null and dailyBasicListVo.pb != ''">
+           <if test="dailyBasicListReqVo.pb != null and dailyBasicListReqVo.pb != ''">
                and pb = #{dailyBasicListVo.pb}
            </if>
-           <if test="dailyBasicListVo.ps != null and dailyBasicListVo.ps != ''">
+           <if test="dailyBasicListReqVo.ps != null and dailyBasicListReqVo.ps != ''">
                and ps = #{dailyBasicListVo.ps}
            </if>
-           <if test="dailyBasicListVo.psTtm != null and dailyBasicListVo.psTtm != ''">
+           <if test="dailyBasicListReqVo.psTtm != null and dailyBasicListReqVo.psTtm != ''">
                and ps_ttm = #{dailyBasicListVo.psTtm}
            </if>
-           <if test="dailyBasicListVo.dvRatio != null and dailyBasicListVo.dvRatio != ''">
+           <if test="dailyBasicListReqVo.dvRatio != null and dailyBasicListReqVo.dvRatio != ''">
                and dv_ratio = #{dailyBasicListVo.dvRatio}
            </if>
-           <if test="dailyBasicListVo.dvTtm != null and dailyBasicListVo.dvTtm != ''">
+           <if test="dailyBasicListReqVo.dvTtm != null and dailyBasicListReqVo.dvTtm != ''">
                and dv_ttm = #{dailyBasicListVo.dvTtm}
            </if>
-           <if test="dailyBasicListVo.totalShare != null and dailyBasicListVo.totalShare != ''">
+           <if test="dailyBasicListReqVo.totalShare != null and dailyBasicListReqVo.totalShare != ''">
                and total_share = #{dailyBasicListVo.totalShare}
            </if>
-           <if test="dailyBasicListVo.floatShare != null and dailyBasicListVo.floatShare != ''">
+           <if test="dailyBasicListReqVo.floatShare != null and dailyBasicListReqVo.floatShare != ''">
                and float_share = #{dailyBasicListVo.floatShare}
            </if>
-           <if test="dailyBasicListVo.freeShare != null and dailyBasicListVo.freeShare != ''">
+           <if test="dailyBasicListReqVo.freeShare != null and dailyBasicListReqVo.freeShare != ''">
                and free_share = #{dailyBasicListVo.freeShare}
            </if>
-           <if test="dailyBasicListVo.totalMv != null and dailyBasicListVo.totalMv != ''">
+           <if test="dailyBasicListReqVo.totalMv != null and dailyBasicListReqVo.totalMv != ''">
                and total_mv = #{dailyBasicListVo.totalMv}
            </if>
-           <if test="dailyBasicListVo.circMv != null and dailyBasicListVo.circMv != ''">
+           <if test="dailyBasicListReqVo.circMv != null and dailyBasicListReqVo.circMv != ''">
                and circ_mv = #{dailyBasicListVo.circMv}
            </if>
         </trim>
     </sql>
 
     <!-- 分页查询 -->
-    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.DailyBasicListDto">
+    <select id="selectDailyBasicPageList" resultType="com.kk.business.quantization.model.vobase.res.DailyBasicListResVo">
         select <include refid="BaseColumnList"/>
         from daily_basic
         <include refid="BaseWhere"/>
-        order by trade_date desc
+
     </select>
 
 

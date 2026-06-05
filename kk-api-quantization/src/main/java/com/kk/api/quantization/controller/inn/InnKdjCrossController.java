@@ -1,4 +1,4 @@
-package com.kk.api.quantization.controller.v;
+package com.kk.api.quantization.controller.inn;
 
 
 import org.springframework.web.bind.annotation.*;
@@ -12,99 +12,99 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import jakarta.annotation.Resource;
-import com.kk.business.quantization.serviceapi.CnMServiceApi;
+import com.kk.business.quantization.serviceapi.KdjCrossServiceApi;
 import com.kk.common.base.model.PageResult;
 import com.kk.common.web.model.ApiResult;
 import com.kk.business.quantization.constant.ServiceSystemKey;
 import com.kk.common.constant.SystemKey;
-import com.kk.business.quantization.model.vobase.req.CnMListReqVo;
-import com.kk.business.quantization.model.vobase.res.CnMListResVo;
-import com.kk.business.quantization.model.vobase.req.CnMAddReqVo;
-import com.kk.business.quantization.model.vobase.req.CnMEditReqVo;
-import com.kk.business.quantization.model.vobase.res.CnMResVo;
-import com.kk.business.quantization.model.vobase.req.CnMDetailsReqVo;
-import com.kk.business.quantization.model.vobase.req.CnMDeleteReqVo;
+import com.kk.business.quantization.model.vobase.req.KdjCrossListReqVo;
+import com.kk.business.quantization.model.vobase.res.KdjCrossListResVo;
+import com.kk.business.quantization.model.vobase.req.KdjCrossAddReqVo;
+import com.kk.business.quantization.model.vobase.req.KdjCrossEditReqVo;
+import com.kk.business.quantization.model.vobase.res.KdjCrossResVo;
+import com.kk.business.quantization.model.vobase.req.KdjCrossDetailsReqVo;
+import com.kk.business.quantization.model.vobase.req.KdjCrossDeleteReqVo;
 /**
  * <p>
- * 人民币货币总量对象 接口
+ * kdj交叉点 内部接口
  * </p>
  *
  * @author kk
- * @since 2026-05-30
+ * @since 2026-06-04
  */
-@Tag(name = "/"+ ServiceSystemKey.ServiceName+"/"+SystemKey.ApiPrefixLogin + "/v1/CnM",description = "人民币货币总量对象(接口)")
+@Tag(name = "/"+ ServiceSystemKey.ServiceName+"/"+SystemKey.ApiPrefixInn + "/v1/InnKdjCross",description = "kdj交叉点(内部接口)")
 @RestController
-@RequestMapping("/"+ ServiceSystemKey.ServiceName+"/"+SystemKey.ApiPrefixLogin + "/v1/CnM")
-public class CnMController {
+@RequestMapping("/"+ ServiceSystemKey.ServiceName+"/"+SystemKey.ApiPrefixInn + "/v1/InnKdjCross")
+public class InnKdjCrossController {
 
     @Resource
-    public CnMServiceApi cnMServiceApi;
+    public KdjCrossServiceApi kdjCrossServiceApi;
 
-    @Operation(summary = "获取人民币货币总量对象分页结果集", description = "获取人民币货币总量对象分页结果集")
+    @Operation(summary = "获取kdj交叉点分页结果集", description = "获取kdj交叉点分页结果集")
     @Parameters(  {
         @Parameter(name = "token", description = "身份令牌", in = ParameterIn.HEADER, required = false),
         @Parameter(name = "source", description = "来源（app/web/minotor）", in = ParameterIn.HEADER, required = false),
         @Parameter(name = "version", description = "版本号（1.0.0）", in = ParameterIn.HEADER, required = false)
     })
-    @PostMapping("/getCnMPageList")
-    //@SaCheckPermission(value = {"v_menu_select_CnM"})
-    public ApiResult<PageResult<CnMListResVo>> getCnMPageList(
-            @RequestBody CnMListReqVo vo)   {
-        return new ApiResult<>(cnMServiceApi.selectCnMPageList(vo));
+    @PostMapping("/getKdjCrossPageList")
+    //@SaCheckPermission(value = {"v_menu_select_KdjCross"})
+    public ApiResult<PageResult<KdjCrossListResVo>> getKdjCrossPageList(
+            @RequestBody KdjCrossListReqVo vo)   {
+        return new ApiResult<>(kdjCrossServiceApi.selectKdjCrossPageList(vo));
     }
-    @Operation(summary = "删除人民币货币总量对象", description = "删除人民币货币总量对象")
+    @Operation(summary = "删除kdj交叉点", description = "删除kdj交叉点")
     @Parameters(  {
         @Parameter(name = "token", description = "身份令牌", in = ParameterIn.HEADER, required = false),
         @Parameter(name = "source", description = "来源（app/web/minotor）", in = ParameterIn.HEADER, required = false),
         @Parameter(name = "version", description = "版本号（1.0.0）", in = ParameterIn.HEADER, required = false)
     })
-    @PostMapping("/deleteCnMById")
-    //@SaCheckPermission(value={"v_btn_delete_CnM"})
-    public ApiResult<?> deleteCnMById(
-            @RequestBody CnMDeleteReqVo vo)   {
-        cnMServiceApi.deleteCnMById(vo);
+    @PostMapping("/deleteKdjCrossById")
+    //@SaCheckPermission(value={"v_btn_delete_KdjCross"})
+    public ApiResult<?> deleteKdjCrossById(
+            @RequestBody KdjCrossDeleteReqVo vo)   {
+        kdjCrossServiceApi.deleteKdjCrossById(vo);
         return new ApiResult<>();
     }
 
-    @Operation(summary = "插入人民币货币总量对象", description = "插入人民币货币总量对象")
+    @Operation(summary = "插入kdj交叉点", description = "插入kdj交叉点")
     @Parameters(  {
         @Parameter(name = "token", description = "身份令牌", in = ParameterIn.HEADER, required = false),
         @Parameter(name = "source", description = "来源（app/web/minotor）", in = ParameterIn.HEADER, required = false),
         @Parameter(name = "version", description = "版本号（1.0.0）", in = ParameterIn.HEADER, required = false)
     })
-    @PostMapping("/insertCnM")
-    //@SaCheckPermission(value={"v_btn_modify_CnM"})
-    public ApiResult<?> insertCnM(
-            @RequestBody CnMAddReqVo vo)   {
-        cnMServiceApi.insertCnM(vo);
+    @PostMapping("/insertKdjCross")
+    //@SaCheckPermission(value={"v_btn_modify_KdjCross"})
+    public ApiResult<?> insertKdjCross(
+            @RequestBody KdjCrossAddReqVo vo)   {
+        kdjCrossServiceApi.insertKdjCross(vo);
         return new ApiResult<>();
     }
 
-    @Operation(summary = "更新人民币货币总量对象", description = "更新人民币货币总量对象")
+    @Operation(summary = "更新kdj交叉点", description = "更新kdj交叉点")
     @Parameters(  {
         @Parameter(name = "token", description = "身份令牌", in = ParameterIn.HEADER, required = false),
         @Parameter(name = "source", description = "来源（app/web/minotor）", in = ParameterIn.HEADER, required = false),
         @Parameter(name = "version", description = "版本号（1.0.0）", in = ParameterIn.HEADER, required = false)
     })
-    @PostMapping("/updateCnM")
-    //@SaCheckPermission(value={"v_btn_modify_CnM"})
-    public ApiResult<?> updateCnM(
-            @RequestBody CnMEditReqVo vo)   {
-        cnMServiceApi.updateCnM(vo);
+    @PostMapping("/updateKdjCross")
+    //@SaCheckPermission(value={"v_btn_modify_KdjCross"})
+    public ApiResult<?> updateKdjCross(
+            @RequestBody KdjCrossEditReqVo vo)   {
+        kdjCrossServiceApi.updateKdjCross(vo);
         return new ApiResult<>();
     }
 
-    @Operation(summary = "查询人民币货币总量对象详情", description = "查询人民币货币总量对象详情")
+    @Operation(summary = "查询kdj交叉点详情", description = "查询kdj交叉点详情")
     @Parameters(  {
         @Parameter(name = "token", description = "身份令牌", in = ParameterIn.HEADER, required = false),
         @Parameter(name = "source", description = "来源（app/web/minotor）", in = ParameterIn.HEADER, required = false),
         @Parameter(name = "version", description = "版本号（1.0.0）", in = ParameterIn.HEADER, required = false)
     })
-    @PostMapping("/getCnMDetails")
-    //@SaCheckPermission(value={"inc_menu_select_CnM"})
-    public ApiResult< CnMResVo > getCnMDetails(
-            @RequestBody CnMDetailsReqVo vo)   {
-        return new  ApiResult<>(cnMServiceApi.selectCnMById(vo));
+    @PostMapping("/getKdjCrossDetails")
+    //@SaCheckPermission(value={"inc_menu_select_KdjCross"})
+    public ApiResult< KdjCrossResVo > getKdjCrossDetails(
+            @RequestBody KdjCrossDetailsReqVo vo)   {
+        return new  ApiResult<>(kdjCrossServiceApi.selectKdjCrossById(vo));
     }
 
 

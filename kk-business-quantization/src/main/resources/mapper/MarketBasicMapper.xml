@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kk.business.quantization.dao.mapper.MarketBasicMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.MarketBasic">
+        <id column="market_code" property="marketCode" />
+        <result column="market_name" property="marketName" />
+        <result column="op_date" property="opDate" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        market_code as 'marketCode',
+        market_name as 'marketName',
+        op_date as 'opDate'
+
+    </sql>
+    <!-- 通用查询条件 -->
+    <sql id="BaseWhere">
+        <trim prefix="where" prefixOverrides="and | or">
+           <if test="marketBasicListReqVo.marketCode != null and marketBasicListReqVo.marketCode != ''">
+               and market_code = #{marketBasicListVo.marketCode}
+           </if>
+           <if test="marketBasicListReqVo.marketName != null and marketBasicListReqVo.marketName != ''">
+               and market_name like concat('%',#{marketBasicListVo.marketName},'%')
+           </if>
+           <if test="marketBasicListReqVo.opDateStart != null and marketBasicListReqVo.opDateStart != ''">
+               and op_date >= #{marketBasicListVo.opDateStart}
+           </if>
+           <if test="marketBasicListReqVo.opDateEnd != null and marketBasicListReqVo.opDateEnd != ''">
+               and op_date &lt;= #{marketBasicListVo.opDateEnd}
+           </if>
+        </trim>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectMarketBasicPageList" resultType="com.kk.business.quantization.model.vobase.res.MarketBasicListResVo">
+        select <include refid="BaseColumnList"/>
+        from market_basic
+        <include refid="BaseWhere"/>
+
+    </select>
+
+
+
+</mapper>

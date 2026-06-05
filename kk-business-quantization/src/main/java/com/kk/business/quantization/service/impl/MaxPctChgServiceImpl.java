@@ -5,21 +5,20 @@ import org.springframework.stereotype.Service;
 import jakarta.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.kk.business.quantization.dao.entity.MaxPctChg;
 import com.kk.business.quantization.dao.mapper.MaxPctChgMapper;
 import com.kk.business.quantization.service.IMaxPctChgService;
-import com.github.jeffreyning.mybatisplus.service.MppServiceImpl;
-import com.kk.business.quantization.model.vo.MaxPctChgListVo;
-import com.kk.business.quantization.model.dto.MaxPctChgListDto;
-import com.kk.business.quantization.model.vo.MaxPctChgAddVo;
-import com.kk.business.quantization.model.vo.MaxPctChgEditVo;
-import com.kk.business.quantization.model.dto.MaxPctChgDto;
-import com.kk.business.quantization.model.vo.MaxPctChgDetailsVo;
-import com.kk.business.quantization.model.vo.MaxPctChgDeleteVo;
-import com.kk.common.utils.MapperUtils;
+import com.kk.business.quantization.model.vobase.req.MaxPctChgListReqVo;
+import com.kk.business.quantization.model.vobase.res.MaxPctChgListResVo;
+import com.kk.business.quantization.model.vobase.req.MaxPctChgAddReqVo;
+import com.kk.business.quantization.model.vobase.req.MaxPctChgEditReqVo;
+import com.kk.business.quantization.model.vobase.res.MaxPctChgResVo;
+import com.kk.business.quantization.model.vobase.req.MaxPctChgDetailsReqVo;
+import com.kk.business.quantization.model.vobase.req.MaxPctChgDeleteReqVo;
 import com.kk.common.base.model.PageResult;
+import com.kk.common.utils.BeanUtil;
 import com.kk.common.exception.BusinessException;
 /**
  * <p>
@@ -27,19 +26,19 @@ import com.kk.common.exception.BusinessException;
  * </p>
  *
  * @author kk
- * @since 2023-05-18
+ * @since 2026-06-04
  */
 @Service
-public class MaxPctChgServiceImpl extends MppServiceImpl<MaxPctChgMapper, MaxPctChg> implements IMaxPctChgService {
+public class MaxPctChgServiceImpl extends ServiceImpl<MaxPctChgMapper, MaxPctChg> implements IMaxPctChgService {
 
-    @Resource
-    public MapperUtils mapperUtils;
+
     /**
-     * 分批批量插入
-     * @param list 数据列表
-     * @return
-     */
-    public void insertIgnoreBatch(List<MaxPctChg> list)
+    * 分批批量插入各个市场涨跌幅限制
+    * @param list 数据列表
+    * @return
+    */
+    @Override
+    public void insertMaxPctChgBatchSomeColumn(List<MaxPctChg> list)
     {
 
         if(list ==null || list.size()<=0) return ;
@@ -52,27 +51,31 @@ public class MaxPctChgServiceImpl extends MppServiceImpl<MaxPctChgMapper, MaxPct
         for(;index<=totalPage;index++)
         {
             List<MaxPctChg> tempList = list.stream().skip((index-1)*size).limit(size).collect(Collectors.toList());
-            this.baseMapper.insertIgnoreBatchSomeColumn(tempList);
+            this.baseMapper.insertBatchSomeColumn(tempList);
         }
     }
     /**
-     * 单条插入
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    public void insert(MaxPctChgAddVo vo)
+    * 单条插入各个市场涨跌幅限制
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    @Override
+    public void insertMaxPctChg(MaxPctChgAddReqVo vo)
     {
-        MaxPctChg model = mapperUtils.map(vo,MaxPctChg.class);
+        MaxPctChg model = new MaxPctChg();
+        BeanUtil.copyProperties(vo,model);
         this.baseMapper.insert(model);
     }
     /**
-     * 更新
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    public int update(MaxPctChgEditVo vo)
+    * 更新各个市场涨跌幅限制
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    @Override
+    public int updateMaxPctChg(MaxPctChgEditReqVo vo)
     {
-        MaxPctChg model = mapperUtils.map(vo,MaxPctChg.class);
+        MaxPctChg model = new MaxPctChg();
+        BeanUtil.copyProperties(vo,model);
         int r = this.baseMapper.updateById(model);
         if(r != 1)
         {
@@ -81,25 +84,30 @@ public class MaxPctChgServiceImpl extends MppServiceImpl<MaxPctChgMapper, MaxPct
         return r;
     }
     /**
-     * 单条查询
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    public MaxPctChgDto selectById(MaxPctChgDetailsVo vo)
+    * 单条查询各个市场涨跌幅限制
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    @Override
+    public MaxPctChgResVo selectMaxPctChgById(MaxPctChgDetailsReqVo vo)
     {
-        MaxPctChg model = mapperUtils.map(vo,MaxPctChg.class);
+        MaxPctChg model = new MaxPctChg();
+        BeanUtil.copyProperties(vo,model);
         MaxPctChg res = this.baseMapper.selectById(model);
-        MaxPctChgDto dto = mapperUtils.map(res,MaxPctChgDto.class);
-        return dto;
+        MaxPctChgResVo resVo = new MaxPctChgResVo();
+        BeanUtil.copyProperties(res,resVo);
+        return resVo;
     }
     /**
-     * 删除
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    public int deleteById(MaxPctChgDeleteVo vo)
+    * 删除各个市场涨跌幅限制
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    @Override
+    public int deleteMaxPctChgById(MaxPctChgDeleteReqVo vo)
     {
-        MaxPctChg model = mapperUtils.map(vo,MaxPctChg.class);
+        MaxPctChg model = new MaxPctChg();
+        BeanUtil.copyProperties(vo,model);
         int r = this.baseMapper.deleteById(model);
         if(r != 1)
         {
@@ -108,22 +116,18 @@ public class MaxPctChgServiceImpl extends MppServiceImpl<MaxPctChgMapper, MaxPct
         return r;
     }
     /**
-     * 分页获取结果集
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    public PageResult<MaxPctChgListDto>  selectPageList(MaxPctChgListVo vo){
+    * 分页获取各个市场涨跌幅限制结果集
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    @Override
+    public PageResult<MaxPctChgListResVo>  selectMaxPctChgPageList(MaxPctChgListReqVo vo){
 
-        IPage<MaxPctChgListDto> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
-        page = this.baseMapper.selectPageList(page,vo);
-        PageResult<MaxPctChgListDto>  pageResult = new PageResult<>();
+        Page<MaxPctChgListResVo> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
+        Page<MaxPctChgListResVo> results = this.baseMapper.selectMaxPctChgPageList(page,vo);
+        PageResult<MaxPctChgListResVo>  pageResult = new PageResult<>();
 
-        pageResult.setResult(page.getRecords());
-        pageResult.setTotalCount(page.getTotal());
-        pageResult.setPageIndex(vo.getPageIndex());
-        pageResult.setPageSize(vo.getPageSize());
-
-        return pageResult;
+        return pageResult.convertPage(results);
     }
 
 

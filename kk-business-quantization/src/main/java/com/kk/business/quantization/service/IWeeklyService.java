@@ -1,16 +1,14 @@
 package com.kk.business.quantization.service;
 
 import com.kk.business.quantization.dao.entity.Weekly;
-import com.github.jeffreyning.mybatisplus.service.IMppService;
-
 import java.util.List;
-import com.kk.business.quantization.model.vo.WeeklyListVo;
-import com.kk.business.quantization.model.dto.WeeklyListDto;
-import com.kk.business.quantization.model.vo.WeeklyAddVo;
-import com.kk.business.quantization.model.vo.WeeklyEditVo;
-import com.kk.business.quantization.model.dto.WeeklyDto;
-import com.kk.business.quantization.model.vo.WeeklyDetailsVo;
-import com.kk.business.quantization.model.vo.WeeklyDeleteVo;
+import com.kk.business.quantization.model.vobase.req.WeeklyListReqVo;
+import com.kk.business.quantization.model.vobase.res.WeeklyListResVo;
+import com.kk.business.quantization.model.vobase.req.WeeklyAddReqVo;
+import com.kk.business.quantization.model.vobase.req.WeeklyEditReqVo;
+import com.kk.business.quantization.model.vobase.res.WeeklyResVo;
+import com.kk.business.quantization.model.vobase.req.WeeklyDetailsReqVo;
+import com.kk.business.quantization.model.vobase.req.WeeklyDeleteReqVo;
 import com.kk.common.base.model.PageResult;
 /**
  * <p>
@@ -18,45 +16,45 @@ import com.kk.common.base.model.PageResult;
  * </p>
  *
  * @author kk
- * @since 2023-05-18
+ * @since 2026-06-04
  */
-public interface IWeeklyService extends IMppService<Weekly> {
+public interface IWeeklyService  {
 
     /**
-    * 分批批量插入
+    * 分批批量插入个股周线行情
     * @param list 数据列表
     * @return
     */
-    void insertIgnoreBatch(List<Weekly> list);
+    void insertWeeklyBatchSomeColumn(List<Weekly> list);
     /**
-    * 分页获取结果集
+    * 单条插入个股周线行情
     * @param vo 请求参数
     * @return 结果集
     */
-    PageResult<WeeklyListDto>  selectPageList(WeeklyListVo vo);
+    void insertWeekly(WeeklyAddReqVo vo);
     /**
-    * 单条插入
+    * 更新个股周线行情
     * @param vo 请求参数
     * @return 结果集
     */
-    void insert(WeeklyAddVo vo);
+    int updateWeekly(WeeklyEditReqVo vo);
     /**
-    * 更新
+    * 单条查询个股周线行情
     * @param vo 请求参数
     * @return 结果集
     */
-    int update(WeeklyEditVo vo);
+    WeeklyResVo selectWeeklyById(WeeklyDetailsReqVo vo);
     /**
-    * 单条查询
+    * 删除个股周线行情
     * @param vo 请求参数
     * @return 结果集
     */
-    WeeklyDto selectById(WeeklyDetailsVo vo);
+    int deleteWeeklyById(WeeklyDeleteReqVo vo);
     /**
-    * 删除
+    * 分页获取个股周线行情结果集
     * @param vo 请求参数
     * @return 结果集
     */
-    int deleteById(WeeklyDeleteVo vo);
-
+    PageResult<WeeklyListResVo>  selectWeeklyPageList(WeeklyListReqVo vo);
 }
+

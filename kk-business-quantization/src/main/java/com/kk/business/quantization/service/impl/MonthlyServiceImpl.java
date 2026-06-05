@@ -5,21 +5,20 @@ import org.springframework.stereotype.Service;
 import jakarta.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.kk.business.quantization.dao.entity.Monthly;
 import com.kk.business.quantization.dao.mapper.MonthlyMapper;
 import com.kk.business.quantization.service.IMonthlyService;
-import com.github.jeffreyning.mybatisplus.service.MppServiceImpl;
-import com.kk.business.quantization.model.vo.MonthlyListVo;
-import com.kk.business.quantization.model.dto.MonthlyListDto;
-import com.kk.business.quantization.model.vo.MonthlyAddVo;
-import com.kk.business.quantization.model.vo.MonthlyEditVo;
-import com.kk.business.quantization.model.dto.MonthlyDto;
-import com.kk.business.quantization.model.vo.MonthlyDetailsVo;
-import com.kk.business.quantization.model.vo.MonthlyDeleteVo;
-import com.kk.common.utils.MapperUtils;
+import com.kk.business.quantization.model.vobase.req.MonthlyListReqVo;
+import com.kk.business.quantization.model.vobase.res.MonthlyListResVo;
+import com.kk.business.quantization.model.vobase.req.MonthlyAddReqVo;
+import com.kk.business.quantization.model.vobase.req.MonthlyEditReqVo;
+import com.kk.business.quantization.model.vobase.res.MonthlyResVo;
+import com.kk.business.quantization.model.vobase.req.MonthlyDetailsReqVo;
+import com.kk.business.quantization.model.vobase.req.MonthlyDeleteReqVo;
 import com.kk.common.base.model.PageResult;
+import com.kk.common.utils.BeanUtil;
 import com.kk.common.exception.BusinessException;
 /**
  * <p>
@@ -27,19 +26,19 @@ import com.kk.common.exception.BusinessException;
  * </p>
  *
  * @author kk
- * @since 2023-05-18
+ * @since 2026-06-04
  */
 @Service
-public class MonthlyServiceImpl extends MppServiceImpl<MonthlyMapper, Monthly> implements IMonthlyService {
+public class MonthlyServiceImpl extends ServiceImpl<MonthlyMapper, Monthly> implements IMonthlyService {
 
-    @Resource
-    public MapperUtils mapperUtils;
+
     /**
-    * 分批批量插入
+    * 分批批量插入个股月线行情
     * @param list 数据列表
     * @return
     */
-    public void insertIgnoreBatch(List<Monthly> list)
+    @Override
+    public void insertMonthlyBatchSomeColumn(List<Monthly> list)
     {
 
         if(list ==null || list.size()<=0) return ;
@@ -52,27 +51,31 @@ public class MonthlyServiceImpl extends MppServiceImpl<MonthlyMapper, Monthly> i
         for(;index<=totalPage;index++)
         {
             List<Monthly> tempList = list.stream().skip((index-1)*size).limit(size).collect(Collectors.toList());
-            this.baseMapper.insertDuplicateKeyUpdate(tempList);
+            this.baseMapper.insertBatchSomeColumn(tempList);
         }
     }
     /**
-    * 单条插入
+    * 单条插入个股月线行情
     * @param vo 请求参数
     * @return 结果集
     */
-    public void insert(MonthlyAddVo vo)
+    @Override
+    public void insertMonthly(MonthlyAddReqVo vo)
     {
-        Monthly model = mapperUtils.map(vo,Monthly.class);
+        Monthly model = new Monthly();
+        BeanUtil.copyProperties(vo,model);
         this.baseMapper.insert(model);
     }
     /**
-    * 更新
+    * 更新个股月线行情
     * @param vo 请求参数
     * @return 结果集
     */
-    public int update(MonthlyEditVo vo)
+    @Override
+    public int updateMonthly(MonthlyEditReqVo vo)
     {
-        Monthly model = mapperUtils.map(vo,Monthly.class);
+        Monthly model = new Monthly();
+        BeanUtil.copyProperties(vo,model);
         int r = this.baseMapper.updateByMultiId(model);
         if(r != 1)
         {
@@ -81,25 +84,30 @@ public class MonthlyServiceImpl extends MppServiceImpl<MonthlyMapper, Monthly> i
         return r;
     }
     /**
-    * 单条查询
+    * 单条查询个股月线行情
     * @param vo 请求参数
     * @return 结果集
     */
-    public MonthlyDto selectById(MonthlyDetailsVo vo)
+    @Override
+    public MonthlyResVo selectMonthlyById(MonthlyDetailsReqVo vo)
     {
-        Monthly model = mapperUtils.map(vo,Monthly.class);
+        Monthly model = new Monthly();
+        BeanUtil.copyProperties(vo,model);
         Monthly res = this.baseMapper.selectByMultiId(model);
-        MonthlyDto dto = mapperUtils.map(res,MonthlyDto.class);
-        return dto;
+        MonthlyResVo resVo = new MonthlyResVo();
+        BeanUtil.copyProperties(res,resVo);
+        return resVo;
     }
     /**
-    * 删除
+    * 删除个股月线行情
     * @param vo 请求参数
     * @return 结果集
     */
-    public int deleteById(MonthlyDeleteVo vo)
+    @Override
+    public int deleteMonthlyById(MonthlyDeleteReqVo vo)
     {
-        Monthly model = mapperUtils.map(vo,Monthly.class);
+        Monthly model = new Monthly();
+        BeanUtil.copyProperties(vo,model);
         int r = this.baseMapper.deleteByMultiId(model);
         if(r != 1)
         {
@@ -108,22 +116,18 @@ public class MonthlyServiceImpl extends MppServiceImpl<MonthlyMapper, Monthly> i
         return r;
     }
     /**
-    * 分页获取结果集
+    * 分页获取个股月线行情结果集
     * @param vo 请求参数
     * @return 结果集
     */
-    public PageResult<MonthlyListDto>  selectPageList(MonthlyListVo vo){
+    @Override
+    public PageResult<MonthlyListResVo>  selectMonthlyPageList(MonthlyListReqVo vo){
 
-        IPage<MonthlyListDto> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
-        page = this.baseMapper.selectPageList(page,vo);
-        PageResult<MonthlyListDto>  pageResult = new PageResult<>();
+        Page<MonthlyListResVo> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
+        Page<MonthlyListResVo> results = this.baseMapper.selectMonthlyPageList(page,vo);
+        PageResult<MonthlyListResVo>  pageResult = new PageResult<>();
 
-        pageResult.setResult(page.getRecords());
-        pageResult.setTotalCount(page.getTotal());
-        pageResult.setPageIndex(vo.getPageIndex());
-        pageResult.setPageSize(vo.getPageSize());
-
-        return pageResult;
+        return pageResult.convertPage(results);
     }
 
 

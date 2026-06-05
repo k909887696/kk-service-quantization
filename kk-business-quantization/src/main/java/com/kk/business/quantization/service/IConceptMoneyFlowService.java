@@ -1,16 +1,14 @@
 package com.kk.business.quantization.service;
 
 import com.kk.business.quantization.dao.entity.ConceptMoneyFlow;
-import com.github.jeffreyning.mybatisplus.service.IMppService;
-
 import java.util.List;
-import com.kk.business.quantization.model.vo.ConceptMoneyFlowListVo;
-import com.kk.business.quantization.model.dto.ConceptMoneyFlowListDto;
-import com.kk.business.quantization.model.vo.ConceptMoneyFlowAddVo;
-import com.kk.business.quantization.model.vo.ConceptMoneyFlowEditVo;
-import com.kk.business.quantization.model.dto.ConceptMoneyFlowDto;
-import com.kk.business.quantization.model.vo.ConceptMoneyFlowDetailsVo;
-import com.kk.business.quantization.model.vo.ConceptMoneyFlowDeleteVo;
+import com.kk.business.quantization.model.vobase.req.ConceptMoneyFlowListReqVo;
+import com.kk.business.quantization.model.vobase.res.ConceptMoneyFlowListResVo;
+import com.kk.business.quantization.model.vobase.req.ConceptMoneyFlowAddReqVo;
+import com.kk.business.quantization.model.vobase.req.ConceptMoneyFlowEditReqVo;
+import com.kk.business.quantization.model.vobase.res.ConceptMoneyFlowResVo;
+import com.kk.business.quantization.model.vobase.req.ConceptMoneyFlowDetailsReqVo;
+import com.kk.business.quantization.model.vobase.req.ConceptMoneyFlowDeleteReqVo;
 import com.kk.common.base.model.PageResult;
 /**
  * <p>
@@ -18,45 +16,45 @@ import com.kk.common.base.model.PageResult;
  * </p>
  *
  * @author kk
- * @since 2023-05-16
+ * @since 2026-06-04
  */
-public interface IConceptMoneyFlowService extends IMppService<ConceptMoneyFlow> {
+public interface IConceptMoneyFlowService  {
 
     /**
-     * 分批批量插入
-     * @param list 数据列表
-     * @return
-     */
-    void insertIgnoreBatch(List<ConceptMoneyFlow> list);
+    * 分批批量插入概念资金流向
+    * @param list 数据列表
+    * @return
+    */
+    void insertConceptMoneyFlowBatchSomeColumn(List<ConceptMoneyFlow> list);
     /**
-     * 分页获取结果集
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    PageResult<ConceptMoneyFlowListDto>  selectPageList(ConceptMoneyFlowListVo vo);
+    * 单条插入概念资金流向
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    void insertConceptMoneyFlow(ConceptMoneyFlowAddReqVo vo);
     /**
-     * 单条插入
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    void insert(ConceptMoneyFlowAddVo vo);
+    * 更新概念资金流向
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    int updateConceptMoneyFlow(ConceptMoneyFlowEditReqVo vo);
     /**
-     * 更新
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    int update(ConceptMoneyFlowEditVo vo);
+    * 单条查询概念资金流向
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    ConceptMoneyFlowResVo selectConceptMoneyFlowById(ConceptMoneyFlowDetailsReqVo vo);
     /**
-     * 单条查询
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    ConceptMoneyFlowDto selectById(ConceptMoneyFlowDetailsVo vo);
+    * 删除概念资金流向
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    int deleteConceptMoneyFlowById(ConceptMoneyFlowDeleteReqVo vo);
     /**
-     * 删除
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    int deleteById(ConceptMoneyFlowDeleteVo vo);
-
+    * 分页获取概念资金流向结果集
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    PageResult<ConceptMoneyFlowListResVo>  selectConceptMoneyFlowPageList(ConceptMoneyFlowListReqVo vo);
 }
+

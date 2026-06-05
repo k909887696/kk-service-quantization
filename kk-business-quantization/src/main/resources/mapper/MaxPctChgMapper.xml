@@ -17,17 +17,17 @@
     <!-- 通用查询条件 -->
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
-           <if test="maxPctChgListVo.market != null and maxPctChgListVo.market != ''">
+           <if test="maxPctChgListReqVo.market != null and maxPctChgListReqVo.market != ''">
                and market = #{maxPctChgListVo.market}
            </if>
-           <if test="maxPctChgListVo.maxPctChg != null and maxPctChgListVo.maxPctChg != ''">
+           <if test="maxPctChgListReqVo.maxPctChg != null and maxPctChgListReqVo.maxPctChg != ''">
                and max_pct_chg = #{maxPctChgListVo.maxPctChg}
            </if>
         </trim>
     </sql>
 
     <!-- 分页查询 -->
-    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.MaxPctChgListDto">
+    <select id="selectMaxPctChgPageList" resultType="com.kk.business.quantization.model.vobase.res.MaxPctChgListResVo">
         select <include refid="BaseColumnList"/>
         from max_pct_chg
         <include refid="BaseWhere"/>

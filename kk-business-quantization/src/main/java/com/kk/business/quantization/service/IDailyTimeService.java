@@ -1,16 +1,14 @@
 package com.kk.business.quantization.service;
 
 import com.kk.business.quantization.dao.entity.DailyTime;
-import com.github.jeffreyning.mybatisplus.service.IMppService;
-
 import java.util.List;
-import com.kk.business.quantization.model.vo.DailyTimeListVo;
-import com.kk.business.quantization.model.dto.DailyTimeListDto;
-import com.kk.business.quantization.model.vo.DailyTimeAddVo;
-import com.kk.business.quantization.model.vo.DailyTimeEditVo;
-import com.kk.business.quantization.model.dto.DailyTimeDto;
-import com.kk.business.quantization.model.vo.DailyTimeDetailsVo;
-import com.kk.business.quantization.model.vo.DailyTimeDeleteVo;
+import com.kk.business.quantization.model.vobase.req.DailyTimeListReqVo;
+import com.kk.business.quantization.model.vobase.res.DailyTimeListResVo;
+import com.kk.business.quantization.model.vobase.req.DailyTimeAddReqVo;
+import com.kk.business.quantization.model.vobase.req.DailyTimeEditReqVo;
+import com.kk.business.quantization.model.vobase.res.DailyTimeResVo;
+import com.kk.business.quantization.model.vobase.req.DailyTimeDetailsReqVo;
+import com.kk.business.quantization.model.vobase.req.DailyTimeDeleteReqVo;
 import com.kk.common.base.model.PageResult;
 /**
  * <p>
@@ -18,45 +16,45 @@ import com.kk.common.base.model.PageResult;
  * </p>
  *
  * @author kk
- * @since 2023-05-18
+ * @since 2026-06-04
  */
-public interface IDailyTimeService extends IMppService<DailyTime> {
+public interface IDailyTimeService  {
 
     /**
-     * 分批批量插入
-     * @param list 数据列表
-     * @return
-     */
-    void insertIgnoreBatch(List<DailyTime> list);
+    * 分批批量插入个股分钟行情
+    * @param list 数据列表
+    * @return
+    */
+    void insertDailyTimeBatchSomeColumn(List<DailyTime> list);
     /**
-     * 分页获取结果集
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    PageResult<DailyTimeListDto>  selectPageList(DailyTimeListVo vo);
+    * 单条插入个股分钟行情
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    void insertDailyTime(DailyTimeAddReqVo vo);
     /**
-     * 单条插入
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    void insert(DailyTimeAddVo vo);
+    * 更新个股分钟行情
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    int updateDailyTime(DailyTimeEditReqVo vo);
     /**
-     * 更新
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    int update(DailyTimeEditVo vo);
+    * 单条查询个股分钟行情
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    DailyTimeResVo selectDailyTimeById(DailyTimeDetailsReqVo vo);
     /**
-     * 单条查询
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    DailyTimeDto selectById(DailyTimeDetailsVo vo);
+    * 删除个股分钟行情
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    int deleteDailyTimeById(DailyTimeDeleteReqVo vo);
     /**
-     * 删除
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    int deleteById(DailyTimeDeleteVo vo);
-
+    * 分页获取个股分钟行情结果集
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    PageResult<DailyTimeListResVo>  selectDailyTimePageList(DailyTimeListReqVo vo);
 }
+

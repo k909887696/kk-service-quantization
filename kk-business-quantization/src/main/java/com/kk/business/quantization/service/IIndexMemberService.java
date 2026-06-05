@@ -1,16 +1,14 @@
 package com.kk.business.quantization.service;
 
 import com.kk.business.quantization.dao.entity.IndexMember;
-import com.github.jeffreyning.mybatisplus.service.IMppService;
-
 import java.util.List;
-import com.kk.business.quantization.model.vo.IndexMemberListVo;
-import com.kk.business.quantization.model.dto.IndexMemberListDto;
-import com.kk.business.quantization.model.vo.IndexMemberAddVo;
-import com.kk.business.quantization.model.vo.IndexMemberEditVo;
-import com.kk.business.quantization.model.dto.IndexMemberDto;
-import com.kk.business.quantization.model.vo.IndexMemberDetailsVo;
-import com.kk.business.quantization.model.vo.IndexMemberDeleteVo;
+import com.kk.business.quantization.model.vobase.req.IndexMemberListReqVo;
+import com.kk.business.quantization.model.vobase.res.IndexMemberListResVo;
+import com.kk.business.quantization.model.vobase.req.IndexMemberAddReqVo;
+import com.kk.business.quantization.model.vobase.req.IndexMemberEditReqVo;
+import com.kk.business.quantization.model.vobase.res.IndexMemberResVo;
+import com.kk.business.quantization.model.vobase.req.IndexMemberDetailsReqVo;
+import com.kk.business.quantization.model.vobase.req.IndexMemberDeleteReqVo;
 import com.kk.common.base.model.PageResult;
 /**
  * <p>
@@ -18,45 +16,45 @@ import com.kk.common.base.model.PageResult;
  * </p>
  *
  * @author kk
- * @since 2023-05-18
+ * @since 2026-06-04
  */
-public interface IIndexMemberService extends IMppService<IndexMember> {
+public interface IIndexMemberService  {
 
     /**
-    * 分批批量插入
+    * 分批批量插入申万行业明细
     * @param list 数据列表
     * @return
     */
-    void insertIgnoreBatch(List<IndexMember> list);
+    void insertIndexMemberBatchSomeColumn(List<IndexMember> list);
     /**
-    * 分页获取结果集
+    * 单条插入申万行业明细
     * @param vo 请求参数
     * @return 结果集
     */
-    PageResult<IndexMemberListDto>  selectPageList(IndexMemberListVo vo);
+    void insertIndexMember(IndexMemberAddReqVo vo);
     /**
-    * 单条插入
+    * 更新申万行业明细
     * @param vo 请求参数
     * @return 结果集
     */
-    void insert(IndexMemberAddVo vo);
+    int updateIndexMember(IndexMemberEditReqVo vo);
     /**
-    * 更新
+    * 单条查询申万行业明细
     * @param vo 请求参数
     * @return 结果集
     */
-    int update(IndexMemberEditVo vo);
+    IndexMemberResVo selectIndexMemberById(IndexMemberDetailsReqVo vo);
     /**
-    * 单条查询
+    * 删除申万行业明细
     * @param vo 请求参数
     * @return 结果集
     */
-    IndexMemberDto selectById(IndexMemberDetailsVo vo);
+    int deleteIndexMemberById(IndexMemberDeleteReqVo vo);
     /**
-    * 删除
+    * 分页获取申万行业明细结果集
     * @param vo 请求参数
     * @return 结果集
     */
-    int deleteById(IndexMemberDeleteVo vo);
-
+    PageResult<IndexMemberListResVo>  selectIndexMemberPageList(IndexMemberListReqVo vo);
 }
+

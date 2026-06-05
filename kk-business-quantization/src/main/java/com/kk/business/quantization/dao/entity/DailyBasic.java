@@ -3,28 +3,29 @@ package com.kk.business.quantization.dao.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.github.jeffreyning.mybatisplus.anno.MppMultiId;
-import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.Serializable;
-
+ import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+import com.github.jeffreyning.mybatisplus.anno.MppMultiId;
 /**
  * <p>
  * 个股每日指标
  * </p>
  *
  * @author kk
- * @since 2021-12-18
+ * @since 2026-06-04
  */
+@Data
 @TableName("daily_basic")
-@Schema(name = "个股每日指标对象", description = "个股每日指标")
+@Schema(description = "个股每日指标")
 public class DailyBasic implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-    * ts股票代码
+    * TS代码
     */
-    @Schema(description = "ts股票代码")
+    @Schema(description = "TS代码")
     @MppMultiId("ts_code")
     private String tsCode;
 
@@ -134,9 +135,9 @@ public class DailyBasic implements Serializable {
     private Double freeShare;
 
     /**
-    * 总市值 （万元）
+    * 当日总市值（元）
     */
-    @Schema(description = "总市值 （万元）")
+    @Schema(description = "当日总市值（元）")
     @TableField("total_mv")
     private Double totalMv;
 
@@ -147,154 +148,5 @@ public class DailyBasic implements Serializable {
     @TableField("circ_mv")
     private Double circMv;
 
-    public String getTsCode() {
-        return tsCode;
-    }
 
-    public void setTsCode(String tsCode) {
-        this.tsCode = tsCode;
-    }
-    public String getTradeDate() {
-        return tradeDate;
-    }
-
-    public void setTradeDate(String tradeDate) {
-        this.tradeDate = tradeDate;
-    }
-    public Double getClose() {
-        return close;
-    }
-
-    public void setClose(Double close) {
-        this.close = close;
-    }
-    public Double getTurnoverRate() {
-        return turnoverRate;
-    }
-
-    public void setTurnoverRate(Double turnoverRate) {
-        this.turnoverRate = turnoverRate;
-    }
-    public Double getTurnoverRateF() {
-        return turnoverRateF;
-    }
-
-    public void setTurnoverRateF(Double turnoverRateF) {
-        this.turnoverRateF = turnoverRateF;
-    }
-    public Double getVolumeRatio() {
-        return volumeRatio;
-    }
-
-    public void setVolumeRatio(Double volumeRatio) {
-        this.volumeRatio = volumeRatio;
-    }
-    public Double getPe() {
-        return pe;
-    }
-
-    public void setPe(Double pe) {
-        this.pe = pe;
-    }
-    public Double getPeTtm() {
-        return peTtm;
-    }
-
-    public void setPeTtm(Double peTtm) {
-        this.peTtm = peTtm;
-    }
-    public Double getPb() {
-        return pb;
-    }
-
-    public void setPb(Double pb) {
-        this.pb = pb;
-    }
-    public Double getPs() {
-        return ps;
-    }
-
-    public void setPs(Double ps) {
-        this.ps = ps;
-    }
-    public Double getPsTtm() {
-        return psTtm;
-    }
-
-    public void setPsTtm(Double psTtm) {
-        this.psTtm = psTtm;
-    }
-    public Double getDvRatio() {
-        return dvRatio;
-    }
-
-    public void setDvRatio(Double dvRatio) {
-        this.dvRatio = dvRatio;
-    }
-    public Double getDvTtm() {
-        return dvTtm;
-    }
-
-    public void setDvTtm(Double dvTtm) {
-        this.dvTtm = dvTtm;
-    }
-    public Double getTotalShare() {
-        return totalShare;
-    }
-
-    public void setTotalShare(Double totalShare) {
-        this.totalShare = totalShare;
-    }
-    public Double getFloatShare() {
-        return floatShare;
-    }
-
-    public void setFloatShare(Double floatShare) {
-        this.floatShare = floatShare;
-    }
-    public Double getFreeShare() {
-        return freeShare;
-    }
-
-    public void setFreeShare(Double freeShare) {
-        this.freeShare = freeShare;
-    }
-    public Double getTotalMv() {
-        return totalMv;
-    }
-
-    public void setTotalMv(Double totalMv) {
-        this.totalMv = totalMv;
-    }
-    public Double getCircMv() {
-        return circMv;
-    }
-
-    public void setCircMv(Double circMv) {
-        this.circMv = circMv;
-    }
-
-    @Override
-    public String toString() {
-        return "DailyBasic{" +
-            "tsCode=" + tsCode +
-            ", tradeDate=" + tradeDate +
-            ", close=" + close +
-            ", turnoverRate=" + turnoverRate +
-            ", turnoverRateF=" + turnoverRateF +
-            ", volumeRatio=" + volumeRatio +
-            ", pe=" + pe +
-            ", peTtm=" + peTtm +
-            ", pb=" + pb +
-            ", ps=" + ps +
-            ", psTtm=" + psTtm +
-            ", dvRatio=" + dvRatio +
-            ", dvTtm=" + dvTtm +
-            ", totalShare=" + totalShare +
-            ", floatShare=" + floatShare +
-            ", freeShare=" + freeShare +
-            ", totalMv=" + totalMv +
-            ", circMv=" + circMv +
-        "}";
-    }
 }

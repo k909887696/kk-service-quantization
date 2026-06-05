@@ -3,19 +3,20 @@ package com.kk.business.quantization.dao.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.Serializable;
-
+ import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
 /**
  * <p>
- * 股票概念
+ * 概念分类
  * </p>
  *
  * @author kk
- * @since 2021-12-24
+ * @since 2026-06-04
  */
+@Data
 @TableName("concept")
-@Schema(name = "股票概念对象", description = "股票概念")
+@Schema(description = "概念分类")
 public class Concept implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -35,7 +36,7 @@ public class Concept implements Serializable {
     private String name;
 
     /**
-    * 来源
+    * 来源 ts:tushare,ths:同花顺 90：东方财富
     */
     @Schema(description = "来源 ts:tushare,ths:同花顺 90：东方财富")
     @TableField("src")
@@ -69,66 +70,5 @@ public class Concept implements Serializable {
     @TableField("count")
     private Integer count;
 
-    public String getCode() {
-        return code;
-    }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-    public String getSrc() {
-        return src;
-    }
-
-    public void setSrc(String src) {
-        this.src = src;
-    }
-    public String getExchange() {
-        return exchange;
-    }
-
-    public void setExchange(String exchange) {
-        this.exchange = exchange;
-    }
-    public String getListDate() {
-        return listDate;
-    }
-
-    public void setListDate(String listDate) {
-        this.listDate = listDate;
-    }
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-    public Integer getCount() {
-        return count;
-    }
-
-    public void setCount(Integer count) {
-        this.count = count;
-    }
-
-    @Override
-    public String toString() {
-        return "Concept{" +
-            "code=" + code +
-            ", name=" + name +
-            ", src=" + src +
-            ", exchange=" + exchange +
-            ", listDate=" + listDate +
-            ", type=" + type +
-            ", count=" + count +
-        "}";
-    }
 }

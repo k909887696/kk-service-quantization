@@ -41,86 +41,70 @@
 
     </sql>
     <!-- 通用查询条件 -->
-    <!-- 通用查询条件 -->
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
-            <if test="stockBasicListVo.tsCode != null and stockBasicListVo.tsCode != ''">
-                and ts_code = #{stockBasicListVo.tsCode}
-            </if>
-            <if test="stockBasicListVo.symbol != null and stockBasicListVo.symbol != ''">
-                and symbol = #{stockBasicListVo.symbol}
-            </if>
-            <if test="stockBasicListVo.name != null and stockBasicListVo.name != ''">
-                and name like concat('%',#{stockBasicListVo.name},'%')
-            </if>
-            <if test="stockBasicListVo.area != null and stockBasicListVo.area != ''">
-                and area = #{stockBasicListVo.area}
-            </if>
-            <if test="stockBasicListVo.industry != null and stockBasicListVo.industry != ''">
-                and industry = #{stockBasicListVo.industry}
-            </if>
-            <if test="stockBasicListVo.fullname != null and stockBasicListVo.fullname != ''">
-                and fullname like concat('%',#{stockBasicListVo.fullname},'%')
-            </if>
-            <if test="stockBasicListVo.enname != null and stockBasicListVo.enname != ''">
-                and enname like concat('%',#{stockBasicListVo.enname},'%')
-            </if>
-            <if test="stockBasicListVo.market != null and stockBasicListVo.market != ''">
-                and market = #{stockBasicListVo.market}
-            </if>
-            <if test="stockBasicListVo.exchange != null and stockBasicListVo.exchange != ''">
-                and exchange = #{stockBasicListVo.exchange}
-            </if>
-            <if test="stockBasicListVo.currType != null and stockBasicListVo.currType != ''">
-                and curr_type = #{stockBasicListVo.currType}
-            </if>
-            <if test="stockBasicListVo.listStatus != null and stockBasicListVo.listStatus != ''">
-                and list_status = #{stockBasicListVo.listStatus}
-            </if>
-            <if test="stockBasicListVo.listDateStart != null and stockBasicListVo.listDateStart != ''">
-                and list_date >= #{stockBasicListVo.listDateStart}
-            </if>
-            <if test="stockBasicListVo.listDateEnd != null and stockBasicListVo.listDateEnd != ''">
-                and list_date &lt;= #{stockBasicListVo.listDateEnd}
-            </if>
-            <if test="stockBasicListVo.delistDateStart != null and stockBasicListVo.delistDateStart != ''">
-                and delist_date >= #{stockBasicListVo.delistDateStart}
-            </if>
-            <if test="stockBasicListVo.delistDateEnd != null and stockBasicListVo.delistDateEnd != ''">
-                and delist_date &lt;= #{stockBasicListVo.delistDateEnd}
-            </if>
-            <if test="stockBasicListVo.isHs != null and stockBasicListVo.isHs != ''">
-                and is_hs = #{stockBasicListVo.isHs}
-            </if>
-            <if test="stockBasicListVo.cnspell != null and stockBasicListVo.cnspell != ''">
-                and cnspell = #{stockBasicListVo.cnspell}
-            </if>
-            <if test="stockBasicListVo.conceptIds != null and stockBasicListVo.conceptIds.size() >0 ">
-                and ts_code in (select cd.ts_code from concept_detail cd where cd.concept_id in
-                <foreach collection="stockBasicListVo.conceptIds" item="code" index="index" open="(" close=")"
-                         separator=",">
-                    #{code}
-                </foreach>
-                )
-            </if>
-            <if test="stockBasicListVo.kdjCrossDate != null and stockBasicListVo.kdjCrossDate != ''">
-                and ts_code  in (select kc.ts_code  from kdj_cross kc where   kc.trade_date = #{stockBasicListVo.kdjCrossDate})
-            </if>
+           <if test="stockBasicListReqVo.tsCode != null and stockBasicListReqVo.tsCode != ''">
+               and ts_code = #{stockBasicListVo.tsCode}
+           </if>
+           <if test="stockBasicListReqVo.symbol != null and stockBasicListReqVo.symbol != ''">
+               and symbol = #{stockBasicListVo.symbol}
+           </if>
+           <if test="stockBasicListReqVo.name != null and stockBasicListReqVo.name != ''">
+               and name like concat('%',#{stockBasicListVo.name},'%')
+           </if>
+           <if test="stockBasicListReqVo.area != null and stockBasicListReqVo.area != ''">
+               and area = #{stockBasicListVo.area}
+           </if>
+           <if test="stockBasicListReqVo.industry != null and stockBasicListReqVo.industry != ''">
+               and industry = #{stockBasicListVo.industry}
+           </if>
+           <if test="stockBasicListReqVo.fullname != null and stockBasicListReqVo.fullname != ''">
+               and fullname like concat('%',#{stockBasicListVo.fullname},'%')
+           </if>
+           <if test="stockBasicListReqVo.enname != null and stockBasicListReqVo.enname != ''">
+               and enname like concat('%',#{stockBasicListVo.enname},'%')
+           </if>
+           <if test="stockBasicListReqVo.market != null and stockBasicListReqVo.market != ''">
+               and market = #{stockBasicListVo.market}
+           </if>
+           <if test="stockBasicListReqVo.exchange != null and stockBasicListReqVo.exchange != ''">
+               and exchange = #{stockBasicListVo.exchange}
+           </if>
+           <if test="stockBasicListReqVo.currType != null and stockBasicListReqVo.currType != ''">
+               and curr_type = #{stockBasicListVo.currType}
+           </if>
+           <if test="stockBasicListReqVo.listStatus != null and stockBasicListReqVo.listStatus != ''">
+               and list_status = #{stockBasicListVo.listStatus}
+           </if>
+           <if test="stockBasicListReqVo.listDateStart != null and stockBasicListReqVo.listDateStart != ''">
+               and list_date >= #{stockBasicListVo.listDateStart}
+           </if>
+           <if test="stockBasicListReqVo.listDateEnd != null and stockBasicListReqVo.listDateEnd != ''">
+               and list_date &lt;= #{stockBasicListVo.listDateEnd}
+           </if>
+           <if test="stockBasicListReqVo.delistDateStart != null and stockBasicListReqVo.delistDateStart != ''">
+               and delist_date >= #{stockBasicListVo.delistDateStart}
+           </if>
+           <if test="stockBasicListReqVo.delistDateEnd != null and stockBasicListReqVo.delistDateEnd != ''">
+               and delist_date &lt;= #{stockBasicListVo.delistDateEnd}
+           </if>
+           <if test="stockBasicListReqVo.isHs != null and stockBasicListReqVo.isHs != ''">
+               and is_hs = #{stockBasicListVo.isHs}
+           </if>
+           <if test="stockBasicListReqVo.cnspell != null and stockBasicListReqVo.cnspell != ''">
+               and cnspell = #{stockBasicListVo.cnspell}
+           </if>
         </trim>
     </sql>
 
-
     <!-- 分页查询 -->
-    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.StockBasicListDto">
+    <select id="selectStockBasicPageList" resultType="com.kk.business.quantization.model.vobase.res.StockBasicListResVo">
         select <include refid="BaseColumnList"/>
         from stock_basic
         <include refid="BaseWhere"/>
 
     </select>
 
-    <delete id="truncateTable">
-        truncate table stock_basic
-    </delete>
 
 
 </mapper>

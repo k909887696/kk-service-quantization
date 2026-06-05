@@ -5,21 +5,20 @@ import org.springframework.stereotype.Service;
 import jakarta.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.kk.business.quantization.dao.entity.StockFluctuation;
 import com.kk.business.quantization.dao.mapper.StockFluctuationMapper;
 import com.kk.business.quantization.service.IStockFluctuationService;
-import com.github.jeffreyning.mybatisplus.service.MppServiceImpl;
-import com.kk.business.quantization.model.vo.StockFluctuationListVo;
-import com.kk.business.quantization.model.dto.StockFluctuationListDto;
-import com.kk.business.quantization.model.vo.StockFluctuationAddVo;
-import com.kk.business.quantization.model.vo.StockFluctuationEditVo;
-import com.kk.business.quantization.model.dto.StockFluctuationDto;
-import com.kk.business.quantization.model.vo.StockFluctuationDetailsVo;
-import com.kk.business.quantization.model.vo.StockFluctuationDeleteVo;
-import com.kk.common.utils.MapperUtils;
+import com.kk.business.quantization.model.vobase.req.StockFluctuationListReqVo;
+import com.kk.business.quantization.model.vobase.res.StockFluctuationListResVo;
+import com.kk.business.quantization.model.vobase.req.StockFluctuationAddReqVo;
+import com.kk.business.quantization.model.vobase.req.StockFluctuationEditReqVo;
+import com.kk.business.quantization.model.vobase.res.StockFluctuationResVo;
+import com.kk.business.quantization.model.vobase.req.StockFluctuationDetailsReqVo;
+import com.kk.business.quantization.model.vobase.req.StockFluctuationDeleteReqVo;
 import com.kk.common.base.model.PageResult;
+import com.kk.common.utils.BeanUtil;
 import com.kk.common.exception.BusinessException;
 /**
  * <p>
@@ -27,19 +26,19 @@ import com.kk.common.exception.BusinessException;
  * </p>
  *
  * @author kk
- * @since 2023-05-18
+ * @since 2026-06-04
  */
 @Service
-public class StockFluctuationServiceImpl extends MppServiceImpl<StockFluctuationMapper, StockFluctuation> implements IStockFluctuationService {
+public class StockFluctuationServiceImpl extends ServiceImpl<StockFluctuationMapper, StockFluctuation> implements IStockFluctuationService {
 
-    @Resource
-    public MapperUtils mapperUtils;
+
     /**
-    * 分批批量插入
+    * 分批批量插入个股异常波动信息
     * @param list 数据列表
     * @return
     */
-    public void insertIgnoreBatch(List<StockFluctuation> list)
+    @Override
+    public void insertStockFluctuationBatchSomeColumn(List<StockFluctuation> list)
     {
 
         if(list ==null || list.size()<=0) return ;
@@ -52,28 +51,32 @@ public class StockFluctuationServiceImpl extends MppServiceImpl<StockFluctuation
         for(;index<=totalPage;index++)
         {
             List<StockFluctuation> tempList = list.stream().skip((index-1)*size).limit(size).collect(Collectors.toList());
-            this.baseMapper.insertIgnoreBatchSomeColumn(tempList);
+            this.baseMapper.insertBatchSomeColumn(tempList);
         }
     }
     /**
-    * 单条插入
+    * 单条插入个股异常波动信息
     * @param vo 请求参数
     * @return 结果集
     */
-    public void insert(StockFluctuationAddVo vo)
+    @Override
+    public void insertStockFluctuation(StockFluctuationAddReqVo vo)
     {
-        StockFluctuation model = mapperUtils.map(vo,StockFluctuation.class);
+        StockFluctuation model = new StockFluctuation();
+        BeanUtil.copyProperties(vo,model);
         this.baseMapper.insert(model);
     }
     /**
-    * 更新
+    * 更新个股异常波动信息
     * @param vo 请求参数
     * @return 结果集
     */
-    public int update(StockFluctuationEditVo vo)
+    @Override
+    public int updateStockFluctuation(StockFluctuationEditReqVo vo)
     {
-        StockFluctuation model = mapperUtils.map(vo,StockFluctuation.class);
-        int r = this.baseMapper.updateByMultiId(model);
+        StockFluctuation model = new StockFluctuation();
+        BeanUtil.copyProperties(vo,model);
+        int r = this.baseMapper.updateById(model);
         if(r != 1)
         {
             throw new BusinessException("个股异常波动信息更新失败!");
@@ -81,26 +84,31 @@ public class StockFluctuationServiceImpl extends MppServiceImpl<StockFluctuation
         return r;
     }
     /**
-    * 单条查询
+    * 单条查询个股异常波动信息
     * @param vo 请求参数
     * @return 结果集
     */
-    public StockFluctuationDto selectById(StockFluctuationDetailsVo vo)
+    @Override
+    public StockFluctuationResVo selectStockFluctuationById(StockFluctuationDetailsReqVo vo)
     {
-        StockFluctuation model = mapperUtils.map(vo,StockFluctuation.class);
-        StockFluctuation res = this.baseMapper.selectByMultiId(model);
-        StockFluctuationDto dto = mapperUtils.map(res,StockFluctuationDto.class);
-        return dto;
+        StockFluctuation model = new StockFluctuation();
+        BeanUtil.copyProperties(vo,model);
+        StockFluctuation res = this.baseMapper.selectById(model);
+        StockFluctuationResVo resVo = new StockFluctuationResVo();
+        BeanUtil.copyProperties(res,resVo);
+        return resVo;
     }
     /**
-    * 删除
+    * 删除个股异常波动信息
     * @param vo 请求参数
     * @return 结果集
     */
-    public int deleteById(StockFluctuationDeleteVo vo)
+    @Override
+    public int deleteStockFluctuationById(StockFluctuationDeleteReqVo vo)
     {
-        StockFluctuation model = mapperUtils.map(vo,StockFluctuation.class);
-        int r = this.baseMapper.deleteByMultiId(model);
+        StockFluctuation model = new StockFluctuation();
+        BeanUtil.copyProperties(vo,model);
+        int r = this.baseMapper.deleteById(model);
         if(r != 1)
         {
             throw new BusinessException("个股异常波动信息删除失败!");
@@ -108,22 +116,18 @@ public class StockFluctuationServiceImpl extends MppServiceImpl<StockFluctuation
         return r;
     }
     /**
-    * 分页获取结果集
+    * 分页获取个股异常波动信息结果集
     * @param vo 请求参数
     * @return 结果集
     */
-    public PageResult<StockFluctuationListDto>  selectPageList(StockFluctuationListVo vo){
+    @Override
+    public PageResult<StockFluctuationListResVo>  selectStockFluctuationPageList(StockFluctuationListReqVo vo){
 
-        IPage<StockFluctuationListDto> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
-        page = this.baseMapper.selectPageList(page,vo);
-        PageResult<StockFluctuationListDto>  pageResult = new PageResult<>();
+        Page<StockFluctuationListResVo> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
+        Page<StockFluctuationListResVo> results = this.baseMapper.selectStockFluctuationPageList(page,vo);
+        PageResult<StockFluctuationListResVo>  pageResult = new PageResult<>();
 
-        pageResult.setResult(page.getRecords());
-        pageResult.setTotalCount(page.getTotal());
-        pageResult.setPageIndex(vo.getPageIndex());
-        pageResult.setPageSize(vo.getPageSize());
-
-        return pageResult;
+        return pageResult.convertPage(results);
     }
 
 

@@ -27,35 +27,35 @@
     <!-- 通用查询条件 -->
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
-           <if test="stockDayKdjListVo.tsCode != null and stockDayKdjListVo.tsCode != ''">
+           <if test="stockDayKdjListReqVo.tsCode != null and stockDayKdjListReqVo.tsCode != ''">
                and ts_code = #{stockDayKdjListVo.tsCode}
            </if>
-           <if test="stockDayKdjListVo.tradeDateStart != null and stockDayKdjListVo.tradeDateStart != ''">
+           <if test="stockDayKdjListReqVo.tradeDateStart != null and stockDayKdjListReqVo.tradeDateStart != ''">
                and trade_date >= #{stockDayKdjListVo.tradeDateStart}
            </if>
-           <if test="stockDayKdjListVo.tradeDateEnd != null and stockDayKdjListVo.tradeDateEnd != ''">
+           <if test="stockDayKdjListReqVo.tradeDateEnd != null and stockDayKdjListReqVo.tradeDateEnd != ''">
                and trade_date &lt;= #{stockDayKdjListVo.tradeDateEnd}
            </if>
-           <if test="stockDayKdjListVo.kValue != null and stockDayKdjListVo.kValue != ''">
+           <if test="stockDayKdjListReqVo.kValue != null and stockDayKdjListReqVo.kValue != ''">
                and k_value = #{stockDayKdjListVo.kValue}
            </if>
-           <if test="stockDayKdjListVo.dValue != null and stockDayKdjListVo.dValue != ''">
+           <if test="stockDayKdjListReqVo.dValue != null and stockDayKdjListReqVo.dValue != ''">
                and d_value = #{stockDayKdjListVo.dValue}
            </if>
-           <if test="stockDayKdjListVo.jValue != null and stockDayKdjListVo.jValue != ''">
+           <if test="stockDayKdjListReqVo.jValue != null and stockDayKdjListReqVo.jValue != ''">
                and j_value = #{stockDayKdjListVo.jValue}
            </if>
-           <if test="stockDayKdjListVo.rsv != null and stockDayKdjListVo.rsv != ''">
+           <if test="stockDayKdjListReqVo.rsv != null and stockDayKdjListReqVo.rsv != ''">
                and rsv = #{stockDayKdjListVo.rsv}
            </if>
-           <if test="stockDayKdjListVo.kdjType != null and stockDayKdjListVo.kdjType != ''">
+           <if test="stockDayKdjListReqVo.kdjType != null and stockDayKdjListReqVo.kdjType != ''">
                and kdj_type = #{stockDayKdjListVo.kdjType}
            </if>
         </trim>
     </sql>
 
     <!-- 分页查询 -->
-    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.StockDayKdjListDto">
+    <select id="selectStockDayKdjPageList" resultType="com.kk.business.quantization.model.vobase.res.StockDayKdjListResVo">
         select <include refid="BaseColumnList"/>
         from stock_day_kdj
         <include refid="BaseWhere"/>

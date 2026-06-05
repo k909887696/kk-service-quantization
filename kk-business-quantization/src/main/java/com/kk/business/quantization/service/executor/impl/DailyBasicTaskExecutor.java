@@ -67,7 +67,7 @@ public class DailyBasicTaskExecutor implements ITaskExecutor {
         }
 
         //插入db
-        dailyBasicService.insertIgnoreBatch(data);
+        dailyBasicService.insertDailyBasicBatchSomeColumn(data);
     }
 
     @Override

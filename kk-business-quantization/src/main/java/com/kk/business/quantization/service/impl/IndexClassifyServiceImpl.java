@@ -5,21 +5,20 @@ import org.springframework.stereotype.Service;
 import jakarta.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.kk.business.quantization.dao.entity.IndexClassify;
 import com.kk.business.quantization.dao.mapper.IndexClassifyMapper;
 import com.kk.business.quantization.service.IIndexClassifyService;
-import com.github.jeffreyning.mybatisplus.service.MppServiceImpl;
-import com.kk.business.quantization.model.vo.IndexClassifyListVo;
-import com.kk.business.quantization.model.dto.IndexClassifyListDto;
-import com.kk.business.quantization.model.vo.IndexClassifyAddVo;
-import com.kk.business.quantization.model.vo.IndexClassifyEditVo;
-import com.kk.business.quantization.model.dto.IndexClassifyDto;
-import com.kk.business.quantization.model.vo.IndexClassifyDetailsVo;
-import com.kk.business.quantization.model.vo.IndexClassifyDeleteVo;
-import com.kk.common.utils.MapperUtils;
+import com.kk.business.quantization.model.vobase.req.IndexClassifyListReqVo;
+import com.kk.business.quantization.model.vobase.res.IndexClassifyListResVo;
+import com.kk.business.quantization.model.vobase.req.IndexClassifyAddReqVo;
+import com.kk.business.quantization.model.vobase.req.IndexClassifyEditReqVo;
+import com.kk.business.quantization.model.vobase.res.IndexClassifyResVo;
+import com.kk.business.quantization.model.vobase.req.IndexClassifyDetailsReqVo;
+import com.kk.business.quantization.model.vobase.req.IndexClassifyDeleteReqVo;
 import com.kk.common.base.model.PageResult;
+import com.kk.common.utils.BeanUtil;
 import com.kk.common.exception.BusinessException;
 /**
  * <p>
@@ -27,19 +26,19 @@ import com.kk.common.exception.BusinessException;
  * </p>
  *
  * @author kk
- * @since 2023-05-18
+ * @since 2026-06-04
  */
 @Service
-public class IndexClassifyServiceImpl extends MppServiceImpl<IndexClassifyMapper, IndexClassify> implements IIndexClassifyService {
+public class IndexClassifyServiceImpl extends ServiceImpl<IndexClassifyMapper, IndexClassify> implements IIndexClassifyService {
 
-    @Resource
-    public MapperUtils mapperUtils;
+
     /**
-    * 分批批量插入
+    * 分批批量插入申万行业分类
     * @param list 数据列表
     * @return
     */
-    public void insertIgnoreBatch(List<IndexClassify> list)
+    @Override
+    public void insertIndexClassifyBatchSomeColumn(List<IndexClassify> list)
     {
 
         if(list ==null || list.size()<=0) return ;
@@ -56,23 +55,27 @@ public class IndexClassifyServiceImpl extends MppServiceImpl<IndexClassifyMapper
         }
     }
     /**
-    * 单条插入
+    * 单条插入申万行业分类
     * @param vo 请求参数
     * @return 结果集
     */
-    public void insert(IndexClassifyAddVo vo)
+    @Override
+    public void insertIndexClassify(IndexClassifyAddReqVo vo)
     {
-        IndexClassify model = mapperUtils.map(vo,IndexClassify.class);
+        IndexClassify model = new IndexClassify();
+        BeanUtil.copyProperties(vo,model);
         this.baseMapper.insert(model);
     }
     /**
-    * 更新
+    * 更新申万行业分类
     * @param vo 请求参数
     * @return 结果集
     */
-    public int update(IndexClassifyEditVo vo)
+    @Override
+    public int updateIndexClassify(IndexClassifyEditReqVo vo)
     {
-        IndexClassify model = mapperUtils.map(vo,IndexClassify.class);
+        IndexClassify model = new IndexClassify();
+        BeanUtil.copyProperties(vo,model);
         int r = this.baseMapper.updateById(model);
         if(r != 1)
         {
@@ -81,26 +84,31 @@ public class IndexClassifyServiceImpl extends MppServiceImpl<IndexClassifyMapper
         return r;
     }
     /**
-    * 单条查询
+    * 单条查询申万行业分类
     * @param vo 请求参数
     * @return 结果集
     */
-    public IndexClassifyDto selectById(IndexClassifyDetailsVo vo)
+    @Override
+    public IndexClassifyResVo selectIndexClassifyById(IndexClassifyDetailsReqVo vo)
     {
-        IndexClassify model = mapperUtils.map(vo,IndexClassify.class);
-        IndexClassify res = this.baseMapper.selectByMultiId(model);
-        IndexClassifyDto dto = mapperUtils.map(res,IndexClassifyDto.class);
-        return dto;
+        IndexClassify model = new IndexClassify();
+        BeanUtil.copyProperties(vo,model);
+        IndexClassify res = this.baseMapper.selectById(model);
+        IndexClassifyResVo resVo = new IndexClassifyResVo();
+        BeanUtil.copyProperties(res,resVo);
+        return resVo;
     }
     /**
-    * 删除
+    * 删除申万行业分类
     * @param vo 请求参数
     * @return 结果集
     */
-    public int deleteById(IndexClassifyDeleteVo vo)
+    @Override
+    public int deleteIndexClassifyById(IndexClassifyDeleteReqVo vo)
     {
-        IndexClassify model = mapperUtils.map(vo,IndexClassify.class);
-        int r = this.baseMapper.deleteByMultiId(model);
+        IndexClassify model = new IndexClassify();
+        BeanUtil.copyProperties(vo,model);
+        int r = this.baseMapper.deleteById(model);
         if(r != 1)
         {
             throw new BusinessException("申万行业分类删除失败!");
@@ -108,22 +116,18 @@ public class IndexClassifyServiceImpl extends MppServiceImpl<IndexClassifyMapper
         return r;
     }
     /**
-    * 分页获取结果集
+    * 分页获取申万行业分类结果集
     * @param vo 请求参数
     * @return 结果集
     */
-    public PageResult<IndexClassifyListDto>  selectPageList(IndexClassifyListVo vo){
+    @Override
+    public PageResult<IndexClassifyListResVo>  selectIndexClassifyPageList(IndexClassifyListReqVo vo){
 
-        IPage<IndexClassifyListDto> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
-        page = this.baseMapper.selectPageList(page,vo);
-        PageResult<IndexClassifyListDto>  pageResult = new PageResult<>();
+        Page<IndexClassifyListResVo> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
+        Page<IndexClassifyListResVo> results = this.baseMapper.selectIndexClassifyPageList(page,vo);
+        PageResult<IndexClassifyListResVo>  pageResult = new PageResult<>();
 
-        pageResult.setResult(page.getRecords());
-        pageResult.setTotalCount(page.getTotal());
-        pageResult.setPageIndex(vo.getPageIndex());
-        pageResult.setPageSize(vo.getPageSize());
-
-        return pageResult;
+        return pageResult.convertPage(results);
     }
 
 

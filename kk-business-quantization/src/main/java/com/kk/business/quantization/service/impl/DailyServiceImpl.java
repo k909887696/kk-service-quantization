@@ -1,46 +1,49 @@
 package com.kk.business.quantization.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.github.jeffreyning.mybatisplus.service.MppServiceImpl;
-import com.kk.business.quantization.dao.entity.Daily;
-import com.kk.business.quantization.dao.mapper.DailyMapper;
-import com.kk.business.quantization.model.dto.DailyDto;
 import com.kk.business.quantization.model.dto.DailyKdjDto;
 import com.kk.business.quantization.model.dto.DailyLeaderDto;
-import com.kk.business.quantization.model.dto.DailyListDto;
-import com.kk.business.quantization.model.vo.*;
-import com.kk.business.quantization.service.IDailyService;
-import com.kk.common.base.model.PageResult;
-import com.kk.common.exception.BusinessException;
-import com.kk.common.utils.MapperUtils;
-import org.apache.commons.lang3.StringUtils;
+import com.kk.business.quantization.model.vo.SearchDailyLeaderVo;
+import com.kk.business.quantization.model.vo.SearchDailyVo;
 import org.springframework.stereotype.Service;
-
 import jakarta.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
-
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.kk.business.quantization.dao.entity.Daily;
+import com.kk.business.quantization.dao.mapper.DailyMapper;
+import com.kk.business.quantization.service.IDailyService;
+import com.kk.business.quantization.model.vobase.req.DailyListReqVo;
+import com.kk.business.quantization.model.vobase.res.DailyListResVo;
+import com.kk.business.quantization.model.vobase.req.DailyAddReqVo;
+import com.kk.business.quantization.model.vobase.req.DailyEditReqVo;
+import com.kk.business.quantization.model.vobase.res.DailyResVo;
+import com.kk.business.quantization.model.vobase.req.DailyDetailsReqVo;
+import com.kk.business.quantization.model.vobase.req.DailyDeleteReqVo;
+import com.kk.common.base.model.PageResult;
+import com.kk.common.utils.BeanUtil;
+import com.kk.common.exception.BusinessException;
 /**
  * <p>
  * 个股日线行情 服务实现类
  * </p>
  *
  * @author kk
- * @since 2021-12-18
+ * @since 2026-06-04
  */
 @Service
-public class DailyServiceImpl extends MppServiceImpl<DailyMapper, Daily> implements IDailyService {
+public class DailyServiceImpl extends ServiceImpl<DailyMapper, Daily> implements IDailyService {
 
-    @Resource
-    public MapperUtils mapperUtils;
+
     /**
-     * 分批批量插入
-     * @param list 数据列表
-     * @return
-     */
-    public void insertIgnoreBatch(List<Daily> list)
+    * 分批批量插入个股日线行情
+    * @param list 数据列表
+    * @return
+    */
+    @Override
+    public void insertDailyBatchSomeColumn(List<Daily> list)
     {
 
         if(list ==null || list.size()<=0) return ;
@@ -57,23 +60,27 @@ public class DailyServiceImpl extends MppServiceImpl<DailyMapper, Daily> impleme
         }
     }
     /**
-     * 单条插入
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    public void insert(DailyAddVo vo)
+    * 单条插入个股日线行情
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    @Override
+    public void insertDaily(DailyAddReqVo vo)
     {
-        Daily model = mapperUtils.map(vo,Daily.class);
+        Daily model = new Daily();
+        BeanUtil.copyProperties(vo,model);
         this.baseMapper.insert(model);
     }
     /**
-     * 更新
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    public int update(DailyEditVo vo)
+    * 更新个股日线行情
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    @Override
+    public int updateDaily(DailyEditReqVo vo)
     {
-        Daily model = mapperUtils.map(vo,Daily.class);
+        Daily model = new Daily();
+        BeanUtil.copyProperties(vo,model);
         int r = this.baseMapper.updateByMultiId(model);
         if(r != 1)
         {
@@ -82,25 +89,30 @@ public class DailyServiceImpl extends MppServiceImpl<DailyMapper, Daily> impleme
         return r;
     }
     /**
-     * 单条查询
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    public DailyDto selectById(DailyDetailsVo vo)
+    * 单条查询个股日线行情
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    @Override
+    public DailyResVo selectDailyById(DailyDetailsReqVo vo)
     {
-        Daily model = mapperUtils.map(vo,Daily.class);
+        Daily model = new Daily();
+        BeanUtil.copyProperties(vo,model);
         Daily res = this.baseMapper.selectByMultiId(model);
-        DailyDto dto = mapperUtils.map(res,DailyDto.class);
-        return dto;
+        DailyResVo resVo = new DailyResVo();
+        BeanUtil.copyProperties(res,resVo);
+        return resVo;
     }
     /**
-     * 删除
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    public int deleteById(DailyDeleteVo vo)
+    * 删除个股日线行情
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    @Override
+    public int deleteDailyById(DailyDeleteReqVo vo)
     {
-        Daily model = mapperUtils.map(vo,Daily.class);
+        Daily model = new Daily();
+        BeanUtil.copyProperties(vo,model);
         int r = this.baseMapper.deleteByMultiId(model);
         if(r != 1)
         {
@@ -109,29 +121,25 @@ public class DailyServiceImpl extends MppServiceImpl<DailyMapper, Daily> impleme
         return r;
     }
     /**
-     * 分页获取结果集
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    public PageResult<DailyListDto>  selectPageList(DailyListVo vo){
+    * 分页获取个股日线行情结果集
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    @Override
+    public PageResult<DailyListResVo>  selectDailyPageList(DailyListReqVo vo){
 
-        IPage<DailyListDto> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
-        page = this.baseMapper.selectPageList(page,vo);
-        PageResult<DailyListDto>  pageResult = new PageResult<>();
+        Page<DailyListResVo> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
+        Page<DailyListResVo> results = this.baseMapper.selectDailyPageList(page,vo);
+        PageResult<DailyListResVo>  pageResult = new PageResult<>();
 
-        pageResult.setResult(page.getRecords());
-        pageResult.setTotalCount(page.getTotal());
-        pageResult.setPageIndex(vo.getPageIndex());
-        pageResult.setPageSize(vo.getPageSize());
-
-        return pageResult;
+        return pageResult.convertPage(results);
     }
-
     /**
      * 分页获取结果集
      * @param vo 请求参数
      * @return 结果集
      */
+    @Override
     public PageResult<DailyKdjDto>  getPageResultEx(SearchDailyVo vo) {
 
 
@@ -154,6 +162,7 @@ public class DailyServiceImpl extends MppServiceImpl<DailyMapper, Daily> impleme
      * @param vo
      * @return
      */
+    @Override
     public PageResult<DailyLeaderDto> selectStockLeader(SearchDailyLeaderVo vo)
     {
         IPage<DailyLeaderDto> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
@@ -169,5 +178,6 @@ public class DailyServiceImpl extends MppServiceImpl<DailyMapper, Daily> impleme
         pageResult.setPageSize(vo.getPageSize());
         return pageResult;
     }
+
 
 }

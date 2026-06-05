@@ -5,21 +5,20 @@ import org.springframework.stereotype.Service;
 import jakarta.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.kk.business.quantization.dao.entity.IndexDaily;
 import com.kk.business.quantization.dao.mapper.IndexDailyMapper;
 import com.kk.business.quantization.service.IIndexDailyService;
-import com.github.jeffreyning.mybatisplus.service.MppServiceImpl;
-import com.kk.business.quantization.model.vo.IndexDailyListVo;
-import com.kk.business.quantization.model.dto.IndexDailyListDto;
-import com.kk.business.quantization.model.vo.IndexDailyAddVo;
-import com.kk.business.quantization.model.vo.IndexDailyEditVo;
-import com.kk.business.quantization.model.dto.IndexDailyDto;
-import com.kk.business.quantization.model.vo.IndexDailyDetailsVo;
-import com.kk.business.quantization.model.vo.IndexDailyDeleteVo;
-import com.kk.common.utils.MapperUtils;
+import com.kk.business.quantization.model.vobase.req.IndexDailyListReqVo;
+import com.kk.business.quantization.model.vobase.res.IndexDailyListResVo;
+import com.kk.business.quantization.model.vobase.req.IndexDailyAddReqVo;
+import com.kk.business.quantization.model.vobase.req.IndexDailyEditReqVo;
+import com.kk.business.quantization.model.vobase.res.IndexDailyResVo;
+import com.kk.business.quantization.model.vobase.req.IndexDailyDetailsReqVo;
+import com.kk.business.quantization.model.vobase.req.IndexDailyDeleteReqVo;
 import com.kk.common.base.model.PageResult;
+import com.kk.common.utils.BeanUtil;
 import com.kk.common.exception.BusinessException;
 /**
  * <p>
@@ -27,19 +26,19 @@ import com.kk.common.exception.BusinessException;
  * </p>
  *
  * @author kk
- * @since 2023-05-19
+ * @since 2026-06-04
  */
 @Service
-public class IndexDailyServiceImpl extends MppServiceImpl<IndexDailyMapper, IndexDaily> implements IIndexDailyService {
+public class IndexDailyServiceImpl extends ServiceImpl<IndexDailyMapper, IndexDaily> implements IIndexDailyService {
 
-    @Resource
-    public MapperUtils mapperUtils;
+
     /**
-    * 分批批量插入
+    * 分批批量插入指数日线行情
     * @param list 数据列表
     * @return
     */
-    public void insertIgnoreBatch(List<IndexDaily> list)
+    @Override
+    public void insertIndexDailyBatchSomeColumn(List<IndexDaily> list)
     {
 
         if(list ==null || list.size()<=0) return ;
@@ -52,27 +51,31 @@ public class IndexDailyServiceImpl extends MppServiceImpl<IndexDailyMapper, Inde
         for(;index<=totalPage;index++)
         {
             List<IndexDaily> tempList = list.stream().skip((index-1)*size).limit(size).collect(Collectors.toList());
-            this.baseMapper.insertDuplicateKeyUpdate(tempList);
+            this.baseMapper.insertBatchSomeColumn(tempList);
         }
     }
     /**
-    * 单条插入
+    * 单条插入指数日线行情
     * @param vo 请求参数
     * @return 结果集
     */
-    public void insert(IndexDailyAddVo vo)
+    @Override
+    public void insertIndexDaily(IndexDailyAddReqVo vo)
     {
-        IndexDaily model = mapperUtils.map(vo,IndexDaily.class);
+        IndexDaily model = new IndexDaily();
+        BeanUtil.copyProperties(vo,model);
         this.baseMapper.insert(model);
     }
     /**
-    * 更新
+    * 更新指数日线行情
     * @param vo 请求参数
     * @return 结果集
     */
-    public int update(IndexDailyEditVo vo)
+    @Override
+    public int updateIndexDaily(IndexDailyEditReqVo vo)
     {
-        IndexDaily model = mapperUtils.map(vo,IndexDaily.class);
+        IndexDaily model = new IndexDaily();
+        BeanUtil.copyProperties(vo,model);
         int r = this.baseMapper.updateByMultiId(model);
         if(r != 1)
         {
@@ -81,25 +84,30 @@ public class IndexDailyServiceImpl extends MppServiceImpl<IndexDailyMapper, Inde
         return r;
     }
     /**
-    * 单条查询
+    * 单条查询指数日线行情
     * @param vo 请求参数
     * @return 结果集
     */
-    public IndexDailyDto selectById(IndexDailyDetailsVo vo)
+    @Override
+    public IndexDailyResVo selectIndexDailyById(IndexDailyDetailsReqVo vo)
     {
-        IndexDaily model = mapperUtils.map(vo,IndexDaily.class);
+        IndexDaily model = new IndexDaily();
+        BeanUtil.copyProperties(vo,model);
         IndexDaily res = this.baseMapper.selectByMultiId(model);
-        IndexDailyDto dto = mapperUtils.map(res,IndexDailyDto.class);
-        return dto;
+        IndexDailyResVo resVo = new IndexDailyResVo();
+        BeanUtil.copyProperties(res,resVo);
+        return resVo;
     }
     /**
-    * 删除
+    * 删除指数日线行情
     * @param vo 请求参数
     * @return 结果集
     */
-    public int deleteById(IndexDailyDeleteVo vo)
+    @Override
+    public int deleteIndexDailyById(IndexDailyDeleteReqVo vo)
     {
-        IndexDaily model = mapperUtils.map(vo,IndexDaily.class);
+        IndexDaily model = new IndexDaily();
+        BeanUtil.copyProperties(vo,model);
         int r = this.baseMapper.deleteByMultiId(model);
         if(r != 1)
         {
@@ -108,22 +116,18 @@ public class IndexDailyServiceImpl extends MppServiceImpl<IndexDailyMapper, Inde
         return r;
     }
     /**
-    * 分页获取结果集
+    * 分页获取指数日线行情结果集
     * @param vo 请求参数
     * @return 结果集
     */
-    public PageResult<IndexDailyListDto>  selectPageList(IndexDailyListVo vo){
+    @Override
+    public PageResult<IndexDailyListResVo>  selectIndexDailyPageList(IndexDailyListReqVo vo){
 
-        IPage<IndexDailyListDto> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
-        page = this.baseMapper.selectPageList(page,vo);
-        PageResult<IndexDailyListDto>  pageResult = new PageResult<>();
+        Page<IndexDailyListResVo> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
+        Page<IndexDailyListResVo> results = this.baseMapper.selectIndexDailyPageList(page,vo);
+        PageResult<IndexDailyListResVo>  pageResult = new PageResult<>();
 
-        pageResult.setResult(page.getRecords());
-        pageResult.setTotalCount(page.getTotal());
-        pageResult.setPageIndex(vo.getPageIndex());
-        pageResult.setPageSize(vo.getPageSize());
-
-        return pageResult;
+        return pageResult.convertPage(results);
     }
 
 

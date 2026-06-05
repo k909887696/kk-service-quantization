@@ -1,45 +1,44 @@
 package com.kk.business.quantization.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.github.jeffreyning.mybatisplus.service.MppServiceImpl;
-import com.kk.business.quantization.dao.entity.StockDayKdj;
-import com.kk.business.quantization.dao.mapper.StockDayKdjMapper;
-import com.kk.business.quantization.model.dto.StockDayKdjDto;
-import com.kk.business.quantization.model.dto.StockDayKdjListDto;
-import com.kk.business.quantization.model.vo.*;
-import com.kk.business.quantization.service.IStockDayKdjService;
-import com.kk.common.base.model.BasePage;
-import com.kk.common.base.model.PageResult;
-import com.kk.common.exception.BusinessException;
-import com.kk.common.utils.MapperUtils;
-import org.springframework.stereotype.Service;
 
+import org.springframework.stereotype.Service;
 import jakarta.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
-
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.kk.business.quantization.dao.entity.StockDayKdj;
+import com.kk.business.quantization.dao.mapper.StockDayKdjMapper;
+import com.kk.business.quantization.service.IStockDayKdjService;
+import com.kk.business.quantization.model.vobase.req.StockDayKdjListReqVo;
+import com.kk.business.quantization.model.vobase.res.StockDayKdjListResVo;
+import com.kk.business.quantization.model.vobase.req.StockDayKdjAddReqVo;
+import com.kk.business.quantization.model.vobase.req.StockDayKdjEditReqVo;
+import com.kk.business.quantization.model.vobase.res.StockDayKdjResVo;
+import com.kk.business.quantization.model.vobase.req.StockDayKdjDetailsReqVo;
+import com.kk.business.quantization.model.vobase.req.StockDayKdjDeleteReqVo;
+import com.kk.common.base.model.PageResult;
+import com.kk.common.utils.BeanUtil;
+import com.kk.common.exception.BusinessException;
 /**
  * <p>
- * kdj数据 服务实现类
+ * 个股kdj数据 服务实现类
  * </p>
  *
  * @author kk
- * @since 2021-12-18
+ * @since 2026-06-04
  */
 @Service
-public class StockDayKdjServiceImpl extends MppServiceImpl<StockDayKdjMapper, StockDayKdj> implements IStockDayKdjService {
+public class StockDayKdjServiceImpl extends ServiceImpl<StockDayKdjMapper, StockDayKdj> implements IStockDayKdjService {
 
-    @Resource
-    public MapperUtils mapperUtils;
+
     /**
-     * 分批批量插入
-     * @param list 数据列表
-     * @return
-     */
-    public void insertIgnoreBatch(List<StockDayKdj> list)
+    * 分批批量插入个股kdj数据
+    * @param list 数据列表
+    * @return
+    */
+    @Override
+    public void insertStockDayKdjBatchSomeColumn(List<StockDayKdj> list)
     {
 
         if(list ==null || list.size()<=0) return ;
@@ -56,23 +55,27 @@ public class StockDayKdjServiceImpl extends MppServiceImpl<StockDayKdjMapper, St
         }
     }
     /**
-     * 单条插入
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    public void insert(StockDayKdjAddVo vo)
+    * 单条插入个股kdj数据
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    @Override
+    public void insertStockDayKdj(StockDayKdjAddReqVo vo)
     {
-        StockDayKdj model = mapperUtils.map(vo,StockDayKdj.class);
+        StockDayKdj model = new StockDayKdj();
+        BeanUtil.copyProperties(vo,model);
         this.baseMapper.insert(model);
     }
     /**
-     * 更新
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    public int update(StockDayKdjEditVo vo)
+    * 更新个股kdj数据
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    @Override
+    public int updateStockDayKdj(StockDayKdjEditReqVo vo)
     {
-        StockDayKdj model = mapperUtils.map(vo,StockDayKdj.class);
+        StockDayKdj model = new StockDayKdj();
+        BeanUtil.copyProperties(vo,model);
         int r = this.baseMapper.updateByMultiId(model);
         if(r != 1)
         {
@@ -81,25 +84,30 @@ public class StockDayKdjServiceImpl extends MppServiceImpl<StockDayKdjMapper, St
         return r;
     }
     /**
-     * 单条查询
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    public StockDayKdjDto selectById(StockDayKdjDetailsVo vo)
+    * 单条查询个股kdj数据
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    @Override
+    public StockDayKdjResVo selectStockDayKdjById(StockDayKdjDetailsReqVo vo)
     {
-        StockDayKdj model = mapperUtils.map(vo,StockDayKdj.class);
+        StockDayKdj model = new StockDayKdj();
+        BeanUtil.copyProperties(vo,model);
         StockDayKdj res = this.baseMapper.selectByMultiId(model);
-        StockDayKdjDto dto = mapperUtils.map(res,StockDayKdjDto.class);
-        return dto;
+        StockDayKdjResVo resVo = new StockDayKdjResVo();
+        BeanUtil.copyProperties(res,resVo);
+        return resVo;
     }
     /**
-     * 删除
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    public int deleteById(StockDayKdjDeleteVo vo)
+    * 删除个股kdj数据
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    @Override
+    public int deleteStockDayKdjById(StockDayKdjDeleteReqVo vo)
     {
-        StockDayKdj model = mapperUtils.map(vo,StockDayKdj.class);
+        StockDayKdj model = new StockDayKdj();
+        BeanUtil.copyProperties(vo,model);
         int r = this.baseMapper.deleteByMultiId(model);
         if(r != 1)
         {
@@ -108,33 +116,18 @@ public class StockDayKdjServiceImpl extends MppServiceImpl<StockDayKdjMapper, St
         return r;
     }
     /**
-     * 分页获取结果集
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    public PageResult<StockDayKdjListDto>  selectPageList(StockDayKdjListVo vo){
+    * 分页获取个股kdj数据结果集
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    @Override
+    public PageResult<StockDayKdjListResVo>  selectStockDayKdjPageList(StockDayKdjListReqVo vo){
 
-        IPage<StockDayKdjListDto> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
-        page = this.baseMapper.selectPageList(page,vo);
-        PageResult<StockDayKdjListDto>  pageResult = new PageResult<>();
+        Page<StockDayKdjListResVo> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
+        Page<StockDayKdjListResVo> results = this.baseMapper.selectStockDayKdjPageList(page,vo);
+        PageResult<StockDayKdjListResVo>  pageResult = new PageResult<>();
 
-        pageResult.setResult(page.getRecords());
-        pageResult.setTotalCount(page.getTotal());
-        pageResult.setPageIndex(vo.getPageIndex());
-        pageResult.setPageSize(vo.getPageSize());
-
-        return pageResult;
-    }
-
-    /**
-     * 根据交易日期删除kdj数据
-     * @param tradeDate
-     */
-    public void deleteByTradeDate(String tradeDate)
-    {
-        LambdaQueryWrapper<StockDayKdj> query = new LambdaQueryWrapper<>();
-        query.eq(StockDayKdj::getTradeDate,tradeDate);
-        baseMapper.delete(query);
+        return pageResult.convertPage(results);
     }
 
 

@@ -1,7 +1,6 @@
 package com.kk.business.quantization.serviceapi;
 
 
-import com.kk.common.utils.BeanUtil;
 import org.springframework.stereotype.Service;
 import jakarta.annotation.Resource;
 import java.util.List;
@@ -22,7 +21,7 @@ import com.kk.common.annotation.BaseTransactional;
  * </p>
  *
  * @author kk
- * @since 2026-05-30
+ * @since 2026-06-04
  */
 @Service
 public class SecuritySelectionServiceApi   {
@@ -58,11 +57,7 @@ public class SecuritySelectionServiceApi   {
     @BaseTransactional
     public int updateSecuritySelection(SecuritySelectionEditReqVo vo)
     {
-        int r =securitySelectionService.updateSecuritySelection(vo);
-        SecuritySelectionAddReqVo model = new SecuritySelectionAddReqVo();
-        BeanUtil.copyProperties(vo, model);
-        //securitySelectionService.insertSecuritySelection(model);
-        return r;
+        return securitySelectionService.updateSecuritySelection(vo);
     }
     /**
     * 单条查询个人自选股
@@ -72,9 +67,7 @@ public class SecuritySelectionServiceApi   {
     @BaseTransactional(readOnly = true)
     public SecuritySelectionResVo selectSecuritySelectionById(SecuritySelectionDetailsReqVo vo)
     {
-        SecuritySelectionResVo res =securitySelectionService.selectSecuritySelectionById(vo);
-
-        return res ;
+        return securitySelectionService.selectSecuritySelectionById(vo);
     }
     /**
     * 删除个人自选股

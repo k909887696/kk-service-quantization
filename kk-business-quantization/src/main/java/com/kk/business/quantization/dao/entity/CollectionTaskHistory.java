@@ -5,21 +5,19 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
-import io.swagger.v3.oas.annotations.media.Schema;
+ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-
-
 /**
  * <p>
  * 系统设置-数据任务-历史
  * </p>
  *
  * @author kk
- * @since 2023-08-24
+ * @since 2026-06-04
  */
 @Data
 @TableName("collection_task_history")
-@Schema(name = "系统设置-数据任务-历史对象", description = "系统设置-数据任务-历史")
+@Schema(description = "系统设置-数据任务-历史")
 public class CollectionTaskHistory implements Serializable {
 
     private static final long serialVersionUID = 1L;

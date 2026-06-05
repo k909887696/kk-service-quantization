@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
-import io.swagger.v3.oas.annotations.media.Schema;
+ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 /**
  * <p>
@@ -13,11 +13,11 @@ import lombok.Data;
  * </p>
  *
  * @author kk
- * @since 2023-08-24
+ * @since 2026-06-04
  */
 @Data
 @TableName("collection_policy")
-@Schema(name = "系统设置-数据策略对象", description = "系统设置-数据策略")
+@Schema(description = "系统设置-数据策略")
 public class CollectionPolicy implements Serializable {
 
     private static final long serialVersionUID = 1L;

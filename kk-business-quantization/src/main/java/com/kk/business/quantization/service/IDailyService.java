@@ -1,63 +1,66 @@
 package com.kk.business.quantization.service;
 
-import com.github.jeffreyning.mybatisplus.service.IMppService;
 import com.kk.business.quantization.dao.entity.Daily;
-import com.kk.business.quantization.model.dto.DailyDto;
-import com.kk.business.quantization.model.dto.DailyKdjDto;
-import com.kk.business.quantization.model.dto.DailyLeaderDto;
-import com.kk.business.quantization.model.dto.DailyListDto;
-import com.kk.business.quantization.model.vo.*;
-import com.kk.common.base.model.PageResult;
-
 import java.util.List;
 
+import com.kk.business.quantization.model.dto.DailyKdjDto;
+import com.kk.business.quantization.model.dto.DailyLeaderDto;
+import com.kk.business.quantization.model.vo.SearchDailyLeaderVo;
+import com.kk.business.quantization.model.vo.SearchDailyVo;
+import com.kk.business.quantization.model.vobase.req.DailyListReqVo;
+import com.kk.business.quantization.model.vobase.res.DailyListResVo;
+import com.kk.business.quantization.model.vobase.req.DailyAddReqVo;
+import com.kk.business.quantization.model.vobase.req.DailyEditReqVo;
+import com.kk.business.quantization.model.vobase.res.DailyResVo;
+import com.kk.business.quantization.model.vobase.req.DailyDetailsReqVo;
+import com.kk.business.quantization.model.vobase.req.DailyDeleteReqVo;
+import com.kk.common.base.model.PageResult;
 /**
  * <p>
  * 个股日线行情 服务类
  * </p>
  *
  * @author kk
- * @since 2021-12-18
+ * @since 2026-06-04
  */
-public interface IDailyService extends IMppService<Daily> {
+public interface IDailyService  {
 
-
     /**
-     * 分批批量插入
-     * @param list 数据列表
-     * @return
-     */
-    void insertIgnoreBatch(List<Daily> list);
+    * 分批批量插入个股日线行情
+    * @param list 数据列表
+    * @return
+    */
+    void insertDailyBatchSomeColumn(List<Daily> list);
     /**
-     * 分页获取结果集
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    PageResult<DailyListDto>  selectPageList(DailyListVo vo);
+    * 单条插入个股日线行情
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    void insertDaily(DailyAddReqVo vo);
     /**
-     * 单条插入
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    void insert(DailyAddVo vo);
+    * 更新个股日线行情
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    int updateDaily(DailyEditReqVo vo);
     /**
-     * 更新
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    int update(DailyEditVo vo);
+    * 单条查询个股日线行情
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    DailyResVo selectDailyById(DailyDetailsReqVo vo);
     /**
-     * 单条查询
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    DailyDto selectById(DailyDetailsVo vo);
+    * 删除个股日线行情
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    int deleteDailyById(DailyDeleteReqVo vo);
     /**
-     * 删除
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    int deleteById(DailyDeleteVo vo);
+    * 分页获取个股日线行情结果集
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    PageResult<DailyListResVo>  selectDailyPageList(DailyListReqVo vo);
 
     /**
      * 分页获取结果集
@@ -71,5 +74,5 @@ public interface IDailyService extends IMppService<Daily> {
      * @return
      */
     PageResult<DailyLeaderDto> selectStockLeader(SearchDailyLeaderVo vo);
-
 }
+

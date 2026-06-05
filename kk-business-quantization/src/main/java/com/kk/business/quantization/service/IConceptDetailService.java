@@ -1,16 +1,14 @@
 package com.kk.business.quantization.service;
 
 import com.kk.business.quantization.dao.entity.ConceptDetail;
-import com.github.jeffreyning.mybatisplus.service.IMppService;
-
 import java.util.List;
-import com.kk.business.quantization.model.vo.ConceptDetailListVo;
-import com.kk.business.quantization.model.dto.ConceptDetailListDto;
-import com.kk.business.quantization.model.vo.ConceptDetailAddVo;
-import com.kk.business.quantization.model.vo.ConceptDetailEditVo;
-import com.kk.business.quantization.model.dto.ConceptDetailDto;
-import com.kk.business.quantization.model.vo.ConceptDetailDetailsVo;
-import com.kk.business.quantization.model.vo.ConceptDetailDeleteVo;
+import com.kk.business.quantization.model.vobase.req.ConceptDetailListReqVo;
+import com.kk.business.quantization.model.vobase.res.ConceptDetailListResVo;
+import com.kk.business.quantization.model.vobase.req.ConceptDetailAddReqVo;
+import com.kk.business.quantization.model.vobase.req.ConceptDetailEditReqVo;
+import com.kk.business.quantization.model.vobase.res.ConceptDetailResVo;
+import com.kk.business.quantization.model.vobase.req.ConceptDetailDetailsReqVo;
+import com.kk.business.quantization.model.vobase.req.ConceptDetailDeleteReqVo;
 import com.kk.common.base.model.PageResult;
 /**
  * <p>
@@ -18,45 +16,45 @@ import com.kk.common.base.model.PageResult;
  * </p>
  *
  * @author kk
- * @since 2023-05-16
+ * @since 2026-06-04
  */
-public interface IConceptDetailService extends IMppService<ConceptDetail> {
+public interface IConceptDetailService  {
 
     /**
-    * 分批批量插入
+    * 分批批量插入概念明细
     * @param list 数据列表
     * @return
     */
-    void insertIgnoreBatch(List<ConceptDetail> list);
+    void insertConceptDetailBatchSomeColumn(List<ConceptDetail> list);
     /**
-    * 分页获取结果集
+    * 单条插入概念明细
     * @param vo 请求参数
     * @return 结果集
     */
-    PageResult<ConceptDetailListDto>  selectPageList(ConceptDetailListVo vo);
+    void insertConceptDetail(ConceptDetailAddReqVo vo);
     /**
-    * 单条插入
+    * 更新概念明细
     * @param vo 请求参数
     * @return 结果集
     */
-    void insert(ConceptDetailAddVo vo);
+    int updateConceptDetail(ConceptDetailEditReqVo vo);
     /**
-    * 更新
+    * 单条查询概念明细
     * @param vo 请求参数
     * @return 结果集
     */
-    int update(ConceptDetailEditVo vo);
+    ConceptDetailResVo selectConceptDetailById(ConceptDetailDetailsReqVo vo);
     /**
-    * 单条查询
+    * 删除概念明细
     * @param vo 请求参数
     * @return 结果集
     */
-    ConceptDetailDto selectById(ConceptDetailDetailsVo vo);
+    int deleteConceptDetailById(ConceptDetailDeleteReqVo vo);
     /**
-    * 删除
+    * 分页获取概念明细结果集
     * @param vo 请求参数
     * @return 结果集
     */
-    int deleteById(ConceptDetailDeleteVo vo);
-
+    PageResult<ConceptDetailListResVo>  selectConceptDetailPageList(ConceptDetailListReqVo vo);
 }
+

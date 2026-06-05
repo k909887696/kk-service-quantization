@@ -4,8 +4,8 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.Weekly">
-        <result column="ts_code" property="tsCode" />
-        <result column="trade_date" property="tradeDate" />
+        <id column="ts_code" property="tsCode" />
+        <id column="trade_date" property="tradeDate" />
         <result column="open" property="open" />
         <result column="high" property="high" />
         <result column="low" property="low" />
@@ -35,47 +35,47 @@
     <!-- 通用查询条件 -->
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
-           <if test="weeklyListVo.tsCode != null and weeklyListVo.tsCode != ''">
+           <if test="weeklyListReqVo.tsCode != null and weeklyListReqVo.tsCode != ''">
                and ts_code = #{weeklyListVo.tsCode}
            </if>
-           <if test="weeklyListVo.tradeDateStart != null and weeklyListVo.tradeDateStart != ''">
+           <if test="weeklyListReqVo.tradeDateStart != null and weeklyListReqVo.tradeDateStart != ''">
                and trade_date >= #{weeklyListVo.tradeDateStart}
            </if>
-           <if test="weeklyListVo.tradeDateEnd != null and weeklyListVo.tradeDateEnd != ''">
+           <if test="weeklyListReqVo.tradeDateEnd != null and weeklyListReqVo.tradeDateEnd != ''">
                and trade_date &lt;= #{weeklyListVo.tradeDateEnd}
            </if>
-           <if test="weeklyListVo.open != null and weeklyListVo.open != ''">
+           <if test="weeklyListReqVo.open != null and weeklyListReqVo.open != ''">
                and open = #{weeklyListVo.open}
            </if>
-           <if test="weeklyListVo.high != null and weeklyListVo.high != ''">
+           <if test="weeklyListReqVo.high != null and weeklyListReqVo.high != ''">
                and high = #{weeklyListVo.high}
            </if>
-           <if test="weeklyListVo.low != null and weeklyListVo.low != ''">
+           <if test="weeklyListReqVo.low != null and weeklyListReqVo.low != ''">
                and low = #{weeklyListVo.low}
            </if>
-           <if test="weeklyListVo.close != null and weeklyListVo.close != ''">
+           <if test="weeklyListReqVo.close != null and weeklyListReqVo.close != ''">
                and close = #{weeklyListVo.close}
            </if>
-           <if test="weeklyListVo.preClose != null and weeklyListVo.preClose != ''">
+           <if test="weeklyListReqVo.preClose != null and weeklyListReqVo.preClose != ''">
                and pre_close = #{weeklyListVo.preClose}
            </if>
-           <if test="weeklyListVo.change != null and weeklyListVo.change != ''">
+           <if test="weeklyListReqVo.change != null and weeklyListReqVo.change != ''">
                and change = #{weeklyListVo.change}
            </if>
-           <if test="weeklyListVo.pctChg != null and weeklyListVo.pctChg != ''">
+           <if test="weeklyListReqVo.pctChg != null and weeklyListReqVo.pctChg != ''">
                and pct_chg = #{weeklyListVo.pctChg}
            </if>
-           <if test="weeklyListVo.vol != null and weeklyListVo.vol != ''">
+           <if test="weeklyListReqVo.vol != null and weeklyListReqVo.vol != ''">
                and vol = #{weeklyListVo.vol}
            </if>
-           <if test="weeklyListVo.amount != null and weeklyListVo.amount != ''">
+           <if test="weeklyListReqVo.amount != null and weeklyListReqVo.amount != ''">
                and amount = #{weeklyListVo.amount}
            </if>
         </trim>
     </sql>
 
     <!-- 分页查询 -->
-    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.WeeklyListDto">
+    <select id="selectWeeklyPageList" resultType="com.kk.business.quantization.model.vobase.res.WeeklyListResVo">
         select <include refid="BaseColumnList"/>
         from weekly
         <include refid="BaseWhere"/>

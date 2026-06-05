@@ -3,20 +3,21 @@ package com.kk.business.quantization.dao.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.github.jeffreyning.mybatisplus.anno.MppMultiId;
-import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.Serializable;
-
+ import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+import com.github.jeffreyning.mybatisplus.anno.MppMultiId;
 /**
  * <p>
  * 交易日历
  * </p>
  *
  * @author kk
- * @since 2021-12-18
+ * @since 2026-06-04
  */
+@Data
 @TableName("trade_cal")
-@Schema(name = "交易日历对象", description = "交易日历")
+@Schema(description = "交易日历")
 public class TradeCal implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,42 +50,5 @@ public class TradeCal implements Serializable {
     @TableField("pretrade_date")
     private String pretradeDate;
 
-    public String getExchange() {
-        return exchange;
-    }
 
-    public void setExchange(String exchange) {
-        this.exchange = exchange;
-    }
-    public String getCalDate() {
-        return calDate;
-    }
-
-    public void setCalDate(String calDate) {
-        this.calDate = calDate;
-    }
-    public String getIsOpen() {
-        return isOpen;
-    }
-
-    public void setIsOpen(String isOpen) {
-        this.isOpen = isOpen;
-    }
-    public String getPretradeDate() {
-        return pretradeDate;
-    }
-
-    public void setPretradeDate(String pretradeDate) {
-        this.pretradeDate = pretradeDate;
-    }
-
-    @Override
-    public String toString() {
-        return "TradeCal{" +
-            "exchange=" + exchange +
-            ", calDate=" + calDate +
-            ", isOpen=" + isOpen +
-            ", pretradeDate=" + pretradeDate +
-        "}";
-    }
 }

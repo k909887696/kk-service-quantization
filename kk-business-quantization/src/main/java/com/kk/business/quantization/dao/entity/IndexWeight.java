@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
-import io.swagger.v3.oas.annotations.media.Schema;
+ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import com.github.jeffreyning.mybatisplus.anno.MppMultiId;
 /**
@@ -13,11 +13,11 @@ import com.github.jeffreyning.mybatisplus.anno.MppMultiId;
  * </p>
  *
  * @author kk
- * @since 2023-05-19
+ * @since 2026-06-04
  */
 @Data
 @TableName("index_weight")
-@Schema(name = "指数成分权重对象", description = "指数成分权重")
+@Schema(description = "指数成分权重")
 public class IndexWeight implements Serializable {
 
     private static final long serialVersionUID = 1L;

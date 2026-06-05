@@ -1,22 +1,27 @@
 package com.kk.business.quantization.service.impl;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.kk.business.quantization.model.dto.DailyLeaderDto;
-import com.kk.business.quantization.model.vo.*;
+import com.kk.business.quantization.model.vo.SearchDailyLeaderVo;
 import org.springframework.stereotype.Service;
 import jakarta.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.kk.business.quantization.dao.entity.ConceptDaily;
 import com.kk.business.quantization.dao.mapper.ConceptDailyMapper;
 import com.kk.business.quantization.service.IConceptDailyService;
-import com.github.jeffreyning.mybatisplus.service.MppServiceImpl;
-import com.kk.business.quantization.model.dto.ConceptDailyListDto;
-import com.kk.business.quantization.model.dto.ConceptDailyDto;
-import com.kk.common.utils.MapperUtils;
+import com.kk.business.quantization.model.vobase.req.ConceptDailyListReqVo;
+import com.kk.business.quantization.model.vobase.res.ConceptDailyListResVo;
+import com.kk.business.quantization.model.vobase.req.ConceptDailyAddReqVo;
+import com.kk.business.quantization.model.vobase.req.ConceptDailyEditReqVo;
+import com.kk.business.quantization.model.vobase.res.ConceptDailyResVo;
+import com.kk.business.quantization.model.vobase.req.ConceptDailyDetailsReqVo;
+import com.kk.business.quantization.model.vobase.req.ConceptDailyDeleteReqVo;
 import com.kk.common.base.model.PageResult;
+import com.kk.common.utils.BeanUtil;
 import com.kk.common.exception.BusinessException;
 /**
  * <p>
@@ -24,19 +29,19 @@ import com.kk.common.exception.BusinessException;
  * </p>
  *
  * @author kk
- * @since 2023-05-16
+ * @since 2026-06-04
  */
 @Service
-public class ConceptDailyServiceImpl extends MppServiceImpl<ConceptDailyMapper, ConceptDaily> implements IConceptDailyService {
+public class ConceptDailyServiceImpl extends ServiceImpl<ConceptDailyMapper, ConceptDaily> implements IConceptDailyService {
 
-    @Resource
-    public MapperUtils mapperUtils;
+
     /**
-    * 分批批量插入
+    * 分批批量插入概念日线行情
     * @param list 数据列表
     * @return
     */
-    public void insertIgnoreBatch(List<ConceptDaily> list)
+    @Override
+    public void insertConceptDailyBatchSomeColumn(List<ConceptDaily> list)
     {
 
         if(list ==null || list.size()<=0) return ;
@@ -53,23 +58,27 @@ public class ConceptDailyServiceImpl extends MppServiceImpl<ConceptDailyMapper, 
         }
     }
     /**
-    * 单条插入
+    * 单条插入概念日线行情
     * @param vo 请求参数
     * @return 结果集
     */
-    public void insert(ConceptDailyAddVo vo)
+    @Override
+    public void insertConceptDaily(ConceptDailyAddReqVo vo)
     {
-        ConceptDaily model = mapperUtils.map(vo,ConceptDaily.class);
+        ConceptDaily model = new ConceptDaily();
+        BeanUtil.copyProperties(vo,model);
         this.baseMapper.insert(model);
     }
     /**
-    * 更新
+    * 更新概念日线行情
     * @param vo 请求参数
     * @return 结果集
     */
-    public int update(ConceptDailyEditVo vo)
+    @Override
+    public int updateConceptDaily(ConceptDailyEditReqVo vo)
     {
-        ConceptDaily model = mapperUtils.map(vo,ConceptDaily.class);
+        ConceptDaily model = new ConceptDaily();
+        BeanUtil.copyProperties(vo,model);
         int r = this.baseMapper.updateByMultiId(model);
         if(r != 1)
         {
@@ -78,25 +87,30 @@ public class ConceptDailyServiceImpl extends MppServiceImpl<ConceptDailyMapper, 
         return r;
     }
     /**
-    * 单条查询
+    * 单条查询概念日线行情
     * @param vo 请求参数
     * @return 结果集
     */
-    public ConceptDailyDto selectById(ConceptDailyDetailsVo vo)
+    @Override
+    public ConceptDailyResVo selectConceptDailyById(ConceptDailyDetailsReqVo vo)
     {
-        ConceptDaily model = mapperUtils.map(vo,ConceptDaily.class);
+        ConceptDaily model = new ConceptDaily();
+        BeanUtil.copyProperties(vo,model);
         ConceptDaily res = this.baseMapper.selectByMultiId(model);
-        ConceptDailyDto dto = mapperUtils.map(res,ConceptDailyDto.class);
-        return dto;
+        ConceptDailyResVo resVo = new ConceptDailyResVo();
+        BeanUtil.copyProperties(res,resVo);
+        return resVo;
     }
     /**
-    * 删除
+    * 删除概念日线行情
     * @param vo 请求参数
     * @return 结果集
     */
-    public int deleteById(ConceptDailyDeleteVo vo)
+    @Override
+    public int deleteConceptDailyById(ConceptDailyDeleteReqVo vo)
     {
-        ConceptDaily model = mapperUtils.map(vo,ConceptDaily.class);
+        ConceptDaily model = new ConceptDaily();
+        BeanUtil.copyProperties(vo,model);
         int r = this.baseMapper.deleteByMultiId(model);
         if(r != 1)
         {
@@ -105,29 +119,25 @@ public class ConceptDailyServiceImpl extends MppServiceImpl<ConceptDailyMapper, 
         return r;
     }
     /**
-    * 分页获取结果集
+    * 分页获取概念日线行情结果集
     * @param vo 请求参数
     * @return 结果集
     */
-    public PageResult<ConceptDailyListDto>  selectPageList(ConceptDailyListVo vo){
+    @Override
+    public PageResult<ConceptDailyListResVo>  selectConceptDailyPageList(ConceptDailyListReqVo vo){
 
-        IPage<ConceptDailyListDto> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
-        page = this.baseMapper.selectPageList(page,vo);
-        PageResult<ConceptDailyListDto>  pageResult = new PageResult<>();
+        Page<ConceptDailyListResVo> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
+        Page<ConceptDailyListResVo> results = this.baseMapper.selectConceptDailyPageList(page,vo);
+        PageResult<ConceptDailyListResVo>  pageResult = new PageResult<>();
 
-        pageResult.setResult(page.getRecords());
-        pageResult.setTotalCount(page.getTotal());
-        pageResult.setPageIndex(vo.getPageIndex());
-        pageResult.setPageSize(vo.getPageSize());
-
-        return pageResult;
+        return pageResult.convertPage(results);
     }
-
     /**
      * 查询区间涨幅最大概念
      * @param vo
      * @return
      */
+    @Override
     public PageResult<DailyLeaderDto> selectConceptLeaderListByRange(SearchDailyLeaderVo vo)
     {
         IPage<DailyLeaderDto> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
@@ -141,5 +151,6 @@ public class ConceptDailyServiceImpl extends MppServiceImpl<ConceptDailyMapper, 
 
         return pageResult;
     }
+
 
 }

@@ -4,9 +4,9 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.DailyTime">
-        <result column="ts_code" property="tsCode" />
-        <result column="trade_date" property="tradeDate" />
-        <result column="trade_time" property="tradeTime" />
+        <id column="ts_code" property="tsCode" />
+        <id column="trade_date" property="tradeDate" />
+        <id column="trade_time" property="tradeTime" />
         <result column="open" property="open" />
         <result column="high" property="high" />
         <result column="low" property="low" />
@@ -37,50 +37,50 @@
     <!-- 通用查询条件 -->
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
-           <if test="dailyTimeListVo.tsCode != null and dailyTimeListVo.tsCode != ''">
+           <if test="dailyTimeListReqVo.tsCode != null and dailyTimeListReqVo.tsCode != ''">
                and ts_code = #{dailyTimeListVo.tsCode}
            </if>
-           <if test="dailyTimeListVo.tradeDateStart != null and dailyTimeListVo.tradeDateStart != ''">
+           <if test="dailyTimeListReqVo.tradeDateStart != null and dailyTimeListReqVo.tradeDateStart != ''">
                and trade_date >= #{dailyTimeListVo.tradeDateStart}
            </if>
-           <if test="dailyTimeListVo.tradeDateEnd != null and dailyTimeListVo.tradeDateEnd != ''">
+           <if test="dailyTimeListReqVo.tradeDateEnd != null and dailyTimeListReqVo.tradeDateEnd != ''">
                and trade_date &lt;= #{dailyTimeListVo.tradeDateEnd}
            </if>
-           <if test="dailyTimeListVo.tradeTime != null and dailyTimeListVo.tradeTime != ''">
+           <if test="dailyTimeListReqVo.tradeTime != null and dailyTimeListReqVo.tradeTime != ''">
                and trade_time = #{dailyTimeListVo.tradeTime}
            </if>
-           <if test="dailyTimeListVo.open != null and dailyTimeListVo.open != ''">
+           <if test="dailyTimeListReqVo.open != null and dailyTimeListReqVo.open != ''">
                and open = #{dailyTimeListVo.open}
            </if>
-           <if test="dailyTimeListVo.high != null and dailyTimeListVo.high != ''">
+           <if test="dailyTimeListReqVo.high != null and dailyTimeListReqVo.high != ''">
                and high = #{dailyTimeListVo.high}
            </if>
-           <if test="dailyTimeListVo.low != null and dailyTimeListVo.low != ''">
+           <if test="dailyTimeListReqVo.low != null and dailyTimeListReqVo.low != ''">
                and low = #{dailyTimeListVo.low}
            </if>
-           <if test="dailyTimeListVo.close != null and dailyTimeListVo.close != ''">
+           <if test="dailyTimeListReqVo.close != null and dailyTimeListReqVo.close != ''">
                and close = #{dailyTimeListVo.close}
            </if>
-           <if test="dailyTimeListVo.preClose != null and dailyTimeListVo.preClose != ''">
+           <if test="dailyTimeListReqVo.preClose != null and dailyTimeListReqVo.preClose != ''">
                and pre_close = #{dailyTimeListVo.preClose}
            </if>
-           <if test="dailyTimeListVo.change != null and dailyTimeListVo.change != ''">
+           <if test="dailyTimeListReqVo.change != null and dailyTimeListReqVo.change != ''">
                and change = #{dailyTimeListVo.change}
            </if>
-           <if test="dailyTimeListVo.pctChg != null and dailyTimeListVo.pctChg != ''">
+           <if test="dailyTimeListReqVo.pctChg != null and dailyTimeListReqVo.pctChg != ''">
                and pct_chg = #{dailyTimeListVo.pctChg}
            </if>
-           <if test="dailyTimeListVo.vol != null and dailyTimeListVo.vol != ''">
+           <if test="dailyTimeListReqVo.vol != null and dailyTimeListReqVo.vol != ''">
                and vol = #{dailyTimeListVo.vol}
            </if>
-           <if test="dailyTimeListVo.amount != null and dailyTimeListVo.amount != ''">
+           <if test="dailyTimeListReqVo.amount != null and dailyTimeListReqVo.amount != ''">
                and amount = #{dailyTimeListVo.amount}
            </if>
         </trim>
     </sql>
 
     <!-- 分页查询 -->
-    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.DailyTimeListDto">
+    <select id="selectDailyTimePageList" resultType="com.kk.business.quantization.model.vobase.res.DailyTimeListResVo">
         select <include refid="BaseColumnList"/>
         from daily_time
         <include refid="BaseWhere"/>

@@ -79,7 +79,7 @@ public class ConceptDetailTaskExecutor implements ITaskExecutor {
         }
 
         //插入db
-        conceptDetailService.insertIgnoreBatch(data);
+        conceptDetailService.insertConceptDetailBatchSomeColumn(data);
         conceptDetailMapper.updateSymbolByConceptIds(vo.getIds());
     }
 

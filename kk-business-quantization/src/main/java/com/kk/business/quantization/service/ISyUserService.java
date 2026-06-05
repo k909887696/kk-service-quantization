@@ -1,16 +1,14 @@
 package com.kk.business.quantization.service;
 
 import com.kk.business.quantization.dao.entity.SyUser;
-import com.github.jeffreyning.mybatisplus.service.IMppService;
-
 import java.util.List;
-import com.kk.business.quantization.model.vo.SyUserListVo;
-import com.kk.business.quantization.model.dto.SyUserListDto;
-import com.kk.business.quantization.model.vo.SyUserAddVo;
-import com.kk.business.quantization.model.vo.SyUserEditVo;
-import com.kk.business.quantization.model.dto.SyUserDto;
-import com.kk.business.quantization.model.vo.SyUserDetailsVo;
-import com.kk.business.quantization.model.vo.SyUserDeleteVo;
+import com.kk.business.quantization.model.vobase.req.SyUserListReqVo;
+import com.kk.business.quantization.model.vobase.res.SyUserListResVo;
+import com.kk.business.quantization.model.vobase.req.SyUserAddReqVo;
+import com.kk.business.quantization.model.vobase.req.SyUserEditReqVo;
+import com.kk.business.quantization.model.vobase.res.SyUserResVo;
+import com.kk.business.quantization.model.vobase.req.SyUserDetailsReqVo;
+import com.kk.business.quantization.model.vobase.req.SyUserDeleteReqVo;
 import com.kk.common.base.model.PageResult;
 /**
  * <p>
@@ -18,45 +16,45 @@ import com.kk.common.base.model.PageResult;
  * </p>
  *
  * @author kk
- * @since 2023-05-18
+ * @since 2026-06-04
  */
-public interface ISyUserService extends IMppService<SyUser> {
+public interface ISyUserService  {
 
     /**
-    * 分批批量插入
+    * 分批批量插入用户信息
     * @param list 数据列表
     * @return
     */
-    void insertIgnoreBatch(List<SyUser> list);
+    void insertSyUserBatchSomeColumn(List<SyUser> list);
     /**
-    * 分页获取结果集
+    * 单条插入用户信息
     * @param vo 请求参数
     * @return 结果集
     */
-    PageResult<SyUserListDto>  selectPageList(SyUserListVo vo);
+    void insertSyUser(SyUserAddReqVo vo);
     /**
-    * 单条插入
+    * 更新用户信息
     * @param vo 请求参数
     * @return 结果集
     */
-    void insert(SyUserAddVo vo);
+    int updateSyUser(SyUserEditReqVo vo);
     /**
-    * 更新
+    * 单条查询用户信息
     * @param vo 请求参数
     * @return 结果集
     */
-    int update(SyUserEditVo vo);
+    SyUserResVo selectSyUserById(SyUserDetailsReqVo vo);
     /**
-    * 单条查询
+    * 删除用户信息
     * @param vo 请求参数
     * @return 结果集
     */
-    SyUserDto selectById(SyUserDetailsVo vo);
+    int deleteSyUserById(SyUserDeleteReqVo vo);
     /**
-    * 删除
+    * 分页获取用户信息结果集
     * @param vo 请求参数
     * @return 结果集
     */
-    int deleteById(SyUserDeleteVo vo);
-
+    PageResult<SyUserListResVo>  selectSyUserPageList(SyUserListReqVo vo);
 }
+

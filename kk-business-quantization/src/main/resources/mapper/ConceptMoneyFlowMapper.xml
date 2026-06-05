@@ -55,81 +55,81 @@
     <!-- 通用查询条件 -->
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
-            <if test="conceptMoneyFlowListVo.code != null and conceptMoneyFlowListVo.code != ''">
-                and code = #{conceptMoneyFlowListVo.code}
-            </if>
-            <if test="conceptMoneyFlowListVo.tradeDateStart != null and conceptMoneyFlowListVo.tradeDateStart != ''">
-                and trade_date >= #{conceptMoneyFlowListVo.tradeDateStart}
-            </if>
-            <if test="conceptMoneyFlowListVo.tradeDateEnd != null and conceptMoneyFlowListVo.tradeDateEnd != ''">
-                and trade_date &lt;= #{conceptMoneyFlowListVo.tradeDateEnd}
-            </if>
-            <if test="conceptMoneyFlowListVo.buySmVol != null and conceptMoneyFlowListVo.buySmVol != ''">
-                and buy_sm_vol = #{conceptMoneyFlowListVo.buySmVol}
-            </if>
-            <if test="conceptMoneyFlowListVo.buySmAmount != null and conceptMoneyFlowListVo.buySmAmount != ''">
-                and buy_sm_amount = #{conceptMoneyFlowListVo.buySmAmount}
-            </if>
-            <if test="conceptMoneyFlowListVo.sellSmVol != null and conceptMoneyFlowListVo.sellSmVol != ''">
-                and sell_sm_vol = #{conceptMoneyFlowListVo.sellSmVol}
-            </if>
-            <if test="conceptMoneyFlowListVo.sellSmAmount != null and conceptMoneyFlowListVo.sellSmAmount != ''">
-                and sell_sm_amount = #{conceptMoneyFlowListVo.sellSmAmount}
-            </if>
-            <if test="conceptMoneyFlowListVo.buyMdVol != null and conceptMoneyFlowListVo.buyMdVol != ''">
-                and buy_md_vol = #{conceptMoneyFlowListVo.buyMdVol}
-            </if>
-            <if test="conceptMoneyFlowListVo.buyMdAmount != null and conceptMoneyFlowListVo.buyMdAmount != ''">
-                and buy_md_amount = #{conceptMoneyFlowListVo.buyMdAmount}
-            </if>
-            <if test="conceptMoneyFlowListVo.sellMdVol != null and conceptMoneyFlowListVo.sellMdVol != ''">
-                and sell_md_vol = #{conceptMoneyFlowListVo.sellMdVol}
-            </if>
-            <if test="conceptMoneyFlowListVo.sellMdAmount != null and conceptMoneyFlowListVo.sellMdAmount != ''">
-                and sell_md_amount = #{conceptMoneyFlowListVo.sellMdAmount}
-            </if>
-            <if test="conceptMoneyFlowListVo.buyLgVol != null and conceptMoneyFlowListVo.buyLgVol != ''">
-                and buy_lg_vol = #{conceptMoneyFlowListVo.buyLgVol}
-            </if>
-            <if test="conceptMoneyFlowListVo.buyLgAmount != null and conceptMoneyFlowListVo.buyLgAmount != ''">
-                and buy_lg_amount = #{conceptMoneyFlowListVo.buyLgAmount}
-            </if>
-            <if test="conceptMoneyFlowListVo.sellLgVol != null and conceptMoneyFlowListVo.sellLgVol != ''">
-                and sell_lg_vol = #{conceptMoneyFlowListVo.sellLgVol}
-            </if>
-            <if test="conceptMoneyFlowListVo.sellLgAmount != null and conceptMoneyFlowListVo.sellLgAmount != ''">
-                and sell_lg_amount = #{conceptMoneyFlowListVo.sellLgAmount}
-            </if>
-            <if test="conceptMoneyFlowListVo.buyElgVol != null and conceptMoneyFlowListVo.buyElgVol != ''">
-                and buy_elg_vol = #{conceptMoneyFlowListVo.buyElgVol}
-            </if>
-            <if test="conceptMoneyFlowListVo.buyElgAmount != null and conceptMoneyFlowListVo.buyElgAmount != ''">
-                and buy_elg_amount = #{conceptMoneyFlowListVo.buyElgAmount}
-            </if>
-            <if test="conceptMoneyFlowListVo.sellElgVol != null and conceptMoneyFlowListVo.sellElgVol != ''">
-                and sell_elg_vol = #{conceptMoneyFlowListVo.sellElgVol}
-            </if>
-            <if test="conceptMoneyFlowListVo.sellElgAmount != null and conceptMoneyFlowListVo.sellElgAmount != ''">
-                and sell_elg_amount = #{conceptMoneyFlowListVo.sellElgAmount}
-            </if>
-            <if test="conceptMoneyFlowListVo.netMfVol != null and conceptMoneyFlowListVo.netMfVol != ''">
-                and net_mf_vol = #{conceptMoneyFlowListVo.netMfVol}
-            </if>
-            <if test="conceptMoneyFlowListVo.netMfAmount != null and conceptMoneyFlowListVo.netMfAmount != ''">
-                and net_mf_amount = #{conceptMoneyFlowListVo.netMfAmount}
-            </if>
-            <if test="conceptMoneyFlowListVo.name != null and conceptMoneyFlowListVo.name != ''">
-                and name like concat('%',#{conceptMoneyFlowListVo.name},'%')
-            </if>
+           <if test="conceptMoneyFlowListReqVo.code != null and conceptMoneyFlowListReqVo.code != ''">
+               and code = #{conceptMoneyFlowListVo.code}
+           </if>
+           <if test="conceptMoneyFlowListReqVo.tradeDateStart != null and conceptMoneyFlowListReqVo.tradeDateStart != ''">
+               and trade_date >= #{conceptMoneyFlowListVo.tradeDateStart}
+           </if>
+           <if test="conceptMoneyFlowListReqVo.tradeDateEnd != null and conceptMoneyFlowListReqVo.tradeDateEnd != ''">
+               and trade_date &lt;= #{conceptMoneyFlowListVo.tradeDateEnd}
+           </if>
+           <if test="conceptMoneyFlowListReqVo.buySmVol != null and conceptMoneyFlowListReqVo.buySmVol != ''">
+               and buy_sm_vol = #{conceptMoneyFlowListVo.buySmVol}
+           </if>
+           <if test="conceptMoneyFlowListReqVo.buySmAmount != null and conceptMoneyFlowListReqVo.buySmAmount != ''">
+               and buy_sm_amount = #{conceptMoneyFlowListVo.buySmAmount}
+           </if>
+           <if test="conceptMoneyFlowListReqVo.sellSmVol != null and conceptMoneyFlowListReqVo.sellSmVol != ''">
+               and sell_sm_vol = #{conceptMoneyFlowListVo.sellSmVol}
+           </if>
+           <if test="conceptMoneyFlowListReqVo.sellSmAmount != null and conceptMoneyFlowListReqVo.sellSmAmount != ''">
+               and sell_sm_amount = #{conceptMoneyFlowListVo.sellSmAmount}
+           </if>
+           <if test="conceptMoneyFlowListReqVo.buyMdVol != null and conceptMoneyFlowListReqVo.buyMdVol != ''">
+               and buy_md_vol = #{conceptMoneyFlowListVo.buyMdVol}
+           </if>
+           <if test="conceptMoneyFlowListReqVo.buyMdAmount != null and conceptMoneyFlowListReqVo.buyMdAmount != ''">
+               and buy_md_amount = #{conceptMoneyFlowListVo.buyMdAmount}
+           </if>
+           <if test="conceptMoneyFlowListReqVo.sellMdVol != null and conceptMoneyFlowListReqVo.sellMdVol != ''">
+               and sell_md_vol = #{conceptMoneyFlowListVo.sellMdVol}
+           </if>
+           <if test="conceptMoneyFlowListReqVo.sellMdAmount != null and conceptMoneyFlowListReqVo.sellMdAmount != ''">
+               and sell_md_amount = #{conceptMoneyFlowListVo.sellMdAmount}
+           </if>
+           <if test="conceptMoneyFlowListReqVo.buyLgVol != null and conceptMoneyFlowListReqVo.buyLgVol != ''">
+               and buy_lg_vol = #{conceptMoneyFlowListVo.buyLgVol}
+           </if>
+           <if test="conceptMoneyFlowListReqVo.buyLgAmount != null and conceptMoneyFlowListReqVo.buyLgAmount != ''">
+               and buy_lg_amount = #{conceptMoneyFlowListVo.buyLgAmount}
+           </if>
+           <if test="conceptMoneyFlowListReqVo.sellLgVol != null and conceptMoneyFlowListReqVo.sellLgVol != ''">
+               and sell_lg_vol = #{conceptMoneyFlowListVo.sellLgVol}
+           </if>
+           <if test="conceptMoneyFlowListReqVo.sellLgAmount != null and conceptMoneyFlowListReqVo.sellLgAmount != ''">
+               and sell_lg_amount = #{conceptMoneyFlowListVo.sellLgAmount}
+           </if>
+           <if test="conceptMoneyFlowListReqVo.buyElgVol != null and conceptMoneyFlowListReqVo.buyElgVol != ''">
+               and buy_elg_vol = #{conceptMoneyFlowListVo.buyElgVol}
+           </if>
+           <if test="conceptMoneyFlowListReqVo.buyElgAmount != null and conceptMoneyFlowListReqVo.buyElgAmount != ''">
+               and buy_elg_amount = #{conceptMoneyFlowListVo.buyElgAmount}
+           </if>
+           <if test="conceptMoneyFlowListReqVo.sellElgVol != null and conceptMoneyFlowListReqVo.sellElgVol != ''">
+               and sell_elg_vol = #{conceptMoneyFlowListVo.sellElgVol}
+           </if>
+           <if test="conceptMoneyFlowListReqVo.sellElgAmount != null and conceptMoneyFlowListReqVo.sellElgAmount != ''">
+               and sell_elg_amount = #{conceptMoneyFlowListVo.sellElgAmount}
+           </if>
+           <if test="conceptMoneyFlowListReqVo.netMfVol != null and conceptMoneyFlowListReqVo.netMfVol != ''">
+               and net_mf_vol = #{conceptMoneyFlowListVo.netMfVol}
+           </if>
+           <if test="conceptMoneyFlowListReqVo.netMfAmount != null and conceptMoneyFlowListReqVo.netMfAmount != ''">
+               and net_mf_amount = #{conceptMoneyFlowListVo.netMfAmount}
+           </if>
+           <if test="conceptMoneyFlowListReqVo.name != null and conceptMoneyFlowListReqVo.name != ''">
+               and name like concat('%',#{conceptMoneyFlowListVo.name},'%')
+           </if>
         </trim>
     </sql>
 
     <!-- 分页查询 -->
-    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.ConceptMoneyFlowListDto">
+    <select id="selectConceptMoneyFlowPageList" resultType="com.kk.business.quantization.model.vobase.res.ConceptMoneyFlowListResVo">
         select <include refid="BaseColumnList"/>
         from concept_money_flow
         <include refid="BaseWhere"/>
-        order by trade_date desc
+
     </select>
 
 

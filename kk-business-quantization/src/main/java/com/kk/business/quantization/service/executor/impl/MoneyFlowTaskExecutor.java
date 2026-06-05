@@ -68,7 +68,7 @@ public class MoneyFlowTaskExecutor implements ITaskExecutor {
         }
 
         //插入db
-        moneyFlowService.insertIgnoreBatch(data);
+        moneyFlowService.insertMoneyFlowBatchSomeColumn(data);
     }
 
     @Override

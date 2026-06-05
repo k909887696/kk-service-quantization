@@ -48,7 +48,7 @@ public class TradeCalTaskExecutor implements ITaskExecutor {
         TushareData<TradeCal> res =  tushareDataApi.tradeCal(vo);
         data.addAll(res.getData());
         //插入db
-        tradeCalService.insertIgnoreBatch(data);
+        tradeCalService.insertTradeCalBatchSomeColumn(data);
     }
 
 

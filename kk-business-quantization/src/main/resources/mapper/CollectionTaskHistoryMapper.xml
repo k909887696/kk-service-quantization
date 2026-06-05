@@ -2,8 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kk.business.quantization.dao.mapper.CollectionTaskHistoryMapper">
 
-
-
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.CollectionTaskHistory">
         <id column="task_id" property="taskId" />
@@ -45,73 +43,74 @@
     <!-- 通用查询条件 -->
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
-            <if test="collectionTaskHistoryListVo.taskId != null and collectionTaskHistoryListVo.taskId != ''">
-                and task_id = #{collectionTaskHistoryListVo.taskId}
-            </if>
-            <if test="collectionTaskHistoryListVo.name != null and collectionTaskHistoryListVo.name != ''">
-                and name like concat('%',#{collectionTaskHistoryListVo.name},'%')
-            </if>
-            <if test="collectionTaskHistoryListVo.policyId != null and collectionTaskHistoryListVo.policyId != ''">
-                and policy_id = #{collectionTaskHistoryListVo.policyId}
-            </if>
-            <if test="collectionTaskHistoryListVo.invokeCode != null and collectionTaskHistoryListVo.invokeCode != ''">
-                and invoke_code = #{collectionTaskHistoryListVo.invokeCode}
-            </if>
-            <if test="collectionTaskHistoryListVo.invokeMethod != null and collectionTaskHistoryListVo.invokeMethod != ''">
-                and invoke_method = #{collectionTaskHistoryListVo.invokeMethod}
-            </if>
-            <if test="collectionTaskHistoryListVo.invokeParams != null and collectionTaskHistoryListVo.invokeParams != ''">
-                and invoke_params = #{collectionTaskHistoryListVo.invokeParams}
-            </if>
-            <if test="collectionTaskHistoryListVo.preRunTimeStart != null and collectionTaskHistoryListVo.preRunTimeStart != ''">
-                and pre_run_time >= #{collectionTaskHistoryListVo.preRunTimeStart}
-            </if>
-            <if test="collectionTaskHistoryListVo.preRunTimeEnd != null and collectionTaskHistoryListVo.preRunTimeEnd != ''">
-                and pre_run_time &lt;= #{collectionTaskHistoryListVo.preRunTimeEnd}
-            </if>
-            <if test="collectionTaskHistoryListVo.runTimeStart != null and collectionTaskHistoryListVo.runTimeStart != ''">
-                and run_time >= #{collectionTaskHistoryListVo.runTimeStart}
-            </if>
-            <if test="collectionTaskHistoryListVo.runTimeEnd != null and collectionTaskHistoryListVo.runTimeEnd != ''">
-                and run_time &lt;= #{collectionTaskHistoryListVo.runTimeEnd}
-            </if>
-            <if test="collectionTaskHistoryListVo.finishTimeStart != null and collectionTaskHistoryListVo.finishTimeStart != ''">
-                and finish_time >= #{collectionTaskHistoryListVo.finishTimeStart}
-            </if>
-            <if test="collectionTaskHistoryListVo.finishTimeEnd != null and collectionTaskHistoryListVo.finishTimeEnd != ''">
-                and finish_time &lt;= #{collectionTaskHistoryListVo.finishTimeEnd}
-            </if>
-            <if test="collectionTaskHistoryListVo.createId != null and collectionTaskHistoryListVo.createId != ''">
-                and create_id = #{collectionTaskHistoryListVo.createId}
-            </if>
-            <if test="collectionTaskHistoryListVo.createName != null and collectionTaskHistoryListVo.createName != ''">
-                and create_name like concat('%',#{collectionTaskHistoryListVo.createName},'%')
-            </if>
-            <if test="collectionTaskHistoryListVo.createTimeStart != null and collectionTaskHistoryListVo.createTimeStart != ''">
-                and create_time >= #{collectionTaskHistoryListVo.createTimeStart}
-            </if>
-            <if test="collectionTaskHistoryListVo.createTimeEnd != null and collectionTaskHistoryListVo.createTimeEnd != ''">
-                and create_time &lt;= #{collectionTaskHistoryListVo.createTimeEnd}
-            </if>
-            <if test="collectionTaskHistoryListVo.runCount != null and collectionTaskHistoryListVo.runCount != ''">
-                and run_count = #{collectionTaskHistoryListVo.runCount}
-            </if>
-            <if test="collectionTaskHistoryListVo.exMsg != null and collectionTaskHistoryListVo.exMsg != ''">
-                and ex_msg = #{collectionTaskHistoryListVo.exMsg}
-            </if>
-            <if test="collectionTaskHistoryListVo.channel != null and collectionTaskHistoryListVo.channel != ''">
-                and channel = #{collectionTaskHistoryListVo.channel}
-            </if>
+           <if test="collectionTaskHistoryListReqVo.taskId != null and collectionTaskHistoryListReqVo.taskId != ''">
+               and task_id = #{collectionTaskHistoryListVo.taskId}
+           </if>
+           <if test="collectionTaskHistoryListReqVo.name != null and collectionTaskHistoryListReqVo.name != ''">
+               and name like concat('%',#{collectionTaskHistoryListVo.name},'%')
+           </if>
+           <if test="collectionTaskHistoryListReqVo.policyId != null and collectionTaskHistoryListReqVo.policyId != ''">
+               and policy_id = #{collectionTaskHistoryListVo.policyId}
+           </if>
+           <if test="collectionTaskHistoryListReqVo.invokeCode != null and collectionTaskHistoryListReqVo.invokeCode != ''">
+               and invoke_code = #{collectionTaskHistoryListVo.invokeCode}
+           </if>
+           <if test="collectionTaskHistoryListReqVo.invokeMethod != null and collectionTaskHistoryListReqVo.invokeMethod != ''">
+               and invoke_method = #{collectionTaskHistoryListVo.invokeMethod}
+           </if>
+           <if test="collectionTaskHistoryListReqVo.invokeParams != null and collectionTaskHistoryListReqVo.invokeParams != ''">
+               and invoke_params = #{collectionTaskHistoryListVo.invokeParams}
+           </if>
+           <if test="collectionTaskHistoryListReqVo.preRunTimeStart != null and collectionTaskHistoryListReqVo.preRunTimeStart != ''">
+               and pre_run_time >= #{collectionTaskHistoryListVo.preRunTimeStart}
+           </if>
+           <if test="collectionTaskHistoryListReqVo.preRunTimeEnd != null and collectionTaskHistoryListReqVo.preRunTimeEnd != ''">
+               and pre_run_time &lt;= #{collectionTaskHistoryListVo.preRunTimeEnd}
+           </if>
+           <if test="collectionTaskHistoryListReqVo.runTimeStart != null and collectionTaskHistoryListReqVo.runTimeStart != ''">
+               and run_time >= #{collectionTaskHistoryListVo.runTimeStart}
+           </if>
+           <if test="collectionTaskHistoryListReqVo.runTimeEnd != null and collectionTaskHistoryListReqVo.runTimeEnd != ''">
+               and run_time &lt;= #{collectionTaskHistoryListVo.runTimeEnd}
+           </if>
+           <if test="collectionTaskHistoryListReqVo.finishTimeStart != null and collectionTaskHistoryListReqVo.finishTimeStart != ''">
+               and finish_time >= #{collectionTaskHistoryListVo.finishTimeStart}
+           </if>
+           <if test="collectionTaskHistoryListReqVo.finishTimeEnd != null and collectionTaskHistoryListReqVo.finishTimeEnd != ''">
+               and finish_time &lt;= #{collectionTaskHistoryListVo.finishTimeEnd}
+           </if>
+           <if test="collectionTaskHistoryListReqVo.createId != null and collectionTaskHistoryListReqVo.createId != ''">
+               and create_id = #{collectionTaskHistoryListVo.createId}
+           </if>
+           <if test="collectionTaskHistoryListReqVo.createName != null and collectionTaskHistoryListReqVo.createName != ''">
+               and create_name like concat('%',#{collectionTaskHistoryListVo.createName},'%')
+           </if>
+           <if test="collectionTaskHistoryListReqVo.createTimeStart != null and collectionTaskHistoryListReqVo.createTimeStart != ''">
+               and create_time >= #{collectionTaskHistoryListVo.createTimeStart}
+           </if>
+           <if test="collectionTaskHistoryListReqVo.createTimeEnd != null and collectionTaskHistoryListReqVo.createTimeEnd != ''">
+               and create_time &lt;= #{collectionTaskHistoryListVo.createTimeEnd}
+           </if>
+           <if test="collectionTaskHistoryListReqVo.runCount != null and collectionTaskHistoryListReqVo.runCount != ''">
+               and run_count = #{collectionTaskHistoryListVo.runCount}
+           </if>
+           <if test="collectionTaskHistoryListReqVo.exMsg != null and collectionTaskHistoryListReqVo.exMsg != ''">
+               and ex_msg = #{collectionTaskHistoryListVo.exMsg}
+           </if>
+           <if test="collectionTaskHistoryListReqVo.channel != null and collectionTaskHistoryListReqVo.channel != ''">
+               and channel = #{collectionTaskHistoryListVo.channel}
+           </if>
         </trim>
     </sql>
 
     <!-- 分页查询 -->
-    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.CollectionTaskHistoryListDto">
+    <select id="selectCollectionTaskHistoryPageList" resultType="com.kk.business.quantization.model.vobase.res.CollectionTaskHistoryListResVo">
         select <include refid="BaseColumnList"/>
         from collection_task_history
         <include refid="BaseWhere"/>
 
     </select>
+
 
 
 </mapper>

@@ -1,16 +1,14 @@
 package com.kk.business.quantization.service;
 
 import com.kk.business.quantization.dao.entity.IndexDaily;
-import com.github.jeffreyning.mybatisplus.service.IMppService;
-
 import java.util.List;
-import com.kk.business.quantization.model.vo.IndexDailyListVo;
-import com.kk.business.quantization.model.dto.IndexDailyListDto;
-import com.kk.business.quantization.model.vo.IndexDailyAddVo;
-import com.kk.business.quantization.model.vo.IndexDailyEditVo;
-import com.kk.business.quantization.model.dto.IndexDailyDto;
-import com.kk.business.quantization.model.vo.IndexDailyDetailsVo;
-import com.kk.business.quantization.model.vo.IndexDailyDeleteVo;
+import com.kk.business.quantization.model.vobase.req.IndexDailyListReqVo;
+import com.kk.business.quantization.model.vobase.res.IndexDailyListResVo;
+import com.kk.business.quantization.model.vobase.req.IndexDailyAddReqVo;
+import com.kk.business.quantization.model.vobase.req.IndexDailyEditReqVo;
+import com.kk.business.quantization.model.vobase.res.IndexDailyResVo;
+import com.kk.business.quantization.model.vobase.req.IndexDailyDetailsReqVo;
+import com.kk.business.quantization.model.vobase.req.IndexDailyDeleteReqVo;
 import com.kk.common.base.model.PageResult;
 /**
  * <p>
@@ -18,45 +16,45 @@ import com.kk.common.base.model.PageResult;
  * </p>
  *
  * @author kk
- * @since 2023-05-19
+ * @since 2026-06-04
  */
-public interface IIndexDailyService extends IMppService<IndexDaily> {
+public interface IIndexDailyService  {
 
     /**
-    * 分批批量插入
+    * 分批批量插入指数日线行情
     * @param list 数据列表
     * @return
     */
-    void insertIgnoreBatch(List<IndexDaily> list);
+    void insertIndexDailyBatchSomeColumn(List<IndexDaily> list);
     /**
-    * 分页获取结果集
+    * 单条插入指数日线行情
     * @param vo 请求参数
     * @return 结果集
     */
-    PageResult<IndexDailyListDto>  selectPageList(IndexDailyListVo vo);
+    void insertIndexDaily(IndexDailyAddReqVo vo);
     /**
-    * 单条插入
+    * 更新指数日线行情
     * @param vo 请求参数
     * @return 结果集
     */
-    void insert(IndexDailyAddVo vo);
+    int updateIndexDaily(IndexDailyEditReqVo vo);
     /**
-    * 更新
+    * 单条查询指数日线行情
     * @param vo 请求参数
     * @return 结果集
     */
-    int update(IndexDailyEditVo vo);
+    IndexDailyResVo selectIndexDailyById(IndexDailyDetailsReqVo vo);
     /**
-    * 单条查询
+    * 删除指数日线行情
     * @param vo 请求参数
     * @return 结果集
     */
-    IndexDailyDto selectById(IndexDailyDetailsVo vo);
+    int deleteIndexDailyById(IndexDailyDeleteReqVo vo);
     /**
-    * 删除
+    * 分页获取指数日线行情结果集
     * @param vo 请求参数
     * @return 结果集
     */
-    int deleteById(IndexDailyDeleteVo vo);
-
+    PageResult<IndexDailyListResVo>  selectIndexDailyPageList(IndexDailyListReqVo vo);
 }
+

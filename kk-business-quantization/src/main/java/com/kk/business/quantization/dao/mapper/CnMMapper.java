@@ -12,7 +12,7 @@ import com.kk.business.quantization.model.vobase.req.CnMListReqVo;
  * </p>
  *
  * @author kk
- * @since 2026-05-30
+ * @since 2026-06-04
  */
 public interface CnMMapper extends RootMapper<CnM> {
      /**

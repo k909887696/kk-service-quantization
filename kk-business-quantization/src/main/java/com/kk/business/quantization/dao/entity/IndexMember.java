@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
-import io.swagger.v3.oas.annotations.media.Schema;
+ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import com.github.jeffreyning.mybatisplus.anno.MppMultiId;
 /**
@@ -13,11 +13,11 @@ import com.github.jeffreyning.mybatisplus.anno.MppMultiId;
  * </p>
  *
  * @author kk
- * @since 2023-05-19
+ * @since 2026-06-04
  */
 @Data
 @TableName("index_member")
-@Schema(name = "申万行业明细对象", description = "申万行业明细")
+@Schema(description = "申万行业明细")
 public class IndexMember implements Serializable {
 
     private static final long serialVersionUID = 1L;

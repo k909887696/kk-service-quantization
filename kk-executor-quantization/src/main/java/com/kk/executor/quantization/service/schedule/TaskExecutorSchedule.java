@@ -7,15 +7,18 @@ import com.kk.business.quantization.model.vo.JobParamVo;
 import com.kk.business.quantization.model.vo.PreExecutePolicyVo;
 import com.kk.business.quantization.model.vo.SelectPreExecutePolicyVo;
 import com.kk.business.quantization.model.vo.SelectPreExecuteTaskVo;
+import com.kk.business.quantization.model.vobase.req.CollectionTaskEditReqVo;
 import com.kk.business.quantization.service.ICollectionPolicyService;
 import com.kk.business.quantization.service.ICollectionTaskService;
 import com.kk.business.quantization.service.handler.TaskExecutorHandler;
+
 import com.kk.common.base.model.PageResult;
+import com.kk.common.utils.BeanUtil;
 import com.kk.common.utils.DateUtil;
 import com.kk.common.utils.JsonUtil;
 import com.kk.executor.quantization.util.LogUtils;
 import com.xxl.job.core.context.XxlJobHelper;
-import lombok.extern.slf4j.Slf4j;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.stereotype.Component;
@@ -30,7 +33,7 @@ import java.util.List;
  * @Date: 2021/12/17 16:10
  * 任务执行器处理调度
  */
-@Slf4j
+
 @Component
 public class TaskExecutorSchedule {
 
@@ -49,7 +52,7 @@ public class TaskExecutorSchedule {
     public void policySchedule( )
     {
 
-
+        String gLogkey = "policySchedule;";
         LogUtils.logInfoXxlAnd4j("{}|{}"
                 ,"任务策略调度开始执行"
                 ,"policySchedule");
@@ -59,7 +62,7 @@ public class TaskExecutorSchedule {
         vo.setPageSize(40);
         if(!StringUtils.isBlank(XxlJobHelper.getJobParam()))
         {
-            jobParamVo = ((JobParamVo)JsonUtil.parseObject(XxlJobHelper.getJobParam(), JobParamVo.class));
+            jobParamVo = ((JobParamVo) JsonUtil.parseObject(XxlJobHelper.getJobParam(), JobParamVo.class));
         }
         vo.setChannel(jobParamVo.getChannel());
         List<CollectionPolicy> list = collectionPolicyService.getPreExecutePolicy(vo);
@@ -67,18 +70,19 @@ public class TaskExecutorSchedule {
         if(list != null && list.size() > 0) {//没有需要执行策略
 
             for (CollectionPolicy p : list) {
+                String logkey = gLogkey + p.getPolicyId();
                 try {
-                    LogUtils.logInfoXxlAnd4j("{}|{}|{}",
+                    LogUtils.logInfoXxlAnd4j(logkey,"{}|{}|{}",
                             p.getName() + "(" + p.getPolicyId() + ")"
                             , "开始执行"
                             , "policySchedule;" + p.getPolicyId());
                     taskExecutorHandler.handlerPolicy(p, CollectionHandType.BySchedule);
-                    LogUtils.logInfoXxlAnd4j("{}|{}|{}",
+                    LogUtils.logInfoXxlAnd4j(logkey,"{}|{}|{}",
                             p.getName() + "(" + p.getPolicyId() + ")"
                             , "执行完成"
                             , "policySchedule;" + p.getPolicyId());
                 } catch (Exception e) {
-                    LogUtils.logErrorXxlAnd4j("{}|{}|{}|{}",
+                    LogUtils.logErrorXxlAnd4j(logkey,"{}|{}|{}|{}",
                             "任务策略调度执行异常：" + p.getName() + "(" + p.getPolicyId() + ")"
                             , e.getMessage(), ExceptionUtils.getStackTrace(e)
                             , "policySchedule;" + p.getPolicyId());
@@ -87,7 +91,7 @@ public class TaskExecutorSchedule {
                 }
             }
         }
-        LogUtils.logInfoXxlAnd4j("{}|{}"
+        LogUtils.logInfoXxlAnd4j(gLogkey,"{}|{}"
                 ,"任务策略调度执行完成"
                 ,"policySchedule");
     }
@@ -98,8 +102,8 @@ public class TaskExecutorSchedule {
      */
     public void taskSchedule()
     {
-
-        LogUtils.logInfoXxlAnd4j("{}|{}"
+        String gLogkey = "taskSchedule;";
+        LogUtils.logInfoXxlAnd4j(gLogkey,"{}|{}"
                 ,"任务调度开始执行"
                 ,"taskSchedule");
         SelectPreExecuteTaskVo vo = new SelectPreExecuteTaskVo();
@@ -114,25 +118,28 @@ public class TaskExecutorSchedule {
         PageResult<CollectionTask> list = collectionTaskService.getPreExecuteTask(vo);
         int runedCount=0;
         while(list != null && list.getResult()!= null && list.getResult().size() > 0) {
-            LogUtils.logInfoXxlAnd4j("{}|{}"
+            String logkey = gLogkey + runedCount;
+            LogUtils.logInfoXxlAnd4j(logkey,"{}|{}"
                     ,"待执行任务数量",list.getResult().size()
                     ,"taskSchedule");
             if (list != null && list.getResult() != null && list.getResult().size() > 0) {//没有需要执行任务
 
                 for (CollectionTask p : list.getResult()) {
+                    String itemLogkey = gLogkey + p.getTaskId();
                     try {
-                        LogUtils.logInfoXxlAnd4j("{}|{}|{}",
+
+                        LogUtils.logInfoXxlAnd4j(itemLogkey,"{}|{}|{}",
                                 p.getName() + "(" + p.getTaskId() + ")"
                                 , "开始执行"
                                 , "taskSchedule;" + p.getTaskId());
                         taskExecutorHandler.handlerTask(p);
-                        LogUtils.logInfoXxlAnd4j("{}|{}|{}",
+                        LogUtils.logInfoXxlAnd4j(itemLogkey,"{}|{}|{}",
                                 p.getName() + "(" + p.getTaskId() + ")"
                                 , "执行完成"
                                 , "taskSchedule;" + p.getTaskId());
                         runedCount++;
                     } catch (Exception e) {
-                        LogUtils.logErrorXxlAnd4j("{}|{}|{}|{}",
+                        LogUtils.logErrorXxlAnd4j(itemLogkey,"{}|{}|{}|{}",
                                 "任务调度执行异常：" + p.getName() + "(" + p.getTaskId() + ")"
                                 , e.getMessage(), ExceptionUtils.getStackTrace(e)
                                 , "taskSchedule;" + p.getTaskId());
@@ -141,7 +148,9 @@ public class TaskExecutorSchedule {
                         p.setRunCount(p.getRunCount() + 1);
                         p.setRunTime(new Date());
                         p.setPreRunTime(DateUtil.addDate(p.getPreRunTime(), Calendar.MINUTE, p.getRunCount() * (p.getRunCount() - 1)));
-                        collectionTaskService.update(p);
+                        CollectionTaskEditReqVo collectionTaskEditReqVo = new CollectionTaskEditReqVo();
+                        BeanUtil.copyProperties(p, collectionTaskEditReqVo);
+                        collectionTaskService.updateCollectionTask(collectionTaskEditReqVo);
                     }
                 }
                 if(runedCount>=MaxRunTaskCount)
@@ -153,7 +162,7 @@ public class TaskExecutorSchedule {
                 break;
             }
         }
-        LogUtils.logInfoXxlAnd4j("{}|{}"
+        LogUtils.logInfoXxlAnd4j(gLogkey,"{}|{}"
                 ,"任务调度执行完成"
                 ,"taskSchedule");
     }

@@ -1,76 +1,55 @@
 package com.kk.business.quantization.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.github.jeffreyning.mybatisplus.service.MppServiceImpl;
 import com.kk.business.quantization.constant.SerialNoType;
-import com.kk.business.quantization.dao.entity.CollectionPolicy;
-import com.kk.business.quantization.dao.entity.CollectionTask;
 import com.kk.business.quantization.dao.entity.CollectionTaskHistory;
 import com.kk.business.quantization.dao.mapper.CollectionTaskHistoryMapper;
-import com.kk.business.quantization.dao.mapper.CollectionTaskMapper;
-import com.kk.business.quantization.model.vo.SearchTaskListVo;
 import com.kk.business.quantization.model.vo.SelectPreExecuteTaskVo;
-import com.kk.business.quantization.service.ICollectionTaskService;
 import com.kk.business.quantization.utils.SerialNoUtil;
-import com.kk.common.base.model.BasePage;
-import com.kk.common.base.model.PageResult;
-import com.kk.common.exception.BusinessException;
 import com.kk.common.utils.DateUtil;
-import com.kk.common.utils.MapperUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-
 import jakarta.annotation.Resource;
-import java.util.ArrayList;
+
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.kk.business.quantization.dao.entity.CollectionTask;
+import com.kk.business.quantization.dao.mapper.CollectionTaskMapper;
+import com.kk.business.quantization.service.ICollectionTaskService;
+import com.kk.business.quantization.model.vobase.req.CollectionTaskListReqVo;
+import com.kk.business.quantization.model.vobase.res.CollectionTaskListResVo;
+import com.kk.business.quantization.model.vobase.req.CollectionTaskAddReqVo;
+import com.kk.business.quantization.model.vobase.req.CollectionTaskEditReqVo;
+import com.kk.business.quantization.model.vobase.res.CollectionTaskResVo;
+import com.kk.business.quantization.model.vobase.req.CollectionTaskDetailsReqVo;
+import com.kk.business.quantization.model.vobase.req.CollectionTaskDeleteReqVo;
+import com.kk.common.base.model.PageResult;
+import com.kk.common.utils.BeanUtil;
+import com.kk.common.exception.BusinessException;
 /**
  * <p>
- * 数据任务 服务实现类
+ * 系统设置-数据任务 服务实现类
  * </p>
  *
  * @author kk
- * @since 2021-12-18
+ * @since 2026-06-04
  */
 @Service
-public class CollectionTaskServiceImpl extends MppServiceImpl<CollectionTaskMapper, CollectionTask> implements ICollectionTaskService {
+public class CollectionTaskServiceImpl extends ServiceImpl<CollectionTaskMapper, CollectionTask> implements ICollectionTaskService {
 
     @Resource
-    public CollectionTaskMapper mapper;
-    @Resource
     public CollectionTaskHistoryMapper collectionTaskHistoryMapper;
-    @Resource
-    public MapperUtils mapperUtils;
     /**
-     * 更新异常信息(每次执行失败，隔2min 再执行)
-     * @param taskId
-     * @param exMsg
-     * @return
-     */
-    public int updateExMsgAndRunCount(String taskId,String exMsg)
-    {
-        return mapper.updateExMsgAndRunCount(taskId,exMsg);
-    }
-    /**
-     * 更新
-     * @param task
-     * @return
-     */
-    public int update(CollectionTask task)
-    {
-        return mapper.updateById(task);
-    }
-    /**
-    * 分批批量插入
+    * 分批批量插入系统设置-数据任务
     * @param list 数据列表
     * @return
     */
-    public void insertIgnoreBatch(List<CollectionTask> list)
+    @Override
+    public void insertCollectionTaskBatchSomeColumn(List<CollectionTask> list)
     {
 
         if(list ==null || list.size()<=0) return ;
@@ -80,54 +59,87 @@ public class CollectionTaskServiceImpl extends MppServiceImpl<CollectionTaskMapp
         int totalPage = totalCount / size;
         if( totalPage * size < totalCount ) totalPage += 1;
 
-        List<String> selialNoList = SerialNoUtil.getMultiNextId(SerialNoType.COLLECTION_TASK, DateUtil.PATTERN_STANDARD04W,10,totalCount);
-
-        for (int i=0;i<totalCount;i++
-             ) {
-            list.get(i).setTaskId(selialNoList.get(i));
-        }
-
         for(;index<=totalPage;index++)
         {
             List<CollectionTask> tempList = list.stream().skip((index-1)*size).limit(size).collect(Collectors.toList());
-            mapper.insertIgnoreBatchSomeColumn(tempList);
+            this.baseMapper.insertBatchSomeColumn(tempList);
         }
     }
     /**
-    * 分页获取结果集
+    * 单条插入系统设置-数据任务
     * @param vo 请求参数
     * @return 结果集
     */
-    public PageResult<CollectionTask>  getCollectionTaskPageResult(SearchTaskListVo vo){
-
-        LambdaQueryWrapper<CollectionTask> query = new LambdaQueryWrapper<>();
-        IPage<CollectionTask> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
-
-        //这里开始编写查询条件
-        if(StringUtils.isNotBlank(vo.getTaskId())) {
-            query.eq(CollectionTask::getTaskId, vo.getTaskId());
-        }
-        if(StringUtils.isNotBlank(vo.getPolicyId())) {
-            query.eq(CollectionTask::getPolicyId, vo.getPolicyId());
-        }
-        if(StringUtils.isNotBlank(vo.getName())) {
-            query.like(CollectionTask::getName, vo.getName());
-        }
-        if(StringUtils.isNotBlank(vo.getInvokeCode())) {
-            query.eq(CollectionTask::getInvokeCode, vo.getInvokeCode());
-        }
-        query.orderByDesc(CollectionTask::getTaskId);
-        page = mapper.selectPage(page,query);
-        PageResult<CollectionTask>  pageResult = new PageResult<>();
-
-        pageResult.setResult(page.getRecords());
-        pageResult.setTotalCount(page.getTotal());
-        pageResult.setPageIndex(vo.getPageIndex());
-        pageResult.setPageSize(vo.getPageSize());
-
-        return pageResult;
+    @Override
+    public void insertCollectionTask(CollectionTaskAddReqVo vo)
+    {
+        CollectionTask model = new CollectionTask();
+        BeanUtil.copyProperties(vo,model);
+        this.baseMapper.insert(model);
     }
+    /**
+    * 更新系统设置-数据任务
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    @Override
+    public int updateCollectionTask(CollectionTaskEditReqVo vo)
+    {
+        CollectionTask model = new CollectionTask();
+        BeanUtil.copyProperties(vo,model);
+        int r = this.baseMapper.updateById(model);
+        if(r != 1)
+        {
+            throw new BusinessException("系统设置-数据任务更新失败!");
+        }
+        return r;
+    }
+    /**
+    * 单条查询系统设置-数据任务
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    @Override
+    public CollectionTaskResVo selectCollectionTaskById(CollectionTaskDetailsReqVo vo)
+    {
+        CollectionTask model = new CollectionTask();
+        BeanUtil.copyProperties(vo,model);
+        CollectionTask res = this.baseMapper.selectById(model);
+        CollectionTaskResVo resVo = new CollectionTaskResVo();
+        BeanUtil.copyProperties(res,resVo);
+        return resVo;
+    }
+    /**
+    * 删除系统设置-数据任务
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    @Override
+    public int deleteCollectionTaskById(CollectionTaskDeleteReqVo vo)
+    {
+        CollectionTask model = new CollectionTask();
+        BeanUtil.copyProperties(vo,model);
+        int r = this.baseMapper.deleteById(model);
+        if(r != 1)
+        {
+            throw new BusinessException("系统设置-数据任务删除失败!");
+        }
+        return r;
+    }
+    /**
+    * 分页获取系统设置-数据任务结果集
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    @Override
+    public PageResult<CollectionTaskListResVo>  selectCollectionTaskPageList(CollectionTaskListReqVo vo){
 
+        Page<CollectionTaskListResVo> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
+        Page<CollectionTaskListResVo> results = this.baseMapper.selectCollectionTaskPageList(page,vo);
+        PageResult<CollectionTaskListResVo>  pageResult = new PageResult<>();
+
+        return pageResult.convertPage(results);
+    }
     /**
      * 获取需要处理的任务
      * @param vo
@@ -136,7 +148,7 @@ public class CollectionTaskServiceImpl extends MppServiceImpl<CollectionTaskMapp
     public PageResult<CollectionTask> getPreExecuteTask(SelectPreExecuteTaskVo vo)
     {
         QueryWrapper<CollectionTask> query = new QueryWrapper<>();
-        IPage<CollectionTask> page = new Page<>(vo.getPageIndex(),vo.getPageSize() <=0 ? 20:vo.getPageSize());
+        Page<CollectionTask> page = new Page<>(vo.getPageIndex(),vo.getPageSize() <=0 ? 20:vo.getPageSize());
 
         vo.setRunCount(vo.getRunCount() == null || vo.getRunCount()<=0 ? 10 : vo.getRunCount());
         vo.setPreRunTimeEnd(vo.getPreRunTimeEnd()==null ? new Date() : vo.getPreRunTimeEnd());
@@ -161,7 +173,7 @@ public class CollectionTaskServiceImpl extends MppServiceImpl<CollectionTaskMapp
 
         query.in("task_id",ids);
 
-        List<CollectionTask> list = mapper.selectList(query);
+        List<CollectionTask> list = this.baseMapper.selectList(query);
         return list;
     }
 
@@ -172,23 +184,25 @@ public class CollectionTaskServiceImpl extends MppServiceImpl<CollectionTaskMapp
      */
     public void retryExecuteTask(String taskId)
     {
-        CollectionTask task = mapper.selectById(taskId);
+        CollectionTask task = this.baseMapper.selectById(taskId);
         CollectionTaskHistory history = null;
         if(task == null) {
             history = collectionTaskHistoryMapper.selectById(taskId);
             if(history==null) {
                 throw new BusinessException("历史任务不存在");
             }
-            task =  mapperUtils.map(history,CollectionTask.class);
+            BeanUtil.copyProperties(history,task);
             task.setTaskId(SerialNoUtil.getSingleNextId(SerialNoType.COLLECTION_TASK, DateUtil.PATTERN_STANDARD02W));
             task.setRunCount(0);
             task.setPreRunTime(new Date());
-            mapper.insert(task);
+            this.baseMapper.insert(task);
         }else{
             task.setPreRunTime(new Date());
             task.setRunCount(0);
-            mapper.updateById(task);
+            this.baseMapper.updateById(task);
         }
 
     }
+
+
 }

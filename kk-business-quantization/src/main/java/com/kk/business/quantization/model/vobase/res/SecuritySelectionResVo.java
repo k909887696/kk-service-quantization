@@ -13,7 +13,7 @@ import lombok.Data;
  * </p>
  *
  * @author kk
- * @since 2026-05-30
+ * @since 2026-06-04
  */
 @Data
 @Schema( description = "个人自选股详情返回实体")

@@ -25,32 +25,32 @@
     <!-- 通用查询条件 -->
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
-           <if test="stockFluctuationListVo.code != null and stockFluctuationListVo.code != ''">
+           <if test="stockFluctuationListReqVo.code != null and stockFluctuationListReqVo.code != ''">
                and code = #{stockFluctuationListVo.code}
            </if>
-           <if test="stockFluctuationListVo.tradeDateStart != null and stockFluctuationListVo.tradeDateStart != ''">
+           <if test="stockFluctuationListReqVo.tradeDateStart != null and stockFluctuationListReqVo.tradeDateStart != ''">
                and trade_date >= #{stockFluctuationListVo.tradeDateStart}
            </if>
-           <if test="stockFluctuationListVo.tradeDateEnd != null and stockFluctuationListVo.tradeDateEnd != ''">
+           <if test="stockFluctuationListReqVo.tradeDateEnd != null and stockFluctuationListReqVo.tradeDateEnd != ''">
                and trade_date &lt;= #{stockFluctuationListVo.tradeDateEnd}
            </if>
-           <if test="stockFluctuationListVo.maxUpCount != null and stockFluctuationListVo.maxUpCount != ''">
+           <if test="stockFluctuationListReqVo.maxUpCount != null and stockFluctuationListReqVo.maxUpCount != ''">
                and max_up_count = #{stockFluctuationListVo.maxUpCount}
            </if>
-           <if test="stockFluctuationListVo.maxDownCount != null and stockFluctuationListVo.maxDownCount != ''">
+           <if test="stockFluctuationListReqVo.maxDownCount != null and stockFluctuationListReqVo.maxDownCount != ''">
                and max_down_count = #{stockFluctuationListVo.maxDownCount}
            </if>
-           <if test="stockFluctuationListVo.maxUp15dCount != null and stockFluctuationListVo.maxUp15dCount != ''">
+           <if test="stockFluctuationListReqVo.maxUp15dCount != null and stockFluctuationListReqVo.maxUp15dCount != ''">
                and max_up_15d_count = #{stockFluctuationListVo.maxUp15dCount}
            </if>
-           <if test="stockFluctuationListVo.maxDown15dCount != null and stockFluctuationListVo.maxDown15dCount != ''">
+           <if test="stockFluctuationListReqVo.maxDown15dCount != null and stockFluctuationListReqVo.maxDown15dCount != ''">
                and max_down_15d_count = #{stockFluctuationListVo.maxDown15dCount}
            </if>
         </trim>
     </sql>
 
     <!-- 分页查询 -->
-    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.StockFluctuationListDto">
+    <select id="selectStockFluctuationPageList" resultType="com.kk.business.quantization.model.vobase.res.StockFluctuationListResVo">
         select <include refid="BaseColumnList"/>
         from stock_fluctuation
         <include refid="BaseWhere"/>

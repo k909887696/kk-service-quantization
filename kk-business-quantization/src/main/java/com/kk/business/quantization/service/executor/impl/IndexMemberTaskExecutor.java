@@ -8,6 +8,8 @@ import com.kk.business.quantization.model.po.tushare.IndexClassifyVo;
 import com.kk.business.quantization.model.po.tushare.IndexMemberVo;
 import com.kk.business.quantization.model.po.tushare.TushareData;
 import com.kk.business.quantization.model.vo.IndexClassifyListVo;
+import com.kk.business.quantization.model.vobase.req.IndexClassifyListReqVo;
+import com.kk.business.quantization.model.vobase.res.IndexClassifyListResVo;
 import com.kk.business.quantization.service.IIndexClassifyService;
 import com.kk.business.quantization.service.IIndexMemberService;
 import com.kk.business.quantization.service.executor.ITaskExecutor;
@@ -75,7 +77,7 @@ public class IndexMemberTaskExecutor implements ITaskExecutor {
         }
 
         //插入db
-        indexMemberService.insertIgnoreBatch(data);
+        indexMemberService.insertIndexMemberBatchSomeColumn(data);
 
     }
 
@@ -86,16 +88,16 @@ public class IndexMemberTaskExecutor implements ITaskExecutor {
         List<CollectionTask> list = new ArrayList<>();
         if((vo.getIds() == null || vo.getIds().size() <= 0 )&& StringUtils.isBlank( vo.getIndexCode()))
         {
-            IndexClassifyListVo icvo = new IndexClassifyListVo();
+            IndexClassifyListReqVo icvo = new IndexClassifyListReqVo();
             icvo.setSrc(vo.getSrc());
             int pageSize = 5000,pageIndex =1;
 
             icvo.setPageIndex(pageIndex);
             icvo.setPageSize(pageSize);
-            PageResult<IndexClassifyListDto> cdPageList = indexClassifyService.selectPageList(icvo);
+            PageResult<IndexClassifyListResVo> cdPageList = indexClassifyService.selectIndexClassifyPageList(icvo);
             if(cdPageList !=null && cdPageList.getTotalCount()>0 )
             {
-                List<IndexClassifyListDto> cdList = cdPageList.getResult();
+                List<IndexClassifyListResVo> cdList = cdPageList.getResult();
                 if(cdPageList.getTotalCount()>pageSize) {
                     long sbPage = cdPageList.getTotalCount() / pageSize;
                     if (sbPage * pageSize < cdPageList.getTotalCount()) {
@@ -104,7 +106,7 @@ public class IndexMemberTaskExecutor implements ITaskExecutor {
                     for (pageIndex++; pageIndex <= sbPage; pageIndex++) {
                         icvo.setPageIndex(pageIndex);
                         icvo.setPageSize(pageSize);
-                        PageResult<IndexClassifyListDto> tempS = indexClassifyService.selectPageList(icvo);
+                        PageResult<IndexClassifyListResVo> tempS = indexClassifyService.selectIndexClassifyPageList(icvo);
                         if(tempS!=null && tempS.getTotalCount()>0)
                         {
                             cdList.addAll(tempS.getResult());
@@ -120,8 +122,7 @@ public class IndexMemberTaskExecutor implements ITaskExecutor {
                 {
                     List<String> tsCodeList = cdList.stream()
                             .skip(i*vo.getPageSize())
-                            .limit(vo.getPageSize())
-                            .map(IndexClassifyListDto::getIndexCode).collect(Collectors.toList());
+                            .map(IndexClassifyListResVo::getIndexCode).collect(Collectors.toList());
                     vo.setIds(tsCodeList);
                     vo.setPageIndex(i+1);
                     CollectionTask task = generateTask(policy);

@@ -1,16 +1,14 @@
 package com.kk.business.quantization.service;
 
 import com.kk.business.quantization.dao.entity.Monthly;
-import com.github.jeffreyning.mybatisplus.service.IMppService;
-
 import java.util.List;
-import com.kk.business.quantization.model.vo.MonthlyListVo;
-import com.kk.business.quantization.model.dto.MonthlyListDto;
-import com.kk.business.quantization.model.vo.MonthlyAddVo;
-import com.kk.business.quantization.model.vo.MonthlyEditVo;
-import com.kk.business.quantization.model.dto.MonthlyDto;
-import com.kk.business.quantization.model.vo.MonthlyDetailsVo;
-import com.kk.business.quantization.model.vo.MonthlyDeleteVo;
+import com.kk.business.quantization.model.vobase.req.MonthlyListReqVo;
+import com.kk.business.quantization.model.vobase.res.MonthlyListResVo;
+import com.kk.business.quantization.model.vobase.req.MonthlyAddReqVo;
+import com.kk.business.quantization.model.vobase.req.MonthlyEditReqVo;
+import com.kk.business.quantization.model.vobase.res.MonthlyResVo;
+import com.kk.business.quantization.model.vobase.req.MonthlyDetailsReqVo;
+import com.kk.business.quantization.model.vobase.req.MonthlyDeleteReqVo;
 import com.kk.common.base.model.PageResult;
 /**
  * <p>
@@ -18,45 +16,45 @@ import com.kk.common.base.model.PageResult;
  * </p>
  *
  * @author kk
- * @since 2023-05-18
+ * @since 2026-06-04
  */
-public interface IMonthlyService extends IMppService<Monthly> {
+public interface IMonthlyService  {
 
     /**
-    * 分批批量插入
+    * 分批批量插入个股月线行情
     * @param list 数据列表
     * @return
     */
-    void insertIgnoreBatch(List<Monthly> list);
+    void insertMonthlyBatchSomeColumn(List<Monthly> list);
     /**
-    * 分页获取结果集
+    * 单条插入个股月线行情
     * @param vo 请求参数
     * @return 结果集
     */
-    PageResult<MonthlyListDto>  selectPageList(MonthlyListVo vo);
+    void insertMonthly(MonthlyAddReqVo vo);
     /**
-    * 单条插入
+    * 更新个股月线行情
     * @param vo 请求参数
     * @return 结果集
     */
-    void insert(MonthlyAddVo vo);
+    int updateMonthly(MonthlyEditReqVo vo);
     /**
-    * 更新
+    * 单条查询个股月线行情
     * @param vo 请求参数
     * @return 结果集
     */
-    int update(MonthlyEditVo vo);
+    MonthlyResVo selectMonthlyById(MonthlyDetailsReqVo vo);
     /**
-    * 单条查询
+    * 删除个股月线行情
     * @param vo 请求参数
     * @return 结果集
     */
-    MonthlyDto selectById(MonthlyDetailsVo vo);
+    int deleteMonthlyById(MonthlyDeleteReqVo vo);
     /**
-    * 删除
+    * 分页获取个股月线行情结果集
     * @param vo 请求参数
     * @return 结果集
     */
-    int deleteById(MonthlyDeleteVo vo);
-
+    PageResult<MonthlyListResVo>  selectMonthlyPageList(MonthlyListReqVo vo);
 }
+

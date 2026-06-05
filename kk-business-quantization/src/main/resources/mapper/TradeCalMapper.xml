@@ -21,29 +21,29 @@
     <!-- 通用查询条件 -->
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
-           <if test="tradeCalListVo.exchange != null and tradeCalListVo.exchange != ''">
+           <if test="tradeCalListReqVo.exchange != null and tradeCalListReqVo.exchange != ''">
                and exchange = #{tradeCalListVo.exchange}
            </if>
-           <if test="tradeCalListVo.calDateStart != null and tradeCalListVo.calDateStart != ''">
+           <if test="tradeCalListReqVo.calDateStart != null and tradeCalListReqVo.calDateStart != ''">
                and cal_date >= #{tradeCalListVo.calDateStart}
            </if>
-           <if test="tradeCalListVo.calDateEnd != null and tradeCalListVo.calDateEnd != ''">
+           <if test="tradeCalListReqVo.calDateEnd != null and tradeCalListReqVo.calDateEnd != ''">
                and cal_date &lt;= #{tradeCalListVo.calDateEnd}
            </if>
-           <if test="tradeCalListVo.isOpen != null and tradeCalListVo.isOpen != ''">
+           <if test="tradeCalListReqVo.isOpen != null and tradeCalListReqVo.isOpen != ''">
                and is_open = #{tradeCalListVo.isOpen}
            </if>
-           <if test="tradeCalListVo.pretradeDateStart != null and tradeCalListVo.pretradeDateStart != ''">
+           <if test="tradeCalListReqVo.pretradeDateStart != null and tradeCalListReqVo.pretradeDateStart != ''">
                and pretrade_date >= #{tradeCalListVo.pretradeDateStart}
            </if>
-           <if test="tradeCalListVo.pretradeDateEnd != null and tradeCalListVo.pretradeDateEnd != ''">
+           <if test="tradeCalListReqVo.pretradeDateEnd != null and tradeCalListReqVo.pretradeDateEnd != ''">
                and pretrade_date &lt;= #{tradeCalListVo.pretradeDateEnd}
            </if>
         </trim>
     </sql>
 
     <!-- 分页查询 -->
-    <select id="selectPageList" resultType="com.kk.business.quantization.model.dto.TradeCalListDto">
+    <select id="selectTradeCalPageList" resultType="com.kk.business.quantization.model.vobase.res.TradeCalListResVo">
         select <include refid="BaseColumnList"/>
         from trade_cal
         <include refid="BaseWhere"/>

@@ -97,7 +97,7 @@ public class StockDayKdjTaskExecutor implements ITaskExecutor {
                data.addAll(stockDayKdjList.stream().filter(t->Integer.parseInt( t.getTradeDate())>=Integer.parseInt(vo.getStartDate())).collect(Collectors.toList()));
             }
         }else {
-            stockDayKdjService.deleteByTradeDate(vo.getTradeDate());
+            //stockDayKdjService.deleteByTradeDate(vo.getTradeDate());
             SearchDailyVo sdVo = mapperUtils.map(vo,SearchDailyVo.class);
             String nowDate = vo.getTradeDate();
             TradeCal nowOpenTradeCal = tradeCalService.getRecentlyOpenByDay(nowDate,N,"asc");
@@ -122,7 +122,7 @@ public class StockDayKdjTaskExecutor implements ITaskExecutor {
 
         }
         //插入db
-        stockDayKdjService.insertIgnoreBatch(data);
+        stockDayKdjService.insertStockDayKdjBatchSomeColumn(data);
     }
 
     @Override

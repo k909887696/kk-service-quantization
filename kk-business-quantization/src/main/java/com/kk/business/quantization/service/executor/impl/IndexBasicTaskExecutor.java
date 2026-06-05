@@ -41,7 +41,7 @@ public class IndexBasicTaskExecutor implements ITaskExecutor {
         TushareData<IndexBasic> res =  tushareDataApi.indexBasic(vo);
         data.addAll(res.getData());
         //插入db
-        indexBasicService.insertIgnoreBatch(data);
+        indexBasicService.insertIndexBasicBatchSomeColumn(data);
     }
 
 

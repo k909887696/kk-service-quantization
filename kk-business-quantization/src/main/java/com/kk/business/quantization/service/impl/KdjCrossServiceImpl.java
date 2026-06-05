@@ -5,21 +5,20 @@ import org.springframework.stereotype.Service;
 import jakarta.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.kk.business.quantization.dao.entity.KdjCross;
 import com.kk.business.quantization.dao.mapper.KdjCrossMapper;
 import com.kk.business.quantization.service.IKdjCrossService;
-import com.github.jeffreyning.mybatisplus.service.MppServiceImpl;
-import com.kk.business.quantization.model.vo.KdjCrossListVo;
-import com.kk.business.quantization.model.dto.KdjCrossListDto;
-import com.kk.business.quantization.model.vo.KdjCrossAddVo;
-import com.kk.business.quantization.model.vo.KdjCrossEditVo;
-import com.kk.business.quantization.model.dto.KdjCrossDto;
-import com.kk.business.quantization.model.vo.KdjCrossDetailsVo;
-import com.kk.business.quantization.model.vo.KdjCrossDeleteVo;
-import com.kk.common.utils.MapperUtils;
+import com.kk.business.quantization.model.vobase.req.KdjCrossListReqVo;
+import com.kk.business.quantization.model.vobase.res.KdjCrossListResVo;
+import com.kk.business.quantization.model.vobase.req.KdjCrossAddReqVo;
+import com.kk.business.quantization.model.vobase.req.KdjCrossEditReqVo;
+import com.kk.business.quantization.model.vobase.res.KdjCrossResVo;
+import com.kk.business.quantization.model.vobase.req.KdjCrossDetailsReqVo;
+import com.kk.business.quantization.model.vobase.req.KdjCrossDeleteReqVo;
 import com.kk.common.base.model.PageResult;
+import com.kk.common.utils.BeanUtil;
 import com.kk.common.exception.BusinessException;
 /**
  * <p>
@@ -27,19 +26,19 @@ import com.kk.common.exception.BusinessException;
  * </p>
  *
  * @author kk
- * @since 2023-05-18
+ * @since 2026-06-04
  */
 @Service
-public class KdjCrossServiceImpl extends MppServiceImpl<KdjCrossMapper, KdjCross> implements IKdjCrossService {
+public class KdjCrossServiceImpl extends ServiceImpl<KdjCrossMapper, KdjCross> implements IKdjCrossService {
 
-    @Resource
-    public MapperUtils mapperUtils;
+
     /**
-     * 分批批量插入
-     * @param list 数据列表
-     * @return
-     */
-    public void insertIgnoreBatch(List<KdjCross> list)
+    * 分批批量插入kdj交叉点
+    * @param list 数据列表
+    * @return
+    */
+    @Override
+    public void insertKdjCrossBatchSomeColumn(List<KdjCross> list)
     {
 
         if(list ==null || list.size()<=0) return ;
@@ -56,23 +55,27 @@ public class KdjCrossServiceImpl extends MppServiceImpl<KdjCrossMapper, KdjCross
         }
     }
     /**
-     * 单条插入
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    public void insert(KdjCrossAddVo vo)
+    * 单条插入kdj交叉点
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    @Override
+    public void insertKdjCross(KdjCrossAddReqVo vo)
     {
-        KdjCross model = mapperUtils.map(vo,KdjCross.class);
+        KdjCross model = new KdjCross();
+        BeanUtil.copyProperties(vo,model);
         this.baseMapper.insert(model);
     }
     /**
-     * 更新
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    public int update(KdjCrossEditVo vo)
+    * 更新kdj交叉点
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    @Override
+    public int updateKdjCross(KdjCrossEditReqVo vo)
     {
-        KdjCross model = mapperUtils.map(vo,KdjCross.class);
+        KdjCross model = new KdjCross();
+        BeanUtil.copyProperties(vo,model);
         int r = this.baseMapper.updateByMultiId(model);
         if(r != 1)
         {
@@ -81,25 +84,30 @@ public class KdjCrossServiceImpl extends MppServiceImpl<KdjCrossMapper, KdjCross
         return r;
     }
     /**
-     * 单条查询
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    public KdjCrossDto selectById(KdjCrossDetailsVo vo)
+    * 单条查询kdj交叉点
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    @Override
+    public KdjCrossResVo selectKdjCrossById(KdjCrossDetailsReqVo vo)
     {
-        KdjCross model = mapperUtils.map(vo,KdjCross.class);
+        KdjCross model = new KdjCross();
+        BeanUtil.copyProperties(vo,model);
         KdjCross res = this.baseMapper.selectByMultiId(model);
-        KdjCrossDto dto = mapperUtils.map(res,KdjCrossDto.class);
-        return dto;
+        KdjCrossResVo resVo = new KdjCrossResVo();
+        BeanUtil.copyProperties(res,resVo);
+        return resVo;
     }
     /**
-     * 删除
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    public int deleteById(KdjCrossDeleteVo vo)
+    * 删除kdj交叉点
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    @Override
+    public int deleteKdjCrossById(KdjCrossDeleteReqVo vo)
     {
-        KdjCross model = mapperUtils.map(vo,KdjCross.class);
+        KdjCross model = new KdjCross();
+        BeanUtil.copyProperties(vo,model);
         int r = this.baseMapper.deleteByMultiId(model);
         if(r != 1)
         {
@@ -108,22 +116,18 @@ public class KdjCrossServiceImpl extends MppServiceImpl<KdjCrossMapper, KdjCross
         return r;
     }
     /**
-     * 分页获取结果集
-     * @param vo 请求参数
-     * @return 结果集
-     */
-    public PageResult<KdjCrossListDto>  selectPageList(KdjCrossListVo vo){
+    * 分页获取kdj交叉点结果集
+    * @param vo 请求参数
+    * @return 结果集
+    */
+    @Override
+    public PageResult<KdjCrossListResVo>  selectKdjCrossPageList(KdjCrossListReqVo vo){
 
-        IPage<KdjCrossListDto> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
-        page = this.baseMapper.selectPageList(page,vo);
-        PageResult<KdjCrossListDto>  pageResult = new PageResult<>();
+        Page<KdjCrossListResVo> page = new Page<>(vo.getPageIndex(),vo.getPageSize());
+        Page<KdjCrossListResVo> results = this.baseMapper.selectKdjCrossPageList(page,vo);
+        PageResult<KdjCrossListResVo>  pageResult = new PageResult<>();
 
-        pageResult.setResult(page.getRecords());
-        pageResult.setTotalCount(page.getTotal());
-        pageResult.setPageIndex(vo.getPageIndex());
-        pageResult.setPageSize(vo.getPageSize());
-
-        return pageResult;
+        return pageResult.convertPage(results);
     }
 
 

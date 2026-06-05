@@ -51,7 +51,7 @@ public class IndexClassifyTaskExecutor implements ITaskExecutor {
         }
         data.addAll(res.getData());
         //插入db
-        iIndexClassifyService.insertIgnoreBatch(data);
+        iIndexClassifyService.insertIndexClassifyBatchSomeColumn(data);
     }
 
 
