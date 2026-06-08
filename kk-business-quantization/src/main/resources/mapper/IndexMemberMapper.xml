@@ -28,31 +28,31 @@
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
            <if test="indexMemberListReqVo.indexCode != null and indexMemberListReqVo.indexCode != ''">
-               and index_code = #{indexMemberListVo.indexCode}
+               and index_code = #{indexMemberListReqVo.indexCode}
            </if>
            <if test="indexMemberListReqVo.indexName != null and indexMemberListReqVo.indexName != ''">
-               and index_name like concat('%',#{indexMemberListVo.indexName},'%')
+               and index_name like concat('%',#{indexMemberListReqVo.indexName},'%')
            </if>
            <if test="indexMemberListReqVo.conCode != null and indexMemberListReqVo.conCode != ''">
-               and con_code = #{indexMemberListVo.conCode}
+               and con_code = #{indexMemberListReqVo.conCode}
            </if>
            <if test="indexMemberListReqVo.conName != null and indexMemberListReqVo.conName != ''">
-               and con_name like concat('%',#{indexMemberListVo.conName},'%')
+               and con_name like concat('%',#{indexMemberListReqVo.conName},'%')
            </if>
            <if test="indexMemberListReqVo.inDateStart != null and indexMemberListReqVo.inDateStart != ''">
-               and in_date >= #{indexMemberListVo.inDateStart}
+               and in_date >= #{indexMemberListReqVo.inDateStart}
            </if>
            <if test="indexMemberListReqVo.inDateEnd != null and indexMemberListReqVo.inDateEnd != ''">
-               and in_date &lt;= #{indexMemberListVo.inDateEnd}
+               and in_date &lt;= #{indexMemberListReqVo.inDateEnd}
            </if>
            <if test="indexMemberListReqVo.outDateStart != null and indexMemberListReqVo.outDateStart != ''">
-               and out_date >= #{indexMemberListVo.outDateStart}
+               and out_date >= #{indexMemberListReqVo.outDateStart}
            </if>
            <if test="indexMemberListReqVo.outDateEnd != null and indexMemberListReqVo.outDateEnd != ''">
-               and out_date &lt;= #{indexMemberListVo.outDateEnd}
+               and out_date &lt;= #{indexMemberListReqVo.outDateEnd}
            </if>
            <if test="indexMemberListReqVo.isNew != null and indexMemberListReqVo.isNew != ''">
-               and is_new = #{indexMemberListVo.isNew}
+               and is_new = #{indexMemberListReqVo.isNew}
            </if>
         </trim>
     </sql>

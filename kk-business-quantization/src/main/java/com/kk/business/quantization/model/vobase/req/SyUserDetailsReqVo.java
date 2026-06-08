@@ -14,13 +14,17 @@ import lombok.Data;
  * </p>
  *
  * @author kk
- * @since 2026-06-04
+ * @since 2026-06-08
  */
 @Data
 @Schema(description = "用户信息查询详情实体")
 public class SyUserDetailsReqVo implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    /**
+    * 用户账号
+    */
+    @Schema(description = "用户账号")
     private String userId;
 
 

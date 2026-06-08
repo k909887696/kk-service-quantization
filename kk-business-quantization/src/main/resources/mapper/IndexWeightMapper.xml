@@ -22,19 +22,19 @@
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
            <if test="indexWeightListReqVo.indexCode != null and indexWeightListReqVo.indexCode != ''">
-               and index_code = #{indexWeightListVo.indexCode}
+               and index_code = #{indexWeightListReqVo.indexCode}
            </if>
            <if test="indexWeightListReqVo.conCode != null and indexWeightListReqVo.conCode != ''">
-               and con_code = #{indexWeightListVo.conCode}
+               and con_code = #{indexWeightListReqVo.conCode}
            </if>
            <if test="indexWeightListReqVo.tradeDateStart != null and indexWeightListReqVo.tradeDateStart != ''">
-               and trade_date >= #{indexWeightListVo.tradeDateStart}
+               and trade_date >= #{indexWeightListReqVo.tradeDateStart}
            </if>
            <if test="indexWeightListReqVo.tradeDateEnd != null and indexWeightListReqVo.tradeDateEnd != ''">
-               and trade_date &lt;= #{indexWeightListVo.tradeDateEnd}
+               and trade_date &lt;= #{indexWeightListReqVo.tradeDateEnd}
            </if>
            <if test="indexWeightListReqVo.weight != null and indexWeightListReqVo.weight != ''">
-               and weight = #{indexWeightListVo.weight}
+               and weight = #{indexWeightListReqVo.weight}
            </if>
         </trim>
     </sql>

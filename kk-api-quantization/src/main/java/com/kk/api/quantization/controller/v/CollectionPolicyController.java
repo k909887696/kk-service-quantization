@@ -6,6 +6,12 @@ import com.kk.business.quantization.model.vo.ExcutePolicyByHandVo;
 import com.kk.business.quantization.model.vo.ExecutePolicyVo;
 import com.kk.business.quantization.model.vo.SearchPolicyListVo;
 import com.kk.business.quantization.model.vo.SearchPolicyVo;
+import com.kk.business.quantization.model.vobase.req.CollectionPolicyAddReqVo;
+import com.kk.business.quantization.model.vobase.req.CollectionPolicyDetailsReqVo;
+import com.kk.business.quantization.model.vobase.req.CollectionPolicyEditReqVo;
+import com.kk.business.quantization.model.vobase.req.CollectionPolicyListReqVo;
+import com.kk.business.quantization.model.vobase.res.CollectionPolicyListResVo;
+import com.kk.business.quantization.model.vobase.res.CollectionPolicyResVo;
 import com.kk.business.quantization.service.ICollectionPolicyService;
 import com.kk.common.base.model.PageResult;
 import com.kk.common.web.model.ApiResult;
@@ -49,9 +55,9 @@ public class CollectionPolicyController {
             @Parameter(name = "version", description = "版本号（1.0.0）", in = ParameterIn.HEADER, required = false)
     })
     @PostMapping("/insert_policy")
-    public ApiResult< String > insertPolicy(@Valid @RequestBody CollectionPolicy vo)   {
-
-        return new  ApiResult(service.insert(vo));
+    public ApiResult< String > insertPolicy(@Valid @RequestBody CollectionPolicyAddReqVo vo)   {
+        service.insertCollectionPolicy(vo);
+        return new  ApiResult();
 
     }
 
@@ -64,9 +70,9 @@ public class CollectionPolicyController {
             @Parameter(name = "version", description = "版本号（1.0.0）", in = ParameterIn.HEADER, required = false)
     })
     @PostMapping("/update_policy")
-    public ApiResult< String > updatePolicy(@Valid @RequestBody CollectionPolicy vo)   {
+    public ApiResult< String > updatePolicy(@Valid @RequestBody CollectionPolicyEditReqVo vo)   {
 
-        return new  ApiResult(service.update(vo));
+        return new  ApiResult(service.updateCollectionPolicy(vo));
 
     }
 
@@ -79,9 +85,9 @@ public class CollectionPolicyController {
             @Parameter(name = "version", description = "版本号（1.0.0）", in = ParameterIn.HEADER, required = false)
     })
     @PostMapping("/get_policy")
-    public ApiResult< CollectionPolicy > getPolicy(@Valid @RequestBody SearchPolicyVo vo)   {
+    public ApiResult<CollectionPolicyResVo> getPolicy(@Valid @RequestBody CollectionPolicyDetailsReqVo vo)   {
 
-        return new  ApiResult(service.getPolicy(vo));
+        return new  ApiResult<>(service.selectCollectionPolicyById(vo));
 
     }
 
@@ -94,9 +100,9 @@ public class CollectionPolicyController {
             @Parameter(name = "version", description = "版本号（1.0.0）", in = ParameterIn.HEADER, required = false)
     })
     @PostMapping("/get_collection_policy_page_result")
-    public ApiResult< PageResult<CollectionPolicy> > getCollectionPolicyPageResult(@Valid @RequestBody SearchPolicyListVo vo)   {
+    public ApiResult< PageResult<CollectionPolicyListResVo> > getCollectionPolicyPageResult(@Valid @RequestBody CollectionPolicyListReqVo vo)   {
 
-        return new  ApiResult(service.getCollectionPolicyPageResult(vo));
+        return new  ApiResult<>(service.selectCollectionPolicyPageList(vo));
 
     }
 

@@ -9,6 +9,8 @@ import com.kk.business.quantization.model.vobase.req.SyUserEditReqVo;
 import com.kk.business.quantization.model.vobase.res.SyUserResVo;
 import com.kk.business.quantization.model.vobase.req.SyUserDetailsReqVo;
 import com.kk.business.quantization.model.vobase.req.SyUserDeleteReqVo;
+import com.kk.common.auth.LoginUserInfo;
+import com.kk.common.base.model.LoginVo;
 import com.kk.common.base.model.PageResult;
 /**
  * <p>
@@ -16,7 +18,7 @@ import com.kk.common.base.model.PageResult;
  * </p>
  *
  * @author kk
- * @since 2026-06-04
+ * @since 2026-06-08
  */
 public interface ISyUserService  {
 
@@ -56,5 +58,12 @@ public interface ISyUserService  {
     * @return 结果集
     */
     PageResult<SyUserListResVo>  selectSyUserPageList(SyUserListReqVo vo);
+
+    /**
+     * 登录
+     * @param vo
+     * @return
+     */
+    LoginUserInfo loginUser(LoginVo vo);
 }
 

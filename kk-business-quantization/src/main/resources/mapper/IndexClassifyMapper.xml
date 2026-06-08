@@ -28,25 +28,25 @@
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
            <if test="indexClassifyListReqVo.indexCode != null and indexClassifyListReqVo.indexCode != ''">
-               and index_code = #{indexClassifyListVo.indexCode}
+               and index_code = #{indexClassifyListReqVo.indexCode}
            </if>
            <if test="indexClassifyListReqVo.industryName != null and indexClassifyListReqVo.industryName != ''">
-               and industry_name like concat('%',#{indexClassifyListVo.industryName},'%')
+               and industry_name like concat('%',#{indexClassifyListReqVo.industryName},'%')
            </if>
            <if test="indexClassifyListReqVo.parentCode != null and indexClassifyListReqVo.parentCode != ''">
-               and parent_code = #{indexClassifyListVo.parentCode}
+               and parent_code = #{indexClassifyListReqVo.parentCode}
            </if>
            <if test="indexClassifyListReqVo.level != null and indexClassifyListReqVo.level != ''">
-               and level = #{indexClassifyListVo.level}
+               and level = #{indexClassifyListReqVo.level}
            </if>
            <if test="indexClassifyListReqVo.industryCode != null and indexClassifyListReqVo.industryCode != ''">
-               and industry_code = #{indexClassifyListVo.industryCode}
+               and industry_code = #{indexClassifyListReqVo.industryCode}
            </if>
            <if test="indexClassifyListReqVo.isPub != null and indexClassifyListReqVo.isPub != ''">
-               and is_pub = #{indexClassifyListVo.isPub}
+               and is_pub = #{indexClassifyListReqVo.isPub}
            </if>
            <if test="indexClassifyListReqVo.src != null and indexClassifyListReqVo.src != ''">
-               and src = #{indexClassifyListVo.src}
+               and src = #{indexClassifyListReqVo.src}
            </if>
         </trim>
     </sql>

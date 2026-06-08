@@ -28,28 +28,28 @@
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
            <if test="conceptListReqVo.code != null and conceptListReqVo.code != ''">
-               and code = #{conceptListVo.code}
+               and code = #{conceptListReqVo.code}
            </if>
            <if test="conceptListReqVo.name != null and conceptListReqVo.name != ''">
-               and name like concat('%',#{conceptListVo.name},'%')
+               and name like concat('%',#{conceptListReqVo.name},'%')
            </if>
            <if test="conceptListReqVo.src != null and conceptListReqVo.src != ''">
-               and src = #{conceptListVo.src}
+               and src = #{conceptListReqVo.src}
            </if>
            <if test="conceptListReqVo.exchange != null and conceptListReqVo.exchange != ''">
-               and exchange = #{conceptListVo.exchange}
+               and exchange = #{conceptListReqVo.exchange}
            </if>
            <if test="conceptListReqVo.listDateStart != null and conceptListReqVo.listDateStart != ''">
-               and list_date >= #{conceptListVo.listDateStart}
+               and list_date >= #{conceptListReqVo.listDateStart}
            </if>
            <if test="conceptListReqVo.listDateEnd != null and conceptListReqVo.listDateEnd != ''">
-               and list_date &lt;= #{conceptListVo.listDateEnd}
+               and list_date &lt;= #{conceptListReqVo.listDateEnd}
            </if>
            <if test="conceptListReqVo.type != null and conceptListReqVo.type != ''">
-               and type = #{conceptListVo.type}
+               and type = #{conceptListReqVo.type}
            </if>
            <if test="conceptListReqVo.count != null and conceptListReqVo.count != ''">
-               and count = #{conceptListVo.count}
+               and count = #{conceptListReqVo.count}
            </if>
         </trim>
     </sql>

@@ -36,40 +36,40 @@
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
            <if test="indexDailyListReqVo.tsCode != null and indexDailyListReqVo.tsCode != ''">
-               and ts_code = #{indexDailyListVo.tsCode}
+               and ts_code = #{indexDailyListReqVo.tsCode}
            </if>
            <if test="indexDailyListReqVo.tradeDateStart != null and indexDailyListReqVo.tradeDateStart != ''">
-               and trade_date >= #{indexDailyListVo.tradeDateStart}
+               and trade_date >= #{indexDailyListReqVo.tradeDateStart}
            </if>
            <if test="indexDailyListReqVo.tradeDateEnd != null and indexDailyListReqVo.tradeDateEnd != ''">
-               and trade_date &lt;= #{indexDailyListVo.tradeDateEnd}
+               and trade_date &lt;= #{indexDailyListReqVo.tradeDateEnd}
            </if>
            <if test="indexDailyListReqVo.close != null and indexDailyListReqVo.close != ''">
-               and close = #{indexDailyListVo.close}
+               and close = #{indexDailyListReqVo.close}
            </if>
            <if test="indexDailyListReqVo.open != null and indexDailyListReqVo.open != ''">
-               and open = #{indexDailyListVo.open}
+               and open = #{indexDailyListReqVo.open}
            </if>
            <if test="indexDailyListReqVo.high != null and indexDailyListReqVo.high != ''">
-               and high = #{indexDailyListVo.high}
+               and high = #{indexDailyListReqVo.high}
            </if>
            <if test="indexDailyListReqVo.low != null and indexDailyListReqVo.low != ''">
-               and low = #{indexDailyListVo.low}
+               and low = #{indexDailyListReqVo.low}
            </if>
            <if test="indexDailyListReqVo.preClose != null and indexDailyListReqVo.preClose != ''">
-               and pre_close = #{indexDailyListVo.preClose}
+               and pre_close = #{indexDailyListReqVo.preClose}
            </if>
            <if test="indexDailyListReqVo.change != null and indexDailyListReqVo.change != ''">
-               and change = #{indexDailyListVo.change}
+               and change = #{indexDailyListReqVo.change}
            </if>
            <if test="indexDailyListReqVo.pctChg != null and indexDailyListReqVo.pctChg != ''">
-               and pct_chg = #{indexDailyListVo.pctChg}
+               and pct_chg = #{indexDailyListReqVo.pctChg}
            </if>
            <if test="indexDailyListReqVo.vol != null and indexDailyListReqVo.vol != ''">
-               and vol = #{indexDailyListVo.vol}
+               and vol = #{indexDailyListReqVo.vol}
            </if>
            <if test="indexDailyListReqVo.amount != null and indexDailyListReqVo.amount != ''">
-               and amount = #{indexDailyListVo.amount}
+               and amount = #{indexDailyListReqVo.amount}
            </if>
         </trim>
     </sql>

@@ -1,6 +1,7 @@
 package com.kk.api.quantization.controller.v;
 
 
+import com.kk.business.quantization.model.vobase.req.CollectionTaskHistoryListReqVo;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -44,9 +45,9 @@ public class CollectionTaskHistoryController {
             @Parameter(name = "version", description = "版本号（1.0.0）", in = ParameterIn.HEADER, required = false)
     })
     @PostMapping("/get_collection_task_history_page_result")
-    public ApiResult< PageResult<CollectionTaskHistory> > getCollectionTaskHistoryPageResult(@Valid @RequestBody BasePage vo)   {
+    public ApiResult< PageResult<CollectionTaskHistory> > getCollectionTaskHistoryPageResult(@Valid @RequestBody CollectionTaskHistoryListReqVo vo)   {
 
-        return new  ApiResult(service.getCollectionTaskHistoryPageResult(vo));
+        return new  ApiResult(service.selectCollectionTaskHistoryPageList(vo));
 
     }
 

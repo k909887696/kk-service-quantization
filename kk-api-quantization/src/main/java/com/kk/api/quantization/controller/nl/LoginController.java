@@ -11,12 +11,15 @@ import com.kk.business.quantization.model.vo.BaseDataItemMapGetVo;
 import com.kk.business.quantization.service.IBaseDataService;
 import com.kk.business.quantization.service.IDailyService;
 import com.kk.business.quantization.service.executor.ITaskExecutor;
+import com.kk.business.quantization.serviceapi.SyUserServiceApi;
 import com.kk.common.auth.LoginInfo;
 import com.kk.common.auth.LoginUserInfo;
 import com.kk.common.auth.LoginUserJurInfo;
 import com.kk.common.auth.LoginUtil;
 import com.kk.common.base.email.EmailSendMsg;
 import com.kk.common.base.email.EmailUtil;
+import com.kk.common.base.model.LoginPermissionResVo;
+import com.kk.common.base.model.LoginPermissionVo;
 import com.kk.common.base.model.LoginVo;
 import com.kk.common.constant.SystemKey;
 import com.kk.common.utils.JsonUtil;
@@ -51,8 +54,8 @@ public class LoginController {
     @Resource
     public EmailUtil emailUtil;
 
-
-
+    @Resource
+    public SyUserServiceApi syUserServiceApi;
     @Operation(summary = "sendEmailMsg")
     @Parameters(  {
             @Parameter(name = "token", description = "身份令牌", in = ParameterIn.HEADER, required = false),
@@ -80,20 +83,47 @@ public class LoginController {
     })
     @PostMapping("/login")
     public ApiResult<LoginUserInfo> login(@Valid @RequestBody LoginVo vo) throws Exception {
-        StpUtil.login(vo.getUserId());
-        LoginInfo loginInfo = new LoginInfo();
-        LoginUserInfo userInfo = new LoginUserInfo();
-        userInfo.setUserId(vo.getUserId()); // Set user ID
-        userInfo.setUserName(vo.getUserId());
-        userInfo.setUserType("user");
-        userInfo.setLoginTime(new Date());
-        userInfo.setLoginChannel("web");
-        loginInfo.setLoginUserInfo(userInfo);
-        loginInfo.setLoginUserJurInfo(new LoginUserJurInfo());
-        List<String> permissionList = List.of("add","update","delete");
-        loginInfo.getLoginUserJurInfo().setPermissionList(permissionList);
-        loginInfo = LoginUtil.login(loginInfo);
-        return new  ApiResult<>(loginInfo.getLoginUserInfo());
+
+        return new  ApiResult<>(syUserServiceApi.loginUser( vo));
 
     }
+
+
+    @Operation(summary = "获取登录信息sa-token jwt模式")
+    @Parameters(  {
+            @Parameter(name = "token", description = "身份令牌", in = ParameterIn.HEADER, required = false),
+            // @ApiImplicitParam(name = "signature", value = "签名", paramType = "header", required = true, dataType = "String"),
+            // @ApiImplicitParam(name = "timestamp", value = "时间戳", paramType = "header", required = true, dataType = "String"),
+            // @ApiImplicitParam(name = "source", value = "来源（app/web/minotor）", paramType = "header", required = true, dataType = "String"),
+            @Parameter(name = "version", description = "版本号（1.0.0）", in = ParameterIn.HEADER, required = false)
+    })
+    @PostMapping("/getLoginInfo")
+    public ApiResult<LoginUserInfo> getLoginInfo() throws Exception {
+
+        LoginUserInfo loginInfo = LoginUtil.getLoginUserInfo();
+        return new  ApiResult<>(loginInfo);
+    }
+
+    @Operation(summary = "登出sa-token jwt模式")
+    @Parameters(  {
+            @Parameter(name = "token", description = "身份令牌", in = ParameterIn.HEADER, required = false),
+             @Parameter(name = "version", description = "版本号（1.0.0）", in = ParameterIn.HEADER, required = false)
+    })
+    @PostMapping("/logOut")
+    public ApiResult<?> logOut() {
+
+        LoginUtil.logout();
+        return new  ApiResult<>();
+    }
+    @Operation(summary = "权限校验sa-token jwt模式")
+    @Parameters(  {
+            @Parameter(name = "token", description = "身份令牌", in = ParameterIn.HEADER, required = false),
+            @Parameter(name = "version", description = "版本号（1.0.0）", in = ParameterIn.HEADER, required = false)
+    })
+    @PostMapping("/getPermissionList")
+    public ApiResult<LoginPermissionResVo> getPermissionList(@RequestBody LoginPermissionVo vo) {
+
+        return new  ApiResult<>(LoginUtil.validPermission(vo));
+    }
+
 }

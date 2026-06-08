@@ -26,25 +26,25 @@
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
            <if test="invokeTypeListReqVo.invokeCode != null and invokeTypeListReqVo.invokeCode != ''">
-               and invoke_code = #{invokeTypeListVo.invokeCode}
+               and invoke_code = #{invokeTypeListReqVo.invokeCode}
            </if>
            <if test="invokeTypeListReqVo.name != null and invokeTypeListReqVo.name != ''">
-               and name like concat('%',#{invokeTypeListVo.name},'%')
+               and name like concat('%',#{invokeTypeListReqVo.name},'%')
            </if>
            <if test="invokeTypeListReqVo.invokeObject != null and invokeTypeListReqVo.invokeObject != ''">
-               and invoke_object = #{invokeTypeListVo.invokeObject}
+               and invoke_object = #{invokeTypeListReqVo.invokeObject}
            </if>
            <if test="invokeTypeListReqVo.invokeMethod != null and invokeTypeListReqVo.invokeMethod != ''">
-               and invoke_method = #{invokeTypeListVo.invokeMethod}
+               and invoke_method = #{invokeTypeListReqVo.invokeMethod}
            </if>
            <if test="invokeTypeListReqVo.createTimeStart != null and invokeTypeListReqVo.createTimeStart != ''">
-               and create_time >= #{invokeTypeListVo.createTimeStart}
+               and create_time >= #{invokeTypeListReqVo.createTimeStart}
            </if>
            <if test="invokeTypeListReqVo.createTimeEnd != null and invokeTypeListReqVo.createTimeEnd != ''">
-               and create_time &lt;= #{invokeTypeListVo.createTimeEnd}
+               and create_time &lt;= #{invokeTypeListReqVo.createTimeEnd}
            </if>
            <if test="invokeTypeListReqVo.invokeParams != null and invokeTypeListReqVo.invokeParams != ''">
-               and invoke_params = #{invokeTypeListVo.invokeParams}
+               and invoke_params = #{invokeTypeListReqVo.invokeParams}
            </if>
         </trim>
     </sql>

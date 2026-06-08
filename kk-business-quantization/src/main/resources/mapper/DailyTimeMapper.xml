@@ -38,43 +38,43 @@
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
            <if test="dailyTimeListReqVo.tsCode != null and dailyTimeListReqVo.tsCode != ''">
-               and ts_code = #{dailyTimeListVo.tsCode}
+               and ts_code = #{dailyTimeListReqVo.tsCode}
            </if>
            <if test="dailyTimeListReqVo.tradeDateStart != null and dailyTimeListReqVo.tradeDateStart != ''">
-               and trade_date >= #{dailyTimeListVo.tradeDateStart}
+               and trade_date >= #{dailyTimeListReqVo.tradeDateStart}
            </if>
            <if test="dailyTimeListReqVo.tradeDateEnd != null and dailyTimeListReqVo.tradeDateEnd != ''">
-               and trade_date &lt;= #{dailyTimeListVo.tradeDateEnd}
+               and trade_date &lt;= #{dailyTimeListReqVo.tradeDateEnd}
            </if>
            <if test="dailyTimeListReqVo.tradeTime != null and dailyTimeListReqVo.tradeTime != ''">
-               and trade_time = #{dailyTimeListVo.tradeTime}
+               and trade_time = #{dailyTimeListReqVo.tradeTime}
            </if>
            <if test="dailyTimeListReqVo.open != null and dailyTimeListReqVo.open != ''">
-               and open = #{dailyTimeListVo.open}
+               and open = #{dailyTimeListReqVo.open}
            </if>
            <if test="dailyTimeListReqVo.high != null and dailyTimeListReqVo.high != ''">
-               and high = #{dailyTimeListVo.high}
+               and high = #{dailyTimeListReqVo.high}
            </if>
            <if test="dailyTimeListReqVo.low != null and dailyTimeListReqVo.low != ''">
-               and low = #{dailyTimeListVo.low}
+               and low = #{dailyTimeListReqVo.low}
            </if>
            <if test="dailyTimeListReqVo.close != null and dailyTimeListReqVo.close != ''">
-               and close = #{dailyTimeListVo.close}
+               and close = #{dailyTimeListReqVo.close}
            </if>
            <if test="dailyTimeListReqVo.preClose != null and dailyTimeListReqVo.preClose != ''">
-               and pre_close = #{dailyTimeListVo.preClose}
+               and pre_close = #{dailyTimeListReqVo.preClose}
            </if>
            <if test="dailyTimeListReqVo.change != null and dailyTimeListReqVo.change != ''">
-               and change = #{dailyTimeListVo.change}
+               and change = #{dailyTimeListReqVo.change}
            </if>
            <if test="dailyTimeListReqVo.pctChg != null and dailyTimeListReqVo.pctChg != ''">
-               and pct_chg = #{dailyTimeListVo.pctChg}
+               and pct_chg = #{dailyTimeListReqVo.pctChg}
            </if>
            <if test="dailyTimeListReqVo.vol != null and dailyTimeListReqVo.vol != ''">
-               and vol = #{dailyTimeListVo.vol}
+               and vol = #{dailyTimeListReqVo.vol}
            </if>
            <if test="dailyTimeListReqVo.amount != null and dailyTimeListReqVo.amount != ''">
-               and amount = #{dailyTimeListVo.amount}
+               and amount = #{dailyTimeListReqVo.amount}
            </if>
         </trim>
     </sql>

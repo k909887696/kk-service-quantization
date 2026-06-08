@@ -20,16 +20,16 @@
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
            <if test="securitySelectionListReqVo.tsCode != null and securitySelectionListReqVo.tsCode != ''">
-               and ts_code = #{securitySelectionListVo.tsCode}
+               and ts_code = #{securitySelectionListReqVo.tsCode}
            </if>
            <if test="securitySelectionListReqVo.tradeDateStart != null and securitySelectionListReqVo.tradeDateStart != ''">
-               and trade_date >= #{securitySelectionListVo.tradeDateStart}
+               and trade_date >= #{securitySelectionListReqVo.tradeDateStart}
            </if>
            <if test="securitySelectionListReqVo.tradeDateEnd != null and securitySelectionListReqVo.tradeDateEnd != ''">
-               and trade_date &lt;= #{securitySelectionListVo.tradeDateEnd}
+               and trade_date &lt;= #{securitySelectionListReqVo.tradeDateEnd}
            </if>
            <if test="securitySelectionListReqVo.selectType != null and securitySelectionListReqVo.selectType != ''">
-               and select_type = #{securitySelectionListVo.selectType}
+               and select_type = #{securitySelectionListReqVo.selectType}
            </if>
         </trim>
     </sql>

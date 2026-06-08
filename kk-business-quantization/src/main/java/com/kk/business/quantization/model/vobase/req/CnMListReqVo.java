@@ -27,6 +27,17 @@ public class CnMListReqVo extends BasePage{
     @Schema(description = "月份")
     private String month;
     /**
+     * 月份开始
+     */
+    @Schema(description = "月份开始")
+    private String monthStart;
+    /**
+     * 月份结束
+     */
+    @Schema(description = "月份结束")
+    private String monthEnd;
+
+    /**
     * 货币M0总量
     */
     @Schema(description = "货币M0总量")

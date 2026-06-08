@@ -1,8 +1,6 @@
-package com.kk.business.quantization.serviceapi;
+package com.kk.business.quantization.service.bll;
 
 
-import com.kk.common.auth.LoginUserInfo;
-import com.kk.common.base.model.LoginVo;
 import org.springframework.stereotype.Service;
 import jakarta.annotation.Resource;
 import java.util.List;
@@ -16,17 +14,16 @@ import com.kk.business.quantization.model.vobase.res.SyUserResVo;
 import com.kk.business.quantization.model.vobase.req.SyUserDetailsReqVo;
 import com.kk.business.quantization.model.vobase.req.SyUserDeleteReqVo;
 import com.kk.common.base.model.PageResult;
-import com.kk.common.annotation.BaseTransactional;
 /**
  * <p>
- * 用户信息 Api服务实现类
+ * 用户信息 Bll业务实现类
  * </p>
  *
  * @author kk
  * @since 2026-06-08
  */
 @Service
-public class SyUserServiceApi   {
+public class SyUserBll   {
 
     @Resource
     public ISyUserService syUserService;
@@ -36,7 +33,6 @@ public class SyUserServiceApi   {
     * @param list 数据列表
     * @return
     */
-    @BaseTransactional
     public void insertSyUserBatchSomeColumn(List<SyUser> list)
     {
         syUserService.insertSyUserBatchSomeColumn(list);
@@ -46,7 +42,6 @@ public class SyUserServiceApi   {
     * @param vo 请求参数
     * @return 结果集
     */
-    @BaseTransactional
     public void insertSyUser(SyUserAddReqVo vo)
     {
         syUserService.insertSyUser(vo);
@@ -56,7 +51,6 @@ public class SyUserServiceApi   {
     * @param vo 请求参数
     * @return 结果集
     */
-    @BaseTransactional
     public int updateSyUser(SyUserEditReqVo vo)
     {
         return syUserService.updateSyUser(vo);
@@ -66,7 +60,6 @@ public class SyUserServiceApi   {
     * @param vo 请求参数
     * @return 结果集
     */
-    @BaseTransactional(readOnly = true)
     public SyUserResVo selectSyUserById(SyUserDetailsReqVo vo)
     {
         return syUserService.selectSyUserById(vo);
@@ -76,7 +69,6 @@ public class SyUserServiceApi   {
     * @param vo 请求参数
     * @return 结果集
     */
-    @BaseTransactional
     public int deleteSyUserById(SyUserDeleteReqVo vo)
     {
         return syUserService.deleteSyUserById(vo);
@@ -86,19 +78,11 @@ public class SyUserServiceApi   {
     * @param vo 请求参数
     * @return 结果集
     */
-    @BaseTransactional(readOnly = true)
     public PageResult<SyUserListResVo>  selectSyUserPageList(SyUserListReqVo vo){
         return syUserService.selectSyUserPageList(vo);
     }
 
-    /**
-     * 用户登录
-     * @param vo
-     * @return
-     */
-    @BaseTransactional
-    public LoginUserInfo loginUser(LoginVo vo){
-        return syUserService.loginUser(vo);
-    }
+
 
 }
+

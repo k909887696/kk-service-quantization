@@ -36,40 +36,40 @@
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
            <if test="monthlyListReqVo.tsCode != null and monthlyListReqVo.tsCode != ''">
-               and ts_code = #{monthlyListVo.tsCode}
+               and ts_code = #{monthlyListReqVo.tsCode}
            </if>
            <if test="monthlyListReqVo.tradeDateStart != null and monthlyListReqVo.tradeDateStart != ''">
-               and trade_date >= #{monthlyListVo.tradeDateStart}
+               and trade_date >= #{monthlyListReqVo.tradeDateStart}
            </if>
            <if test="monthlyListReqVo.tradeDateEnd != null and monthlyListReqVo.tradeDateEnd != ''">
-               and trade_date &lt;= #{monthlyListVo.tradeDateEnd}
+               and trade_date &lt;= #{monthlyListReqVo.tradeDateEnd}
            </if>
            <if test="monthlyListReqVo.open != null and monthlyListReqVo.open != ''">
-               and open = #{monthlyListVo.open}
+               and open = #{monthlyListReqVo.open}
            </if>
            <if test="monthlyListReqVo.high != null and monthlyListReqVo.high != ''">
-               and high = #{monthlyListVo.high}
+               and high = #{monthlyListReqVo.high}
            </if>
            <if test="monthlyListReqVo.low != null and monthlyListReqVo.low != ''">
-               and low = #{monthlyListVo.low}
+               and low = #{monthlyListReqVo.low}
            </if>
            <if test="monthlyListReqVo.close != null and monthlyListReqVo.close != ''">
-               and close = #{monthlyListVo.close}
+               and close = #{monthlyListReqVo.close}
            </if>
            <if test="monthlyListReqVo.preClose != null and monthlyListReqVo.preClose != ''">
-               and pre_close = #{monthlyListVo.preClose}
+               and pre_close = #{monthlyListReqVo.preClose}
            </if>
            <if test="monthlyListReqVo.change != null and monthlyListReqVo.change != ''">
-               and change = #{monthlyListVo.change}
+               and change = #{monthlyListReqVo.change}
            </if>
            <if test="monthlyListReqVo.pctChg != null and monthlyListReqVo.pctChg != ''">
-               and pct_chg = #{monthlyListVo.pctChg}
+               and pct_chg = #{monthlyListReqVo.pctChg}
            </if>
            <if test="monthlyListReqVo.vol != null and monthlyListReqVo.vol != ''">
-               and vol = #{monthlyListVo.vol}
+               and vol = #{monthlyListReqVo.vol}
            </if>
            <if test="monthlyListReqVo.amount != null and monthlyListReqVo.amount != ''">
-               and amount = #{monthlyListVo.amount}
+               and amount = #{monthlyListReqVo.amount}
            </if>
         </trim>
     </sql>

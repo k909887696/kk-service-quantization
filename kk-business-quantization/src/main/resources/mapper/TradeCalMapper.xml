@@ -22,22 +22,22 @@
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
            <if test="tradeCalListReqVo.exchange != null and tradeCalListReqVo.exchange != ''">
-               and exchange = #{tradeCalListVo.exchange}
+               and exchange = #{tradeCalListReqVo.exchange}
            </if>
            <if test="tradeCalListReqVo.calDateStart != null and tradeCalListReqVo.calDateStart != ''">
-               and cal_date >= #{tradeCalListVo.calDateStart}
+               and cal_date >= #{tradeCalListReqVo.calDateStart}
            </if>
            <if test="tradeCalListReqVo.calDateEnd != null and tradeCalListReqVo.calDateEnd != ''">
-               and cal_date &lt;= #{tradeCalListVo.calDateEnd}
+               and cal_date &lt;= #{tradeCalListReqVo.calDateEnd}
            </if>
            <if test="tradeCalListReqVo.isOpen != null and tradeCalListReqVo.isOpen != ''">
-               and is_open = #{tradeCalListVo.isOpen}
+               and is_open = #{tradeCalListReqVo.isOpen}
            </if>
            <if test="tradeCalListReqVo.pretradeDateStart != null and tradeCalListReqVo.pretradeDateStart != ''">
-               and pretrade_date >= #{tradeCalListVo.pretradeDateStart}
+               and pretrade_date >= #{tradeCalListReqVo.pretradeDateStart}
            </if>
            <if test="tradeCalListReqVo.pretradeDateEnd != null and tradeCalListReqVo.pretradeDateEnd != ''">
-               and pretrade_date &lt;= #{tradeCalListVo.pretradeDateEnd}
+               and pretrade_date &lt;= #{tradeCalListReqVo.pretradeDateEnd}
            </if>
         </trim>
     </sql>

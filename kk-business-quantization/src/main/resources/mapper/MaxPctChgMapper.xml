@@ -18,10 +18,10 @@
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
            <if test="maxPctChgListReqVo.market != null and maxPctChgListReqVo.market != ''">
-               and market = #{maxPctChgListVo.market}
+               and market = #{maxPctChgListReqVo.market}
            </if>
            <if test="maxPctChgListReqVo.maxPctChg != null and maxPctChgListReqVo.maxPctChg != ''">
-               and max_pct_chg = #{maxPctChgListVo.maxPctChg}
+               and max_pct_chg = #{maxPctChgListReqVo.maxPctChg}
            </if>
         </trim>
     </sql>

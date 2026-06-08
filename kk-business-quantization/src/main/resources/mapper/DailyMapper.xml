@@ -21,12 +21,12 @@
     <sql id="BaseColumnList">
         ts_code as 'tsCode',
         trade_date as 'tradeDate',
-        open as 'open',
-        high as 'high',
-        low as 'low',
-        close as 'close',
+        `open` as 'open',
+        `high` as 'high',
+        `low` as 'low',
+        `close` as 'close',
         pre_close as 'preClose',
-        change as 'change',
+        `change` as 'change',
         pct_chg as 'pctChg',
         vol as 'vol',
         amount as 'amount'
@@ -36,40 +36,40 @@
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
            <if test="dailyListReqVo.tsCode != null and dailyListReqVo.tsCode != ''">
-               and ts_code = #{dailyListVo.tsCode}
+               and ts_code = #{dailyListReqVo.tsCode}
            </if>
            <if test="dailyListReqVo.tradeDateStart != null and dailyListReqVo.tradeDateStart != ''">
-               and trade_date >= #{dailyListVo.tradeDateStart}
+               and trade_date >= #{dailyListReqVo.tradeDateStart}
            </if>
            <if test="dailyListReqVo.tradeDateEnd != null and dailyListReqVo.tradeDateEnd != ''">
-               and trade_date &lt;= #{dailyListVo.tradeDateEnd}
+               and trade_date &lt;= #{dailyListReqVo.tradeDateEnd}
            </if>
            <if test="dailyListReqVo.open != null and dailyListReqVo.open != ''">
-               and open = #{dailyListVo.open}
+               and `open` = #{dailyListReqVo.open}
            </if>
            <if test="dailyListReqVo.high != null and dailyListReqVo.high != ''">
-               and high = #{dailyListVo.high}
+               and `high` = #{dailyListReqVo.high}
            </if>
            <if test="dailyListReqVo.low != null and dailyListReqVo.low != ''">
-               and low = #{dailyListVo.low}
+               and `low` = #{dailyListReqVo.low}
            </if>
            <if test="dailyListReqVo.close != null and dailyListReqVo.close != ''">
-               and close = #{dailyListVo.close}
+               and `close` = #{dailyListReqVo.close}
            </if>
            <if test="dailyListReqVo.preClose != null and dailyListReqVo.preClose != ''">
-               and pre_close = #{dailyListVo.preClose}
+               and pre_close = #{dailyListReqVo.preClose}
            </if>
            <if test="dailyListReqVo.change != null and dailyListReqVo.change != ''">
-               and change = #{dailyListVo.change}
+               and `change` = #{dailyListReqVo.change}
            </if>
            <if test="dailyListReqVo.pctChg != null and dailyListReqVo.pctChg != ''">
-               and pct_chg = #{dailyListVo.pctChg}
+               and pct_chg = #{dailyListReqVo.pctChg}
            </if>
            <if test="dailyListReqVo.vol != null and dailyListReqVo.vol != ''">
-               and vol = #{dailyListVo.vol}
+               and vol = #{dailyListReqVo.vol}
            </if>
            <if test="dailyListReqVo.amount != null and dailyListReqVo.amount != ''">
-               and amount = #{dailyListVo.amount}
+               and amount = #{dailyListReqVo.amount}
            </if>
         </trim>
     </sql>
@@ -80,79 +80,6 @@
         from daily
         <include refid="BaseWhere"/>
 
-    </select>
-
-
-    <select id="selectDailyExList" resultType="com.kk.business.quantization.model.dto.DailyKdjDto">
-        select * from daily d
-        left join stock_basic sb on sb.ts_code = d.ts_code
-        left join stock_day_kdj kdj on kdj.ts_code = d.ts_code and d.trade_date = kdj.trade_date
-        left join kdj_cross kc on kc.ts_code = kdj.ts_code and kc.trade_date = kdj.trade_date
-        <where>
-            <if test="vo.tsCode != null and vo.tsCode != ''">
-                and d.ts_code = #{vo.tsCode}
-            </if>
-            <if test="vo.kdjType != null and vo.kdjType != ''">
-                and kdj.kdj_type = #{vo.kdjType}
-            </if>
-
-            <if test="vo.tradeDate != null and vo.tradeDate != ''">
-                and d.trade_date = #{vo.tradeDate}
-            </if>
-            <if test="vo.startDate != null and vo.startDate != ''">
-                <![CDATA[ and d.trade_date >= #{vo.startDate} ]]>
-            </if>
-            <if test="vo.endDate != null and vo.endDate != ''">
-                <![CDATA[ and d.trade_date <= #{vo.endDate}]]>
-            </if>
-            <if test="vo.ids != null and vo.ids.size() >0 ">
-                and d.ts_code in
-                <foreach collection="vo.ids" item="code" index="index" open="(" close=")" separator=",">
-                    #{code}
-                </foreach>
-            </if>
-            <if test="vo.conceptIds != null and vo.conceptIds.size() >0 ">
-                and d.ts_code in (select cd.ts_code from concept_detail cd where cd.concept_id in
-                <foreach collection="vo.conceptIds" item="code" index="index" open="(" close=")"
-                         separator=",">
-                    #{code}
-                </foreach>
-                )
-            </if>
-            <if test="vo.crossType != null and vo.crossType != ''">
-                and kc.cross_type = #{vo.crossType}
-            </if>
-        </where>
-    </select>
-    <select id="selectMaxMinByDateRange" resultType="com.kk.business.quantization.model.dto.SelectMaxMinByDateRangeDto">
-        select max(d.`close`) 'max_close',min(d.`close`) 'min_close' ,d.ts_code from daily d
-
-        where
-            <![CDATA[ and d.trade_date >= #{vo.startDate} ]]>
-
-            <![CDATA[ and d.trade_date <= #{vo.endDate}]]>
-
-        group by ts_code
-    </select>
-
-    <select id="selectStockLeader" resultType="com.kk.business.quantization.model.dto.DailyLeaderDto">
-        select  sb.name,dg.*,sd.`close` 'start_close',ed.`close` 'end_close'
-        , round((ed.`close` - sd.`close`) / sd.`close` * 100 ,2) 'range_pct'
-        , round((ed.`close` - dg.high) / dg.high * 100 ,2) 'roll_back_pct'
-        , round((dg.high - sd.`close`) / sd.`close` * 100,2) 'max_pct'
-        from (
-                 select ts_code 'ts_code', max(high) 'high', MIN(low) 'low'  from daily d
-                 where trade_date <![CDATA[>=]]> #{vo.startDate} and trade_date <![CDATA[<=]]> #{vo.endDate}
-                   and ts_code in (select ts_code from concept_detail cd where cd.concept_id=#{vo.conceptId})
-                 group by ts_code
-             ) dg
-                 left join
-             daily   sd on sd.trade_date =  #{vo.startDate} and dg.ts_code = sd.ts_code
-                 left join
-             daily  ed on ed.trade_date = #{vo.endDate} and dg.ts_code = ed.ts_code
-                 left join
-             stock_basic   sb on sb.ts_code  = dg.ts_code
-        order by range_pct desc
     </select>
 
 

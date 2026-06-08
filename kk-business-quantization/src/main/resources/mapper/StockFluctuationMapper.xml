@@ -26,25 +26,25 @@
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
            <if test="stockFluctuationListReqVo.code != null and stockFluctuationListReqVo.code != ''">
-               and code = #{stockFluctuationListVo.code}
+               and code = #{stockFluctuationListReqVo.code}
            </if>
            <if test="stockFluctuationListReqVo.tradeDateStart != null and stockFluctuationListReqVo.tradeDateStart != ''">
-               and trade_date >= #{stockFluctuationListVo.tradeDateStart}
+               and trade_date >= #{stockFluctuationListReqVo.tradeDateStart}
            </if>
            <if test="stockFluctuationListReqVo.tradeDateEnd != null and stockFluctuationListReqVo.tradeDateEnd != ''">
-               and trade_date &lt;= #{stockFluctuationListVo.tradeDateEnd}
+               and trade_date &lt;= #{stockFluctuationListReqVo.tradeDateEnd}
            </if>
            <if test="stockFluctuationListReqVo.maxUpCount != null and stockFluctuationListReqVo.maxUpCount != ''">
-               and max_up_count = #{stockFluctuationListVo.maxUpCount}
+               and max_up_count = #{stockFluctuationListReqVo.maxUpCount}
            </if>
            <if test="stockFluctuationListReqVo.maxDownCount != null and stockFluctuationListReqVo.maxDownCount != ''">
-               and max_down_count = #{stockFluctuationListVo.maxDownCount}
+               and max_down_count = #{stockFluctuationListReqVo.maxDownCount}
            </if>
            <if test="stockFluctuationListReqVo.maxUp15dCount != null and stockFluctuationListReqVo.maxUp15dCount != ''">
-               and max_up_15d_count = #{stockFluctuationListVo.maxUp15dCount}
+               and max_up_15d_count = #{stockFluctuationListReqVo.maxUp15dCount}
            </if>
            <if test="stockFluctuationListReqVo.maxDown15dCount != null and stockFluctuationListReqVo.maxDown15dCount != ''">
-               and max_down_15d_count = #{stockFluctuationListVo.maxDown15dCount}
+               and max_down_15d_count = #{stockFluctuationListReqVo.maxDown15dCount}
            </if>
         </trim>
     </sql>

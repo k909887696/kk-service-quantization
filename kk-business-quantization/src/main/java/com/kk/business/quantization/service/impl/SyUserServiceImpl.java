@@ -1,8 +1,19 @@
 package com.kk.business.quantization.service.impl;
 
 
+import cn.dev33.satoken.stp.StpUtil;
+import com.kk.common.auth.LoginInfo;
+import com.kk.common.auth.LoginUserInfo;
+import com.kk.common.auth.LoginUserJurInfo;
+import com.kk.common.auth.LoginUtil;
+import com.kk.common.base.model.LoginRes;
+import com.kk.common.base.model.LoginVo;
+import com.kk.common.web.model.ApiResult;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import jakarta.annotation.Resource;
+
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -26,7 +37,7 @@ import com.kk.common.exception.BusinessException;
  * </p>
  *
  * @author kk
- * @since 2026-06-04
+ * @since 2026-06-08
  */
 @Service
 public class SyUserServiceImpl extends ServiceImpl<SyUserMapper, SyUser> implements ISyUserService {
@@ -63,6 +74,10 @@ public class SyUserServiceImpl extends ServiceImpl<SyUserMapper, SyUser> impleme
     public void insertSyUser(SyUserAddReqVo vo)
     {
         SyUser model = new SyUser();
+        if(StringUtils.isBlank(vo.getUserId()))
+        {
+            throw new BusinessException("账号不能为空！");
+        }
         BeanUtil.copyProperties(vo,model);
         this.baseMapper.insert(model);
     }
@@ -130,6 +145,43 @@ public class SyUserServiceImpl extends ServiceImpl<SyUserMapper, SyUser> impleme
         return pageResult.convertPage(results);
     }
 
+    /**
+     * 用户登录
+     * @param vo
+     * @return
+     */
+    @Override
+    public LoginUserInfo loginUser(LoginVo vo)
+    {
+        if(StringUtils.isBlank(vo.getUserId()))
+        {
+            throw new BusinessException("账号不能为空！");
+        }
+        if(StringUtils.isBlank(vo.getPassword()))
+        {
+            throw new BusinessException("密码不能为空！");
+        }
+        SyUser user = this.baseMapper.selectById(vo.getUserId());
+        if(user==null || !user.getPassword().equals(vo.getPassword()) || !user.getStatus().equals("1"))
+        {
+            throw new BusinessException("账号或密码错误！");
+        }
+        StpUtil.login(vo.getUserId());
+        LoginInfo loginInfo = new LoginInfo();
+        LoginUserInfo userInfo = new LoginUserInfo();
+        userInfo.setUserId(user.getUserId()); // Set user ID
+        userInfo.setUserName(user.getUserName());
+        userInfo.setUserType(user.getUserType());
+        userInfo.setLoginTime(new Date());
+        userInfo.setLoginChannel("web");
+        loginInfo.setLoginUserInfo(userInfo);
+        loginInfo.setLoginUserJurInfo(new LoginUserJurInfo());
+        //List<String> permissionList = List.of("add","update","delete");
+        //loginInfo.getLoginUserJurInfo().setPermissionList(permissionList);
+        loginInfo = LoginUtil.login(loginInfo);
 
+
+        return loginInfo.getLoginUserInfo();
+    }
 
 }

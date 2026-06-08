@@ -44,55 +44,55 @@
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
            <if test="stockBasicListReqVo.tsCode != null and stockBasicListReqVo.tsCode != ''">
-               and ts_code = #{stockBasicListVo.tsCode}
+               and ts_code = #{stockBasicListReqVo.tsCode}
            </if>
            <if test="stockBasicListReqVo.symbol != null and stockBasicListReqVo.symbol != ''">
-               and symbol = #{stockBasicListVo.symbol}
+               and symbol = #{stockBasicListReqVo.symbol}
            </if>
            <if test="stockBasicListReqVo.name != null and stockBasicListReqVo.name != ''">
-               and name like concat('%',#{stockBasicListVo.name},'%')
+               and name like concat('%',#{stockBasicListReqVo.name},'%')
            </if>
            <if test="stockBasicListReqVo.area != null and stockBasicListReqVo.area != ''">
-               and area = #{stockBasicListVo.area}
+               and area = #{stockBasicListReqVo.area}
            </if>
            <if test="stockBasicListReqVo.industry != null and stockBasicListReqVo.industry != ''">
-               and industry = #{stockBasicListVo.industry}
+               and industry = #{stockBasicListReqVo.industry}
            </if>
            <if test="stockBasicListReqVo.fullname != null and stockBasicListReqVo.fullname != ''">
-               and fullname like concat('%',#{stockBasicListVo.fullname},'%')
+               and fullname like concat('%',#{stockBasicListReqVo.fullname},'%')
            </if>
            <if test="stockBasicListReqVo.enname != null and stockBasicListReqVo.enname != ''">
-               and enname like concat('%',#{stockBasicListVo.enname},'%')
+               and enname like concat('%',#{stockBasicListReqVo.enname},'%')
            </if>
            <if test="stockBasicListReqVo.market != null and stockBasicListReqVo.market != ''">
-               and market = #{stockBasicListVo.market}
+               and market = #{stockBasicListReqVo.market}
            </if>
            <if test="stockBasicListReqVo.exchange != null and stockBasicListReqVo.exchange != ''">
-               and exchange = #{stockBasicListVo.exchange}
+               and exchange = #{stockBasicListReqVo.exchange}
            </if>
            <if test="stockBasicListReqVo.currType != null and stockBasicListReqVo.currType != ''">
-               and curr_type = #{stockBasicListVo.currType}
+               and curr_type = #{stockBasicListReqVo.currType}
            </if>
            <if test="stockBasicListReqVo.listStatus != null and stockBasicListReqVo.listStatus != ''">
-               and list_status = #{stockBasicListVo.listStatus}
+               and list_status = #{stockBasicListReqVo.listStatus}
            </if>
            <if test="stockBasicListReqVo.listDateStart != null and stockBasicListReqVo.listDateStart != ''">
-               and list_date >= #{stockBasicListVo.listDateStart}
+               and list_date >= #{stockBasicListReqVo.listDateStart}
            </if>
            <if test="stockBasicListReqVo.listDateEnd != null and stockBasicListReqVo.listDateEnd != ''">
-               and list_date &lt;= #{stockBasicListVo.listDateEnd}
+               and list_date &lt;= #{stockBasicListReqVo.listDateEnd}
            </if>
            <if test="stockBasicListReqVo.delistDateStart != null and stockBasicListReqVo.delistDateStart != ''">
-               and delist_date >= #{stockBasicListVo.delistDateStart}
+               and delist_date >= #{stockBasicListReqVo.delistDateStart}
            </if>
            <if test="stockBasicListReqVo.delistDateEnd != null and stockBasicListReqVo.delistDateEnd != ''">
-               and delist_date &lt;= #{stockBasicListVo.delistDateEnd}
+               and delist_date &lt;= #{stockBasicListReqVo.delistDateEnd}
            </if>
            <if test="stockBasicListReqVo.isHs != null and stockBasicListReqVo.isHs != ''">
-               and is_hs = #{stockBasicListVo.isHs}
+               and is_hs = #{stockBasicListReqVo.isHs}
            </if>
            <if test="stockBasicListReqVo.cnspell != null and stockBasicListReqVo.cnspell != ''">
-               and cnspell = #{stockBasicListVo.cnspell}
+               and cnspell = #{stockBasicListReqVo.cnspell}
            </if>
         </trim>
     </sql>

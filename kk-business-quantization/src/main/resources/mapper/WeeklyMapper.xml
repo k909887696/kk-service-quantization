@@ -36,40 +36,40 @@
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
            <if test="weeklyListReqVo.tsCode != null and weeklyListReqVo.tsCode != ''">
-               and ts_code = #{weeklyListVo.tsCode}
+               and ts_code = #{weeklyListReqVo.tsCode}
            </if>
            <if test="weeklyListReqVo.tradeDateStart != null and weeklyListReqVo.tradeDateStart != ''">
-               and trade_date >= #{weeklyListVo.tradeDateStart}
+               and trade_date >= #{weeklyListReqVo.tradeDateStart}
            </if>
            <if test="weeklyListReqVo.tradeDateEnd != null and weeklyListReqVo.tradeDateEnd != ''">
-               and trade_date &lt;= #{weeklyListVo.tradeDateEnd}
+               and trade_date &lt;= #{weeklyListReqVo.tradeDateEnd}
            </if>
            <if test="weeklyListReqVo.open != null and weeklyListReqVo.open != ''">
-               and open = #{weeklyListVo.open}
+               and open = #{weeklyListReqVo.open}
            </if>
            <if test="weeklyListReqVo.high != null and weeklyListReqVo.high != ''">
-               and high = #{weeklyListVo.high}
+               and high = #{weeklyListReqVo.high}
            </if>
            <if test="weeklyListReqVo.low != null and weeklyListReqVo.low != ''">
-               and low = #{weeklyListVo.low}
+               and low = #{weeklyListReqVo.low}
            </if>
            <if test="weeklyListReqVo.close != null and weeklyListReqVo.close != ''">
-               and close = #{weeklyListVo.close}
+               and close = #{weeklyListReqVo.close}
            </if>
            <if test="weeklyListReqVo.preClose != null and weeklyListReqVo.preClose != ''">
-               and pre_close = #{weeklyListVo.preClose}
+               and pre_close = #{weeklyListReqVo.preClose}
            </if>
            <if test="weeklyListReqVo.change != null and weeklyListReqVo.change != ''">
-               and change = #{weeklyListVo.change}
+               and change = #{weeklyListReqVo.change}
            </if>
            <if test="weeklyListReqVo.pctChg != null and weeklyListReqVo.pctChg != ''">
-               and pct_chg = #{weeklyListVo.pctChg}
+               and pct_chg = #{weeklyListReqVo.pctChg}
            </if>
            <if test="weeklyListReqVo.vol != null and weeklyListReqVo.vol != ''">
-               and vol = #{weeklyListVo.vol}
+               and vol = #{weeklyListReqVo.vol}
            </if>
            <if test="weeklyListReqVo.amount != null and weeklyListReqVo.amount != ''">
-               and amount = #{weeklyListVo.amount}
+               and amount = #{weeklyListReqVo.amount}
            </if>
         </trim>
     </sql>

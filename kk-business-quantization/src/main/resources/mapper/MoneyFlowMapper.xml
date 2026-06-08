@@ -54,67 +54,67 @@
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
            <if test="moneyFlowListReqVo.tsCode != null and moneyFlowListReqVo.tsCode != ''">
-               and ts_code = #{moneyFlowListVo.tsCode}
+               and ts_code = #{moneyFlowListReqVo.tsCode}
            </if>
            <if test="moneyFlowListReqVo.tradeDateStart != null and moneyFlowListReqVo.tradeDateStart != ''">
-               and trade_date >= #{moneyFlowListVo.tradeDateStart}
+               and trade_date >= #{moneyFlowListReqVo.tradeDateStart}
            </if>
            <if test="moneyFlowListReqVo.tradeDateEnd != null and moneyFlowListReqVo.tradeDateEnd != ''">
-               and trade_date &lt;= #{moneyFlowListVo.tradeDateEnd}
+               and trade_date &lt;= #{moneyFlowListReqVo.tradeDateEnd}
            </if>
            <if test="moneyFlowListReqVo.buySmVol != null and moneyFlowListReqVo.buySmVol != ''">
-               and buy_sm_vol = #{moneyFlowListVo.buySmVol}
+               and buy_sm_vol = #{moneyFlowListReqVo.buySmVol}
            </if>
            <if test="moneyFlowListReqVo.buySmAmount != null and moneyFlowListReqVo.buySmAmount != ''">
-               and buy_sm_amount = #{moneyFlowListVo.buySmAmount}
+               and buy_sm_amount = #{moneyFlowListReqVo.buySmAmount}
            </if>
            <if test="moneyFlowListReqVo.sellSmVol != null and moneyFlowListReqVo.sellSmVol != ''">
-               and sell_sm_vol = #{moneyFlowListVo.sellSmVol}
+               and sell_sm_vol = #{moneyFlowListReqVo.sellSmVol}
            </if>
            <if test="moneyFlowListReqVo.sellSmAmount != null and moneyFlowListReqVo.sellSmAmount != ''">
-               and sell_sm_amount = #{moneyFlowListVo.sellSmAmount}
+               and sell_sm_amount = #{moneyFlowListReqVo.sellSmAmount}
            </if>
            <if test="moneyFlowListReqVo.buyMdVol != null and moneyFlowListReqVo.buyMdVol != ''">
-               and buy_md_vol = #{moneyFlowListVo.buyMdVol}
+               and buy_md_vol = #{moneyFlowListReqVo.buyMdVol}
            </if>
            <if test="moneyFlowListReqVo.buyMdAmount != null and moneyFlowListReqVo.buyMdAmount != ''">
-               and buy_md_amount = #{moneyFlowListVo.buyMdAmount}
+               and buy_md_amount = #{moneyFlowListReqVo.buyMdAmount}
            </if>
            <if test="moneyFlowListReqVo.sellMdVol != null and moneyFlowListReqVo.sellMdVol != ''">
-               and sell_md_vol = #{moneyFlowListVo.sellMdVol}
+               and sell_md_vol = #{moneyFlowListReqVo.sellMdVol}
            </if>
            <if test="moneyFlowListReqVo.sellMdAmount != null and moneyFlowListReqVo.sellMdAmount != ''">
-               and sell_md_amount = #{moneyFlowListVo.sellMdAmount}
+               and sell_md_amount = #{moneyFlowListReqVo.sellMdAmount}
            </if>
            <if test="moneyFlowListReqVo.buyLgVol != null and moneyFlowListReqVo.buyLgVol != ''">
-               and buy_lg_vol = #{moneyFlowListVo.buyLgVol}
+               and buy_lg_vol = #{moneyFlowListReqVo.buyLgVol}
            </if>
            <if test="moneyFlowListReqVo.buyLgAmount != null and moneyFlowListReqVo.buyLgAmount != ''">
-               and buy_lg_amount = #{moneyFlowListVo.buyLgAmount}
+               and buy_lg_amount = #{moneyFlowListReqVo.buyLgAmount}
            </if>
            <if test="moneyFlowListReqVo.sellLgVol != null and moneyFlowListReqVo.sellLgVol != ''">
-               and sell_lg_vol = #{moneyFlowListVo.sellLgVol}
+               and sell_lg_vol = #{moneyFlowListReqVo.sellLgVol}
            </if>
            <if test="moneyFlowListReqVo.sellLgAmount != null and moneyFlowListReqVo.sellLgAmount != ''">
-               and sell_lg_amount = #{moneyFlowListVo.sellLgAmount}
+               and sell_lg_amount = #{moneyFlowListReqVo.sellLgAmount}
            </if>
            <if test="moneyFlowListReqVo.buyElgVol != null and moneyFlowListReqVo.buyElgVol != ''">
-               and buy_elg_vol = #{moneyFlowListVo.buyElgVol}
+               and buy_elg_vol = #{moneyFlowListReqVo.buyElgVol}
            </if>
            <if test="moneyFlowListReqVo.buyElgAmount != null and moneyFlowListReqVo.buyElgAmount != ''">
-               and buy_elg_amount = #{moneyFlowListVo.buyElgAmount}
+               and buy_elg_amount = #{moneyFlowListReqVo.buyElgAmount}
            </if>
            <if test="moneyFlowListReqVo.sellElgVol != null and moneyFlowListReqVo.sellElgVol != ''">
-               and sell_elg_vol = #{moneyFlowListVo.sellElgVol}
+               and sell_elg_vol = #{moneyFlowListReqVo.sellElgVol}
            </if>
            <if test="moneyFlowListReqVo.sellElgAmount != null and moneyFlowListReqVo.sellElgAmount != ''">
-               and sell_elg_amount = #{moneyFlowListVo.sellElgAmount}
+               and sell_elg_amount = #{moneyFlowListReqVo.sellElgAmount}
            </if>
            <if test="moneyFlowListReqVo.netMfVol != null and moneyFlowListReqVo.netMfVol != ''">
-               and net_mf_vol = #{moneyFlowListVo.netMfVol}
+               and net_mf_vol = #{moneyFlowListReqVo.netMfVol}
            </if>
            <if test="moneyFlowListReqVo.netMfAmount != null and moneyFlowListReqVo.netMfAmount != ''">
-               and net_mf_amount = #{moneyFlowListVo.netMfAmount}
+               and net_mf_amount = #{moneyFlowListReqVo.netMfAmount}
            </if>
         </trim>
     </sql>

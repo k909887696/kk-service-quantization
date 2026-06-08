@@ -40,52 +40,52 @@
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
            <if test="indexBasicListReqVo.tsCode != null and indexBasicListReqVo.tsCode != ''">
-               and ts_code = #{indexBasicListVo.tsCode}
+               and ts_code = #{indexBasicListReqVo.tsCode}
            </if>
            <if test="indexBasicListReqVo.name != null and indexBasicListReqVo.name != ''">
-               and name like concat('%',#{indexBasicListVo.name},'%')
+               and name like concat('%',#{indexBasicListReqVo.name},'%')
            </if>
            <if test="indexBasicListReqVo.fullname != null and indexBasicListReqVo.fullname != ''">
-               and fullname like concat('%',#{indexBasicListVo.fullname},'%')
+               and fullname like concat('%',#{indexBasicListReqVo.fullname},'%')
            </if>
            <if test="indexBasicListReqVo.market != null and indexBasicListReqVo.market != ''">
-               and market = #{indexBasicListVo.market}
+               and market = #{indexBasicListReqVo.market}
            </if>
            <if test="indexBasicListReqVo.publisher != null and indexBasicListReqVo.publisher != ''">
-               and publisher = #{indexBasicListVo.publisher}
+               and publisher = #{indexBasicListReqVo.publisher}
            </if>
            <if test="indexBasicListReqVo.indexType != null and indexBasicListReqVo.indexType != ''">
-               and index_type = #{indexBasicListVo.indexType}
+               and index_type = #{indexBasicListReqVo.indexType}
            </if>
            <if test="indexBasicListReqVo.category != null and indexBasicListReqVo.category != ''">
-               and category = #{indexBasicListVo.category}
+               and category = #{indexBasicListReqVo.category}
            </if>
            <if test="indexBasicListReqVo.baseDateStart != null and indexBasicListReqVo.baseDateStart != ''">
-               and base_date >= #{indexBasicListVo.baseDateStart}
+               and base_date >= #{indexBasicListReqVo.baseDateStart}
            </if>
            <if test="indexBasicListReqVo.baseDateEnd != null and indexBasicListReqVo.baseDateEnd != ''">
-               and base_date &lt;= #{indexBasicListVo.baseDateEnd}
+               and base_date &lt;= #{indexBasicListReqVo.baseDateEnd}
            </if>
            <if test="indexBasicListReqVo.basePoint != null and indexBasicListReqVo.basePoint != ''">
-               and base_point = #{indexBasicListVo.basePoint}
+               and base_point = #{indexBasicListReqVo.basePoint}
            </if>
            <if test="indexBasicListReqVo.listDateStart != null and indexBasicListReqVo.listDateStart != ''">
-               and list_date >= #{indexBasicListVo.listDateStart}
+               and list_date >= #{indexBasicListReqVo.listDateStart}
            </if>
            <if test="indexBasicListReqVo.listDateEnd != null and indexBasicListReqVo.listDateEnd != ''">
-               and list_date &lt;= #{indexBasicListVo.listDateEnd}
+               and list_date &lt;= #{indexBasicListReqVo.listDateEnd}
            </if>
            <if test="indexBasicListReqVo.weightRule != null and indexBasicListReqVo.weightRule != ''">
-               and weight_rule = #{indexBasicListVo.weightRule}
+               and weight_rule = #{indexBasicListReqVo.weightRule}
            </if>
            <if test="indexBasicListReqVo.desc != null and indexBasicListReqVo.desc != ''">
-               and desc = #{indexBasicListVo.desc}
+               and desc = #{indexBasicListReqVo.desc}
            </if>
            <if test="indexBasicListReqVo.expDateStart != null and indexBasicListReqVo.expDateStart != ''">
-               and exp_date >= #{indexBasicListVo.expDateStart}
+               and exp_date >= #{indexBasicListReqVo.expDateStart}
            </if>
            <if test="indexBasicListReqVo.expDateEnd != null and indexBasicListReqVo.expDateEnd != ''">
-               and exp_date &lt;= #{indexBasicListVo.expDateEnd}
+               and exp_date &lt;= #{indexBasicListReqVo.expDateEnd}
            </if>
         </trim>
     </sql>

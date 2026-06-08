@@ -6,30 +6,81 @@
     <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.SyUser">
         <id column="user_id" property="userId" />
         <result column="user_name" property="userName" />
-        <result column="b_day" property="bDay" />
+        <result column="join_time" property="joinTime" />
+        <result column="password" property="password" />
+        <result column="user_type" property="userType" />
+        <result column="create_time" property="createTime" />
+        <result column="email" property="email" />
+        <result column="parent_node_code" property="parentNodeCode" />
+        <result column="status" property="status" />
+        <result column="op_time" property="opTime" />
+        <result column="op_id" property="opId" />
+        <result column="op_name" property="opName" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="BaseColumnList">
         user_id as 'userId',
         user_name as 'userName',
-        b_day as 'bDay'
+        join_time as 'joinTime',
+        password as 'password',
+        user_type as 'userType',
+        create_time as 'createTime',
+        email as 'email',
+        parent_node_code as 'parentNodeCode',
+        status as 'status',
+        op_time as 'opTime',
+        op_id as 'opId',
+        op_name as 'opName'
 
     </sql>
     <!-- 通用查询条件 -->
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
            <if test="syUserListReqVo.userId != null and syUserListReqVo.userId != ''">
-               and user_id = #{syUserListVo.userId}
+               and user_id = #{syUserListReqVo.userId}
            </if>
            <if test="syUserListReqVo.userName != null and syUserListReqVo.userName != ''">
-               and user_name like concat('%',#{syUserListVo.userName},'%')
+               and user_name like concat('%',#{syUserListReqVo.userName},'%')
            </if>
-           <if test="syUserListReqVo.bDayStart != null and syUserListReqVo.bDayStart != ''">
-               and b_day >= #{syUserListVo.bDayStart}
+           <if test="syUserListReqVo.joinTimeStart != null and syUserListReqVo.joinTimeStart != ''">
+               and join_time >= #{syUserListReqVo.joinTimeStart}
            </if>
-           <if test="syUserListReqVo.bDayEnd != null and syUserListReqVo.bDayEnd != ''">
-               and b_day &lt;= #{syUserListVo.bDayEnd}
+           <if test="syUserListReqVo.joinTimeEnd != null and syUserListReqVo.joinTimeEnd != ''">
+               and join_time &lt;= #{syUserListReqVo.joinTimeEnd}
+           </if>
+           <if test="syUserListReqVo.password != null and syUserListReqVo.password != ''">
+               and password = #{syUserListReqVo.password}
+           </if>
+           <if test="syUserListReqVo.userType != null and syUserListReqVo.userType != ''">
+               and user_type = #{syUserListReqVo.userType}
+           </if>
+           <if test="syUserListReqVo.createTimeStart != null and syUserListReqVo.createTimeStart != ''">
+               and create_time >= #{syUserListReqVo.createTimeStart}
+           </if>
+           <if test="syUserListReqVo.createTimeEnd != null and syUserListReqVo.createTimeEnd != ''">
+               and create_time &lt;= #{syUserListReqVo.createTimeEnd}
+           </if>
+           <if test="syUserListReqVo.email != null and syUserListReqVo.email != ''">
+               and email = #{syUserListReqVo.email}
+           </if>
+           <if test="syUserListReqVo.parentNodeCode != null and syUserListReqVo.parentNodeCode != ''">
+               and parent_node_code = #{syUserListReqVo.parentNodeCode}
+           </if>
+           <if test="syUserListReqVo.status != null and syUserListReqVo.status != ''">
+               and status = #{syUserListReqVo.status}
+           </if>
+           <if test="syUserListReqVo.opTimeStart != null and syUserListReqVo.opTimeStart != ''">
+               and op_time >= #{syUserListReqVo.opTimeStart}
+           </if>
+           <if test="syUserListReqVo.opTimeEnd != null and syUserListReqVo.opTimeEnd != ''">
+               and op_time &lt;= #{syUserListReqVo.opTimeEnd}
+           </if>
+           <if test="syUserListReqVo.opId != null and syUserListReqVo.opId != ''">
+               and op_id = #{syUserListReqVo.opId}
+           </if>
+           <if test="syUserListReqVo.opName != null and syUserListReqVo.opName != ''">
+               and op_name like concat('%',#{syUserListReqVo.opName},'%')
            </if>
         </trim>
     </sql>

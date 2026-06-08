@@ -34,34 +34,40 @@
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
            <if test="cnMListReqVo.month != null and cnMListReqVo.month != ''">
-               and month = #{cnMListVo.month}
+               and month = #{cnMListReqVo.month}
            </if>
+            <if test="cnMListReqVo.monthStart != null and cnMListReqVo.monthStart != ''">
+                and month >= #{cnMListReqVo.monthStart}
+            </if>
+            <if test="cnMListReqVo.monthEnd != null and cnMListReqVo.monthEnd != ''">
+                and month &lt;= #{cnMListReqVo.monthEnd}
+            </if>
            <if test="cnMListReqVo.m0 != null and cnMListReqVo.m0 != ''">
-               and m0 = #{cnMListVo.m0}
+               and m0 = #{cnMListReqVo.m0}
            </if>
            <if test="cnMListReqVo.m0Yoy != null and cnMListReqVo.m0Yoy != ''">
-               and m0_yoy = #{cnMListVo.m0Yoy}
+               and m0_yoy = #{cnMListReqVo.m0Yoy}
            </if>
            <if test="cnMListReqVo.m0Mom != null and cnMListReqVo.m0Mom != ''">
-               and m0_mom = #{cnMListVo.m0Mom}
+               and m0_mom = #{cnMListReqVo.m0Mom}
            </if>
            <if test="cnMListReqVo.m1 != null and cnMListReqVo.m1 != ''">
-               and m1 = #{cnMListVo.m1}
+               and m1 = #{cnMListReqVo.m1}
            </if>
            <if test="cnMListReqVo.m1Yoy != null and cnMListReqVo.m1Yoy != ''">
-               and m1_yoy = #{cnMListVo.m1Yoy}
+               and m1_yoy = #{cnMListReqVo.m1Yoy}
            </if>
            <if test="cnMListReqVo.m1Mom != null and cnMListReqVo.m1Mom != ''">
-               and m1_mom = #{cnMListVo.m1Mom}
+               and m1_mom = #{cnMListReqVo.m1Mom}
            </if>
            <if test="cnMListReqVo.m2 != null and cnMListReqVo.m2 != ''">
-               and m2 = #{cnMListVo.m2}
+               and m2 = #{cnMListReqVo.m2}
            </if>
            <if test="cnMListReqVo.m2Yoy != null and cnMListReqVo.m2Yoy != ''">
-               and m2_yoy = #{cnMListVo.m2Yoy}
+               and m2_yoy = #{cnMListReqVo.m2Yoy}
            </if>
            <if test="cnMListReqVo.m2Mom != null and cnMListReqVo.m2Mom != ''">
-               and m2_mom = #{cnMListVo.m2Mom}
+               and m2_mom = #{cnMListReqVo.m2Mom}
            </if>
         </trim>
     </sql>

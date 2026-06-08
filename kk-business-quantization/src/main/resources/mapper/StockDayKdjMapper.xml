@@ -28,28 +28,28 @@
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
            <if test="stockDayKdjListReqVo.tsCode != null and stockDayKdjListReqVo.tsCode != ''">
-               and ts_code = #{stockDayKdjListVo.tsCode}
+               and ts_code = #{stockDayKdjListReqVo.tsCode}
            </if>
            <if test="stockDayKdjListReqVo.tradeDateStart != null and stockDayKdjListReqVo.tradeDateStart != ''">
-               and trade_date >= #{stockDayKdjListVo.tradeDateStart}
+               and trade_date >= #{stockDayKdjListReqVo.tradeDateStart}
            </if>
            <if test="stockDayKdjListReqVo.tradeDateEnd != null and stockDayKdjListReqVo.tradeDateEnd != ''">
-               and trade_date &lt;= #{stockDayKdjListVo.tradeDateEnd}
+               and trade_date &lt;= #{stockDayKdjListReqVo.tradeDateEnd}
            </if>
            <if test="stockDayKdjListReqVo.kValue != null and stockDayKdjListReqVo.kValue != ''">
-               and k_value = #{stockDayKdjListVo.kValue}
+               and k_value = #{stockDayKdjListReqVo.kValue}
            </if>
            <if test="stockDayKdjListReqVo.dValue != null and stockDayKdjListReqVo.dValue != ''">
-               and d_value = #{stockDayKdjListVo.dValue}
+               and d_value = #{stockDayKdjListReqVo.dValue}
            </if>
            <if test="stockDayKdjListReqVo.jValue != null and stockDayKdjListReqVo.jValue != ''">
-               and j_value = #{stockDayKdjListVo.jValue}
+               and j_value = #{stockDayKdjListReqVo.jValue}
            </if>
            <if test="stockDayKdjListReqVo.rsv != null and stockDayKdjListReqVo.rsv != ''">
-               and rsv = #{stockDayKdjListVo.rsv}
+               and rsv = #{stockDayKdjListReqVo.rsv}
            </if>
            <if test="stockDayKdjListReqVo.kdjType != null and stockDayKdjListReqVo.kdjType != ''">
-               and kdj_type = #{stockDayKdjListVo.kdjType}
+               and kdj_type = #{stockDayKdjListReqVo.kdjType}
            </if>
         </trim>
     </sql>

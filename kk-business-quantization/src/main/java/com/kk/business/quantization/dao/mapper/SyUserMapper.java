@@ -12,7 +12,7 @@ import com.kk.business.quantization.model.vobase.req.SyUserListReqVo;
  * </p>
  *
  * @author kk
- * @since 2026-06-04
+ * @since 2026-06-08
  */
 public interface SyUserMapper extends RootMapper<SyUser> {
      /**

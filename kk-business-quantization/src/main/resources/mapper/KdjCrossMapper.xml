@@ -22,19 +22,19 @@
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
            <if test="kdjCrossListReqVo.tsCode != null and kdjCrossListReqVo.tsCode != ''">
-               and ts_code = #{kdjCrossListVo.tsCode}
+               and ts_code = #{kdjCrossListReqVo.tsCode}
            </if>
            <if test="kdjCrossListReqVo.tradeDateStart != null and kdjCrossListReqVo.tradeDateStart != ''">
-               and trade_date >= #{kdjCrossListVo.tradeDateStart}
+               and trade_date >= #{kdjCrossListReqVo.tradeDateStart}
            </if>
            <if test="kdjCrossListReqVo.tradeDateEnd != null and kdjCrossListReqVo.tradeDateEnd != ''">
-               and trade_date &lt;= #{kdjCrossListVo.tradeDateEnd}
+               and trade_date &lt;= #{kdjCrossListReqVo.tradeDateEnd}
            </if>
            <if test="kdjCrossListReqVo.crossType != null and kdjCrossListReqVo.crossType != ''">
-               and cross_type = #{kdjCrossListVo.crossType}
+               and cross_type = #{kdjCrossListReqVo.crossType}
            </if>
            <if test="kdjCrossListReqVo.analysisType != null and kdjCrossListReqVo.analysisType != ''">
-               and analysis_type = #{kdjCrossListVo.analysisType}
+               and analysis_type = #{kdjCrossListReqVo.analysisType}
            </if>
         </trim>
     </sql>

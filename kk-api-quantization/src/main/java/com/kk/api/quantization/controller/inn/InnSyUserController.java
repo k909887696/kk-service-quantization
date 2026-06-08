@@ -30,7 +30,7 @@ import com.kk.business.quantization.model.vobase.req.SyUserDeleteReqVo;
  * </p>
  *
  * @author kk
- * @since 2026-06-04
+ * @since 2026-06-08
  */
 @Tag(name = "/"+ ServiceSystemKey.ServiceName+"/"+SystemKey.ApiPrefixInn + "/v1/InnSyUser",description = "用户信息(内部接口)")
 @RestController

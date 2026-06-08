@@ -20,16 +20,16 @@
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
            <if test="marketBasicListReqVo.marketCode != null and marketBasicListReqVo.marketCode != ''">
-               and market_code = #{marketBasicListVo.marketCode}
+               and market_code = #{marketBasicListReqVo.marketCode}
            </if>
            <if test="marketBasicListReqVo.marketName != null and marketBasicListReqVo.marketName != ''">
-               and market_name like concat('%',#{marketBasicListVo.marketName},'%')
+               and market_name like concat('%',#{marketBasicListReqVo.marketName},'%')
            </if>
            <if test="marketBasicListReqVo.opDateStart != null and marketBasicListReqVo.opDateStart != ''">
-               and op_date >= #{marketBasicListVo.opDateStart}
+               and op_date >= #{marketBasicListReqVo.opDateStart}
            </if>
            <if test="marketBasicListReqVo.opDateEnd != null and marketBasicListReqVo.opDateEnd != ''">
-               and op_date &lt;= #{marketBasicListVo.opDateEnd}
+               and op_date &lt;= #{marketBasicListReqVo.opDateEnd}
            </if>
         </trim>
     </sql>

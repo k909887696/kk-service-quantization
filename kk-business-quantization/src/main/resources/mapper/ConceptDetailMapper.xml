@@ -30,34 +30,34 @@
     <sql id="BaseWhere">
         <trim prefix="where" prefixOverrides="and | or">
            <if test="conceptDetailListReqVo.conceptId != null and conceptDetailListReqVo.conceptId != ''">
-               and concept_id = #{conceptDetailListVo.conceptId}
+               and concept_id = #{conceptDetailListReqVo.conceptId}
            </if>
            <if test="conceptDetailListReqVo.conceptName != null and conceptDetailListReqVo.conceptName != ''">
-               and concept_name like concat('%',#{conceptDetailListVo.conceptName},'%')
+               and concept_name like concat('%',#{conceptDetailListReqVo.conceptName},'%')
            </if>
            <if test="conceptDetailListReqVo.tsCode != null and conceptDetailListReqVo.tsCode != ''">
-               and ts_code = #{conceptDetailListVo.tsCode}
+               and ts_code = #{conceptDetailListReqVo.tsCode}
            </if>
            <if test="conceptDetailListReqVo.name != null and conceptDetailListReqVo.name != ''">
-               and name like concat('%',#{conceptDetailListVo.name},'%')
+               and name like concat('%',#{conceptDetailListReqVo.name},'%')
            </if>
            <if test="conceptDetailListReqVo.inDateStart != null and conceptDetailListReqVo.inDateStart != ''">
-               and in_date >= #{conceptDetailListVo.inDateStart}
+               and in_date >= #{conceptDetailListReqVo.inDateStart}
            </if>
            <if test="conceptDetailListReqVo.inDateEnd != null and conceptDetailListReqVo.inDateEnd != ''">
-               and in_date &lt;= #{conceptDetailListVo.inDateEnd}
+               and in_date &lt;= #{conceptDetailListReqVo.inDateEnd}
            </if>
            <if test="conceptDetailListReqVo.outDateStart != null and conceptDetailListReqVo.outDateStart != ''">
-               and out_date >= #{conceptDetailListVo.outDateStart}
+               and out_date >= #{conceptDetailListReqVo.outDateStart}
            </if>
            <if test="conceptDetailListReqVo.outDateEnd != null and conceptDetailListReqVo.outDateEnd != ''">
-               and out_date &lt;= #{conceptDetailListVo.outDateEnd}
+               and out_date &lt;= #{conceptDetailListReqVo.outDateEnd}
            </if>
            <if test="conceptDetailListReqVo.symbol != null and conceptDetailListReqVo.symbol != ''">
-               and symbol = #{conceptDetailListVo.symbol}
+               and symbol = #{conceptDetailListReqVo.symbol}
            </if>
            <if test="conceptDetailListReqVo.weight != null and conceptDetailListReqVo.weight != ''">
-               and weight = #{conceptDetailListVo.weight}
+               and weight = #{conceptDetailListReqVo.weight}
            </if>
         </trim>
     </sql>
@@ -70,32 +70,6 @@
 
     </select>
 
-    <update id="updateSymbolByConceptIds">
-        update concept_detail cd inner join stock_basic sb on sb.ts_code = cd.ts_code
-        set cd.symbol = sb.symbol
-        where cd.concept_id in
-        <foreach collection="conceptIds"  item="id" open="(" separator="," close=")">
-            #{id}
-        </foreach>
 
-    </update>
-    <update id="updateTsCodeByConceptIds">
-        update concept_detail cd inner join stock_basic sb on sb.symbol = cd.ts_code
-        set cd.ts_code = sb.ts_code,cd.symbol = sb.symbol
-        where cd.concept_id in
-        <foreach collection="conceptIds"  item="id" open="(" separator="," close=")">
-            #{id}
-        </foreach>
-
-    </update>
-    <update id="updateConceptNameByConceptIds">
-        update concept_detail cd inner join concept c on c.code = cd.concept_id
-        set cd.concept_name = c.name
-        where cd.concept_id in
-        <foreach collection="conceptIds"  item="id" open="(" separator="," close=")">
-            #{id}
-        </foreach>
-
-    </update>
 
 </mapper>
