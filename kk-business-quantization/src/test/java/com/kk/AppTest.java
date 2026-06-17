@@ -1587,4 +1587,14 @@ Date  beginTime = new Date();
         }
         return url;
     }
+
+    @Test
+    public void testFileName() {
+
+        String targetPath = "D://log/quantization (7).zip";
+
+        File file = new File(targetPath);
+
+        System.out.println(file.getName());
+    }
 }

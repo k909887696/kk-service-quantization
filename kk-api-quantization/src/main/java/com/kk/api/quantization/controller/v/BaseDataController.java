@@ -77,7 +77,6 @@ public class BaseDataController {
 
     @PostMapping("/get_base_data_item_map")
     public ApiResult<BaseDataItemMapGetDto> getBaseDataItemMap(@Valid @RequestBody BaseDataItemMapGetVo vo)   {
-        List<String> permissionList = StpUtil.getPermissionList();
         return new  ApiResult(baseDataService.getBaseDataItemMap(vo));
 
     }

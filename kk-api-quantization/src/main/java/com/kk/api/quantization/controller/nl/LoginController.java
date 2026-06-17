@@ -56,22 +56,7 @@ public class LoginController {
 
     @Resource
     public SyUserServiceApi syUserServiceApi;
-    @Operation(summary = "sendEmailMsg")
-    @Parameters(  {
-            @Parameter(name = "token", description = "身份令牌", in = ParameterIn.HEADER, required = false),
-            // @ApiImplicitParam(name = "signature", value = "签名", paramType = "header", required = true, dataType = "String"),
-            // @ApiImplicitParam(name = "timestamp", value = "时间戳", paramType = "header", required = true, dataType = "String"),
-            // @ApiImplicitParam(name = "source", value = "来源（app/web/minotor）", paramType = "header", required = true, dataType = "String"),
-            @Parameter(name = "version", description = "版本号（1.0.0）", in = ParameterIn.HEADER, required = false)
-    })
-    //@SaCheckPermission(value = {"user:export", "data:export"}, mode = SaMode.OR)
-    @PostMapping("/sendEmailMsg")
-    public ApiResult<List<Daily>> sendEmailMsg(@Valid @RequestBody EmailSendMsg vo) throws Exception {
-        List<String> permissionList = StpUtil.getPermissionList();
-        emailUtil.sendMimeMail(vo);
-        return new  ApiResult();
 
-    }
 
     @Operation(summary = "登录sa-token jwt模式")
     @Parameters(  {
