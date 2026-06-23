@@ -70,9 +70,9 @@ public class CollectionPolicyController {
             @Parameter(name = "version", description = "版本号（1.0.0）", in = ParameterIn.HEADER, required = false)
     })
     @PostMapping("/update_policy")
-    public ApiResult< String > updatePolicy(@Valid @RequestBody CollectionPolicyEditReqVo vo)   {
+    public ApiResult< Integer > updatePolicy(@Valid @RequestBody CollectionPolicyEditReqVo vo)   {
 
-        return new  ApiResult(service.updateCollectionPolicy(vo));
+        return new  ApiResult<>(service.updateCollectionPolicy(vo));
 
     }
 
@@ -117,7 +117,7 @@ public class CollectionPolicyController {
     @PostMapping("/execute_policy_by_hand")
     public ApiResult< CollectionPolicy > executePolicyByHand(@Valid @RequestBody ExcutePolicyByHandVo vo)   {
         service.executePolicyByHand(vo.getPolicyId());
-        return ApiResult.getSuccessResult("请求成功！");
+        return new ApiResult<>();
 
     }
 

@@ -6,6 +6,7 @@ import com.kk.business.quantization.model.vo.ExecuteTaskVo;
 import com.kk.business.quantization.model.vo.RetryExecuteTaskVo;
 import com.kk.business.quantization.model.vo.SearchTaskListVo;
 import com.kk.business.quantization.model.vobase.req.CollectionTaskListReqVo;
+import com.kk.business.quantization.model.vobase.res.CollectionTaskListResVo;
 import com.kk.business.quantization.service.ICollectionTaskService;
 import com.kk.common.base.model.PageResult;
 import com.kk.common.web.model.ApiResult;
@@ -47,9 +48,9 @@ public class CollectionTaskController {
             @Parameter(name = "version", description = "版本号（1.0.0）", in = ParameterIn.HEADER, required = false)
     })
     @PostMapping("/get_collection_task_page_result")
-    public ApiResult< PageResult<CollectionTask> > getCollectionTaskPageResult(@Valid @RequestBody CollectionTaskListReqVo vo)   {
+    public ApiResult< PageResult<CollectionTaskListResVo> > getCollectionTaskPageResult(@Valid @RequestBody CollectionTaskListReqVo vo)   {
 
-        return new  ApiResult(service.selectCollectionTaskPageList(vo));
+        return new ApiResult<>(service.selectCollectionTaskPageList(vo));
 
     }
 
@@ -65,7 +66,7 @@ public class CollectionTaskController {
     @PostMapping("/retry_execute_task")
     public ApiResult< String > retryExecuteTask(@Valid @RequestBody RetryExecuteTaskVo vo)   {
         service.retryExecuteTask(vo.getTaskId());
-        return  ApiResult.getSuccessResult("请求成功");
+        return  new ApiResult<>();
 
     }
 
