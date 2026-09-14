@@ -40,21 +40,21 @@ public class IndexDaily implements Serializable {
     * 	收盘点位
     */
     @Schema(description = "	收盘点位")
-    @TableField("close")
+    @TableField("`close`")
     private Double close;
 
     /**
     * 	开盘点位
     */
     @Schema(description = "	开盘点位")
-    @TableField("open")
+    @TableField("`open`")
     private Double open;
 
     /**
     * 最高点位
     */
     @Schema(description = "最高点位")
-    @TableField("high")
+    @TableField("`high`")
     private Double high;
 
     /**
@@ -75,7 +75,7 @@ public class IndexDaily implements Serializable {
     * 涨跌点
     */
     @Schema(description = "涨跌点")
-    @TableField("change")
+    @TableField("`change`")
     private Double change;
 
     /**

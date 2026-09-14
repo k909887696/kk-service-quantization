@@ -1,6 +1,7 @@
 package com.kk.business.quantization.utils;
 
 
+import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
 import org.apache.http.Consts;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -150,5 +151,36 @@ public class pdfUtils {
         return null;
     }
 
+    public static void generatePdfFromHtml(String htmlContent, String outputPath) throws Exception {
+        try (OutputStream os = new FileOutputStream(outputPath)) {
+            PdfRendererBuilder builder = new PdfRendererBuilder();
 
-}
+            // 设置 HTML 内容，第二个参数是 base URI（用于解析相对路径的资源），没有可传 null
+            builder.withHtmlContent(htmlContent, null);
+
+            // 注册中文字体（防止中文变方框）
+            // Windows 系统字体路径示例：
+            // 从 classpath 读取字体，复制到临时文件
+            InputStream fontStream = pdfUtils.class.getClassLoader()
+                    .getResourceAsStream("fonts/AlibabaPuHuiTi-3-55-Regular.ttf");
+            if (fontStream != null) {
+                // 创建临时文件
+                File tempFontFile = File.createTempFile("AlibabaPuHuiTi", ".ttf");
+                tempFontFile.deleteOnExit(); // JVM 退出时自动删除
+
+                // 将 classpath 中的字体写入临时文件
+                try (FileOutputStream fos = new FileOutputStream(tempFontFile)) {
+                    fontStream.transferTo(fos);
+                }
+
+                // 用 File 模式注册字体
+                builder.useFont(tempFontFile, "Alibaba PuHuiTi 3");
+            }
+
+            // 输出到流
+            builder.toStream(os);
+
+            // 执行生成
+            builder.run();
+        }
+    }}

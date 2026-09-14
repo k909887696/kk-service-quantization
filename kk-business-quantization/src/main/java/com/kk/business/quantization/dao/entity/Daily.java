@@ -40,14 +40,14 @@ public class Daily implements Serializable {
     * 开盘价
     */
     @Schema(description = "开盘价")
-    @TableField("open")
+    @TableField("`open`")
     private Double open;
 
     /**
     * 最高价
     */
     @Schema(description = "最高价")
-    @TableField("high")
+    @TableField("`high`")
     private Double high;
 
     /**
@@ -61,7 +61,7 @@ public class Daily implements Serializable {
     * 收盘价
     */
     @Schema(description = "收盘价")
-    @TableField("close")
+    @TableField("`close`")
     private Double close;
 
     /**
@@ -75,7 +75,7 @@ public class Daily implements Serializable {
     * 涨跌额
     */
     @Schema(description = "涨跌额")
-    @TableField("change")
+    @TableField("`change`")
     private Double change;
 
     /**

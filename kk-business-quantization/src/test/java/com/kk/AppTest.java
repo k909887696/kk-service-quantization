@@ -483,7 +483,7 @@ public class AppTest {
         System.out.print(res);
     }
     @Test
-    public void testMYinterface2() {
+    public void testrepeat_push_bkcapitalflow_2_orderprocess() {
         String sid = "NET:4220427491516135615265_80A9EA7EDA315A41AE66B3ADDE5D609A";
         String json = "{\"flowId\":\"LS240329948\"}";
         Map<String, Object> params = JSONObject.parseObject(json);
@@ -497,7 +497,7 @@ public class AppTest {
     }
 
     @Test
-    public void testMYinterfaceCancelPR() {
+    public void testmodify_blpayapplication_status() {
         String sid = "NET:90AC1CA90DF646E39F31C4CD44B5C3AETMC_69A8EE52A647F3B34C6E77141FA97864";
         String json = "{\"status\":5,\"payApplicationId\":\"PR2500968718\",\"approvalResult\":\"重复核销取消pr单\"}";
         Map<String, Object> params = JSONObject.parseObject(json);
@@ -666,7 +666,7 @@ public class AppTest {
         System.out.print(res);
     }
     @Test
-    public void testMYinterfaceWithSignjiedong() {
+    public void testcreditUnFreeze() {
         Date n = new Date();
         long timeStamp = n.getTime();
         String apiKey = "AYATDI2B3XfV@Q%I7hJGSGS!SFU0Ew$7";
@@ -1594,7 +1594,62 @@ Date  beginTime = new Date();
         String targetPath = "D://log/quantization (7).zip";
 
         File file = new File(targetPath);
+        String fileName ="26439136004000079411.ofd";
+        String realFileName = fileName.substring(0, fileName.lastIndexOf(".")) ;
+        String filePrefix = fileName.substring(fileName.lastIndexOf("."));
 
         System.out.println(file.getName());
+    }
+
+    @Test
+    public void testHtmlToPdf() throws Exception {
+        String html = """
+            <html>
+                <head>
+        
+                    <style>
+                        body { font-family: SimSun, sans-serif; }
+                        h1 { color: #2c3e50; }
+                        table { border-collapse: collapse; width: 100%; }
+                        td, th { border: 1px solid #ddd; padding: 8px; }
+                    </style>
+                </head>
+                <body>
+                    <h1>PDFBox + OpenHTML2PDF 生成 PDF</h1>
+                    <table>
+                        <tr><th>姓名</th><th>部门</th></tr>
+                        <tr><td>张三</td><td>技术部</td></tr>
+                        <tr><td>李四</td><td>产品部</td></tr>
+                    </table>
+                </body>
+            </html>
+            """;
+
+        pdfUtils.generatePdfFromHtml(html, "D:\\log\\output1.pdf");
+    }
+
+    @Test
+    public void testDataSdf()
+    {
+        Date d = new Date(42267);
+        String strDate ="42221dddd4";
+        boolean f =strDate.matches("^\\d+$");
+        String pattern= "yyyy-MM-dd";
+         {
+        if (strDate != null && !strDate.equals("")) {
+            pattern = pattern != null && !pattern.equals("") ? pattern : "yyyy-MM-dd HH:mm:ss";
+            SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+            Date date = null;
+
+            try {
+                date = sdf.parse(strDate);
+                //return date;
+            } catch (Exception var5) {
+                throw new RuntimeException(var5);
+            }
+        } else {
+            throw new RuntimeException("strDate is null");
+        }
+    }
     }
 }
