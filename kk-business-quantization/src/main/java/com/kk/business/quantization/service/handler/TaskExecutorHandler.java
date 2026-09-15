@@ -12,6 +12,7 @@ import com.kk.business.quantization.dao.mapper.CollectionTaskMapper;
 import com.kk.business.quantization.dao.mapper.InvokeTypeMapper;
 import com.kk.business.quantization.service.ICollectionTaskService;
 import com.kk.business.quantization.service.executor.ITaskExecutor;
+import com.kk.common.annotation.BaseTransactional;
 import com.kk.common.exception.BusinessException;
 import com.kk.common.utils.DateUtil;
 import com.kk.common.utils.MapperUtils;
@@ -62,6 +63,7 @@ public class TaskExecutorHandler {
      * @param policy
      * @param handType 1:手动，手动执行不更新下次执行时间；其余：调度自动
      */
+    @BaseTransactional
     public void handlerPolicy(CollectionPolicy policy,String handType)
     {
         if(StringUtils.isBlank(policy.getInvokeCode()))
@@ -177,6 +179,7 @@ public class TaskExecutorHandler {
      * 任务处理
      * @param task
      */
+    @BaseTransactional
     public void handlerTask(CollectionTask task)
     {
 

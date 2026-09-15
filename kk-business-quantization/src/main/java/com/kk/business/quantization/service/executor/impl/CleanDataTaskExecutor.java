@@ -13,7 +13,6 @@ import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-import com.kk.common.annotation.BaseTransactional;
 
 
 
@@ -38,7 +37,6 @@ public class CleanDataTaskExecutor implements ITaskExecutor {
      * @param params
      */
     @Override
-    @BaseTransactional
     public void executeTask(String params) {
         if(StringUtils.isBlank(params)) return ;
         CleanDataVo vo = (CleanDataVo) JsonUtil.parseObject(params,CleanDataVo.class);
