@@ -9,9 +9,13 @@ import com.kk.business.quantization.model.po.tushare.ConceptVo;
 import com.kk.business.quantization.third.IDfcfDataApi;
 import com.kk.business.quantization.utils.ThridDataUtils;
 import com.kk.common.utils.JsonUtil;
+import com.kk.common.utils.LogUtil;
 import com.kk.common.utils.MapperUtils;
 import com.kk.common.utils.httpUtil;
+import com.kk.common.web.advice.LogResponseAdvice;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 
@@ -29,6 +33,7 @@ import java.util.Map;
 @Slf4j
 public class DfcfDataApiImpl implements IDfcfDataApi {
 
+    private Logger logger = LogManager.getLogger(LogResponseAdvice.class);
     @Resource
     public ThirdDataConfig thirdDataConfig;
     @Resource
@@ -111,11 +116,13 @@ public class DfcfDataApiImpl implements IDfcfDataApi {
                 +String.format("&cb=%s&beg=%s&end=%s&lmt=%s&secid=%s",
                 thirdDataConfig.getDfcfCb(),vo.getStartDate(),vo.getEndDate(),vo.getLimit(),"90."+vo.getConceptId());
         //&cb=jQuery112402670742210902033_1584861859279&beg=20211024&end=20211224&lmt=1000000&secid=90.BK0615
-        log.info("{}|{}",reqUrl,"conceptDaily");
+        LogUtil.info(logger,"conceptDaily","{}",reqUrl);
         String resStr = httpUtil.doPost(reqUrl,"",null);
+        LogUtil.info(logger,"conceptDaily","{}",resStr);
         resStr = dfcfResutlHandler(resStr,thirdDataConfig.getDfcfCb());
         DfcfHisBaseRes resObj= (DfcfHisBaseRes) JsonUtil.parseObject(resStr,DfcfHisBaseRes.class);
-        log.info("{}|{}", JsonUtil.getJSONString(resObj),"conceptDaily");
+        LogUtil.info(logger,"conceptDaily","{}",JsonUtil.getJSONString(resObj));
+
         if(resObj.getData()!=null && resObj.getData().getKlines() != null) {
             List<Map<String, Object>> diff = ThridDataUtils.dfcfKlinesHandler(resObj.getData().getKlines(), DfcfFieldsMap.CODE_VALUE_MAP.get(DfcfFieldsMap.DFCF_CONCEPT_DAILY));
             List<ConceptDaily> list = mapperUtils.map(diff, ConceptDaily.class);
