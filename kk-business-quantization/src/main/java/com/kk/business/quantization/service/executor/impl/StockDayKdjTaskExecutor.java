@@ -20,7 +20,7 @@ import com.kk.common.utils.MapperUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import com.kk.common.annotation.BaseTransactional;
 
 import jakarta.annotation.Resource;
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ public class StockDayKdjTaskExecutor implements ITaskExecutor {
      * @param params
      */
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @BaseTransactional
     public void executeTask(String params) {
         if(StringUtils.isBlank(params)) return ;
         DailyKdjVo vo = (DailyKdjVo) JsonUtil.parseObject(params,DailyKdjVo.class);
