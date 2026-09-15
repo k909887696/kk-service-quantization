@@ -12,6 +12,7 @@ import com.kk.common.utils.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.annotation.Resource;
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ public class ConceptTaskExecutor implements ITaskExecutor {
      * @param params
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void executeTask(String params) {
         if(StringUtils.isBlank(params)) return ;
         ConceptVo vo = (ConceptVo) JsonUtil.parseObject(params,ConceptVo.class);
