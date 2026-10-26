@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kk.business.quantization.dao.mapper.SyDagProcessTaskMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.SyDagProcessTask">
+        <id column="process_task_id" property="processTaskId" />
+        <result column="process_task_name" property="processTaskName" />
+        <result column="process_id" property="processId" />
+        <result column="dag_id" property="dagId" />
+        <result column="node_code" property="nodeCode" />
+        <result column="top_node_code" property="topNodeCode" />
+        <result column="pre_process_task_id" property="preProcessTaskId" />
+        <result column="next_process_task_id" property="nextProcessTaskId" />
+        <result column="pre_node_code" property="preNodeCode" />
+        <result column="next_node_code" property="nextNodeCode" />
+        <result column="run_param" property="runParam" />
+        <result column="pre_run_time" property="preRunTime" />
+        <result column="run_count" property="runCount" />
+        <result column="reamrk" property="reamrk" />
+        <result column="create_time" property="createTime" />
+        <result column="create_id" property="createId" />
+        <result column="create_name" property="createName" />
+        <result column="finish_time" property="finishTime" />
+        <result column="ex_message" property="exMessage" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        process_task_id as 'processTaskId',
+        process_task_name as 'processTaskName',
+        process_id as 'processId',
+        dag_id as 'dagId',
+        node_code as 'nodeCode',
+        top_node_code as 'topNodeCode',
+        pre_process_task_id as 'preProcessTaskId',
+        next_process_task_id as 'nextProcessTaskId',
+        pre_node_code as 'preNodeCode',
+        next_node_code as 'nextNodeCode',
+        run_param as 'runParam',
+        pre_run_time as 'preRunTime',
+        run_count as 'runCount',
+        reamrk as 'reamrk',
+        create_time as 'createTime',
+        create_id as 'createId',
+        create_name as 'createName',
+        finish_time as 'finishTime',
+        ex_message as 'exMessage'
+
+    </sql>
+    <!-- 通用查询条件 -->
+    <sql id="BaseWhere">
+        <trim prefix="where" prefixOverrides="and | or">
+           <if test="syDagProcessTaskListReqVo.processTaskId != null and syDagProcessTaskListReqVo.processTaskId != ''">
+               and process_task_id = #{syDagProcessTaskListReqVo.processTaskId}
+           </if>
+           <if test="syDagProcessTaskListReqVo.processTaskName != null and syDagProcessTaskListReqVo.processTaskName != ''">
+               and process_task_name like concat('%',#{syDagProcessTaskListReqVo.processTaskName},'%')
+           </if>
+           <if test="syDagProcessTaskListReqVo.processId != null and syDagProcessTaskListReqVo.processId != ''">
+               and process_id = #{syDagProcessTaskListReqVo.processId}
+           </if>
+           <if test="syDagProcessTaskListReqVo.dagId != null and syDagProcessTaskListReqVo.dagId != ''">
+               and dag_id = #{syDagProcessTaskListReqVo.dagId}
+           </if>
+           <if test="syDagProcessTaskListReqVo.nodeCode != null and syDagProcessTaskListReqVo.nodeCode != ''">
+               and node_code = #{syDagProcessTaskListReqVo.nodeCode}
+           </if>
+           <if test="syDagProcessTaskListReqVo.topNodeCode != null and syDagProcessTaskListReqVo.topNodeCode != ''">
+               and top_node_code = #{syDagProcessTaskListReqVo.topNodeCode}
+           </if>
+           <if test="syDagProcessTaskListReqVo.preProcessTaskId != null and syDagProcessTaskListReqVo.preProcessTaskId != ''">
+               and pre_process_task_id = #{syDagProcessTaskListReqVo.preProcessTaskId}
+           </if>
+           <if test="syDagProcessTaskListReqVo.nextProcessTaskId != null and syDagProcessTaskListReqVo.nextProcessTaskId != ''">
+               and next_process_task_id = #{syDagProcessTaskListReqVo.nextProcessTaskId}
+           </if>
+           <if test="syDagProcessTaskListReqVo.preNodeCode != null and syDagProcessTaskListReqVo.preNodeCode != ''">
+               and pre_node_code = #{syDagProcessTaskListReqVo.preNodeCode}
+           </if>
+           <if test="syDagProcessTaskListReqVo.nextNodeCode != null and syDagProcessTaskListReqVo.nextNodeCode != ''">
+               and next_node_code = #{syDagProcessTaskListReqVo.nextNodeCode}
+           </if>
+           <if test="syDagProcessTaskListReqVo.runParam != null and syDagProcessTaskListReqVo.runParam != ''">
+               and run_param = #{syDagProcessTaskListReqVo.runParam}
+           </if>
+           <if test="syDagProcessTaskListReqVo.preRunTimeStart != null and syDagProcessTaskListReqVo.preRunTimeStart != ''">
+               and pre_run_time >= #{syDagProcessTaskListReqVo.preRunTimeStart}
+           </if>
+           <if test="syDagProcessTaskListReqVo.preRunTimeEnd != null and syDagProcessTaskListReqVo.preRunTimeEnd != ''">
+               and pre_run_time &lt;= #{syDagProcessTaskListReqVo.preRunTimeEnd}
+           </if>
+           <if test="syDagProcessTaskListReqVo.runCount != null and syDagProcessTaskListReqVo.runCount != ''">
+               and run_count = #{syDagProcessTaskListReqVo.runCount}
+           </if>
+           <if test="syDagProcessTaskListReqVo.reamrk != null and syDagProcessTaskListReqVo.reamrk != ''">
+               and reamrk = #{syDagProcessTaskListReqVo.reamrk}
+           </if>
+           <if test="syDagProcessTaskListReqVo.createTimeStart != null and syDagProcessTaskListReqVo.createTimeStart != ''">
+               and create_time >= #{syDagProcessTaskListReqVo.createTimeStart}
+           </if>
+           <if test="syDagProcessTaskListReqVo.createTimeEnd != null and syDagProcessTaskListReqVo.createTimeEnd != ''">
+               and create_time &lt;= #{syDagProcessTaskListReqVo.createTimeEnd}
+           </if>
+           <if test="syDagProcessTaskListReqVo.createId != null and syDagProcessTaskListReqVo.createId != ''">
+               and create_id = #{syDagProcessTaskListReqVo.createId}
+           </if>
+           <if test="syDagProcessTaskListReqVo.createName != null and syDagProcessTaskListReqVo.createName != ''">
+               and create_name like concat('%',#{syDagProcessTaskListReqVo.createName},'%')
+           </if>
+           <if test="syDagProcessTaskListReqVo.finishTimeStart != null and syDagProcessTaskListReqVo.finishTimeStart != ''">
+               and finish_time >= #{syDagProcessTaskListReqVo.finishTimeStart}
+           </if>
+           <if test="syDagProcessTaskListReqVo.finishTimeEnd != null and syDagProcessTaskListReqVo.finishTimeEnd != ''">
+               and finish_time &lt;= #{syDagProcessTaskListReqVo.finishTimeEnd}
+           </if>
+           <if test="syDagProcessTaskListReqVo.exMessage != null and syDagProcessTaskListReqVo.exMessage != ''">
+               and ex_message = #{syDagProcessTaskListReqVo.exMessage}
+           </if>
+        </trim>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectSyDagProcessTaskPageList" resultType="com.kk.business.quantization.model.vobase.res.SyDagProcessTaskListResVo">
+        select <include refid="BaseColumnList"/>
+        from sy_dag_process_task
+        <include refid="BaseWhere"/>
+
+    </select>
+
+
+
+</mapper>

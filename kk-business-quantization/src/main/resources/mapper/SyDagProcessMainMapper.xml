@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kk.business.quantization.dao.mapper.SyDagProcessMainMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.SyDagProcessMain">
+        <id column="process_id" property="processId" />
+        <result column="process_name" property="processName" />
+        <result column="create_time" property="createTime" />
+        <result column="create_id" property="createId" />
+        <result column="create_name" property="createName" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        process_id as 'processId',
+        process_name as 'processName',
+        create_time as 'createTime',
+        create_id as 'createId',
+        create_name as 'createName'
+
+    </sql>
+    <!-- 通用查询条件 -->
+    <sql id="BaseWhere">
+        <trim prefix="where" prefixOverrides="and | or">
+           <if test="syDagProcessMainListReqVo.processId != null and syDagProcessMainListReqVo.processId != ''">
+               and process_id = #{syDagProcessMainListReqVo.processId}
+           </if>
+           <if test="syDagProcessMainListReqVo.processName != null and syDagProcessMainListReqVo.processName != ''">
+               and process_name like concat('%',#{syDagProcessMainListReqVo.processName},'%')
+           </if>
+           <if test="syDagProcessMainListReqVo.createTimeStart != null and syDagProcessMainListReqVo.createTimeStart != ''">
+               and create_time >= #{syDagProcessMainListReqVo.createTimeStart}
+           </if>
+           <if test="syDagProcessMainListReqVo.createTimeEnd != null and syDagProcessMainListReqVo.createTimeEnd != ''">
+               and create_time &lt;= #{syDagProcessMainListReqVo.createTimeEnd}
+           </if>
+           <if test="syDagProcessMainListReqVo.createId != null and syDagProcessMainListReqVo.createId != ''">
+               and create_id = #{syDagProcessMainListReqVo.createId}
+           </if>
+           <if test="syDagProcessMainListReqVo.createName != null and syDagProcessMainListReqVo.createName != ''">
+               and create_name like concat('%',#{syDagProcessMainListReqVo.createName},'%')
+           </if>
+        </trim>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectSyDagProcessMainPageList" resultType="com.kk.business.quantization.model.vobase.res.SyDagProcessMainListResVo">
+        select <include refid="BaseColumnList"/>
+        from sy_dag_process_main
+        <include refid="BaseWhere"/>
+
+    </select>
+
+
+
+</mapper>

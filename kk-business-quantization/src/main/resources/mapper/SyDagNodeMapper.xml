@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kk.business.quantization.dao.mapper.SyDagNodeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.SyDagNode">
+        <id column="node_code" property="nodeCode" />
+        <result column="node_name" property="nodeName" />
+        <result column="bean_id" property="beanId" />
+        <result column="method_name" property="methodName" />
+        <result column="run_param" property="runParam" />
+        <result column="create_time" property="createTime" />
+        <result column="create_id" property="createId" />
+        <result column="create_name" property="createName" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        node_code as 'nodeCode',
+        node_name as 'nodeName',
+        bean_id as 'beanId',
+        method_name as 'methodName',
+        run_param as 'runParam',
+        create_time as 'createTime',
+        create_id as 'createId',
+        create_name as 'createName'
+
+    </sql>
+    <!-- 通用查询条件 -->
+    <sql id="BaseWhere">
+        <trim prefix="where" prefixOverrides="and | or">
+           <if test="syDagNodeListReqVo.nodeCode != null and syDagNodeListReqVo.nodeCode != ''">
+               and node_code = #{syDagNodeListReqVo.nodeCode}
+           </if>
+           <if test="syDagNodeListReqVo.nodeName != null and syDagNodeListReqVo.nodeName != ''">
+               and node_name like concat('%',#{syDagNodeListReqVo.nodeName},'%')
+           </if>
+           <if test="syDagNodeListReqVo.beanId != null and syDagNodeListReqVo.beanId != ''">
+               and bean_id = #{syDagNodeListReqVo.beanId}
+           </if>
+           <if test="syDagNodeListReqVo.methodName != null and syDagNodeListReqVo.methodName != ''">
+               and method_name like concat('%',#{syDagNodeListReqVo.methodName},'%')
+           </if>
+           <if test="syDagNodeListReqVo.runParam != null and syDagNodeListReqVo.runParam != ''">
+               and run_param = #{syDagNodeListReqVo.runParam}
+           </if>
+           <if test="syDagNodeListReqVo.createTimeStart != null and syDagNodeListReqVo.createTimeStart != ''">
+               and create_time >= #{syDagNodeListReqVo.createTimeStart}
+           </if>
+           <if test="syDagNodeListReqVo.createTimeEnd != null and syDagNodeListReqVo.createTimeEnd != ''">
+               and create_time &lt;= #{syDagNodeListReqVo.createTimeEnd}
+           </if>
+           <if test="syDagNodeListReqVo.createId != null and syDagNodeListReqVo.createId != ''">
+               and create_id = #{syDagNodeListReqVo.createId}
+           </if>
+           <if test="syDagNodeListReqVo.createName != null and syDagNodeListReqVo.createName != ''">
+               and create_name like concat('%',#{syDagNodeListReqVo.createName},'%')
+           </if>
+        </trim>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectSyDagNodePageList" resultType="com.kk.business.quantization.model.vobase.res.SyDagNodeListResVo">
+        select <include refid="BaseColumnList"/>
+        from sy_dag_node
+        <include refid="BaseWhere"/>
+        order by node_name
+    </select>
+
+
+
+</mapper>

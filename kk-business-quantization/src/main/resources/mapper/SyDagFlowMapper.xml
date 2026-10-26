@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kk.business.quantization.dao.mapper.SyDagFlowMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.kk.business.quantization.dao.entity.SyDagFlow">
+        <id column="dag_flow_id" property="dagFlowId" />
+        <result column="node_code" property="nodeCode" />
+        <result column="next_node_code" property="nextNodeCode" />
+        <result column="pre_node_code" property="preNodeCode" />
+        <result column="dag_id" property="dagId" />
+        <result column="flow_info" property="flowInfo" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="BaseColumnList">
+        node_code as 'nodeCode',
+        next_node_code as 'nextNodeCode',
+        pre_node_code as 'preNodeCode',
+        dag_id as 'dagId',
+        dag_flow_id as 'dagFlowId',
+        flow_info as 'flowInfo'
+
+    </sql>
+    <!-- 通用查询条件 -->
+    <sql id="BaseWhere">
+        <trim prefix="where" prefixOverrides="and | or">
+           <if test="syDagFlowListReqVo.nodeCode != null and syDagFlowListReqVo.nodeCode != ''">
+               and node_code = #{syDagFlowListReqVo.nodeCode}
+           </if>
+           <if test="syDagFlowListReqVo.nextNodeCode != null and syDagFlowListReqVo.nextNodeCode != ''">
+               and next_node_code = #{syDagFlowListReqVo.nextNodeCode}
+           </if>
+           <if test="syDagFlowListReqVo.preNodeCode != null and syDagFlowListReqVo.preNodeCode != ''">
+               and pre_node_code = #{syDagFlowListReqVo.preNodeCode}
+           </if>
+           <if test="syDagFlowListReqVo.dagId != null and syDagFlowListReqVo.dagId != ''">
+               and dag_id = #{syDagFlowListReqVo.dagId}
+           </if>
+           <if test="syDagFlowListReqVo.dagFlowId != null and syDagFlowListReqVo.dagFlowId != ''">
+               and dag_flow_id = #{syDagFlowListReqVo.dagFlowId}
+           </if>
+           <if test="syDagFlowListReqVo.flowInfo != null and syDagFlowListReqVo.flowInfo != ''">
+               and flow_info = #{syDagFlowListReqVo.flowInfo}
+           </if>
+        </trim>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectSyDagFlowPageList" resultType="com.kk.business.quantization.model.vobase.res.SyDagFlowListResVo">
+        select <include refid="BaseColumnList"/>
+        from sy_dag_flow
+        <include refid="BaseWhere"/>
+
+    </select>
+
+
+
+</mapper>
